@@ -30,17 +30,17 @@
   <url-pattern>/log</url-pattern>
 </servlet-mapping>
 
-<!--
+
   <servlet>
-    <servlet-name>userinsert</servlet-name>
-    <servlet-class>com.user.controller.Userinsert</servlet-class>
+    <servlet-name>deleteUserServlet</servlet-name>
+    <servlet-class>com.user.controller.DeleteUserServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
-    <servlet-name>userinsert</servlet-name>
-    <url-pattern>/insert</url-pattern>
+    <servlet-name>deleteUserServlet</servlet-name>
+    <url-pattern>/delete</url-pattern>
   </servlet-mapping>
--->
+
   <servlet>
     <servlet-name>UserInsertServlet</servlet-name>
     <servlet-class>com.user.controller.Userinsert</servlet-class>

@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>-->
 
 <!DOCTYPE html>
 <html>
@@ -107,14 +107,18 @@
 
     <div class="main-content">
         <form action="UpdateUserServlet" method="post">
+
             <div class="profile-details">
                 <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
                 <p>Name: <span contenteditable="true" name="fname">${user.getFname()}</span> <span
                         contenteditable="true" name="lname">${user.getLname()}</span></p>
                 <p>Email: ${user.getEmail()}</p>
+                <p>Birthday: ${user.getBday()}</p>
+                <p>Country: ${user.getCountry()}</p>
                 <!-- Add other editable fields as needed -->
-
             </div>
+                </c:forEach>
+
 
             <div class="completion-bar">
                 <div class="completion-fill" style="width: 14%;"></div>
@@ -125,7 +129,7 @@
 
             <div class="dashboard-options">
                 <ul>
-                    <li><input type="submit" value="Update"></li>
+<li>
 
                     <c:url value="editProfile.jsp" var="userupdate">
                         <c:param name="fname" value="${fname}"/>
@@ -140,16 +144,33 @@
 
                     <a href="${userupdate}">
                         <input type="button" name="update" value="Update my data">
-                    </a>
+                    </a></li>
 
                     <li><a href="updateuser.jsp"><button>Edit Account</button></a></li>
                     <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
-                    <li><a href="accountDeactivate.jsp"><button>Deactivate Account</button></a></li>
+                    <li>
+
+                        <c:url value="deleteuserprofile.jsp" var="userdelete">
+                            <c:param name="fname" value="${fname}"/>
+                            <c:param name="lname" value="${lname}"/>
+                            <c:param name="bday" value="${bday}"/>
+                            <c:param name="country" value="${country}"/>
+                            <c:param name="email" value="${email}"/>
+                            <c:param name="password" value="${password}"/>
+                            <c:param name="cpassword" value="${cpassword}"/>
+
+                        </c:url>
+
+
+
+                        <a href="${userdelete}">
+                        <input type="button" name="delete" value="Deactivate Account"></a></li>
+
                 </ul>
             </div>
         </form>
     </div>
-</c:forEach>
+
 </body>
 
 </html>

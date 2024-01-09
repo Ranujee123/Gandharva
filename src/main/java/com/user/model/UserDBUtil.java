@@ -35,7 +35,7 @@ public class UserDBUtil {
                 String passwordU = resultSet.getString(7);
                 String cpassswordU = resultSet.getString(8);
 
-                User u = new User( fname, lname, bday, country, emailU, passwordU, cpassswordU);
+                User u = new User(fname, lname, bday, country, emailU, passwordU, cpassswordU);
                 user.add(u);
 
             }
@@ -76,13 +76,13 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser( String fname, String lname, String bday, String country, String email, String password, String cpassword) {
+    public static boolean updateUser(String fname, String lname, String bday, String country, String email, String password, String cpassword) {
         boolean isSuccess = false;
 
         try {
             con = DBConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email +  "',password='" + password +  "', cpassword='" + cpassword + "' where email='" + email + "'";
+            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email + "',password='" + password + "', cpassword='" + cpassword + "' where email='" + email + "'";
             int resultSet = stmt.executeUpdate(sql);
 
 
@@ -92,46 +92,69 @@ public class UserDBUtil {
                 isSuccess = false;
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isSuccess;
     }
 
 
+    public static List<User> getUserDetails(String email) {
+        // int convertedID=Integer.parseInt(Id);
 
-    public static List<User> getUserDetails (String email){
-       // int convertedID=Integer.parseInt(Id);
+        ArrayList<User> user = new ArrayList<>();
 
-        ArrayList<User> user =new ArrayList<>();
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "select * from user where email='" + email + "'";
+            resultSet = stmt.executeQuery(sql);
 
-        try{
-            con= DBConnect.getConnection();
-            stmt=con.createStatement();
-            String sql="select * from user where email='"+email +"'";
-            resultSet=stmt.executeQuery(sql);
-
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 //int id=resultSet.getInt(1);
-                String fname= resultSet.getString(2);
-                String lname= resultSet.getString(3);
-                String bday=resultSet.getString(4);
-                String country=resultSet.getString(5);
+                String fname = resultSet.getString(2);
+                String lname = resultSet.getString(3);
+                String bday = resultSet.getString(4);
+                String country = resultSet.getString(5);
                 email = resultSet.getString(6);
-                String password= resultSet.getString(7);
-                String cpassword= resultSet.getString(8);
+                String password = resultSet.getString(7);
+                String cpassword = resultSet.getString(8);
 
 
-                User user1= new User(fname,lname,bday, country,email,password,cpassword);
+                User user1 = new User(fname, lname, bday, country, email, password, cpassword);
                 user.add(user1);
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return user;
+    }
+
+
+    public static boolean deleteUser(String email) {
+
+        //int convId = Integer.parseInt(id);
+
+        try {
+
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "delete from user where email='" + email + "'";
+            int rs = stmt.executeUpdate(sql);
+
+            if (rs > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
     }
 }
 
