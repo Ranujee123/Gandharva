@@ -98,7 +98,7 @@
 <!-- Login Card -->
 <div class="login-card">
   <h2 class="center-elements" style="color: black">Login</h2>
-  <form action="loginServlet" method="post">
+  <form action="log" method="post">
     <label for="email" class="center-elements">E-mail  :</label>
     <input type="email" id="email" name="email" placeholder="Email" required><br><br>
     <label for="password" class="center-elements">Password:</label>
@@ -112,7 +112,7 @@
     <input type="submit" value="Login" class="login-button"><br><br>
     <a href="forgotPassword.jsp">Forgot Password?</a><br>
   </form>
-  <p class="signup-text">Don't have an account? <a href="signup.jsp">Sign Up</a></p>
+  <p class="signup-text">Don't have an account? <a href="u_reg.jsp">Sign Up</a></p>
 </div>
 
 <!-- Add more HTML and CSS as needed for styling and responsiveness -->
