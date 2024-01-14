@@ -60,6 +60,16 @@
     <url-pattern>/updateu</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>UserinsertDeatils</servlet-name>
+    <servlet-class>com.user.controller.QualificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserinsertDeatils</servlet-name>
+    <url-pattern>/qul</url-pattern>
+  </servlet-mapping>
+
+
 
 
   <servlet>

@@ -112,6 +112,10 @@
     <input type="submit" value="Login" class="login-button"><br><br>
     <a href="forgotPassword.jsp">Forgot Password?</a><br>
   </form>
+  <% if (request.getParameter("error") != null) { %>
+  <p style="color: red;">Invalid credentials. Please try again.</p>
+  <% } %>
+
   <p class="signup-text">Don't have an account? <a href="u_reg.jsp">Sign Up</a></p>
 </div>
 
