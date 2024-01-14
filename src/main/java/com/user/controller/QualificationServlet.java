@@ -22,7 +22,7 @@ public class QualificationServlet extends HttpServlet {
             HttpSession session = request.getSession();
             String userEmail = (String) session.getAttribute("userEmail");
 
-// Check if the user is authenticated
+            // Check if the user is authenticated
             if (userEmail == null) {
                 // Log or print the value of userEmail here for debugging
                 System.out.println("User email is null");
@@ -30,17 +30,19 @@ public class QualificationServlet extends HttpServlet {
                 return; // Stop further processing
             }
 
+            System.out.println("User email: " + userEmail); // Debug print
+
             String school = request.getParameter("school");
             String eduQualification = request.getParameter("eduquali");
             String occupation = request.getParameter("occupation");
 
-            // Get uID from the user table based on the email
+            System.out.println("School: " + school); // Debug print
+            System.out.println("Edu Qualification: " + eduQualification); // Debug print
+            System.out.println("Occupation: " + occupation); // Debug print
+
+            // Get user ID, qualification ID, and occupation ID
             int uID = getUserIdByEmail(userEmail);
-
-            // Get qID from the qualification table based on the qualification
             int qID = getQualificationIdByName(eduQualification);
-
-            // Get oID from the occupation table based on the occupation
             int oID = getOccupationIdByName(occupation);
 
             // Save the details to the database
