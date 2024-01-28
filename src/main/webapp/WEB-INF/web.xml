@@ -82,4 +82,52 @@
   </servlet-mapping>
 
 
+  <servlet>
+    <servlet-name>UserinteerstsServlet</servlet-name>
+    <servlet-class>com.user.controller.Interest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserinteerstsServlet</servlet-name>
+    <url-pattern>/interest</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UserinteresedINServlet</servlet-name>
+    <servlet-class>com.user.controller.InterestedINServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserinteresedINServlet</servlet-name>
+    <url-pattern>/interestin</url-pattern>
+  </servlet-mapping>
+
+ <servlet>
+  <servlet-name>ProfileCompletionServlet</servlet-name>
+  <servlet-class>com.user.controller.ProfileCompletionServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>ProfileCompletionServlet</servlet-name>
+<url-pattern>/ProfileCompletionServlet</url-pattern>
+</servlet-mapping>
+
+  <servlet>
+    <servlet-name>UserinteresedINQualServlet</servlet-name>
+    <servlet-class>com.user.controller.interestedINqual</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserinteresedINQualServlet</servlet-name>
+    <url-pattern>/interestinqual</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>UserinteresedINFamServlet</servlet-name>
+    <servlet-class>com.user.controller.InterestedINfam</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserinteresedINFamServlet</servlet-name>
+    <url-pattern>/interestinfam</url-pattern>
+  </servlet-mapping>
+
+
 </web-app>

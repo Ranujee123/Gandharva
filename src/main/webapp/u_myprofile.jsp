@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!--<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>-->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -79,6 +79,8 @@
     <c:set var="cpassword" value="${user.cpassword}"/>
 
 
+
+
 <div class="sidebar">
     <div class="profile">
         <img src="images/background.jpg" alt="Profile Image" class="profile-image">
@@ -125,7 +127,9 @@
             </div>
 
             <p class="completion-text">1 out of 7 is completed</p>
-            <p class="completion-link"><a href="addDetails.jsp">Add Profile Details</a></p>
+            <a href="ProfileCompletionServlet">Add Profile Details</a>
+
+           <!-- <p class="completion-link"><a href="addDetails.jsp">Add Profile Details</a></p>-->
 
             <div class="dashboard-options">
                 <ul>

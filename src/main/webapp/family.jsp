@@ -148,9 +148,13 @@
               </div>
               <p class="completion-text">3 out of 7 is completed</p>
 
-              <button type="submit">Save Progress</button>
-              <a href="NextPageServlet"><button type="button">Proceed</button></a>
+
+              <button type="submit" name="action" value="proceed">Proceed</button>
+
+              <!-- Save Progress button -->
+              <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
             </form>
+          </form>
           </div>
 
 
