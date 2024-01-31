@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 @WebServlet
@@ -22,21 +23,25 @@ public class DeleteUserServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String email = request.getParameter("email");
-        boolean isTrue;
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
 
 
-        isTrue = UserDBUtil.deleteUser(email);
 
-        if (isTrue == true) {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("u_reg.jsp");
-            dispatcher.forward(request, response);
+        if (userEmail == null) {
+            response.sendRedirect("login.jsp"); // Redirect to login if session expired or user not logged in
+            return;
+        }
+
+        boolean isDeleted = UserDBUtil.deleteUser(userEmail);
+
+        if (isDeleted) {
+            session.invalidate(); // Invalidate the session after deletion
+            response.sendRedirect("u_reg.jsp"); // Redirect to login or home page
         }
         else {
 
-            List<User> userDetails = UserDBUtil.getUserDetails(email);
-            request.setAttribute("userDetails", userDetails);
-
+            request.setAttribute("errorMessage", "User deletion failed.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("u_myprofile.jsp");
             dispatcher.forward(request, response);
         }

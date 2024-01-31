@@ -5,9 +5,22 @@
   Time: 22:04
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="com.user.model.User" %>
+<%@ page import="com.user.model.UserDBUtil" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%
+
+  String userEmail = (String) session.getAttribute("userEmail");
+  User user = null;
+  if (userEmail != null) {
+    List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
+    if (userDetails != null && !userDetails.isEmpty()) {
+      user = userDetails.get(0);
+    }
+  }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,26 +70,12 @@
 <body>
 
 
-<%
-
-  String fname= request.getParameter("fname");
-  String lname= request.getParameter("lname");
-  String bday= request.getParameter("bday");
-  String country= request.getParameter("country");
-  String email= request.getParameter("email");
-  String password= request.getParameter("password");
-  String cpassword= request.getParameter("cpassword");
-
-
-%>
-
-
-
 <div class="sidebar">
   <div class="profile">
+    <% if (user != null) { %>
     <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-
-    <p class="profile-name"><%= fname %> <%= lname %></p>
+    <p class="profile-name"><%= user.getFname() %> <%= user.getLname() %></p>
+    <% } %>
   </div>
   <ul class="sidebar-menu">
     <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
@@ -89,33 +88,25 @@
       <ul class="dropdown-content">
         <li><a href="astrologerService.jsp"><button>Astrology Service</button></a></li>
         <li><a href="eventplannerService.jsp"><button>Event Planner Service</button></a></li>
-</div>
-</li>
 </ul>
 </div>
 
 
 <div class="main-content">
-  <h1>Edit Profile</h1>
+
+  <h1>Deactivate Account</h1>
   <div class="form-container">
-    <div class="error" id="password-error"></div>
+    <% if (user != null) { %>
+
+
     <form action="delete" method="post">
-      <label>First Name:</label>
-      <input type="text" name="fname" value="<%= fname%>" readonly>
-      <label>Last Name:</label>
-      <input type="text" name="lname" value="<%= lname%>" readonly>
-
-      <label>Email:</label>
-      <input type="email" name="email" value="<%= email%>" readonly>
-      <label>Date of Birth:</label>
-      <input type="date" id="dob" name="dob" value="<%=bday%>" readonly>
-      <label>Country of Residence:</label>
-      <input type="text" id="country" name="country" value="<%= country%>" readonly>
-      <label>About Me:</label>
-      <textarea id="aboutMe" name="aboutMe"></textarea>
-
-
-      <button type="submit" onclick="saveProfile()">Deactivate Account</button>
+      <input type="hidden" name="email" value="<%= user.getEmail() %>">
+      <p>Are you sure you want to deactivate your account?</p>
+      <button type="submit">Deactivate Account</button>
+    </form>
+    <% } else { %>
+    <p>User details not found.</p>
+    <% } %>
   </div>
 </div>
 
