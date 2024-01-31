@@ -5,9 +5,22 @@
   Time: 19:29
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="com.user.model.User" %>
+<%@ page import="com.user.model.UserDBUtil" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+<%
+
+    String userEmail = (String) session.getAttribute("userEmail");
+    User user = null;
+    if (userEmail != null) {
+        List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
+        if (userDetails != null && !userDetails.isEmpty()) {
+            user = userDetails.get(0);
+        }
+    }
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,28 +70,17 @@
 <body>
 
 
-<%
-
-    String fname= request.getParameter("fname");
-    String lname= request.getParameter("lname");
-    String bday= request.getParameter("bday");
-    String country= request.getParameter("country");
-    String email= request.getParameter("email");
-    String password= request.getParameter("password");
-    String cpassword= request.getParameter("cpassword");
-
-
-%>
 
 
 
 <div class="sidebar">
     <div class="profile">
+        <% if (user != null) { %>
         <img src="images/background.jpg" alt="Profile Image" class="profile-image">
+        <p class="profile-name"><%= user.getFname() %> <%= user.getLname() %></p>
+        <% } %>
 
-        <p class="profile-name"><%= fname %> <%= lname %></p>
-    </div>
-    <ul class="sidebar-menu">
+        <ul class="sidebar-menu">
         <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
         <li><button>Connections</button></li>
         <li><a href="chat.jsp"><button>Chat</button></a></li>
@@ -99,30 +101,32 @@
     <h1>Edit Profile</h1>
     <div class="form-container">
         <div class="error" id="password-error"></div>
+        <% if (user != null) { %>
         <form action="updateu" method="post">
-        <label>First Name:</label>
-        <input type="text" name="fname" value="<%= fname%>" >
-        <label>Last Name:</label>
-        <input type="text" name="lname" value="<%= lname%>" >
-
-        <label>Email:</label>
-        <input type="email" name="email" value="<%= email%>" >
+            <label>First Name:</label>
+            <input type="text" name="fname" value="<%= user.getFname() %>" >
+            <label>Last Name:</label>
+            <input type="text" name="lname" value="<%= user.getLname() %>" >
+            <label>Email:</label>
+            <input type="email" name="email" value="<%= user.getEmail() %>" >
             <label>Date of Birth:</label>
-            <input type="date" id="dob" name="dob" value="<%=bday%>">
-        <label>Country of Residence:</label>
-        <input type="text" id="country" name="country" value="<%= country%>">
-      <label>About Me:</label>
-        <textarea id="aboutMe" name="aboutMe"></textarea>
+            <input type="text" id="bday" name="bday" value="<%= user.getBday() %>">
+            <label>Country of Residence:</label>
+            <input type="text" id="country" name="country" value="<%= user.getCountry() %>">
+            <label>About Me:</label>
+            <textarea id="aboutMe" name="aboutMe"></textarea>
 
-        <h2>Change Password</h2>
-        <label>Existing Password:</label>
-        <input type="password" id="existingPassword" name="existingPassword" value="<%=password%>">
-        <label>New Password:</label>
-        <input type="password" id="newPassword" name="newPassword">
-        <label>Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword">
+            <h2>Change Password</h2>
+            <label>Existing Password:</label>
+            <input type="password" id="existingPassword" name="existingPassword">
+            <label>New Password:</label>
+            <input type="password" id="newPassword" name="newPassword">
+            <label>Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword">
 
-        <button type="submit" onclick="saveProfile()">Save</button>
+            <button type="submit" onclick="saveProfile()">Save</button>
+        </form>
+        <% } %>
     </div>
 </div>
 

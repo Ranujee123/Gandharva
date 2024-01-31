@@ -1,6 +1,7 @@
 package com.user.model;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class UserDBUtil {
                 String passwordU = resultSet.getString(7);
                 String cpassswordU = resultSet.getString(8);
 
-                User u = new User( fname, lname, bday, country, emailU, passwordU, cpassswordU);
+                User u = new User(fname, lname, bday, country, emailU, passwordU, cpassswordU);
                 user.add(u);
 
             }
@@ -76,13 +77,13 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser( String fname, String lname, String bday, String country, String email, String password, String cpassword) {
+    public static boolean updateUser(String fname, String lname, String bday, String country, String email, String password, String cpassword) {
         boolean isSuccess = false;
 
         try {
             con = DBConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email +  "',password='" + password +  "', cpassword='" + cpassword + "' where email='" + email + "'";
+            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email + "',password='" + password + "', cpassword='" + cpassword + "' where email='" + email + "'";
             int resultSet = stmt.executeUpdate(sql);
 
 
@@ -92,46 +93,576 @@ public class UserDBUtil {
                 isSuccess = false;
             }
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isSuccess;
     }
 
 
+    public static List<User> getUserDetails(String email) {
+        // int convertedID=Integer.parseInt(Id);
 
-    public static List<User> getUserDetails (String email){
-       // int convertedID=Integer.parseInt(Id);
+        ArrayList<User> user = new ArrayList<>();
 
-        ArrayList<User> user =new ArrayList<>();
+        try {
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "select * from user where email='" + email + "'";
+            resultSet = stmt.executeQuery(sql);
 
-        try{
-            con= DBConnect.getConnection();
-            stmt=con.createStatement();
-            String sql="select * from user where email='"+email +"'";
-            resultSet=stmt.executeQuery(sql);
-
-            while(resultSet.next()){
+            while (resultSet.next()) {
                 //int id=resultSet.getInt(1);
-                String fname= resultSet.getString(2);
-                String lname= resultSet.getString(3);
-                String bday=resultSet.getString(4);
-                String country=resultSet.getString(5);
+                String fname = resultSet.getString(2);
+                String lname = resultSet.getString(3);
+                String bday = resultSet.getString(4);
+                String country = resultSet.getString(5);
                 email = resultSet.getString(6);
-                String password= resultSet.getString(7);
-                String cpassword= resultSet.getString(8);
+                String password = resultSet.getString(7);
+                String cpassword = resultSet.getString(8);
 
 
-                User user1= new User(fname,lname,bday, country,email,password,cpassword);
+                User user1 = new User(fname, lname, bday, country, email, password, cpassword);
                 user.add(user1);
             }
 
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return user;
     }
-}
 
+
+    public static boolean deleteUser(String email) {
+
+        //int convId = Integer.parseInt(id);
+
+        try {
+
+            con = DBConnect.getConnection();
+            stmt = con.createStatement();
+            String sql = "delete from user where email='" + email + "'";
+            int rs = stmt.executeUpdate(sql);
+
+            if (rs > 0) {
+                isSuccess = true;
+            } else {
+                isSuccess = false;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return isSuccess;
+    }
+
+    public static int getUserIdByEmail(String email) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT uID FROM user WHERE email = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("uID");
+                }
+            }
+        }
+        return -1; // Handle the case when no uID is found
+    }
+
+    public static int getQualificationIdByName(String qualification) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT qID FROM qualification WHERE qualification = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, qualification);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("qID");
+                }
+            }
+        }
+        return -1; // Handle the case when no qID is found
+    }
+
+    public static int getOccupationIdByName(String occupation) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT oID FROM occupation WHERE occupation = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, occupation);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("oID");
+                }
+            }
+        }
+        return -1; // Handle the case when no oID is found
+    }
+
+    public static boolean saveDetailsToDatabase(int uID, int qID, int oID, String school) throws Exception {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO userdetails (uID, qID, oID, school) VALUES (?, ?, ?, ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, uID);
+            preparedStatement.setInt(2, qID);
+            preparedStatement.setInt(3, oID);
+            preparedStatement.setString(4, school);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in saveDetailsToDatabase: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static boolean saveFamilyDetailsToDatabase(String userEmail, String fathername, String freli, String foccu,
+                                                      String mothername, String mreli, String moccup, String maritalstatus, String siblings) {
+        try {
+            int uID = getUserIdByEmail(userEmail);
+            if (uID == -1) {
+                return false; // User ID not found
+            }
+
+            Connection con = DBConnect.getConnection();
+            String sql = "INSERT INTO fdetails (uID, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, uID);
+                preparedStatement.setString(2, fathername);
+                preparedStatement.setString(3, freli);
+                preparedStatement.setString(4, foccu);
+                preparedStatement.setString(5, mothername);
+                preparedStatement.setString(6, mreli);
+                preparedStatement.setString(7, moccup);
+                preparedStatement.setString(8, maritalstatus);
+                preparedStatement.setString(9, siblings);
+                int result = preparedStatement.executeUpdate();
+                return result > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error saving family details: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public static List<String> getAllQualifications() {
+        List<String> qualifications = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT qualification FROM qualification";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                qualifications.add(rs.getString("qualification"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return qualifications;
+    }
+
+    public static List<String> getAllOccupations() {
+        List<String> occupations = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT occupation FROM occupation";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                occupations.add(rs.getString("occupation"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return occupations;
+    }
+
+
+    public static boolean isQualificationDetailsCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM userdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public static boolean isFamilyDetailsCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM fdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+
+//interest
+
+    public static List<String> getAllpersonality() {
+        List<String> personality = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT personality FROM personality";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                personality.add(rs.getString("personality"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return personality;
+    }
+
+
+    public static boolean isInterestCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM uinterest WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public static int getPersonalityIdByName(String personality) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT pID FROM personality WHERE personality = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, personality);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("pID");
+                }
+            }
+        }
+        return -1; // Handle the case when no oID is found
+    }
+
+
+    public static boolean saveInterestDetails(int uID, String interests, int pID) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO uinterest (uID, interests, pID) VALUES (?, ?, ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, uID);
+            preparedStatement.setString(2, interests);
+            preparedStatement.setInt(3, pID);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in saveInterestDetails: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+//interested IN
+
+    public static List<String> getAge() {
+        List<String> age = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT age FROM age";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                age.add(rs.getString("age"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return age;
+    }
+
+
+
+
+    public static int getAgeIdByName(String age) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT aID FROM age WHERE age = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, age);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("aID");
+                }
+            }
+        }
+        return -1; // Handle the case when no oID is found
+    }
+
+
+    // Method to save interested in details to the database
+    public static boolean saveInterestedInDetails(int uID, int aID, String gender, String religion, String caste, String nationality, String country) throws Exception {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO interestedIn (uID, aID, gender, religion, caste, nationality, country) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, uID);
+            preparedStatement.setInt(2, aID);
+            preparedStatement.setString(3, gender);
+            preparedStatement.setString(4, religion);
+            preparedStatement.setString(5, caste);
+            preparedStatement.setString(6, nationality);
+            preparedStatement.setString(7, country);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (preparedStatement != null) preparedStatement.close();
+            if (con != null) con.close();
+        }
+    }
+
+
+    public static boolean isInterestedINCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM interestedIn WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+
+    //inteersted IN qualification
+
+    public static boolean saveinterestedINQualToDatabase(int uID, String school, int oID, int qID) throws Exception {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO interestedINQual (uID,school, oID,  qID) VALUES (?, ?, ?, ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setInt(1, uID);
+            preparedStatement.setString(2, school);
+            preparedStatement.setInt(3, oID);
+            preparedStatement.setInt(4, qID);
+            int result = preparedStatement.executeUpdate();
+            return result > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error in saveDetailsToDatabase: " + e.getMessage());
+            return false;
+        } finally {
+            try {
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static boolean isInterestedINQualCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM interestedINQual WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+// interestedIn family details
+
+    public static boolean saveinterestedINFamDetailsToDatabase(String userEmail, String fathername, String freli, String foccu,
+                                                      String mothername, String mreli, String moccup, String maritalstatus, String siblings) {
+        try {
+            int uID = getUserIdByEmail(userEmail);
+            if (uID == -1) {
+                return false; // User ID not found
+            }
+
+            Connection con = DBConnect.getConnection();
+            String sql = "INSERT INTO interestedinfam (uID, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, uID);
+                preparedStatement.setString(2, fathername);
+                preparedStatement.setString(3, freli);
+                preparedStatement.setString(4, foccu);
+                preparedStatement.setString(5, mothername);
+                preparedStatement.setString(6, mreli);
+                preparedStatement.setString(7, moccup);
+                preparedStatement.setString(8, maritalstatus);
+                preparedStatement.setString(9, siblings);
+                int result = preparedStatement.executeUpdate();
+                return result > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error saving family details: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public static boolean isinterestedINFamDetailsCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM interestedinfam WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+
+
+}

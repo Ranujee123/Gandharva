@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,22 +29,25 @@ public class LoginServlet extends HttpServlet {
             // Check if the validation was successful
             if (!userDetails.isEmpty()) {
                 req.setAttribute("userDetails", userDetails);
+
+                // Set userEmail in session
+                HttpSession session = req.getSession();
+                session.setAttribute("userEmail", email);
+
                 RequestDispatcher dis = req.getRequestDispatcher("u_myprofile.jsp");
                 dis.forward(req, resp);
-            } else {
+            }
+            else {
                 // Handle invalid login (redirect to login page, show error message, etc.)
                 req.setAttribute("errorMessage", "Invalid email or password");
-                RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
+                RequestDispatcher dis = req.getRequestDispatcher("/login.jsp");
                 dis.forward(req, resp);
             }
         } catch (Exception e) {
             e.printStackTrace();
             // Handle other exceptions as needed
+            RequestDispatcher dis = req.getRequestDispatcher("/error.jsp");
+            dis.forward(req, resp);
         }
-
-
-        RequestDispatcher dis =req.getRequestDispatcher("useraccount.jsp");
-        dis.forward(req,resp);
-
     }
 }

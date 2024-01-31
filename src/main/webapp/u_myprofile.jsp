@@ -1,12 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: ranu
-  Date: 2023-09-26
-  Time: 15:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.user.model.User" %>
+<%@ page import="com.user.model.UserDBUtil" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+
+    String userEmail = (String) session.getAttribute("userEmail");
+    User user = null;
+    if (userEmail != null) {
+        List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
+        if (userDetails != null && !userDetails.isEmpty()) {
+            user = userDetails.get(0);
+        }
+    }
+%>
+
 
 <!DOCTYPE html>
 <html>
@@ -67,23 +75,21 @@
     </style>
 </head>
 
+
+
 <body style="margin: 0;">
 
-<c:forEach var="user" items="${userDetails}">
-    <c:set var="fname" value="${user.fname}"/>
-    <c:set var="lname" value="${user.lname}"/>
-    <c:set var="bday" value="${user.bday}"/>
-    <c:set var="country" value="${user.country}"/>
-    <c:set var="email" value="${user.email}"/>
-    <c:set var="password" value="${user.password}"/>
-    <c:set var="cpassword" value="${user.cpassword}"/>
+
+
 
 
 <div class="sidebar">
     <div class="profile">
         <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-        <p class="profile-name"> <span contenteditable="true" name="fname">${user.getFname()}</span> <span
-                contenteditable="true" name="lname">${user.getLname()}</span>
+        <% if (user != null) { %>
+        <p class="profile-name"><span contenteditable="true" name="fname"><%= user.getFname() %></span>
+            <span contenteditable="true" name="lname"><%= user.getLname() %></span></p>
+        <% } %>
     </div>
     <ul class="sidebar-menu">
 
@@ -105,51 +111,39 @@
 
 
 
-    <div class="main-content">
-        <form action="UpdateUserServlet" method="post">
-            <div class="profile-details">
-                <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
-                <p>Name: <span contenteditable="true" name="fname">${user.getFname()}</span> <span
-                        contenteditable="true" name="lname">${user.getLname()}</span></p>
-                <p>Email: ${user.getEmail()}</p>
-                <!-- Add other editable fields as needed -->
+<div class="main-content">
+    <form action="UpdateUserServlet" method="post">
+        <div class="profile-details">
+            <% if (user != null) { %>
+            <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
+            <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
+            <p>Email: <%= user.getEmail() %></p>
+            <p>Birthday: <%= user.getBday() %></p>
+            <p>Country: <%= user.getCountry() %></p>
+            <!-- Add other fields as needed -->
+            <% } %>
+        </div>
 
-            </div>
+
 
             <div class="completion-bar">
                 <div class="completion-fill" style="width: 14%;"></div>
             </div>
 
             <p class="completion-text">1 out of 7 is completed</p>
-            <p class="completion-link"><a href="addDetails.jsp">Add Profile Details</a></p>
+            <a href="ProfileCompletionServlet">Add Profile Details</a>
 
-            <div class="dashboard-options">
-                <ul>
-                    <li><input type="submit" value="Update"></li>
+           <!-- <p class="completion-link"><a href="addDetails.jsp">Add Profile Details</a></p>-->
 
-                    <c:url value="editProfile.jsp" var="userupdate">
-                        <c:param name="fname" value="${fname}"/>
-                        <c:param name="lname" value="${lname}"/>
-                        <c:param name="bday" value="${bday}"/>
-                        <c:param name="country" value="${country}"/>
-                        <c:param name="email" value="${email}"/>
-                        <c:param name="password" value="${password}"/>
-                        <c:param name="cpassword" value="${cpassword}"/>
+        <div class="dashboard-options">
+            <ul>
+                <li><a href="editProfile.jsp"><button type="button">Update my data</button></a></li>
+                <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
+                <li><a href="deleteuserprofile.jsp"><button type="button">Deactivate Account</button></a></li>
+            </ul>
+        </div>
+    </form>
+</div>
 
-                    </c:url>
-
-                    <a href="${userupdate}">
-                        <input type="button" name="update" value="Update my data">
-                    </a>
-
-                    <li><a href="updateuser.jsp"><button>Edit Account</button></a></li>
-                    <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
-                    <li><a href="accountDeactivate.jsp"><button>Deactivate Account</button></a></li>
-                </ul>
-            </div>
-        </form>
-    </div>
-</c:forEach>
 </body>
-
 </html>

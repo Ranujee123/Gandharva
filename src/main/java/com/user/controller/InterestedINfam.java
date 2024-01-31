@@ -1,16 +1,15 @@
 package com.user.controller;
 
 import com.user.model.UserDBUtil;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet
-public class FamilyDetails extends HttpServlet {
+public class InterestedINfam extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -32,16 +31,20 @@ public class FamilyDetails extends HttpServlet {
             String siblings = request.getParameter("numberOfSiblings");
 
 
-        if (UserDBUtil.saveFamilyDetailsToDatabase(userEmail, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings)) {
-            session.setAttribute("familyDetailsCompleted", true);
-            response.sendRedirect("ProfileCompletionServlet");
-        } else {
+            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(userEmail, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings)) {
+                session.setAttribute("interestedINFamDetailsCompleted", true);
+                response.sendRedirect("ProfileCompletionServlet");
+            } else {
+                response.sendRedirect("unsuccess.jsp");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             response.sendRedirect("unsuccess.jsp");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        response.sendRedirect("unsuccess.jsp");
-    }
 
+    }
 }
-}
+
+
+
+

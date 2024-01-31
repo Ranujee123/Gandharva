@@ -8,13 +8,22 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
 public class UpdateUserServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
+
+        if (userEmail == null || userEmail.isEmpty()) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String bday = request.getParameter("bday");
@@ -23,51 +32,26 @@ public class UpdateUserServlet extends HttpServlet {
         String password = request.getParameter("password");
         String cpassword = request.getParameter("cpassword");
 
-        // Retrieve existing user details
-        List<User> existingUserDetails = UserDBUtil.getUserDetails(email);
-        User existingUser = existingUserDetails.get(0);
-
-        // Use existing values if corresponding form fields are not provided or empty
-        if (fname == null || fname.isEmpty()) {
-            fname = existingUser.getFname();
-        }
-
-        if (lname == null || lname.isEmpty()) {
-            lname = existingUser.getLname();
-        }
-
-        if (bday == null || bday.isEmpty()) {
-            bday = existingUser.getBday();
-        }
-
-        if (email == null || email.isEmpty()) {
-            email = existingUser.getEmail();
-        }
-
-        if (password == null || password.isEmpty()) {
-            password = existingUser.getPassword();
-        }
-        if (cpassword == null || cpassword.isEmpty()) {
-            cpassword = existingUser.getCpassword();
-        }
-
-
-
-
-
-        // Repeat this for other fields as needed...
-
         boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, country, email, password, cpassword);
 
         if (isTrue) {
-            List<User> userDetails = UserDBUtil.getUserDetails(email);
-            request.setAttribute("userDetails", userDetails);
+            // Fetch the updated user details
+            List<User> updatedUserDetails = UserDBUtil.getUserDetails(email);
+
+            // Check if updated user details are retrieved successfully
+            if (!updatedUserDetails.isEmpty()) {
+                // Update the session with the new user details
+                session.setAttribute("userDetails", updatedUserDetails.get(0));
+                request.setAttribute("userDetails", updatedUserDetails);
+            }
 
             RequestDispatcher dis = request.getRequestDispatcher("u_myprofile.jsp");
             dis.forward(request, response);
         } else {
-            // Handle the case where the update was not successful
-            List<User> userDetails = UserDBUtil.getUserDetails(email);
+            System.out.println("Error: User update failed for email: " + email);
+
+            // Fetch the original user details to display in case of failure
+            List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
             request.setAttribute("userDetails", userDetails);
 
             RequestDispatcher dis = request.getRequestDispatcher("u_myprofile.jsp");

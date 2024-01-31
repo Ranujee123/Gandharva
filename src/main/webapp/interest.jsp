@@ -1,28 +1,25 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.user.model.UserDBUtil" %>
-<%@ page import="javax.servlet.http.HttpSession" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.user.model.UserDBUtil" %>
-
-
-<%
-    List<String> qualifications = UserDBUtil.getAllQualifications();
-    List<String> occupations = UserDBUtil.getAllOccupations();
-%>
-
-<%@ page import="javax.servlet.http.HttpSession" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse" %>
-
 <%--
   Created by IntelliJ IDEA.
   User: ranu
-  Date: 2023-11-03
-  Time: 01:58
+  Date: 2024-01-16
+  Time: 19:15
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="java.sql.DriverManager" %>
+<%@ page import="java.sql.Statement" %>
+<%@ page import="com.user.model.DBConnect" %>
+<%@ page import="com.user.model.User" %>
+<%@ page import="java.sql.Connection" %>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="com.user.model.UserDBUtil" %>
+<%@ page import="java.util.List" %>
+
+<%
+    List<String>personalities = UserDBUtil.getAllpersonality();
+
+%>
+
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -78,7 +75,6 @@
             padding: 10px 20px;
             cursor: pointer;
         }
-
         .completion-bar {
             width: 100%;
             height: 20px;
@@ -101,9 +97,6 @@
             margin-bottom: 10px;
         }
     </style>
-
-
-
 </head>
 <body>
 
@@ -131,35 +124,31 @@
 
 
     <div class="main-content">
-        <h1>Qualifications</h1>
+        <h1>Interest</h1>
         <div class="form-container">
-            <form action="qul" method="post">
-                <label>School / College:</label>
-                <input type="text" name="school" required><br>
+            <form action="interest" method="post">
+                <label>Enter your interests & hobbies:</label>
+                <input type="text" name="interest" required><br>
 
-                <label>Heighest Education Qualification:</label>
-                <select name="eduquali" required>
+
+
+                <label>Enter your personality type:</label>
+                <select name="ptype" required>
                     <option value=""></option>
-                    <% for (String qualification : qualifications) { %>
-                    <option><%= qualification %></option>
+                    <% for (String personality : personalities) { %>
+                    <option><%= personality %></option>
                     <% } %>
                 </select>
 
-                <label>Occupation :</label>
-                <select name="occupation" required>
-                    <option value=""></option>
-                    <% for (String occupation : occupations) { %>
-                    <option><%= occupation %></option>
-                    <% } %>
-                </select>
+
+
+                <label>You want to find it out? : <a href="https://www.16personalities.com/free-personality-test" target="_blank">Click here</a></label>
+
 
                 <div class="completion-bar">
-                    <div class="completion-fill" style="width: 28%;"></div> <!-- Adjust the width based on completion -->
+                    <div class="completion-fill" style="width: 56%;"></div> <!-- Adjust the width based on completion -->
                 </div>
-                <p class="completion-text">2 out of 7 is completed</p>
-
-
-
+                <p class="completion-text">4 out of 7 is completed</p>
 
                 <!-- Proceed button -->
                 <button type="submit" name="action" value="proceed">Proceed</button>
@@ -169,9 +158,10 @@
             </form>
 
         </div>
-    </div>
+</div>
+</div>
+
 </div>
 
 </body>
 </html>
-
