@@ -23,7 +23,7 @@
 
         /* Set background image */
         body {
-        background-image: url('images/background.jpg');
+            background-image: url('images/background.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
