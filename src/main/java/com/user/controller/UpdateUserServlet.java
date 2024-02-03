@@ -30,9 +30,10 @@ public class UpdateUserServlet extends HttpServlet {
         String country = request.getParameter("country");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String cpassword = request.getParameter("cpassword");
 
-        boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, country, email, password, cpassword);
+
+
+        boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, country, email, password);
 
         if (isTrue) {
             // Fetch the updated user details

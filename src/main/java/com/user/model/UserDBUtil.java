@@ -49,41 +49,43 @@ public class UserDBUtil {
         return user;
     }
 
-    public static boolean insertUser(String fname, String lname, String bday, String country, String email, String password, String cpassword) {
+    public static boolean insertUser(String fname, String lname, String bday, String country, String email,String frontphoto,String backphoto, String password) {
         boolean isSuccess = false;
 
 
         try {
 
             con = DBConnect.getConnection();
-            stmt = con.createStatement();
+            String sql = "insert into user(fname, lname, bday, country, email, frontphoto,backphoto, password) values(?, ?, ?, ?, ?, ?, ?,?)";
 
-            String sql = "insert into user values(0,'" + fname + "','" + lname + "','" + bday + "','" + country + "','" + email + "','" + password + "','" + cpassword + "')";
-            System.out.println("SQL Query: " + sql);
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setString(1, fname);
+                preparedStatement.setString(2, lname);
+                preparedStatement.setString(3, bday);
+                preparedStatement.setString(4, country);
+                preparedStatement.setString(5, email);
+                preparedStatement.setString(6, frontphoto);
+                preparedStatement.setString(7, backphoto);// Add the photo ID path
+                preparedStatement.setString(8, password);
 
-            int resultSet = stmt.executeUpdate(sql);
 
-            if (resultSet > 0) {
-                isSuccess = true;
-            } else {
-                isSuccess = false;
+                int rowsAffected = preparedStatement.executeUpdate();
+                isSuccess = rowsAffected > 0;
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return isSuccess;
     }
 
 
-    public static boolean updateUser(String fname, String lname, String bday, String country, String email, String password, String cpassword) {
+    public static boolean updateUser(String fname, String lname, String bday, String country, String email, String password) {
         boolean isSuccess = false;
 
         try {
             con = DBConnect.getConnection();
             stmt = con.createStatement();
-            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email + "',password='" + password + "', cpassword='" + cpassword + "' where email='" + email + "'";
+            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email + "',password='" + password +  "' where email='" + email + "'";
             int resultSet = stmt.executeUpdate(sql);
 
 
@@ -601,8 +603,8 @@ public class UserDBUtil {
 
 // interestedIn family details
 
-    public static boolean saveinterestedINFamDetailsToDatabase(String userEmail, String fathername, String freli, String foccu,
-                                                      String mothername, String mreli, String moccup, String maritalstatus, String siblings) {
+    public static boolean saveinterestedINFamDetailsToDatabase(String userEmail, String freli, String foccu,
+                                                       String mreli, String moccup, String maritalstatus, String siblings) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -610,17 +612,15 @@ public class UserDBUtil {
             }
 
             Connection con = DBConnect.getConnection();
-            String sql = "INSERT INTO interestedinfam (uID, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO interestedinfam (uID, freli, foccu, mreli, moccup, maritalstatus, siblings) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
-                preparedStatement.setString(2, fathername);
-                preparedStatement.setString(3, freli);
-                preparedStatement.setString(4, foccu);
-                preparedStatement.setString(5, mothername);
-                preparedStatement.setString(6, mreli);
-                preparedStatement.setString(7, moccup);
-                preparedStatement.setString(8, maritalstatus);
-                preparedStatement.setString(9, siblings);
+                preparedStatement.setString(2, freli);
+                preparedStatement.setString(3, foccu);
+                preparedStatement.setString(4, mreli);
+                preparedStatement.setString(5, moccup);
+                preparedStatement.setString(6, maritalstatus);
+                preparedStatement.setString(7, siblings);
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }

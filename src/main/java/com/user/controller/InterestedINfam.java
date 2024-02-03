@@ -21,17 +21,17 @@ public class InterestedINfam extends HttpServlet {
                 return;
             }
 
-            String fathername = request.getParameter("fatherName");
+
             String freli = request.getParameter("fatherReligion");
             String foccu = request.getParameter("fatherOccupation");
-            String mothername = request.getParameter("motherName");
+
             String mreli = request.getParameter("motherReligion");
             String moccup = request.getParameter("motherOccupation");
             String maritalstatus = request.getParameter("maritalStatus");
             String siblings = request.getParameter("numberOfSiblings");
 
 
-            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(userEmail, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings)) {
+            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(userEmail,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
                 session.setAttribute("interestedINFamDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

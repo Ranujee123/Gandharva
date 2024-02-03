@@ -18,6 +18,12 @@ To change this template use File | Settings | File Templates.
 <%@ page import="com.user.model.User" %>
 <%@ page import="java.sql.Connection" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.user.model.UserDBUtil" %>
+<%
+  List<String> occupations = UserDBUtil.getAllOccupations();
+%>
+
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -116,8 +122,6 @@ To change this template use File | Settings | File Templates.
     <h1>Who are you interested in ?</h1>
     <div class="form-container">
       <form action="interestinfam" method="post">
-        <label>Father's Name:</label>
-        <input type="text" name="fatherName" required><br>
 
         <label>Father's Religion:</label>
         <select name="fatherReligion">
@@ -128,8 +132,7 @@ To change this template use File | Settings | File Templates.
           <!-- Add more options as needed -->
         </select><br>
 
-        <label>Mother's Name:</label>
-        <input type="text" name="motherName" required><br>
+
 
         <label>Mother's Religion:</label>
         <select name="motherReligion">
@@ -141,10 +144,21 @@ To change this template use File | Settings | File Templates.
         </select><br>
 
         <label>Father's Occupation:</label>
-        <input type="text" name="fatherOccupation" required><br>
+        <select name="fatherOccupation" required>
+          <option value=""></option>
+          <% for (String occupation : occupations) { %>
+          <option><%= occupation %></option>
+          <% } %>
+        </select>
 
         <label>Mother's Occupation:</label>
-        <input type="text" name="motherOccupation" required><br>
+        <select name="motherOccupation" required>
+          <option value=""></option>
+          <% for (String occupation : occupations) { %>
+          <option><%= occupation %></option>
+          <% } %>
+        </select>
+
 
         <label>Marital Status of Parents:</label>
         <select name="maritalStatus">

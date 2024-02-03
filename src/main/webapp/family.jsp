@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.user.model.UserDBUtil" %><%--
   Created by IntelliJ IDEA.
   User: ranu
   Date: 2023-11-02
@@ -6,6 +7,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+  List<String> occupations = UserDBUtil.getAllOccupations();
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,10 +132,20 @@
               </select><br>
 
               <label>Father's Occupation:</label>
-              <input type="text" name="fatherOccupation" required><br>
+              <select name="fatherOccupation" required>
+                <option value=""></option>
+                <% for (String occupation : occupations) { %>
+                <option><%= occupation %></option>
+                <% } %>
+              </select>
 
               <label>Mother's Occupation:</label>
-              <input type="text" name="motherOccupation" required><br>
+              <select name="motherOccupation" required>
+                <option value=""></option>
+                <% for (String occupation : occupations) { %>
+                <option><%= occupation %></option>
+                <% } %>
+              </select>
 
               <label>Marital Status of Parents:</label>
               <select name="maritalStatus">
