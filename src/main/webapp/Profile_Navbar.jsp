@@ -20,8 +20,7 @@
 <body>
 <div class="sidebar">
     <div class="logo">
-        <a href="Astrologer_profile.jsp"><img src="images/img.png">
-        </a>
+        <img src="images/logo.png">
     </div>
     <ul class="menu">
         <li class="active">
@@ -98,7 +97,8 @@
                     <input type="text" placeholder="Search">
             </div>
 
-            <img src="images/img.png">
+            <a href="Astrologer_profile.jsp"><img src="images/img.png">
+            </a>
 
         </div>
 
