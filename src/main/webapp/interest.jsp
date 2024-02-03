@@ -148,7 +148,7 @@
                 <div class="completion-bar">
                     <div class="completion-fill" style="width: 56%;"></div> <!-- Adjust the width based on completion -->
                 </div>
-                <p class="completion-text">4 out of 7 is completed</p>
+                <p class="completion-text">4 out of 6 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
                 <button type="submit" name="action" value="proceed">Proceed</button>
