@@ -191,7 +191,7 @@
     </nav>
 </header>
 
-    <button class="find-match"><a href="login.jsp">Find Your Match</a></button>
+    <button class="find-match"><a href="Astrologer_Login.jsp">Find Your Match</a></button>
 
 </body>
 </html>
