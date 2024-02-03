@@ -116,16 +116,18 @@
             <label>About Me:</label>
             <textarea id="aboutMe" name="aboutMe"></textarea>
 
+
             <h2>Change Password</h2>
-            <label>Existing Password:</label>
-            <input type="password" id="existingPassword" name="existingPassword">
+            <label>Current Password:</label>
+            <input type="password" id="existingPassword" name="existingPassword" placeholder="Enter current password">
             <label>New Password:</label>
-            <input type="password" id="newPassword" name="newPassword">
-            <label>Confirm Password:</label>
-            <input type="password" id="confirmPassword" name="confirmPassword">
+            <input type="password" id="newPassword" name="newPassword" placeholder="Enter new password">
+            <label>Confirm New Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
 
             <button type="submit" onclick="saveProfile()">Save</button>
         </form>
+
         <% } %>
     </div>
 </div>

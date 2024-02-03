@@ -96,16 +96,19 @@
 </nav>
 <div class="background">
   <div class="registration-card">
-    <form id="registration-form" method="post" action="reg" >
+    <% if (request.getAttribute("errorMessage") != null) { %>
+    <div style="color: red;"><%= request.getAttribute("errorMessage").toString() %></div>
+    <% } %>
+    <form id="registration-form" method="post" action="reg" enctype="multipart/form-data">
 
       <label for="firstName">First Name<span class="required-star">*</span>:</label>
-      <input type="text" id="firstName" name="firstName" required >
+      <input type="text" id="firstName" name="firstName" required value="<%= request.getParameter("firstName") != null ? request.getParameter("firstName") : "" %>" />
 
       <label for="lastName">Last Name<span class="required-star">*</span>:</label>
-      <input type="text" id="lastName" name="lastName" required >
+      <input type="text" id="lastName" name="lastName" required value="<%= request.getParameter("lastName") != null ? request.getParameter("lastName") : "" %>" />
 
       <label for="birthday">Birthday <span class="required-star">*</span>:</label>
-      <input type="date" id="birthday" name="birthday" required>
+      <input type="date" id="birthday" name="birthday" required value="<%= request.getParameter("birthday") != null ? request.getParameter("birthday") : "" %>" />
 
       <label for="country">Country of Residence <span class="required-star">*</span>:</label>
       <select id="country" name="country" >
@@ -114,8 +117,21 @@
         <!-Add more countries here -->
       </select>
 
+
+
+        <label for="frontphoto">ID photo (front)<span class="required-star">*</span>:</label>
+        <input type="file" id="frontphoto" name="frontphoto" required>
+
+      <label for="backphoto">ID photo (back)<span class="required-star">*</span>:</label>
+      <input type="file" id="backphoto" name="backphoto" required>
+
+
+
+
       <label for="email">Email<span class="required-star">*</span>:</label>
-      <input type="email" id="email" name="email" required>
+      <input type="email" id="email" name="email" required value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>" />
+
+
 
       <label for="password">Password<span class="required-star">*</span>:</label>
       <input type="password" id="password" name="password" required>
