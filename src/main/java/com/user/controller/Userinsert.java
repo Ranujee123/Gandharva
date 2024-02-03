@@ -11,15 +11,36 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 
 @MultipartConfig
 public class Userinsert extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+
+
+
+// Parse the birthday from the request and calculate age
+        String bday = req.getParameter("birthday");
+        LocalDate biday = LocalDate.parse(bday, DateTimeFormatter.ISO_LOCAL_DATE);
+        LocalDate today = LocalDate.now();
+        int age = Period.between(biday, today).getYears();
+
+        if (age < 18) {
+            req.setAttribute("errorMessage", "You must be at least 18 years old to register.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return; // Stop the execution
+        }
+// Continue with registration process if age is 18 or above
+
         String fname = req.getParameter("firstName");
         String lname = req.getParameter("lastName");
-        String bday = req.getParameter("birthday");
+
         String country = req.getParameter("country");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
