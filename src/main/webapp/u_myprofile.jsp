@@ -126,14 +126,25 @@
 
 
 
-            <div class="completion-bar">
-                <div class="completion-fill" style="width: 14%;"></div>
-            </div>
+        <%
+            Integer completedSteps = (Integer)session.getAttribute("completedSteps");
+            Integer totalSteps = 6; // Assuming there are 7 steps in total for profile completion
+            if (completedSteps == null) { completedSteps = 0; }
+            int stepsLeft = totalSteps - completedSteps;
 
-            <p class="completion-text">1 out of 7 is completed</p>
-            <a href="ProfileCompletionServlet">Add Profile Details</a>
+            if (stepsLeft > 0) {
+        %>
+        <div class="completion-bar">
+            <div class="completion-fill" style="width: <%= ((double)completedSteps / totalSteps) * 100 %>%;"></div>
+        </div>
+        <p class="completion-text">You have <%= stepsLeft %> steps left to complete your profile.</p>
+        <% } else { %>
+        <p>Your profile is fully completed.</p>
+        <% } %>
 
-           <!-- <p class="completion-link"><a href="addDetails.jsp">Add Profile Details</a></p>-->
+
+        <a href="ProfileCompletionServlet?action=addDetails">Add Profile Details</a>
+
 
         <div class="dashboard-options">
             <ul>

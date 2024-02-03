@@ -34,10 +34,12 @@ public class LoginServlet extends HttpServlet {
                 HttpSession session = req.getSession();
                 session.setAttribute("userEmail", email);
 
+                // Calculate and set profile completion status
+                updateProfileCompletionStatus(session, email);
+
                 RequestDispatcher dis = req.getRequestDispatcher("u_myprofile.jsp");
                 dis.forward(req, resp);
-            }
-            else {
+            } else {
                 // Handle invalid login (redirect to login page, show error message, etc.)
                 req.setAttribute("errorMessage", "Invalid email or password");
                 RequestDispatcher dis = req.getRequestDispatcher("/login.jsp");
@@ -50,4 +52,22 @@ public class LoginServlet extends HttpServlet {
             dis.forward(req, resp);
         }
     }
-}
+        private void updateProfileCompletionStatus(HttpSession session, String userEmail) {
+            // Assume these methods return true if the respective section is completed
+            boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
+            boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
+            boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
+            boolean interestedINCompleted = UserDBUtil.isInterestedINCompleted(userEmail);
+            boolean interestedINQualCompleted = UserDBUtil.isInterestedINQualCompleted(userEmail);
+            boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
+
+
+            int completedSteps = (qualificationCompleted ? 1 : 0) + (familyDetailsCompleted ? 1 : 0) + (interestCompleted ? 1 : 0) + (interestedINCompleted ? 1 : 0) + (interestedINQualCompleted ? 1 : 0) + (interestedINFamDetailsCompleted ? 1 : 0);
+            int totalSteps = 6;
+            int completionPercentage = (completedSteps * 100) / totalSteps;
+
+            session.setAttribute("completedSteps", completedSteps);
+            session.setAttribute("totalSteps", totalSteps);
+            session.setAttribute("completionPercentage", completionPercentage);
+        }
+    }

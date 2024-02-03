@@ -16,6 +16,7 @@ public class ProfileCompletionServlet extends HttpServlet {
         doPost(request, response);
     }
 
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         HttpSession session = request.getSession();
@@ -44,6 +45,21 @@ public class ProfileCompletionServlet extends HttpServlet {
 
 
 
+        // Calculate completion percentage
+        int completedSteps = 0;
+        if (qualificationCompleted) completedSteps++;
+        if (familyDetailsCompleted) completedSteps++;
+        if (interestCompleted) completedSteps++;
+        if (interestedINCompleted) completedSteps++;
+        if (interestedINQualCompleted) completedSteps++;
+        if (interestedINFamDetailsCompleted) completedSteps++;
+
+        int totalSteps = 6;
+        int completionPercentage = (completedSteps * 100) / totalSteps;
+
+        // Update session attributes
+        session.setAttribute("completedSteps", completedSteps);
+        session.setAttribute("completionPercentage", completionPercentage);
 
 
         if (!qualificationCompleted) {
@@ -65,5 +81,10 @@ public class ProfileCompletionServlet extends HttpServlet {
         }else {
             response.sendRedirect("u_myprofile.jsp");
         }
+
+
+
     }
+
+
 }
