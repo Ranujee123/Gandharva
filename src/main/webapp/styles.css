@@ -1,3 +1,99 @@
+/* styles.css */
+
+
+.sidebar {
+    background-color: black;
+    color: #fff;
+    width: 200px;
+    height: 100vh;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.profile {
+    text-align: center;
+}
+
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.profile-name {
+    margin-top: 10px;
+}
+
+.sidebar-menu {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar-menu li {
+    margin-bottom: 10px;
+}
+
+.sidebar-menu button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.profile-image-editable {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.completion-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    margin-top: 20px;
+}
+
+.completion-fill {
+    height: 100%;
+    background-color: #4CAF50;
+}
+
+.completion-text {
+    margin-top: 10px;
+}
+
+.completion-link a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.dashboard-options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard-options ul li {
+    margin-bottom: 10px;
+}
+
+
+/* Binali U */
 /***PROFILE_NAVBAR***/
 
 *{
