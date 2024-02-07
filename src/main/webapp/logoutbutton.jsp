@@ -12,12 +12,18 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <div id="logout-container">
-    <form action="${pageContext.request.contextPath}/userlogout" method="post" style="margin: 0;">
+    <form action="${pageContext.request.contextPath}/userlogout" method="post" style="margin: 0;" id="logoutForm">
         <button type="submit" class="logout-icon" title="Log out" style="background: none; border: none; cursor: pointer;">
             <i class="fas fa-sign-out-alt"></i>
         </button>
     </form>
 </div>
+<script>
+    document.getElementById('logoutForm').onsubmit = function() {
+        return confirm('Are you sure you want to log out?');
+    };
+</script>
+
 <style>
     #logout-container {
         position: fixed;
