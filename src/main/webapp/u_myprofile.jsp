@@ -3,6 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+
 <%
 
     String userEmail = (String) session.getAttribute("userEmail");
@@ -20,8 +21,13 @@
 <html>
 
 <head>
-    <title>User Dashboard</title>
+    <title>User profile </title>
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <c:import url="logoutbutton.jsp"/>
+
+
+
     <style>
         body {
             margin: 0;
@@ -72,6 +78,8 @@
         .dashboard-options ul li {
             margin-bottom: 10px;
         }
+
+
     </style>
 </head>
 
@@ -106,8 +114,10 @@
 
             </ul>
         </li>
+
     </ul>
 </div>
+
 
 
 

@@ -87,7 +87,13 @@ public class Userinsert extends HttpServlet {
             return null; // Indicate error
         }
 
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+        // Generate a unique file name by appending a timestamp
+        String newFileName = System.currentTimeMillis() + "_" + originalFileName;
+
+
+       // String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+
         File uploadsDir = new File(uploadsDirPath);
         if (!uploadsDir.exists() && !uploadsDir.mkdirs()) {
             System.err.println("Failed to create directory for file uploads.");
@@ -97,10 +103,10 @@ public class Userinsert extends HttpServlet {
             return null; // Indicate error
         }
 
-        String photoIDPath = uploadsDirPath + File.separator + fileName;
+        String photoIDPath = uploadsDirPath + File.separator + newFileName;
         filePart.write(photoIDPath); // Save the file
 
-        return fileName; // Return the file name for database storage
+        return newFileName; // Return the file name for database storage
     }
 }
 

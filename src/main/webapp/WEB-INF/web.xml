@@ -129,5 +129,14 @@
     <url-pattern>/interestinfam</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>UserLogout</servlet-name>
+    <servlet-class>com.user.controller.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserLogout</servlet-name>
+    <url-pattern>/userlogout</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>
