@@ -1,4 +1,5 @@
-<%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.user.model.UserDBUtil" %><%--
   Created by IntelliJ IDEA.
   User: ranu
   Date: 2023-09-25
@@ -6,6 +7,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+  List<String> gender = UserDBUtil.getAllGender();
+  List<String> country = UserDBUtil.getAllCountry();
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,11 +118,23 @@
       <label for="birthday">Birthday <span class="required-star">*</span>:</label>
       <input type="date" id="birthday" name="birthday" required value="<%= request.getParameter("birthday") != null ? request.getParameter("birthday") : "" %>" />
 
-      <label for="country">Country of Residence <span class="required-star">*</span>:</label>
-      <select id="country" name="country" >
-        <option value="country1" >Country 1</option>
-        <option value="country2">Country 2</option>
-        <!-Add more countries here -->
+
+
+      <label>Gender <span class="required-star">*</span>:</label>
+      <select name="gender" required>
+        <option value=""></option>
+        <% for (String gen : gender) { %>
+        <option><%= gen %></option>
+        <% } %>
+      </select>
+
+
+      <label>Country of Residence<span class="required-star">*</span>:</label>
+      <select name="country" required>
+        <option value=""></option>
+        <% for (String con : country) { %>
+        <option><%= con %></option>
+        <% } %>
       </select>
 
 

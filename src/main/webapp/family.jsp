@@ -11,6 +11,10 @@
 <%
   List<String> occupations = UserDBUtil.getAllOccupations();
 %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="logoutbutton.jsp"/>
+<c:import url="sidebar.jsp"/>
+
 
 <!DOCTYPE html>
 <html>
@@ -82,33 +86,12 @@
 
 <div class="container">
 
-  <div class="sidebar">
-    <div class="profile">
-      <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-      <p class="profile-name">John Doe</p>
-    </div>
-    <ul class="sidebar-menu">
-      <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
-      <li><button>Connections</button></li>
-      <li><button>Chat</button></li>
-      <li><button>Notifications</button></li>
-      <li class="dropdown">
-        <button>Request Service &#9662;</button>
-        <div class="dropdown-content">
-          <button>Astrology Service</button>
-          <button>Event Planner Service</button>
-        </div>
-      </li>
-    </ul>
-  </div>
 
 
         <div class="main-content">
           <h1>Family Details</h1>
           <div class="form-container">
             <form action="fam" method="post">
-              <label>Father's Name:</label>
-              <input type="text" name="fatherName" required><br>
 
               <label>Father's Religion:</label>
               <select name="fatherReligion">
@@ -119,8 +102,6 @@
                 <!-- Add more options as needed -->
               </select><br>
 
-              <label>Mother's Name:</label>
-              <input type="text" name="motherName" required><br>
 
               <label>Mother's Religion:</label>
               <select name="motherReligion">

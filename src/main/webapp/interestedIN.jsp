@@ -6,14 +6,12 @@ Date: 2023-11-02
 Time: 09:20
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="java.sql.DriverManager" %>
-<%@ page import="java.sql.Statement" %>
-<%@ page import="com.user.model.DBConnect" %>
-<%@ page import="com.user.model.User" %>
-<%@ page import="java.sql.Connection" %>
-<%@ page import="java.sql.ResultSet" %>
+
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="logoutbutton.jsp"/>
+<c:import url="sidebar.jsp"/>
 
 <%
     List<String> ages = UserDBUtil.getAge();
@@ -93,25 +91,6 @@ To change this template use File | Settings | File Templates.
 
 <div class="container">
 
-    <div class="sidebar">
-        <div class="profile">
-            <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-            <p class="profile-name">John Doe</p>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
-            <li><button>Connections</button></li>
-            <li><button>Chat</button></li>
-            <li><button>Notifications</button></li>
-            <li class="dropdown">
-                <button>Request Service &#9662;</button>
-                <div class="dropdown-content">
-                    <button>Astrology Service</button>
-                    <button>Event Planner Service</button>
-                </div>
-            </li>
-        </ul>
-    </div>
 
 
     <div class="main-content">

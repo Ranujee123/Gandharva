@@ -49,24 +49,85 @@ public class UserDBUtil {
         return user;
     }
 
-    public static boolean insertUser(String fname, String lname, String bday, String country, String email,String frontphoto,String backphoto, String password) {
+
+    public static int getgenderIdByName(String gender) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT gID FROM gender WHERE gender = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, gender);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("gID");
+                }
+            }
+        }
+        return -1; // Handle the case when no oID is found
+    }
+
+
+    public static List<String> getAllGender() {
+        List<String> gender = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT gender FROM gender";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                gender.add(rs.getString("gender"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return gender;
+    }
+    public static int getCountryIdByName(String country) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT cID FROM country WHERE country = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, country);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("cID");
+                }
+            }
+        }
+        return -1; // Handle the case when no oID is found
+    }
+    public static List<String> getAllCountry() {
+        List<String> country = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             Statement stmt = con.createStatement()) {
+            String sql = "SELECT country FROM country";
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                country.add(rs.getString("country"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return country;
+    }
+
+
+    public static boolean insertUser(String fname, String lname, String bday,int cID, String email,String frontphoto,String backphoto, String password, int gID) {
         boolean isSuccess = false;
 
 
         try {
 
             con = DBConnect.getConnection();
-            String sql = "insert into user(fname, lname, bday, country, email, frontphoto,backphoto, password) values(?, ?, ?, ?, ?, ?, ?,?)";
+            String sql = "insert into user(fname, lname, bday, cID, email, frontphoto,backphoto, password,gID) values(?, ?, ?, ?, ?, ?, ?,?,?)";
 
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setString(1, fname);
                 preparedStatement.setString(2, lname);
                 preparedStatement.setString(3, bday);
-                preparedStatement.setString(4, country);
+
+                preparedStatement.setString(4, String.valueOf(cID));
                 preparedStatement.setString(5, email);
                 preparedStatement.setString(6, frontphoto);
                 preparedStatement.setString(7, backphoto);// Add the photo ID path
                 preparedStatement.setString(8, password);
+                preparedStatement.setString(9, String.valueOf(gID));
 
 
                 int rowsAffected = preparedStatement.executeUpdate();
@@ -230,8 +291,8 @@ public class UserDBUtil {
     }
 
 
-    public static boolean saveFamilyDetailsToDatabase(String userEmail, String fathername, String freli, String foccu,
-                                                      String mothername, String mreli, String moccup, String maritalstatus, String siblings) {
+    public static boolean saveFamilyDetailsToDatabase(String userEmail, String freli, String foccu,
+                                                       String mreli, String moccup, String maritalstatus, String siblings) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -242,14 +303,12 @@ public class UserDBUtil {
             String sql = "INSERT INTO fdetails (uID, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
-                preparedStatement.setString(2, fathername);
-                preparedStatement.setString(3, freli);
-                preparedStatement.setString(4, foccu);
-                preparedStatement.setString(5, mothername);
-                preparedStatement.setString(6, mreli);
-                preparedStatement.setString(7, moccup);
-                preparedStatement.setString(8, maritalstatus);
-                preparedStatement.setString(9, siblings);
+                preparedStatement.setString(2, freli);
+                preparedStatement.setString(3, foccu);
+                preparedStatement.setString(4, mreli);
+                preparedStatement.setString(5, moccup);
+                preparedStatement.setString(6, maritalstatus);
+                preparedStatement.setString(7, siblings);
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }

@@ -38,13 +38,46 @@ public class Userinsert extends HttpServlet {
         }
 // Continue with registration process if age is 18 or above
 
+
+
         String fname = req.getParameter("firstName");
         String lname = req.getParameter("lastName");
 
         String country = req.getParameter("country");
+        int cID = -1; // Default or error value, assuming your IDs are positive integers
+        try {
+            cID = UserDBUtil.getCountryIdByName(country);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Consider handling this error more gracefully
+        }
+
+        // Check if a valid gender ID was retrieved
+        if (cID == -1) {
+            req.setAttribute("errorMessage", "Invalid country selected.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String cpassword = req.getParameter("confirmPassword");
+        String gender = req.getParameter("gender");
+        int gID = -1; // Default or error value, assuming your IDs are positive integers
+        try {
+            gID = UserDBUtil.getgenderIdByName(gender);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Consider handling this error more gracefully
+        }
+
+        // Check if a valid gender ID was retrieved
+        if (gID == -1) {
+            req.setAttribute("errorMessage", "Invalid gender selected.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
+        }
 
         // Check if passwords match
         if (!password.equals(cpassword)) {
@@ -67,7 +100,7 @@ public class Userinsert extends HttpServlet {
 
         password = String.valueOf(password.hashCode()); // Consider a more secure hashing method
 
-        boolean isInserted = UserDBUtil.insertUser(fname, lname, bday, country, email, frontphoto, backphoto, password);
+        boolean isInserted = UserDBUtil.insertUser(fname, lname, bday, cID, email, frontphoto, backphoto, password,gID);
 
         if (isInserted) {
             RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
