@@ -15,38 +15,33 @@ public class UserDBUtil {
     private static boolean isSuccess;
 
     public static List<User> validate(String email, String password) {
-        ArrayList<User> user = new ArrayList<>();
-
-
-        //validate
+        ArrayList<User> users = new ArrayList<>();
         try {
-            con = DBConnect.getConnection();
-            stmt = con.createStatement();
-
-            String sql = "SELECT * FROM user WHERE email='" + email + "' AND password='" + password + "'";
-            resultSet = stmt.executeQuery(sql);
+            Connection con = DBConnect.getConnection();
+            // Adjust the SQL to include a JOIN with the country table to fetch the countryName
+            String sql = "SELECT u.*, c.country AS countryName FROM user u JOIN country c ON u.cID = c.cID WHERE u.email = ? AND u.password = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, password);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                String fname = resultSet.getString("fname");
+                String lname = resultSet.getString("lname");
+                String bday = resultSet.getString("bday");
+                int cID = resultSet.getInt("cID");
+                String emailU = resultSet.getString("email");
+                String passwordU = resultSet.getString("password");
+                int gID = resultSet.getInt("gID");
+                String countryName = resultSet.getString("countryName"); // Fetch the country name
 
-                String fname = resultSet.getString(2);
-                String lname = resultSet.getString(3);
-                String bday = resultSet.getString(4);
-                String country = resultSet.getString(5);
-                String emailU = resultSet.getString(6);
-                String passwordU = resultSet.getString(7);
-                String cpassswordU = resultSet.getString(8);
-
-                User u = new User(fname, lname, bday, country, emailU, passwordU, cpassswordU);
-                user.add(u);
-
+                User u = new User(fname, lname, bday, cID, emailU, passwordU, gID, countryName);
+                users.add(u);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
-
         }
-
-        return user;
+        return users;
     }
 
 
@@ -164,35 +159,30 @@ public class UserDBUtil {
 
 
     public static List<User> getUserDetails(String email) {
-        // int convertedID=Integer.parseInt(Id);
-
-        ArrayList<User> user = new ArrayList<>();
-
+        List<User> user = new ArrayList<>();
         try {
-            con = DBConnect.getConnection();
-            stmt = con.createStatement();
-            String sql = "select * from user where email='" + email + "'";
-            resultSet = stmt.executeQuery(sql);
+            Connection con = DBConnect.getConnection();
+            String sql = "SELECT u.*, c.country AS countryName FROM user u JOIN country c ON u.cID = c.cID WHERE u.email=?";
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                //int id=resultSet.getInt(1);
-                String fname = resultSet.getString(2);
-                String lname = resultSet.getString(3);
-                String bday = resultSet.getString(4);
-                String country = resultSet.getString(5);
-                email = resultSet.getString(6);
-                String password = resultSet.getString(7);
-                String cpassword = resultSet.getString(8);
+                String fname = resultSet.getString("fname");
+                String lname = resultSet.getString("lname");
+                String bday = resultSet.getString("bday");
+                int cID = resultSet.getInt("cID");
+                String emailU = resultSet.getString("email");
+                String passwordU = resultSet.getString("password");
+                int gID = resultSet.getInt("gID");
+                String countryName = resultSet.getString("countryName"); // Fetch the country name
 
-
-                User user1 = new User(fname, lname, bday, country, email, password, cpassword);
-                user.add(user1);
+                User u = new User(fname, lname, bday, cID, emailU, passwordU,  gID, countryName);
+                user.add(u);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return user;
     }
 

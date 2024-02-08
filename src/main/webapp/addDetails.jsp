@@ -1,8 +1,5 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.user.model.UserDBUtil" %>
-<%@ page import="javax.servlet.http.HttpSession" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -14,9 +11,7 @@
     List<String> occupations = UserDBUtil.getAllOccupations();
 %>
 
-<%@ page import="javax.servlet.http.HttpSession" %>
-<%@ page import="javax.servlet.http.HttpServletRequest" %>
-<%@ page import="javax.servlet.http.HttpServletResponse" %>
+
 
 <%--
   Created by IntelliJ IDEA.
