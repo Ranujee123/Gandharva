@@ -102,7 +102,7 @@
             <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
             <p>Email: <%= user.getEmail() %></p>
             <p>Birthday: <%= user.getBday() %></p>
-            <p>Country: <%= user.getCountry() %></p>
+            <p>Country: <%= user.getCountryName() %></p>
             <!-- Add other fields as needed -->
             <% } %>
         </div>
@@ -132,6 +132,7 @@
         <div class="dashboard-options">
             <ul>
                 <li><a href="editProfile.jsp"><button type="button">Update my data</button></a></li>
+                <li><a href="cpassword.jsp"><button type="button">Change Password</button></a></li>
                 <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
                 <li><a href="deleteuserprofile.jsp"><button type="button">Deactivate Account</button></a></li>
             </ul>
