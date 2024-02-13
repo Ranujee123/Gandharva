@@ -13,7 +13,10 @@
 <c:import url="logoutbutton.jsp"/>
 <c:import url="sidebar.jsp"/>
 
+<%
 
+    List<String> province = UserDBUtil.getAllProvince();
+%>
 <%
 
     String userEmail = (String) session.getAttribute("userEmail");
@@ -70,8 +73,11 @@
             margin-bottom: 10px;
         }
     </style>
+
+    <script src="nic-utils.js"></script>
 </head>
 <body>
+
 
 
 
@@ -90,10 +96,22 @@
             <input type="text" name="lname" value="<%= user.getLname() %>" >
             <label>Email:</label>
             <input type="email" name="email" value="<%= user.getEmail() %>" >
-            <label>Date of Birth:</label>
-            <input type="text" id="bday" name="bday" value="<%= user.getBday() %>">
-            <label>Country of Residence:</label>
-            <input type="text" id="country" name="country" value="<%= user.getCountry() %>">
+            <label>NIC:</label>
+            <input type="text" id="idNumber" name="idNumber" value="<%= user.getidNumber() %>">
+
+
+            <label>Province:</label>
+            <select name="province" required>
+                <option value="">Select Province</option>
+                <% for (String pro : province) { %>
+                <option value="<%= pro %>"
+                        <%= (user.getProvinceName() != null && user.getProvinceName().equals(pro)) ? "selected" : "" %>>
+                    <%= pro %>
+                </option>
+                <% } %>
+            </select>
+
+            <br>
             <label>About Me:</label>
             <textarea id="aboutMe" name="aboutMe"></textarea>
 

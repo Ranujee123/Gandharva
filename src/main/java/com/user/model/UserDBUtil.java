@@ -1,9 +1,6 @@
 package com.user.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +16,7 @@ public class UserDBUtil {
         try {
             Connection con = DBConnect.getConnection();
             // Adjust the SQL to include a JOIN with the country table to fetch the countryName
-            String sql = "SELECT u.*, c.country AS countryName FROM user u JOIN country c ON u.cID = c.cID WHERE u.email = ? AND u.password = ?";
+            String sql = "SELECT u.*, p.province AS provinceName FROM user u JOIN province p ON u.pID = p.pID WHERE u.email = ? AND u.password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -28,14 +25,15 @@ public class UserDBUtil {
             if (resultSet.next()) {
                 String fname = resultSet.getString("fname");
                 String lname = resultSet.getString("lname");
-                String bday = resultSet.getString("bday");
-                int cID = resultSet.getInt("cID");
+                String idNumber = resultSet.getString("idNumber");
+                int pID = resultSet.getInt("pID");
                 String emailU = resultSet.getString("email");
                 String passwordU = resultSet.getString("password");
-                int gID = resultSet.getInt("gID");
-                String countryName = resultSet.getString("countryName"); // Fetch the country name
+                String gender= resultSet.getString("gender");
+                String dob= resultSet.getString("dob");
+                String provinceName = resultSet.getString("provinceName"); // Fetch the country name
 
-                User u = new User(fname, lname, bday, cID, emailU, passwordU, gID, countryName);
+                User u = new User(fname, lname, idNumber, pID, emailU, passwordU, gender, provinceName);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -74,56 +72,56 @@ public class UserDBUtil {
         }
         return gender;
     }
-    public static int getCountryIdByName(String country) throws Exception {
+    public static int getProvinceIdByName(String province) throws Exception {
         Connection con = DBConnect.getConnection();
-        String sql = "SELECT cID FROM country WHERE country = ?";
+        String sql = "SELECT pID FROM province WHERE province = ?";
         try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
-            preparedStatement.setString(1, country);
+            preparedStatement.setString(1, province);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("cID");
+                    return resultSet.getInt("pID");
                 }
             }
         }
         return -1; // Handle the case when no oID is found
     }
-    public static List<String> getAllCountry() {
-        List<String> country = new ArrayList<>();
+    public static List<String> getAllProvince() {
+        List<String> province = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
              Statement stmt = con.createStatement()) {
-            String sql = "SELECT country FROM country";
+            String sql = "SELECT province FROM province";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
-                country.add(rs.getString("country"));
+                province.add(rs.getString("province"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return country;
+        return province;
     }
 
 
-    public static boolean insertUser(String fname, String lname, String bday,int cID, String email,String frontphoto,String backphoto, String password, int gID) {
+    public static boolean insertUser(String fname, String lname, String idNumber,int pID, String email,String frontphoto,String backphoto, String password, String gender, String dob) {
         boolean isSuccess = false;
 
 
         try {
 
             con = DBConnect.getConnection();
-            String sql = "insert into user(fname, lname, bday, cID, email, frontphoto,backphoto, password,gID) values(?, ?, ?, ?, ?, ?, ?,?,?)";
+            String sql = "insert into user(fname, lname, idNumber, pID, email, frontphoto,backphoto, password,gender,dob) values(?, ?, ?, ?, ?, ?, ?,?,?,?)";
 
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setString(1, fname);
                 preparedStatement.setString(2, lname);
-                preparedStatement.setString(3, bday);
+                preparedStatement.setString(3, idNumber);
 
-                preparedStatement.setString(4, String.valueOf(cID));
+                preparedStatement.setString(4, String.valueOf(pID));
                 preparedStatement.setString(5, email);
                 preparedStatement.setString(6, frontphoto);
                 preparedStatement.setString(7, backphoto);// Add the photo ID path
                 preparedStatement.setString(8, password);
-                preparedStatement.setString(9, String.valueOf(gID));
-
+                preparedStatement.setString(9,gender);
+                preparedStatement.setString(10,dob);
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 isSuccess = rowsAffected > 0;
@@ -135,34 +133,56 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser(String fname, String lname, String bday, String country, String email, String password) {
+    public static boolean updateUser(String fname, String lname, String idNumber, String provinceName, String email) {
         boolean isSuccess = false;
-
+        Connection con = null;
+        PreparedStatement pstmt = null;
         try {
             con = DBConnect.getConnection();
-            stmt = con.createStatement();
-            String sql = "update user set fname='" + fname + "', lname='" + lname + "', bday='" + bday + "', country='" + country + "', email='" + email + "',password='" + password +  "' where email='" + email + "'";
-            int resultSet = stmt.executeUpdate(sql);
-
-
-            if (resultSet > 0) {
-                isSuccess = true;
-            } else {
-                isSuccess = false;
+            // Get the pID for the given province name
+            String provinceQuery = "SELECT pID FROM province WHERE province = ?";
+            pstmt = con.prepareStatement(provinceQuery);
+            pstmt.setString(1, provinceName);
+            ResultSet rs = pstmt.executeQuery();
+            int pID = -1;
+            if (rs.next()) {
+                pID = rs.getInt("pID");
             }
+            pstmt.close(); // Close the PreparedStatement to reuse the variable
 
+            if (pID != -1) {
+                // Update the user with the new country ID
+                String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, pID=? WHERE email=?";
+                pstmt = con.prepareStatement(sql);
+                pstmt.setString(1, fname);
+                pstmt.setString(2, lname);
+                pstmt.setString(3, idNumber);
+                pstmt.setInt(4, pID);
+                pstmt.setString(5, email);
+
+                int rowsAffected = pstmt.executeUpdate();
+                isSuccess = rowsAffected > 0;
+            } else {
+                System.out.println("Province not found for name: " + provinceName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return isSuccess;
     }
-
 
     public static List<User> getUserDetails(String email) {
         List<User> user = new ArrayList<>();
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "SELECT u.*, c.country AS countryName FROM user u JOIN country c ON u.cID = c.cID WHERE u.email=?";
+            String sql = "SELECT u.*, p.province AS provinceName FROM user u JOIN province p ON u.pID = p.pID WHERE u.email=?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -170,14 +190,15 @@ public class UserDBUtil {
             while (resultSet.next()) {
                 String fname = resultSet.getString("fname");
                 String lname = resultSet.getString("lname");
-                String bday = resultSet.getString("bday");
-                int cID = resultSet.getInt("cID");
+                String idNumber = resultSet.getString("idNumber");
+                int pID = resultSet.getInt("pID");
                 String emailU = resultSet.getString("email");
                 String passwordU = resultSet.getString("password");
-                int gID = resultSet.getInt("gID");
-                String countryName = resultSet.getString("countryName"); // Fetch the country name
+                String dob=resultSet.getString("dob");
 
-                User u = new User(fname, lname, bday, cID, emailU, passwordU,  gID, countryName);
+                String provinceName = resultSet.getString("provinceName"); // Fetch the country name
+
+                User u = new User(fname, lname, idNumber, pID, emailU, passwordU,  dob, provinceName);
                 user.add(u);
             }
         } catch (Exception e) {

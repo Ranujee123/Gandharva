@@ -27,13 +27,14 @@ public class UpdateUserServlet extends HttpServlet {
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         String bday = request.getParameter("bday");
-        String country = request.getParameter("country");
+        //String cID = request.getParameter("cID");
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String provinceName = request.getParameter("province"); // Assuming the dropdown has the name "country"
 
 
 
-        boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, country, email, password);
+
+        boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, provinceName, email);
 
         if (isTrue) {
             // Fetch the updated user details

@@ -4,25 +4,29 @@ package com.user.model;
 
         private String fname;
         private String lname;
-        private String bday;
-        private int cID;
+        private String idNumber;
+        private int pID;
         private String email;
         private String password;
 
-        private int gID;
-        private String countryName;
+        private String gender;
+        private String dob;
+
+        private String provinceName;
 
 
-        public User(String fname, String lname, String bday, int cID, String email, String password,  int gID, String countryName) {
+        public User(String fname, String lname, String idNumber, int pID, String email, String password,  String gender, String dob) {
             this.fname = fname;
             this.lname = lname;
-            this.bday = bday;
-            this.cID = cID;
+            this.idNumber = idNumber;
+            this.pID = pID;
             this.email = email;
+
             this.password = password;
 
-            this.gID = gID;
-            this.countryName = countryName; // Set the country name
+            this.gender = gender;
+            this.dob=dob;
+            this.provinceName = provinceName; // Set the country name
         }
 
 
@@ -34,8 +38,8 @@ package com.user.model;
             return lname;
         }
 
-        public String getBday(){return bday;}
-        public int getCountry(){return cID;}
+        public String getBday(){return idNumber;}
+        public int getProvince(){return pID;}
 
         public String getEmail(){
             return email;
@@ -47,19 +51,20 @@ package com.user.model;
 
 
 
-        public int getgID() {
-            return gID;
+        public String getGender() {
+            return gender;
         }
 
-        public String getCountryName() {
-            return countryName;
+        public String getProvinceName() {
+            return provinceName;
         }
 
-        public void setCountryName(String countryName) {
-            this.countryName = countryName;
+        public void setProvinceName(String provinceName) {
+            this.provinceName = provinceName;
         }
 
 
-
-
+        public Object getidNumber() {
+            return idNumber;
+        }
     }

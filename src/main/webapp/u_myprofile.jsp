@@ -82,6 +82,8 @@
 
 
     </style>
+    <script src="nic-utils.js"></script>
+
 </head>
 
 
@@ -101,8 +103,9 @@
             <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
             <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
             <p>Email: <%= user.getEmail() %></p>
-            <p>Birthday: <%= user.getBday() %></p>
-            <p>Country: <%= user.getCountryName() %></p>
+
+            <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %>
+
             <!-- Add other fields as needed -->
             <% } %>
         </div>
