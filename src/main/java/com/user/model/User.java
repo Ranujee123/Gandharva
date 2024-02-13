@@ -14,8 +14,10 @@ package com.user.model;
 
         private String provinceName;
 
+        private int age;
 
-        public User(String fname, String lname, String idNumber, int pID, String email, String password,  String gender, String dob) {
+
+        public User(String fname, String lname, String idNumber, int pID, String email, String password,  String gender, String dob, int age) {
             this.fname = fname;
             this.lname = lname;
             this.idNumber = idNumber;
@@ -27,6 +29,8 @@ package com.user.model;
             this.gender = gender;
             this.dob=dob;
             this.provinceName = provinceName; // Set the country name
+            this.age=age;
+
         }
 
 
@@ -66,5 +70,9 @@ package com.user.model;
 
         public Object getidNumber() {
             return idNumber;
+        }
+
+        public int getAge() {
+            return age;
         }
     }

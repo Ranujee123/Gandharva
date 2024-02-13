@@ -79,8 +79,7 @@ public class Userinsert extends HttpServlet {
             dispatcher.forward(req, resp);
             return; // Stop execution
         }
-
-        boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, pID, email, frontphoto, backphoto, password,gender,dob);
+        boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, pID, email, frontphoto, backphoto, password,gender,dob,age);
 
         if (isInserted) {
             RequestDispatcher dis = req.getRequestDispatcher("login.jsp");

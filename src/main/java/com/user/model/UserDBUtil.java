@@ -32,8 +32,9 @@ public class UserDBUtil {
                 String gender= resultSet.getString("gender");
                 String dob= resultSet.getString("dob");
                 String provinceName = resultSet.getString("provinceName"); // Fetch the country name
+                int age= Integer.parseInt(resultSet.getString("age"));
 
-                User u = new User(fname, lname, idNumber, pID, emailU, passwordU, gender, provinceName);
+                User u = new User(fname, lname, idNumber, pID, emailU, passwordU, gender, provinceName,age);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -101,14 +102,14 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertUser(String fname, String lname, String idNumber,int pID, String email,String frontphoto,String backphoto, String password, String gender, String dob) {
+    public static boolean insertUser(String fname, String lname, String idNumber,int pID, String email,String frontphoto,String backphoto, String password, String gender, String dob, int age) {
         boolean isSuccess = false;
 
 
         try {
 
             con = DBConnect.getConnection();
-            String sql = "insert into user(fname, lname, idNumber, pID, email, frontphoto,backphoto, password,gender,dob) values(?, ?, ?, ?, ?, ?, ?,?,?,?)";
+            String sql = "insert into user(fname, lname, idNumber, pID, email, frontphoto,backphoto, password,gender,dob,age) values(?, ?, ?, ?, ?, ?, ?,?,?,?,?)";
 
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setString(1, fname);
@@ -122,6 +123,7 @@ public class UserDBUtil {
                 preparedStatement.setString(8, password);
                 preparedStatement.setString(9,gender);
                 preparedStatement.setString(10,dob);
+                preparedStatement.setString(11, String.valueOf(age));
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 isSuccess = rowsAffected > 0;
@@ -197,8 +199,9 @@ public class UserDBUtil {
                 String dob=resultSet.getString("dob");
 
                 String provinceName = resultSet.getString("provinceName"); // Fetch the country name
+                int age= Integer.parseInt(resultSet.getString("age"));
 
-                User u = new User(fname, lname, idNumber, pID, emailU, passwordU,  dob, provinceName);
+                User u = new User(fname, lname, idNumber, pID, emailU, passwordU,  dob, provinceName,age);
                 user.add(u);
             }
         } catch (Exception e) {
