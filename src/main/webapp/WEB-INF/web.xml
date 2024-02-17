@@ -61,6 +61,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>UPersonalDetails</servlet-name>
+    <servlet-class>com.user.controller.Personaldetails</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UPersonalDetails</servlet-name>
+    <url-pattern>/updetails</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
     <servlet-name>UserinsertDeatils</servlet-name>
     <servlet-class>com.user.controller.QualificationServlet</servlet-class>
   </servlet>

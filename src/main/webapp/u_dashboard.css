@@ -1,0 +1,78 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile {
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-name {
+    font-weight: bold;
+}
+
+
+.filter-section {
+    width: calc(100% - 250px); /* Adjust based on sidebar width */
+    padding: 20px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
+    margin-left: 250px; /* Same as sidebar width */
+}
+
+.profiles-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.profile-card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for depth */
+    margin: 15px; /* Space between cards */
+    padding: 20px; /* Internal spacing */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #ffffff; /* Card background color */
+    width: 200px; /* Fixed width, adjust as necessary */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.profile-card:hover {
+    transform: scale(1.05); /* Slightly enlarge card on hover */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Increase shadow for lifted effect */
+}
+
+.profile-card img {
+    width: 100%; /* Make images fit card width */
+    border-radius: 5px; /* Slightly rounded corners for images */
+    margin-bottom: 15px; /* Space between image and text content */
+}
+
+.profile-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px; /* Space below the name */
+    font-size: 18px; /* Adjust name font size as needed */
+    text-align: center; /* Center-align the name */
+}
+
+.profile-card p {
+    margin-top: 5px;
+    margin-bottom: 5px; /* Adjust spacing between paragraph elements */
+    font-size: 14px; /* Adjust font size for details */
+    color: #666; /* Detail text color */
+    text-align: center; /* Center-align the details */
+}

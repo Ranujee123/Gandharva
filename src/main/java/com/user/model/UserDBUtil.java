@@ -249,6 +249,73 @@ public class UserDBUtil {
         return -1; // Handle the case when no uID is found
     }
 
+
+
+
+    public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion,
+                                                      String status, String height, String foodpreferences, String drinking, String smoking,String diffabled) {
+        try {
+            int uID = getUserIdByEmail(userEmail);
+            if (uID == -1) {
+                return false; // User ID not found
+            }
+
+            Connection con = DBConnect.getConnection();
+            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+            try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+                preparedStatement.setInt(1, uID);
+                preparedStatement.setString(2, ethnicity);
+                preparedStatement.setString(3, religion);
+                preparedStatement.setString(4, status);
+                preparedStatement.setString(5, height);
+                preparedStatement.setString(6, foodpreferences);
+                preparedStatement.setString(7, drinking);
+                preparedStatement.setString(8, smoking);
+                preparedStatement.setString(9, diffabled);
+                int result = preparedStatement.executeUpdate();
+                return result > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error saving personal details: " + e.getMessage());
+            return false;
+        }
+    }
+
+
+    public static boolean isPersonalDetailsCompleted(String userEmail) {
+        Connection con = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT COUNT(*) FROM u_pdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)";
+            preparedStatement = con.prepareStatement(sql);
+            preparedStatement.setString(1, userEmail);
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close resources
+            try {
+                if (resultSet != null) resultSet.close();
+                if (preparedStatement != null) preparedStatement.close();
+                if (con != null) con.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+
+
     public static int getQualificationIdByName(String qualification) throws Exception {
         Connection con = DBConnect.getConnection();
         String sql = "SELECT qID FROM qualification WHERE qualification = ?";
@@ -306,7 +373,7 @@ public class UserDBUtil {
 
 
     public static boolean saveFamilyDetailsToDatabase(String userEmail, String freli, String foccu,
-                                                       String mreli, String moccup, String maritalstatus, String siblings) {
+                                                       String mreli, String moccup, String maritalstatus, int siblings) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -314,7 +381,7 @@ public class UserDBUtil {
             }
 
             Connection con = DBConnect.getConnection();
-            String sql = "INSERT INTO fdetails (uID, fathername, freli, foccu, mothername, mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO fdetails (uID,  freli, foccu,  mreli, moccup, maritalstatus, siblings) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
                 preparedStatement.setString(2, freli);
@@ -322,7 +389,7 @@ public class UserDBUtil {
                 preparedStatement.setString(4, mreli);
                 preparedStatement.setString(5, moccup);
                 preparedStatement.setString(6, maritalstatus);
-                preparedStatement.setString(7, siblings);
+               preparedStatement.setInt(7,siblings);
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }

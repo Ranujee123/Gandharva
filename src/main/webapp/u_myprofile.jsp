@@ -114,7 +114,7 @@
 
         <%
             Integer completedSteps = (Integer)session.getAttribute("completedSteps");
-            Integer totalSteps = 6; // Assuming there are 7 steps in total for profile completion
+            Integer totalSteps = 7; // Assuming there are 7 steps in total for profile completion
             if (completedSteps == null) { completedSteps = 0; }
             int stepsLeft = totalSteps - completedSteps;
 
@@ -129,7 +129,7 @@
         <% } %>
 
 
-        <a href="ProfileCompletionServlet?action=addDetails">Add Profile Details</a>
+        <a href="ProfileCompletionServlet">Add Profile Details</a>
 
 
         <div class="dashboard-options">

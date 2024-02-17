@@ -135,7 +135,7 @@
                 <div class="completion-bar">
                     <div class="completion-fill" style="width: 28%;"></div> <!-- Adjust the width based on completion -->
                 </div>
-                <p class="completion-text">6 out of 6 steps left to complete your profile</p>
+                <p class="completion-text">6 out of 7 steps left to complete your profile</p>
 
 
 
