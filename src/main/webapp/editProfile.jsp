@@ -102,7 +102,7 @@
 
             <label>Province:</label>
             <select name="province" required>
-                <option value="">Select Province</option>
+                <option value=""></option>
                 <% for (String pro : province) { %>
                 <option value="<%= pro %>"
                         <%= (user.getProvinceName() != null && user.getProvinceName().equals(pro)) ? "selected" : "" %>>

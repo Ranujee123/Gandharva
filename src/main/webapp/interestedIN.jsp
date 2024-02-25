@@ -167,9 +167,9 @@ To change this template use File | Settings | File Templates.
 
 
                 <div class="completion-bar">
-                    <div class="completion-fill" style="width: 70%;"></div> <!-- Adjust the width based on completion -->
+                    <div class="completion-fill" style="width: 71%;"></div> <!-- Adjust the width based on completion -->
                 </div>
-                <p class="completion-text">3 out of 6 steps left to complete your profile</p>
+                <p class="completion-text">3 out of 7 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
                 <button type="submit" name="action" value="proceed">Proceed</button>

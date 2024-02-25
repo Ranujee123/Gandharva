@@ -45,10 +45,21 @@ public class ProfileCompletionServlet extends HttpServlet {
         boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
 
 
+        session.setAttribute("personalDetailsCompleted", personalDetailsCompleted);
+        session.setAttribute("qualificationCompleted", qualificationCompleted);
+        session.setAttribute("familyDetailsCompleted", familyDetailsCompleted);
+        session.setAttribute("interestCompleted", interestCompleted);
+        session.setAttribute("interestedINCompleted", interestedINCompleted);
+        session.setAttribute("interestedINQualCompleted", interestedINQualCompleted);
+        session.setAttribute("interestedINFamDetailsCompleted", interestedINFamDetailsCompleted);
+
+
+
+
 
         // Calculate completion percentage
         int completedSteps = 0;
-        if(personalDetailsCompleted) completedSteps++;
+        if (personalDetailsCompleted) completedSteps++;
         if (qualificationCompleted) completedSteps++;
         if (familyDetailsCompleted) completedSteps++;
         if (interestCompleted) completedSteps++;
@@ -63,7 +74,7 @@ public class ProfileCompletionServlet extends HttpServlet {
         session.setAttribute("completedSteps", completedSteps);
         session.setAttribute("completionPercentage", completionPercentage);
 
-        String redirectUrl ;
+     String redirectUrl;
 
         if(!personalDetailsCompleted){
             redirectUrl="u_personaldetails.jsp";

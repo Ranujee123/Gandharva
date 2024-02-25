@@ -54,6 +54,7 @@ public class LoginServlet extends HttpServlet {
     }
         private void updateProfileCompletionStatus(HttpSession session, String userEmail) {
             // Assume these methods return true if the respective section is completed
+            boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
             boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
             boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
             boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
@@ -62,8 +63,8 @@ public class LoginServlet extends HttpServlet {
             boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
 
 
-            int completedSteps = (qualificationCompleted ? 1 : 0) + (familyDetailsCompleted ? 1 : 0) + (interestCompleted ? 1 : 0) + (interestedINCompleted ? 1 : 0) + (interestedINQualCompleted ? 1 : 0) + (interestedINFamDetailsCompleted ? 1 : 0);
-            int totalSteps = 6;
+            int completedSteps = (personalDetailsCompleted ? 1 : 0) +(qualificationCompleted ? 1 : 0) + (familyDetailsCompleted ? 1 : 0) + (interestCompleted ? 1 : 0) + (interestedINCompleted ? 1 : 0) + (interestedINQualCompleted ? 1 : 0) + (interestedINFamDetailsCompleted ? 1 : 0);
+            int totalSteps = 7;
             int completionPercentage = (completedSteps * 100) / totalSteps;
 
             session.setAttribute("completedSteps", completedSteps);

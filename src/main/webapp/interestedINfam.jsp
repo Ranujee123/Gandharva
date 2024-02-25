@@ -156,7 +156,7 @@ To change this template use File | Settings | File Templates.
         <div class="completion-bar">
           <div class="completion-fill" style="width: 100%;"></div> <!-- Adjust the width based on completion -->
         </div>
-        <p class="completion-text">1 out of 6 is completed</p>
+        <p class="completion-text">1 out of 7 is completed</p>
 
         <button type="submit" name="action" value="proceed">Submit</button>
       </form>

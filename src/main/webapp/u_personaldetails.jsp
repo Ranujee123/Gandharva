@@ -13,10 +13,6 @@
 <c:import url="logoutbutton.jsp"/>
 <c:import url="sidebar.jsp"/>
 
-<%
-  List<String> qualifications = UserDBUtil.getAllQualifications();
-  List<String> occupations = UserDBUtil.getAllOccupations();
-%>
 
 
 
@@ -119,9 +115,9 @@
   <div class="main-content">
     <h1>About You</h1>
     <div class="form-container">
-      <form action="updetails" method="post">
-        <label>Ethnicity:</label>
-        <select name="ethnicity" required>
+      <form action="updetails" method="post" enctype="multipart/form-data">
+       <label>Ethnicity:</label>
+        <select name="ethnicity">
           <option value=""> </option>
           <option value="sinhalese">Sinhalese</option>
           <option value="tamil">tamil</option>
@@ -176,7 +172,7 @@
           <option value="vegan">Vegan</option>
         </select>
 
-        <label>Dronking:</label>
+        <label>Drinking:</label>
         <select name="drinking" required>
           <option value=""> </option>
           <option value="yes">Yes</option>
@@ -199,8 +195,12 @@
           <option value="No">No</option>
         </select>
 
+        <label for="dpphoto">Profile Picture<span class="required-star"></span>:</label>
+        <input type="file" id="dpphoto" name="dpphoto">
+
+
         <div class="completion-bar">
-          <div class="completion-fill" style="width: 28%;"></div> <!-- Adjust the width based on completion -->
+          <div class="completion-fill" style="width: 15%;"></div> <!-- Adjust the width based on completion -->
         </div>
         <p class="completion-text">7 out of 7 steps left to complete your profile</p>
 

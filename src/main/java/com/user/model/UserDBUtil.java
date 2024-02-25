@@ -253,7 +253,7 @@ public class UserDBUtil {
 
 
     public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion,
-                                                      String status, String height, String foodpreferences, String drinking, String smoking,String diffabled) {
+                                                      String status, String height, String foodpreferences, String drinking, String smoking,String diffabled,String dpphoto) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -261,17 +261,18 @@ public class UserDBUtil {
             }
 
             Connection con = DBConnect.getConnection();
-            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
+            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled,dpphoto) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
-                preparedStatement.setString(2, ethnicity);
-                preparedStatement.setString(3, religion);
-                preparedStatement.setString(4, status);
-                preparedStatement.setString(5, height);
-                preparedStatement.setString(6, foodpreferences);
-                preparedStatement.setString(7, drinking);
-                preparedStatement.setString(8, smoking);
-                preparedStatement.setString(9, diffabled);
+                preparedStatement.setString(2,  ethnicity);
+                preparedStatement.setString(3,  religion);
+                preparedStatement.setString(4,  status);
+                preparedStatement.setString(5,  height);
+                preparedStatement.setString(6,  foodpreferences);
+                preparedStatement.setString(7,  drinking);
+                preparedStatement.setString(8,  smoking);
+                preparedStatement.setString(9,  diffabled);
+                preparedStatement.setString(10, dpphoto);
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }
