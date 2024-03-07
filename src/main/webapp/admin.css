@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+.sidebar-admin {
+    height: 100%;
+    width: 280px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: #111;
+    padding-top: 20px;
+    transition: 0.5s; /* Add transition for smooth animation */
+}
+.sidebar-menu-admin{
+    margin-top: 40px;
+    padding: 0;
+}
+.sidebar-admin h5 {
+    font-size: 22px;
+    color: white;
+    text-align: center;
+}
+.sidebar-admin a {
+    padding: 15px;
+    margin-top: 10px;
+    height: 20px;
+    text-decoration: none;
+    font-size: 17px;
+
+    color: white;
+    display: block;
+    text-align: center; /* Center align the text */
+    transition: 0.3s; /* Add transition for hover effect */
+}
+.sidebar-admin .logout {
+    padding: 15px;
+    margin-top: auto;
+    height: 20px;
+    text-decoration: none;
+    font-size: 17px;
+    PADDING-BOTTOM: 38px;
+    color: white;
+    display: block;
+    text-align: center;
+    transition: 0.3s;
+}
+.sidebar-admin .logout:hover {
+    background-color: #ff2f2f;
+}
+
+.sidebar-admin a:hover {
+    background-color: #333;
+}
+
+.content {
+    margin-left: 280px;
+    padding: 20px;
+    transition: margin-left 0.5s; /* Add transition for content shifting */
+}
