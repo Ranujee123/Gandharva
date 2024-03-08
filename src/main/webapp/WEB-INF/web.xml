@@ -149,4 +149,16 @@
   </servlet-mapping>
 
 
+  <servlet>
+    <servlet-name>Filterservlet</servlet-name>
+    <servlet-class>com.user.controller.FilterServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Filterservlet</servlet-name>
+    <url-pattern>/Filter</url-pattern>
+  </servlet-mapping>
+
+
+
+
 </web-app>

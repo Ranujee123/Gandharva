@@ -97,7 +97,7 @@
             <label>Email:</label>
             <input type="email" name="email" value="<%= user.getEmail() %>" >
             <label>NIC:</label>
-            <input type="text" id="idNumber" name="idNumber" value="<%= user.getidNumber() %>">
+            <input type="text" id="idNumber" name="idNumber" value="<%= user.getIdNumber() %>">
 
 
             <label>Province:</label>

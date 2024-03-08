@@ -23,6 +23,7 @@ public class ProfileCompletionServlet extends HttpServlet {
         String action = request.getParameter("action");
 
 
+
         String userEmail = (String) session.getAttribute("userEmail");
 
         if (userEmail == null) {

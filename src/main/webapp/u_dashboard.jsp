@@ -20,14 +20,38 @@
 <html>
 <head>
     <title>User Dashboard</title>
-    <link rel="stylesheet" href="u_dashboard.css"> <!-- Link to your CSS file for styling -->
-    <!-- Add any additional CSS or JS links here -->
+    <link rel="stylesheet" href="u_dashboard.css">
+    <style>
+        .profile-card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 40%;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px;
+            padding: 2px 16px;
+        }
+        .profile-card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        function validateAgeRange() {
+            var ageFrom = document.getElementById('age').value;
+            var ageTo = document.getElementById('ageto').value;
+            if (parseInt(ageFrom) > parseInt(ageTo)) {
+                alert('Age From should be less than or equal to Age To.');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </head>
 <body>
 
 <!-- Filter Section -->
 <div class="filter-section">
-    <form action="your_servlet_url" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
+    <form action="Filter" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
         <label for="age">Age From:</label>
         <input type="number" id="age" name="age" min="18" max="60" oninput="validateAge(this)">
         <span id="age-error" style="color: red;"></span>
@@ -37,16 +61,7 @@
         <span id="ageto-error" style="color: red;"></span>
 
 
-        <script>
-            function validateAgePopup(input) {
-                const minValue = 18;
-                const maxValue = 60;
-                if (input.value < minValue || input.value > maxValue) {
-                    alert("Please enter a value between 18 and 60.");
-                    input.value = ''; // Optionally, clear the incorrect input
-                }
-            }
-        </script>
+
 
         <label>Province<span ></span>:</label>
         <select name="province" required>
@@ -112,7 +127,7 @@
 
 
         <label>Occupation :</label>
-        <select name="occupation" required>
+        <select name="occupation" >
             <option value=""></option>
             <% for (String occupation : occupations) { %>
             <option><%= occupation %></option>
@@ -121,7 +136,7 @@
 
 
         <label>Differently Abled :</label>
-        <select name="diffabled" required>
+        <select name="diffabled" >
             <option value=""> </option>
             <option value="yes">Yes</option>
             <option value="No">No</option>
@@ -132,31 +147,21 @@
         <!-- Add more filters here up to 10 different filters as per your requirement -->
 
         <button type="submit">Filter</button>
-        <button type="reset">Clear</button> <!-- Clear button to reset form fields -->
+        <button type="reset">Clear</button>
     </form>
 </div>
 
-<!-- Profiles Section -->
-<div class="profiles-section">
-    <!-- Example profiles with dummy data -->
-    <div class="profile-card">
-        <h3>Jane Doe</h3>
-        <p>Age: 28</p>
-        <p>Height: 165 cm</p>
-        <p>Province: Ontario</p>
-        <p>Cast: Cast A</p>
-        <!-- Add more profile details here -->
-    </div>
-    <div class="profile-card">
-        <h3>John Smith</h3>
-        <p>Age: 32</p>
-        <p>Height: 175 cm</p>
-        <p>Province: British Columbia</p>
-        <p>Cast: Cast B</p>
-        <!-- Add more profile details here -->
-    </div>
-    <!-- Add more dummy profiles as needed -->
-</div>
-
+<!-- Display filtered users securely using c:out to prevent XSS -->
+<c:if test="${not empty filteredUsers}">
+    <c:forEach items="${filteredUsers}" var="user">
+        <div class="profile-card">
+            <h2><c:out value="${user.fname}"/> <c:out value="${user.lname}"/></h2>
+            <!-- Include other user details using c:out tags -->
+        </div>
+    </c:forEach>
+</c:if>
+<c:if test="${empty filteredUsers}">
+    <p>No users found matching your criteria.</p>
+</c:if>
 </body>
 </html>

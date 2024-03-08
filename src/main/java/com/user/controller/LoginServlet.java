@@ -37,7 +37,7 @@ public class LoginServlet extends HttpServlet {
                 // Calculate and set profile completion status
                 updateProfileCompletionStatus(session, email);
 
-                RequestDispatcher dis = req.getRequestDispatcher("u_myprofile.jsp");
+                RequestDispatcher dis = req.getRequestDispatcher("u_dashboard.jsp");
                 dis.forward(req, resp);
             } else {
                 // Handle invalid login (redirect to login page, show error message, etc.)

@@ -45,7 +45,7 @@
 
     <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
     <li><button>Connections</button></li>
-    <li><a href="chat.jsp"><button>Chat</button></a></li>
+    <li><a href="view_profile.jsp"><button>Chat</button></a></li>
     <li><button>Notifications</button></li>
     <li><button>Settings</button></li>
     <li class="dropdown">
