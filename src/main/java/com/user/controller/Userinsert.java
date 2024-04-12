@@ -12,8 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
+
 
 @MultipartConfig
 public class Userinsert extends HttpServlet {
@@ -21,40 +20,22 @@ public class Userinsert extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-
-
-
-// Parse the birthday from the request and calculate age
-        String bday = req.getParameter("birthday");
-        LocalDate biday = LocalDate.parse(bday, DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDate today = LocalDate.now();
-        int age = Period.between(biday, today).getYears();
-
-        if (age < 18) {
-            req.setAttribute("errorMessage", "You must be at least 18 years old to register.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return; // Stop the execution
-        }
-// Continue with registration process if age is 18 or above
-
-
-
         String fname = req.getParameter("firstName");
         String lname = req.getParameter("lastName");
+        String idNumber=req.getParameter("idNumber");
 
-        String country = req.getParameter("country");
-        int cID = -1; // Default or error value, assuming your IDs are positive integers
+        String province = req.getParameter("province");
+        int pID = -1; // Default or error value, assuming your IDs are positive integers
         try {
-            cID = UserDBUtil.getCountryIdByName(country);
+            pID = UserDBUtil.getProvinceIdByName(province);
         } catch (Exception e) {
             e.printStackTrace();
             // Consider handling this error more gracefully
         }
 
         // Check if a valid gender ID was retrieved
-        if (cID == -1) {
-            req.setAttribute("errorMessage", "Invalid country selected.");
+        if (pID == -1) {
+            req.setAttribute("errorMessage", "Invalid province selected.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
             dispatcher.forward(req, resp);
             return;
@@ -62,22 +43,8 @@ public class Userinsert extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String cpassword = req.getParameter("confirmPassword");
-        String gender = req.getParameter("gender");
-        int gID = -1; // Default or error value, assuming your IDs are positive integers
-        try {
-            gID = UserDBUtil.getgenderIdByName(gender);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Consider handling this error more gracefully
-        }
 
-        // Check if a valid gender ID was retrieved
-        if (gID == -1) {
-            req.setAttribute("errorMessage", "Invalid gender selected.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return;
-        }
+
 
         // Check if passwords match
         if (!password.equals(cpassword)) {
@@ -93,6 +60,7 @@ public class Userinsert extends HttpServlet {
         String frontphoto = uploadPhoto(filePartFront, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(F)", req, resp);
         String backphoto = uploadPhoto(filePartBack, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(B)", req, resp);
 
+        String gender= req.getParameter("gender");
         if (frontphoto == null || backphoto == null) {
             // Error handling is already done inside uploadPhoto
             return; // Stop processing if there was an error uploading photos
@@ -100,7 +68,18 @@ public class Userinsert extends HttpServlet {
 
         password = String.valueOf(password.hashCode()); // Consider a more secure hashing method
 
-        boolean isInserted = UserDBUtil.insertUser(fname, lname, bday, cID, email, frontphoto, backphoto, password,gID);
+        // Inside your doPost method before inserting the user
+        String dob = req.getParameter("dob");
+        LocalDate birthDate = DateUtil.parseDate(dob);
+        int age = DateUtil.calculateAge(birthDate, LocalDate.now());
+
+        if (age < 18) {
+            req.setAttribute("errorMessage", "You must be 18 years or older to register.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return; // Stop execution
+        }
+        boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, pID, email, frontphoto, backphoto, password,gender,dob,age);
 
         if (isInserted) {
             RequestDispatcher dis = req.getRequestDispatcher("login.jsp");

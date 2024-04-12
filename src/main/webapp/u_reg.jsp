@@ -9,8 +9,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-  List<String> gender = UserDBUtil.getAllGender();
-  List<String> country = UserDBUtil.getAllCountry();
+
+  List<String> province = UserDBUtil.getAllProvince();
 %>
 
 
@@ -97,6 +97,10 @@
     }
 
   </style>
+
+
+  <script src="nic-utils.js"></script>
+
 </head>
 <body>
 <nav>
@@ -115,25 +119,23 @@
       <label for="lastName">Last Name<span class="required-star">*</span>:</label>
       <input type="text" id="lastName" name="lastName" required value="<%= request.getParameter("lastName") != null ? request.getParameter("lastName") : "" %>" />
 
-      <label for="birthday">Birthday <span class="required-star">*</span>:</label>
-      <input type="date" id="birthday" name="birthday" required value="<%= request.getParameter("birthday") != null ? request.getParameter("birthday") : "" %>" />
+      <!-- Your existing form structure -->
+      <label for="idNumber">Nation Identity Number<span class="required-star">*</span>:</label>
+      <input type="text" id="idNumber" name="idNumber" onchange="updateGenderAndAgeFromNIC('idNumber', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
 
 
+      <div id="nicError" style="color: red; display: none;"></div>
 
-      <label>Gender <span class="required-star">*</span>:</label>
-      <select name="gender" required>
+      <input type="hidden" id="gender" name="gender" value="" />
+      <input type="hidden" id="dob" name="dob" value="" />
+      <input type="hidden" id="age" name="age" value="" />
+
+
+      <label>Province<span class="required-star">*</span>:</label>
+      <select name="province" required>
         <option value=""></option>
-        <% for (String gen : gender) { %>
-        <option><%= gen %></option>
-        <% } %>
-      </select>
-
-
-      <label>Country of Residence<span class="required-star">*</span>:</label>
-      <select name="country" required>
-        <option value=""></option>
-        <% for (String con : country) { %>
-        <option><%= con %></option>
+        <% for (String pro : province) { %>
+        <option><%= pro %></option>
         <% } %>
       </select>
 

@@ -141,9 +141,9 @@
               <input type="number" name="numberOfSiblings" min="0" required><br>
 
               <div class="completion-bar">
-                <div class="completion-fill" style="width: 42%;"></div> <!-- Adjust the width based on completion -->
+                <div class="completion-fill" style="width: 43%;"></div> <!-- Adjust the width based on completion -->
               </div>
-              <p class="completion-text">5 out of 6 steps left to complete your profile</p>
+              <p class="completion-text">5 out of 7 steps left to complete your profile</p>
 
 
               <button type="submit" name="action" value="proceed">Proceed</button>

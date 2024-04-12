@@ -8,7 +8,6 @@
 <c:import url="sidebar.jsp"/>
 
 <%
-
     String userEmail = (String) session.getAttribute("userEmail");
     User user = null;
     if (userEmail != null) {
@@ -17,7 +16,9 @@
             user = userDetails.get(0);
         }
     }
+    String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
 %>
+
 
 
 <!DOCTYPE html>
@@ -82,6 +83,8 @@
 
 
     </style>
+    <script src="nic-utils.js"></script>
+
 </head>
 
 
@@ -98,11 +101,12 @@
     <form action="UpdateUserServlet" method="post">
         <div class="profile-details">
             <% if (user != null) { %>
-            <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
+            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
             <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
             <p>Email: <%= user.getEmail() %></p>
-            <p>Birthday: <%= user.getBday() %></p>
-            <p>Country: <%= user.getCountryName() %></p>
+
+            <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %>
+
             <!-- Add other fields as needed -->
             <% } %>
         </div>
@@ -111,7 +115,7 @@
 
         <%
             Integer completedSteps = (Integer)session.getAttribute("completedSteps");
-            Integer totalSteps = 6; // Assuming there are 7 steps in total for profile completion
+            Integer totalSteps = 7; // Assuming there are 7 steps in total for profile completion
             if (completedSteps == null) { completedSteps = 0; }
             int stepsLeft = totalSteps - completedSteps;
 
@@ -126,7 +130,7 @@
         <% } %>
 
 
-        <a href="ProfileCompletionServlet?action=addDetails">Add Profile Details</a>
+        <a href="ProfileCompletionServlet">Add Profile Details</a>
 
 
         <div class="dashboard-options">

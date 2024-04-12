@@ -28,7 +28,7 @@ public class FamilyDetails extends HttpServlet {
             String mreli = request.getParameter("motherReligion");
             String moccup = request.getParameter("motherOccupation");
             String maritalstatus = request.getParameter("maritalStatus");
-            String siblings = request.getParameter("numberOfSiblings");
+            int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
 
 
         if (UserDBUtil.saveFamilyDetailsToDatabase(userEmail,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {

@@ -21,7 +21,7 @@ public class interestedINqual extends  HttpServlet{
                     return;
                 }
 
-                String school = request.getParameter("school");
+
                 String eduQualification = request.getParameter("eduquali");
                 String occupation = request.getParameter("occupation");
 
@@ -29,7 +29,7 @@ public class interestedINqual extends  HttpServlet{
                 int qID = UserDBUtil.getQualificationIdByName(eduQualification);
                 int oID = UserDBUtil.getOccupationIdByName(occupation);
 
-                if (UserDBUtil.saveinterestedINQualToDatabase(uID, school, oID, qID)) {
+                if (UserDBUtil.saveinterestedINQualToDatabase(uID, oID, qID)) {
                     session.setAttribute("isInterestedINQualCompleted", true);
                     response.sendRedirect("ProfileCompletionServlet");
                 } else {
