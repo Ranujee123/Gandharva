@@ -8,7 +8,6 @@
 <c:import url="sidebar.jsp"/>
 
 <%
-
     String userEmail = (String) session.getAttribute("userEmail");
     User user = null;
     if (userEmail != null) {
@@ -17,7 +16,9 @@
             user = userDetails.get(0);
         }
     }
+    String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
 %>
+
 
 
 <!DOCTYPE html>
@@ -100,7 +101,7 @@
     <form action="UpdateUserServlet" method="post">
         <div class="profile-details">
             <% if (user != null) { %>
-            <img src="images/background.jpg" alt="Profile Image" class="profile-image-editable">
+            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
             <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
             <p>Email: <%= user.getEmail() %></p>
 

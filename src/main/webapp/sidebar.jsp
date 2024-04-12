@@ -16,31 +16,32 @@
     <title>Title</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <%
-
-    String userEmail = (String) session.getAttribute("userEmail");
-    User user = null;
-    if (userEmail != null) {
-      List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
-      if (userDetails != null && !userDetails.isEmpty()) {
-        user = userDetails.get(0);
-      }
-    }
-  %>
-
-
 
 </head>
 <body>
 <div class="sidebar">
   <div class="profile">
-    <img src="images/background.jpg" alt="Profile Image" class="profile-image">
+    <%
+      String userEmail = (String) session.getAttribute("userEmail");
+      User user = null;
+      if (userEmail != null) {
+        List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
+        if (userDetails != null && !userDetails.isEmpty()) {
+          user = userDetails.get(0);
+        }
+      }
+      String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
+    %>
+
+
     <% if (user != null) { %>
+    <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
     <p class="profile-name"><span contenteditable="true" name="fname"><%= user.getFname() %></span>
       <span contenteditable="true" name="lname"><%= user.getLname() %></span></p>
     <% } %>
-
   </div>
+
+
   <ul class="sidebar-menu">
 
     <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>

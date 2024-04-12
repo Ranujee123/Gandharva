@@ -679,17 +679,16 @@ public class UserDBUtil {
 
     //inteersted IN qualification
 
-    public static boolean saveinterestedINQualToDatabase(int uID, String school, int oID, int qID) throws Exception {
+    public static boolean saveinterestedINQualToDatabase(int uID, int oID, int qID) throws Exception {
         Connection con = null;
         PreparedStatement preparedStatement = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO interestedINQual (uID,school, oID,  qID) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO interestedINQual (uID, oID,  qID) VALUES (?, ?, ?)";
             preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, uID);
-            preparedStatement.setString(2, school);
-            preparedStatement.setInt(3, oID);
-            preparedStatement.setInt(4, qID);
+            preparedStatement.setInt(2, oID);
+            preparedStatement.setInt(3, qID);
             int result = preparedStatement.executeUpdate();
             return result > 0;
         } catch (Exception e) {
@@ -890,6 +889,23 @@ public class UserDBUtil {
             e.printStackTrace();
         }
         return userList;
+    }
+
+
+    public static String getProfileImagePath(String userEmail) {
+        String defaultImagePath = "DP/defaultDP.jpeg"; // Path to the default image
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM u_pdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)")) {
+            pstmt.setString(1, userEmail);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next() && rs.getString("dpphoto") != null && !rs.getString("dpphoto").trim().isEmpty()) {
+                    return "DP/" + rs.getString("dpphoto"); // Return the user's profile photo if available
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return defaultImagePath; // Return default image path if none found or error occurs
     }
 
 
