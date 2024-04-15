@@ -29,7 +29,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="u_styles.css">
   <title>Personal Details</title>
   <style>
     /* Inline CSS styling */
@@ -195,8 +195,6 @@
           <option value="No">No</option>
         </select>
 
-        <label for="dpphoto">Profile Picture<span class="required-star"></span>:</label>
-        <input type="file" id="dpphoto" name="dpphoto">
 
 
         <div class="completion-bar">

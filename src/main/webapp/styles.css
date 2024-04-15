@@ -1,6 +1,5 @@
 /* styles.css */
 
-
 .sidebar {
     background-color: black;
     color: #fff;
@@ -93,9 +92,9 @@
 }
 
 
-/* Binali U
+/*Binali U
 /***PROFILE_NAVBAR***/
-/*
+
 *{
     margin: 0;
     padding: 0;
@@ -107,7 +106,7 @@
 }
 
 
-body{
+.body{
     display: flex;
 }
 
@@ -138,7 +137,7 @@ body{
     margin-left: -8px;
     width: 10px; !important;/* Adjust width as needed */
 /*    height: 80px; !important;/* Adjust height as needed */
-/*
+
 }
 
 .menu{
@@ -190,7 +189,7 @@ body{
 
 /*main body section*/
 
-/*
+
 .main--content{
     position: relative;
     background: lightgray;
@@ -256,18 +255,18 @@ body{
 /*ASTROLOGER_DASHBOARD_BODY*/
 /*card container*/
 
-/*
+
 .card--container{
     background: white;
     padding: 2rem;
     border-radius: 10px;
 
 }
-/*.card--container:hover{*/
-/*    cursor: pointer;*/
-/*}*/
+.card--container:hover{
+  cursor: pointer;
+}
 
-/*
+
 .card--wrapper{
     display: flex;
     justify-content: space-evenly;
@@ -340,7 +339,7 @@ body{
 }
 
 /*color css*/
-/*
+
 .light-red{
     background: rgb(255,233,233);
 }
@@ -368,7 +367,7 @@ body{
 
 /*tabular section*/
 /*TABLES*/
-/*
+
 .tabular--wrapper{
     background-color: #fff;
     margin-top: 1rem;
@@ -379,7 +378,7 @@ body{
     width: 100%;
 }
 
-table {
+/*table {
     width: 100%;
     border-collapse: collapse;
     border-radius: 10px;
@@ -406,17 +405,17 @@ td button{
 }
 
 
-/*tfoot{*/
-/*    background: #24333E;*/
-/*    font-weight: bold;*/
-/*    color: #fff;*/
-/*}*/
-/*tfoot td{*/
-/*    padding: 15px;*/
-/*}*/
+tfoot{
+ background: #24333E;
+   font-weight: bold;
+   color: #fff;
+}
+tfoot td{
+ padding: 15px;
+}
 
 /*ASTROLOGER_PROFILE*/
-/*
+
 .amend{
     margin-left: 45%; //with delete 550px
     display: flex;
@@ -476,40 +475,40 @@ td button{
     color: black;
 }
 
-.
-/*.image--wrapper {*/
-/*    height: 130px;*/
-/*    width: 130px;*/
-/*    border-radius: 50%;*/
-/*    position: fixed;*/
-/*    justify-content: center;*/
-/*    align-items: center;*/
-/*}*/
-/*#photo{*/
-/*    width: 130px;*/
-/*    height: 130px;*/
-/*    border-radius:50%;*/
-/*}*/
-/*#file{*/
-/*    display: none;*/
-/*}*/
-/*#upload--button{*/
-/*    position: absolute;*/
-/*    height: 30px;*/
-/*    width: 30px;*/
-/*    padding: 6px 6px;*/
-/*    border-radius: 50%;*/
-/*    cursor: pointer;*/
-/*    color: #fff;*/
-/*    background-color: rgb(173,172,172,0.001);*/
-/*    box-shadow: 2px 4px 4px rgb(0,0,0,0.644);*/
+
+.image--wrapper {
+   height: 130px;
+   width: 130px;
+    border-radius: 50%;
+    position: fixed;
+    justify-content: center;
+   align-items: center;
+}
+#photo{
+    width: 130px;
+   height: 130px;
+   border-radius:50%;
+}
+#file{
+    display: none;
+}
+#upload--button{
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    padding: 6px 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    color: #fff;
+    background-color: rgb(173,172,172,0.001);
+    box-shadow: 2px 4px 4px rgb(0,0,0,0.644);
 
 
-/*}*/
+}
 
 
 /*ASTROLOGER_PAYMENT*/
-/*
+
 .transaction--statement{
     cursor: pointer;
 
@@ -517,7 +516,7 @@ td button{
 
 /*ASTROLOGER_SETTING*/
 
-/*
+
 .settings--buttons{
     border: none;
     border-radius: 20%;
@@ -526,7 +525,7 @@ td button{
 
 
 /*ASTROLOGER_PENDING*/
-/*
+
 .pending--table input{
     width: 80%;
     background-color: lightgrey;
@@ -539,7 +538,7 @@ td button{
 
 /*ASTROLOGER_LOGOUT*/
 
-/*
+
 .cards {
     position: absolute;
     margin-top: 200px;
@@ -590,7 +589,7 @@ a{
 
 /*ASTROLOGER_PENDING*/
 
-/*
+
 .feedback--popup .overlay{
     position: fixed;
     top: 0px;
@@ -649,4 +648,3 @@ a{
     margin-top: -50px;
     scale: 80%;
 }
-*/

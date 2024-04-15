@@ -5,6 +5,7 @@ public class User {
     private String idNumber;
     private int pID;
     private String email;
+    private String dpphoto;
     private String password;
     private String gender;
     private String dob;
@@ -19,12 +20,13 @@ public class User {
     private String diffabled;
 
     // Constructor
-    public User(String fname, String lname, String idNumber, int pID, String email, String dob, String provinceName, int age) {
+    public User(String fname, String lname, String idNumber, int pID, String email,String dpphoto, String dob, String provinceName, int age) {
         this.fname = fname;
         this.lname = lname;
         this.idNumber = idNumber;
         this.pID = pID;
         this.email = email;
+        this.dpphoto=dpphoto;
         this.dob = dob;
         this.provinceName = provinceName;
         this.age = age;
@@ -164,6 +166,11 @@ public class User {
     }
 
 
+    public void setDpphoto(String dpphoto) {
+        this.dpphoto = dpphoto;
+    }
 
-
+    public String getDpphoto() {
+        return dpphoto;
+    }
 }

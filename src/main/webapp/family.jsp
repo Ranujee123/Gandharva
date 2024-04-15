@@ -20,7 +20,7 @@
 <html>
 <head>
   <title>User Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="u_styles.css">
   <style>
     /* Inline CSS styling */
     body {

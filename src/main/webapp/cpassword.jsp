@@ -30,7 +30,7 @@
 <head>
 
     <title>Change Password </title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="u_styles.css">
 
     <style>
     body {

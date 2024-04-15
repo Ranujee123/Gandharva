@@ -1,4 +1,5 @@
 package com.user.model;
+import javax.servlet.http.Part;
 import java.sql.*;
 
 
@@ -28,6 +29,7 @@ public class UserDBUtil {
                 String idNumber = resultSet.getString("idNumber");
                 int pID = resultSet.getInt("pID");
                 String emailU = resultSet.getString("email");
+                String dpphoto=resultSet.getString("dpphoto");
                 // String passwordU = resultSet.getString("password"); // Typically not needed once validated
                 //  String gender = resultSet.getString("gender");
                 String dob = resultSet.getString("dob");
@@ -35,7 +37,7 @@ public class UserDBUtil {
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
 
                 // Assuming you have updated the User constructor to include 'gender' and 'age' as parameters
-                User u = new User(fname, lname, idNumber, pID, emailU, dob, provinceName, age);
+                User u = new User(fname, lname, idNumber, pID, emailU,dpphoto, dob, provinceName, age);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -139,7 +141,7 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser(String fname, String lname, String idNumber, String provinceName, String email) {
+    public static boolean updateUser(String fname, String lname, String idNumber, String provinceName, String email,String dpphoto) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -158,13 +160,15 @@ public class UserDBUtil {
 
             if (pID != -1) {
                 // Update the user with the new country ID
-                String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, pID=? WHERE email=?";
+                String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, pID=? ,dpphoto=? WHERE email=?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setString(1, fname);
                 pstmt.setString(2, lname);
                 pstmt.setString(3, idNumber);
                 pstmt.setInt(4, pID);
-                pstmt.setString(5, email);
+                pstmt.setString(5, dpphoto);
+                pstmt.setString(6, email);
+
 
                 int rowsAffected = pstmt.executeUpdate();
                 isSuccess = rowsAffected > 0;
@@ -196,11 +200,13 @@ public class UserDBUtil {
                     String lname = resultSet.getString("lname");
                     String idNumber = resultSet.getString("idNumber");
                     int pID = resultSet.getInt("pID");
+                    String dpphoto=resultSet.getString("dpphoto");
                     String emailU = resultSet.getString("email");
+
                     String dob = resultSet.getString("dob");
                     String provinceName = resultSet.getString("provinceName");
                     int age = resultSet.getInt("age");
-                    User user = new User(fname, lname, idNumber, pID, emailU, dob, provinceName, age);
+                    User user = new User(fname, lname, idNumber, pID, emailU,dpphoto, dob, provinceName, age);
                     users.add(user);
                 }
             }
@@ -251,7 +257,7 @@ public class UserDBUtil {
 
 
     public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion,
-                                                        String status, String height, String foodpreferences, String drinking, String smoking, String diffabled, String dpphoto) {
+                                                        String status, String height, String foodpreferences, String drinking, String smoking, String diffabled) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -259,7 +265,7 @@ public class UserDBUtil {
             }
 
             Connection con = DBConnect.getConnection();
-            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled,dpphoto) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)";
+            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
                 preparedStatement.setString(2, ethnicity);
@@ -270,7 +276,7 @@ public class UserDBUtil {
                 preparedStatement.setString(7, drinking);
                 preparedStatement.setString(8, smoking);
                 preparedStatement.setString(9, diffabled);
-                preparedStatement.setString(10, dpphoto);
+
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }
@@ -895,7 +901,7 @@ public class UserDBUtil {
     public static String getProfileImagePath(String userEmail) {
         String defaultImagePath = "DP/defaultDP.jpeg"; // Path to the default image
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM u_pdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)")) {
+             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM user WHERE email = ?")) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next() && rs.getString("dpphoto") != null && !rs.getString("dpphoto").trim().isEmpty()) {

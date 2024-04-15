@@ -26,7 +26,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="u_styles.css">
     <title>User Dashboard</title>
     <style>
         /* Inline CSS styling */
