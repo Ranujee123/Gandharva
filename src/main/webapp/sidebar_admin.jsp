@@ -30,10 +30,10 @@
   </div>
   <ul class="sidebar-menu-admin">
 
-    <li><a href="adminUserlist.jsp" >Activate Accounts</a></li>
-    <li><a href="verify_accounts.jsp">Verify Accounts</a></li>
-    <li><a href="userList.jsp">View profiles</a></li>
-    <li><a href="handle_complaints.jsp">Handling Complaints</a></li>
+    <li><a href="activateuser" >Activate Accounts</a></li>
+    <li><a href="verifyuser">Verify Accounts</a></li>
+    <li><a href="userlist">View profiles</a></li>
+    <li><a href="complaints">Handling Complaints</a></li>
   </ul>
 
   <a class="logout">Logout</a>
