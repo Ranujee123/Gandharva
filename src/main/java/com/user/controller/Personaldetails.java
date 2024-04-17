@@ -34,16 +34,9 @@ public class Personaldetails extends HttpServlet {
             String smoking = request.getParameter("smoking");
             String diffabled = request.getParameter("diffabled");
 
-            Part filePartDP = request.getPart("dpphoto");
-            String uploadsDirPath = "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/DP"; // Update this path
-            String dpphoto = uploadPhoto(filePartDP, uploadsDirPath, request, response);
-            if (dpphoto == null) {
-                // Error handling already done inside uploadPhoto
-                return; // Stop processing if there was an error uploading the photo
-            }
 
             // Save personal details to database
-            boolean isSaved = UserDBUtil.savePersonalDetailsToDatabase(userEmail, ethnicity, religion, status, height, foodPreference, drinking, smoking, diffabled, dpphoto);
+            boolean isSaved = UserDBUtil.savePersonalDetailsToDatabase(userEmail, ethnicity, religion, status, height, foodPreference, drinking, smoking, diffabled);
             if (isSaved) {
                 session.setAttribute("personalDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet"); // Redirect to the next step or confirmation page
@@ -60,28 +53,4 @@ public class Personaldetails extends HttpServlet {
         }
     }
 
-    private String uploadPhoto(Part filePart, String uploadsDirPath, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (filePart == null || filePart.getSubmittedFileName().isEmpty()) {
-            request.setAttribute("errorMessage", "Profile picture is required. Please select a file to upload.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/errorPage.jsp");
-            dispatcher.forward(request, response);
-            return null;
-        }
-
-        String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        String newFileName = System.currentTimeMillis() + "_" + originalFileName;
-
-        File uploadsDir = new File(uploadsDirPath);
-        if (!uploadsDir.exists() && !uploadsDir.mkdirs()) {
-            request.setAttribute("errorMessage", "Server error: unable to create directory for file upload.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/errorPage.jsp");
-            dispatcher.forward(request, response);
-            return null;
-        }
-
-        String photoPath = uploadsDirPath + File.separator + newFileName;
-        filePart.write(photoPath);
-
-        return newFileName;
-    }
 }

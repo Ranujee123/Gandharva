@@ -1,4 +1,5 @@
 package com.user.model;
+import javax.servlet.http.Part;
 import java.sql.*;
 
 
@@ -28,6 +29,7 @@ public class UserDBUtil {
                 String idNumber = resultSet.getString("idNumber");
                 int pID = resultSet.getInt("pID");
                 String emailU = resultSet.getString("email");
+                String dpphoto = resultSet.getString("dpphoto");
                 // String passwordU = resultSet.getString("password"); // Typically not needed once validated
                 //  String gender = resultSet.getString("gender");
                 String dob = resultSet.getString("dob");
@@ -35,7 +37,7 @@ public class UserDBUtil {
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
 
                 // Assuming you have updated the User constructor to include 'gender' and 'age' as parameters
-                User u = new User(fname, lname, idNumber, pID, emailU, dob, provinceName, age);
+                User u = new User(fname, lname, idNumber, pID, emailU, dpphoto, dob, provinceName, age);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -126,8 +128,8 @@ public class UserDBUtil {
                 preparedStatement.setString(8, password);
                 preparedStatement.setString(9, gender);
                 preparedStatement.setString(10, dob);
-             // preparedStatement.setString(11,age);
-                 preparedStatement.setString(11, String.valueOf(age));
+                // preparedStatement.setString(11,age);
+                preparedStatement.setString(11, String.valueOf(age));
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 isSuccess = rowsAffected > 0;
@@ -139,7 +141,7 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser(String fname, String lname, String idNumber, String provinceName, String email) {
+    public static boolean updateUser(String fname, String lname, String idNumber, String provinceName, String email, String dpphoto) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -158,13 +160,15 @@ public class UserDBUtil {
 
             if (pID != -1) {
                 // Update the user with the new country ID
-                String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, pID=? WHERE email=?";
+                String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, pID=? ,dpphoto=? WHERE email=?";
                 pstmt = con.prepareStatement(sql);
                 pstmt.setString(1, fname);
                 pstmt.setString(2, lname);
                 pstmt.setString(3, idNumber);
                 pstmt.setInt(4, pID);
-                pstmt.setString(5, email);
+                pstmt.setString(5, dpphoto);
+                pstmt.setString(6, email);
+
 
                 int rowsAffected = pstmt.executeUpdate();
                 isSuccess = rowsAffected > 0;
@@ -196,11 +200,13 @@ public class UserDBUtil {
                     String lname = resultSet.getString("lname");
                     String idNumber = resultSet.getString("idNumber");
                     int pID = resultSet.getInt("pID");
+                    String dpphoto = resultSet.getString("dpphoto");
                     String emailU = resultSet.getString("email");
+
                     String dob = resultSet.getString("dob");
                     String provinceName = resultSet.getString("provinceName");
                     int age = resultSet.getInt("age");
-                    User user = new User(fname, lname, idNumber, pID, emailU, dob, provinceName, age);
+                    User user = new User(fname, lname, idNumber, pID, emailU, dpphoto, dob, provinceName, age);
                     users.add(user);
                 }
             }
@@ -251,7 +257,7 @@ public class UserDBUtil {
 
 
     public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion,
-                                                        String status, String height, String foodpreferences, String drinking, String smoking, String diffabled, String dpphoto) {
+                                                        String status, String height, String foodpreferences, String drinking, String smoking, String diffabled) {
         try {
             int uID = getUserIdByEmail(userEmail);
             if (uID == -1) {
@@ -259,7 +265,7 @@ public class UserDBUtil {
             }
 
             Connection con = DBConnect.getConnection();
-            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled,dpphoto) VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?)";
+            String sql = "INSERT INTO u_pdetails (uID,  ethnicity, religion,  status, height, foodpreferences,drinking, smoking,diffabled) VALUES (?, ?, ?, ?, ?, ?, ?,?,?)";
             try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
                 preparedStatement.setInt(1, uID);
                 preparedStatement.setString(2, ethnicity);
@@ -270,7 +276,7 @@ public class UserDBUtil {
                 preparedStatement.setString(7, drinking);
                 preparedStatement.setString(8, smoking);
                 preparedStatement.setString(9, diffabled);
-                preparedStatement.setString(10, dpphoto);
+
                 int result = preparedStatement.executeUpdate();
                 return result > 0;
             }
@@ -799,103 +805,10 @@ public class UserDBUtil {
     }
 
 
-    public static List<User> getFilteredUsers(String userEmail, String ageFrom, String ageTo, String province, String ethnicity, String religion, String status, String height, String eduQuali, String occupation, String diffabled) {
-        List<User> userList = new ArrayList<>();
-        try {
-            Connection con = DBConnect.getConnection(); // Ensure you have a method DBConnect.getConnection() that returns a valid connection
-            StringBuilder queryBuilder = new StringBuilder();
-            queryBuilder.append("SELECT u.fname, u.lname, u.email, u.age, p.province AS provinceName, pd.ethnicity, pd.religion, pd.status, pd.height, q.qualification AS qualificationName, o.occupation AS occupationName, pd.diffabled ");
-            queryBuilder.append("FROM user u ");
-            queryBuilder.append("JOIN province p ON u.pID = p.pID ");
-            queryBuilder.append("JOIN u_pdetails pd ON u.uID = pd.uID ");
-            queryBuilder.append("JOIN userdetails ud ON u.uID = ud.uID ");
-            queryBuilder.append("JOIN qualification q ON ud.qID = q.qID ");
-            queryBuilder.append("JOIN occupation o ON ud.oID = o.oID ");
-            queryBuilder.append("WHERE u.email != ? ");
-
-            List<Object> parameters = new ArrayList<>();
-            parameters.add(userEmail); // Add the email to the parameters list
-
-            // Dynamic filtering based on provided filters
-            if (ageFrom != null && !ageFrom.isEmpty() && ageTo != null && !ageTo.isEmpty()) {
-                queryBuilder.append("AND u.age BETWEEN ? AND ? ");
-                parameters.add(Integer.parseInt(ageFrom));
-                parameters.add(Integer.parseInt(ageTo));
-            }
-            if (province != null && !province.isEmpty()) {
-                queryBuilder.append("AND p.province = ? ");
-                parameters.add(province);
-            }
-            if (ethnicity != null && !ethnicity.isEmpty()) {
-                queryBuilder.append("AND pd.ethnicity = ? ");
-                parameters.add(ethnicity);
-            }
-            if (religion != null && !religion.isEmpty()) {
-                queryBuilder.append("AND pd.religion = ? ");
-                parameters.add(religion);
-            }
-            if (status != null && !status.isEmpty()) {
-                queryBuilder.append("AND pd.status = ? ");
-                parameters.add(status);
-            }
-            if (height != null && !height.isEmpty()) {
-                queryBuilder.append("AND pd.height = ? ");
-                parameters.add(height);
-            }
-            if (eduQuali != null && !eduQuali.isEmpty()) {
-                queryBuilder.append("AND q.qualification = ? ");
-                parameters.add(eduQuali);
-            }
-            if (occupation != null && !occupation.isEmpty()) {
-                queryBuilder.append("AND o.occupation = ? ");
-                parameters.add(occupation);
-            }
-            if (diffabled != null && !diffabled.isEmpty()) {
-                queryBuilder.append("AND pd.diffabled = ? ");
-                parameters.add(diffabled);
-            }
-
-            PreparedStatement pst = con.prepareStatement(queryBuilder.toString());
-
-            System.out.println("Executing query: " + queryBuilder.toString());
-            System.out.println("With parameters: " + parameters);
-
-
-            // Set the parameters for the prepared statement
-            for (int i = 0; i < parameters.size(); i++) {
-                pst.setObject(i + 1, parameters.get(i));
-            }
-
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                User user = new User(
-                        rs.getString("fname"),
-                        rs.getString("lname"),
-                        rs.getString("email"),
-                        rs.getInt("age"),
-                        rs.getString("provinceName"),
-                        rs.getString("ethnicity"),
-                        rs.getString("religion"),
-                        rs.getString("status"),
-                        rs.getString("height"),
-                        rs.getString("qualificationName"),
-                        rs.getString("occupationName"),
-                        rs.getString("diffabled")
-                );
-                userList.add(user);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return userList;
-    }
-
-
     public static String getProfileImagePath(String userEmail) {
         String defaultImagePath = "DP/defaultDP.jpeg"; // Path to the default image
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM u_pdetails WHERE uID = (SELECT uID FROM user WHERE email = ?)")) {
+             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM user WHERE email = ?")) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next() && rs.getString("dpphoto") != null && !rs.getString("dpphoto").trim().isEmpty()) {
@@ -908,5 +821,108 @@ public class UserDBUtil {
         return defaultImagePath; // Return default image path if none found or error occurs
     }
 
+
+    /*  public static List<User> getUsersByProvince(String province) {
+          List<User> users = new ArrayList<>();
+          try (Connection con = DBConnect.getConnection();
+               PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user JOIN province ON user.pID = province.pID WHERE province.province = ?")) {
+
+              preparedStatement.setString(1, province);
+              ResultSet resultSet = preparedStatement.executeQuery();
+
+              while (resultSet.next()) {
+                  // Assuming you have a constructor that suits this data structure
+                  User user = new User(
+                          resultSet.getString("fname"),
+                          resultSet.getString("lname"),
+                          resultSet.getString("email"),
+                          resultSet.getString("province"));
+                  users.add(user);
+              }
+          } catch (SQLException e) {
+              e.printStackTrace();
+          }
+          return users;
+      }
+  */
+    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height, String qualification, String occupation, String diffabled, String userEmail) {
+        List<User> users = new ArrayList<>();
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT u.fname, u.lname, u.email, p.province, pd.ethnicity, pd.religion, pd.status, pd.height, q.qualification, o.occupation, pd.diffabled, ");
+        query.append("((CASE WHEN p.province = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.ethnicity = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.religion = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.status = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.height = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN q.qualification = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN o.occupation = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.diffabled = ? THEN 1 ELSE 0 END)) AS relevance ");
+        query.append("FROM user u ");
+        query.append("LEFT JOIN province p ON u.pID = p.pID ");
+        query.append("LEFT JOIN u_pdetails pd ON u.uID = pd.uID ");
+        query.append("LEFT JOIN userdetails ud ON u.uID = ud.uID ");
+        query.append("LEFT JOIN qualification q ON ud.qID = q.qID ");
+        query.append("LEFT JOIN occupation o ON ud.oID = o.oID ");
+        query.append("WHERE u.email <> ? ");
+        query.append("AND (p.province = ? OR pd.ethnicity = ? OR pd.religion = ? OR pd.status=? OR pd.height=? OR q.qualification=? OR o.occupation=? OR pd.diffabled=?) ");
+        query.append("ORDER BY relevance DESC");
+
+        List<String> parameters = new ArrayList<>();
+// Add parameters for relevance scoring
+        parameters.add(province);
+        parameters.add(ethnicity);
+        parameters.add(religion);
+        parameters.add(status);
+        parameters.add(height);
+        parameters.add(qualification);
+        parameters.add(occupation);
+        parameters.add(diffabled);
+
+// Add user email for exclusion in WHERE clause
+        parameters.add(userEmail);
+
+// Add parameters again for filtering conditions in WHERE clause
+        parameters.add(province);
+        parameters.add(ethnicity);
+        parameters.add(religion);
+        parameters.add(status);
+        parameters.add(height);
+        parameters.add(qualification);
+        parameters.add(occupation);
+        parameters.add(diffabled);
+
+        System.out.println("Executing SQL: " + query.toString());
+        System.out.println("With parameters: " + parameters);
+
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement preparedStatement = con.prepareStatement(query.toString())) {
+            for (int i = 0; i < parameters.size(); i++) {
+                preparedStatement.setString(i + 1, parameters.get(i));
+            }
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = new User(
+                        resultSet.getString("fname"),
+                        resultSet.getString("lname"),
+                        resultSet.getString("email"),
+                        resultSet.getString("province"),
+                        resultSet.getString("ethnicity"),
+                        resultSet.getString("religion"),
+                        resultSet.getString("status"),
+                        resultSet.getString("height"),
+                        resultSet.getString("qualification"),
+                        resultSet.getString("occupation"),
+                        resultSet.getString("diffabled")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("SQL Error: " + e.getMessage());
+        }
+        return users;
+    }
 
 }

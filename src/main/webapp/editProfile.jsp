@@ -21,18 +21,22 @@
 
     String userEmail = (String) session.getAttribute("userEmail");
     User user = null;
+    String profileImagePath = UserDBUtil.getProfileImagePath(userEmail);
     if (userEmail != null) {
         List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
         if (userDetails != null && !userDetails.isEmpty()) {
             user = userDetails.get(0);
         }
     }
+
 %>
 <!DOCTYPE html>
 <html>
 <head>
     <title>User Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="u_styles.css">
+    <link rel="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
     <style>
         /* Inline CSS styling */
         .container {
@@ -72,6 +76,28 @@
             color: red;
             margin-bottom: 10px;
         }
+
+
+        .dp .profile-img-container {
+            position: relative;
+            display: inline-block; /* Center the image container if needed */
+        }
+
+        .dp img.profile-image {
+            width: 150px; /* Adjust size as needed */
+            height: auto;
+        }
+
+        .dp .edit-icon {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.8); /*White background with opacity for visibility */
+            padding: 5px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
     </style>
 
     <script src="nic-utils.js"></script>
@@ -88,8 +114,23 @@
     <h1>Edit Profile</h1>
     <div class="form-container">
         <div class="error" id="password-error"></div>
+
         <% if (user != null) { %>
-        <form action="updateu" method="post">
+        <form action="updateu" method="post" enctype="multipart/form-data">
+            <div class="dp">
+                <div class="profile-img-container">
+                    <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
+                    <i class="fas fa-pencil-alt edit-icon" onclick="document.getElementById('dpphoto').click();"></i>
+
+
+                </div>
+                <input type="file" id="dpphoto" name="dpphoto" style="display: none;">
+
+            </div>
+            <label>Choose a file :</label>
+            <br>
+
+            <br>
             <label>First Name:</label>
             <input type="text" name="fname" value="<%= user.getFname() %>" >
             <label>Last Name:</label>

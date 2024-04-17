@@ -14,7 +14,7 @@
 <html>
 <head>
     <title>Title</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="u_styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 </head>
@@ -46,7 +46,7 @@
 
     <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
     <li><button>Connections</button></li>
-    <li><a href="view_profile.jsp"><button>Chat</button></a></li>
+    <li><a href="chat.jsp"><button>Chat</button></a></li>
     <li><button>Notifications</button></li>
     <li><button>Settings</button></li>
     <li class="dropdown">

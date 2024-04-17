@@ -1,11 +1,12 @@
-<%@ page import="java.util.List" %>
-<%@ page import="com.user.model.UserDBUtil" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: ranu
-  Date: 2024-02-17
-  Time: 15:12
+  Date: 2024-04-17
+  Time: 13:40
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page import="java.util.List" %>
+<%@ page import="com.user.model.UserDBUtil" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="sidebar.jsp"/>
@@ -15,7 +16,6 @@
     List<String> province = UserDBUtil.getAllProvince();
     List<String> occupations = UserDBUtil.getAllOccupations();
     List<String> qualifications = UserDBUtil.getAllQualifications();
-    List<String> ages= UserDBUtil.getAge();
 %>
 
 <html>
@@ -54,9 +54,7 @@
 
 <!-- Filter Section -->
 <div class="filter-section">
-    <form action="Filter" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
-
-
+    <form action="filter" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
 
 
 
@@ -90,6 +88,7 @@
             <option value="none">None</option>
             <option value="other">Other</option>
         </select>
+
         <label>Civil Status :</label>
         <select name="status" >
             <option value=""> </option>
@@ -138,10 +137,16 @@
             <option value="yes">Yes</option>
             <option value="No">No</option>
         </select>
+        <label for="minAge">Age From:</label>
+        <input type="number" id="minAge" name="minAge" min="18" max="60" oninput="validateAge(this)">
+        <span id="age-error" style="color: red;"></span>
 
-        <!-- Add more filters here up to 10 different filters as per your requirement -->
+        <label for="maxAge">To:</label>
+        <input type="number" id="maxAge" name="maxAge" min="18" max="60" oninput="validateAge(this)">
+        <span id="ageto-error" style="color: red;"></span>
 
-        <!-- Add more filters here up to 10 different filters as per your requirement -->
+
+
 
         <button type="submit">Filter</button>
         <button type="reset">Clear</button>

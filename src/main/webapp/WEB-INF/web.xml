@@ -160,5 +160,26 @@
 
 
 
+  <servlet>
+    <servlet-name>ChatStore</servlet-name>
+    <servlet-class>com.user.controller.ChatStore</servlet-class>
+  </servlet>
+
+    <servlet-mapping>
+      <servlet-name>ChatStore</servlet-name>
+      <url-pattern>/chatstore</url-pattern>
+    </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>LoadMessages</servlet-name>
+    <servlet-class>com.user.controller.LoadMessages</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>LoadMessages</servlet-name>
+    <url-pattern>/LoadMessages</url-pattern>
+  </servlet-mapping>
+
 
 </web-app>
