@@ -18,7 +18,10 @@ public class User {
     private String qualificationName;
     private String occupationName;
     private String diffabled;
+   private int minAge;
+   private int maxAge;
 
+private static int Id;
     // Constructor
     public User(String fname, String lname, String idNumber, int pID, String email,String dpphoto, String dob, String provinceName, int age) {
         this.fname = fname;
@@ -45,6 +48,22 @@ public class User {
         this.qualificationName = qualificationName;
         this.occupationName = occupationName;
         this.diffabled = diffabled;
+
+    }
+    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String qualification,String occupation,String diffabled) {
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.provinceName = province;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.status=status;
+        this.height=height;
+        this.qualificationName=qualification;
+        this.occupationName=occupation;
+        this.diffabled=diffabled;
+
+
     }
 
     public String getReligion() {
@@ -172,5 +191,9 @@ public class User {
 
     public String getDpphoto() {
         return dpphoto;
+    }
+
+    public static int getId() {
+        return Id;
     }
 }
