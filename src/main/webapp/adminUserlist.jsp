@@ -12,7 +12,7 @@
     <title>Admin Dashboard</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>/* Style the table */
-    .container{
+    .container-complaints{
         /*margin-top: 50px;*/
         width: 100%;
         border-collapse: collapse;
@@ -87,74 +87,85 @@
     <div class="container">
         <table>
             <tr>
-                <th>Username</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>
-                <th>Phone</th>
+                <th>NIC</th>
                 <th>Country</th>
+                <th>Status</th>
             </tr>
-            <tr>
-                <td>user1</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john.doe@example.com</td>
-                <td>123-456-7890</td>
-                <td>USA</td>
-                <td><button>Activate</button></td>
-            </tr>
-            <tr>
-                <td>user2</td>
-                <td>Jane</td>
-                <td>Smith</td>
-                <td>jane.smith@example.com</td>
-                <td>987-654-3210</td>
-                <td>Canada</td>
-                <td><button>Activate</button></td>
-            </tr>
+            <c:forEach items="${userList}" var="user">
+                <tr >
 
-            <tr>
-                <td>user3</td>
-                <td>Michael</td>
-                <td>Johnson</td>
-                <td>michael.johnson@example.com</td>
-                <td>456-789-0123</td>
-                <td>UK</td>
-                <td><button>Activate</button></td>
-            </tr>
-            <tr>
-                <td>user1</td>
-                <td>John</td>
-                <td>Doe</td>
-                <td>john.doe@example.com</td>
-                <td>123-456-7890</td>
-                <td>USA</td>
-                <td><button>Activate</button></td>
-            </tr>
-            <tr>
-                <td>user2</td>
-                <td>Jane</td>
-                <td>Smith</td>
-                <td>jane.smith@example.com</td>
-                <td>987-654-3210</td>
-                <td>Canada</td>
-                <td><button>Activate</button></td>
-            </tr>
+                    <td>${user.firstName}</td>
+                    <td>${user.lastName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.nic}</td>
+                    <td>${user.countryOfResidence}</td>
 
-            <tr>
-                <td>user3</td>
-                <td>Michael</td>
-                <td>Johnson</td>
-                <td>michael.johnson@example.com</td>
-                <td>456-789-0123</td>
-                <td>UK</td>
-                <td><button>Activate</button></td>
-            </tr>
+                    <c:if test="${user.stat == 'active'}">
+                        <td style="text-align: center">Active</td>
+                        <td style="display: flex;align-items: center;justify-content: center;"><button class="btn-deactivate" onclick="UpdateStatus('Deactive','${user.id}')">Deactivate</button></td>
+                    </c:if>
+                    <c:if test="${user.stat == 'Deactive'}">
+                        <td style="text-align: center">Deactive</td>
+                        <td style="display: flex;align-items: center;justify-content: center;"><button class="btn-activate" onclick="UpdateStatus('active','${user.id}')">Activate</button></td>
+                    </c:if>
+
+                </tr>
+            </c:forEach>
+
         </table>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function UpdateStatus(status, id) {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to "+status+" this user!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, '+status+' it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
 
 
+        fetch('/Gandharva_main/activateuser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + encodeURIComponent(id)+'&status='+encodeURIComponent(status)
+        })
+            .then(function(response) {
+                if (response.ok) {
+                    return response.text();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(function(responseText) {
+                console.log(responseText);
+                Swal.fire(
+                    'Success!',
+                    'User has been '+status+'d.',
+                    'success'
+                ).then((result) => {
 
+                        location.reload();
+
+                });
+            })
+            .catch(function(error) {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+            }
+        })
+    }
+</script>
 
 
 </div>

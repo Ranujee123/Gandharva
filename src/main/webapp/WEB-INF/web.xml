@@ -70,7 +70,41 @@
   </servlet-mapping>
 
 
+  <servlet>
+    <servlet-name>Userlist</servlet-name>
+    <servlet-class>com.user.controller.UserListControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Userlist</servlet-name>
+    <url-pattern>/userlist</url-pattern>
+  </servlet-mapping>
 
+  <servlet>
+    <servlet-name>complaints</servlet-name>
+    <servlet-class>com.user.controller.ComplaintsController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>complaints</servlet-name>
+    <url-pattern>/complaints</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>verifyuser</servlet-name>
+    <servlet-class>com.user.controller.userVerifyControler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>verifyuser</servlet-name>
+    <url-pattern>/verifyuser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>activateuser</servlet-name>
+    <servlet-class>com.user.controller.activateuserController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>activateuser</servlet-name>
+    <url-pattern>/activateuser</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>FamilyDetailsServlet</servlet-name>
