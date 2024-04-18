@@ -37,6 +37,9 @@
         .profile-card:hover {
             box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
         }
+
+
+
     </style>
     <script>
         function validateAgeRange() {
@@ -131,6 +134,29 @@
             <% } %>
         </select>
 
+        <label>Food Preference:</label>
+        <select name="foodpreferences" >
+            <option value=""> </option>
+            <option value="Veg">Vegetarian</option>
+            <option value="Non-Veg">Non-Vegetarian</option>
+            <option value="vegan">Vegan</option>
+        </select>
+
+        <label>Drinking:</label>
+        <select name="drinking" >
+            <option value=""> </option>
+            <option value="yes">Yes</option>
+            <option value="No">No</option>
+            <option value="occationally">Occationally</option>
+        </select>
+
+
+        <label>Smoking :</label>
+        <select name="smoking" >
+            <option value=""> </option>
+            <option value="yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
         <label>Differently Abled :</label>
         <select name="diffabled" >
@@ -149,16 +175,43 @@
 </div>
 
 <!-- Display filtered users securely using c:out to prevent XSS -->
+
+
 <c:if test="${not empty filteredUsers}">
     <c:forEach items="${filteredUsers}" var="user">
         <div class="profile-card">
             <h2><c:out value="${user.fname}"/> <c:out value="${user.lname}"/></h2>
-            <!-- Include other user details using c:out tags -->
+            <p>Email: <c:out value="${user.email}"/></p>
+            <p>Province: <c:out value="${user.provinceName}"/></p>
+            <p>Ethnicity: <c:out value="${user.ethnicity}"/></p>
+            <p>Religion: <c:out value="${user.religion}"/></p>
+            <p>Status: <c:out value="${user.status}"/></p>
+            <p>Height: <c:out value="${user.height}"/></p>
+            <p>Food Preferences: <c:out value="${user.foodpreferences}"/></p>
+            <p>Drinking: <c:out value="${user.drinking}"/></p>
+            <p>Smoking: <c:out value="${user.smoking}"/></p>
+            <p>Qualification: <c:out value="${user.qualificationName}"/></p>
+            <p>Occupation: <c:out value="${user.occupationName}"/></p>
+            <p>Differently Abled: <c:out value="${user.diffabled}"/></p>
+            <input type="hidden" name="email" value="<c:out value='${user.email}'/>">
+            <div class="button-container">
+                <button class="connect-button">Connect</button>
+                <button class="reject-button">Reject</button>
+                <form action="moredetails" method="post">
+                    <input type="hidden" name="email" value="${user.email}"/>
+                    <button type="submit" >View More</button>
+                </form>
+
+            </div>
+
         </div>
     </c:forEach>
 </c:if>
+
 <c:if test="${empty filteredUsers}">
     <p>No users found matching your criteria.</p>
 </c:if>
+
+
 </body>
 </html>

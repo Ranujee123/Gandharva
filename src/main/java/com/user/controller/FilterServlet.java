@@ -31,12 +31,16 @@ public class FilterServlet extends HttpServlet {
         String religion = request.getParameter("religion");
         String status=request.getParameter("status");
         String height=request.getParameter("height");
+        String foodpreferences= request.getParameter("foodpreferences");
+        String drinking= request.getParameter("drinking");
+        String smoking= request.getParameter("smoking");
         String eduquali=request.getParameter("eduquali");
         String occupation=request.getParameter("occupation");
         String diffabled= request.getParameter("diffabled");
 
+
         // Call the model to get filtered users, excluding the current user
-        List<User> filteredUsers = UserDBUtil.getFilteredUsers(province, ethnicity, religion, status,height,eduquali,occupation,diffabled,userEmail);
+        List<User> filteredUsers = UserDBUtil.getFilteredUsers(province, ethnicity, religion, status,height,foodpreferences,drinking,smoking,eduquali,occupation,diffabled,userEmail);
 
         request.setAttribute("filteredUsers", filteredUsers);
         RequestDispatcher dispatcher = request.getRequestDispatcher("u_dashboard.jsp"); // Adjust if necessary

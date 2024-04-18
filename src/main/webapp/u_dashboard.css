@@ -42,7 +42,7 @@ body {
 }
 
 .profile-card {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for depth */
+    /*box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for depth */
     margin: 15px; /* Space between cards */
     padding: 20px; /* Internal spacing */
     border-radius: 10px; /* Rounded corners */
@@ -53,7 +53,7 @@ body {
 
 .profile-card:hover {
     transform: scale(1.05); /* Slightly enlarge card on hover */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Increase shadow for lifted effect */
+ /*   box-shadow: 0 8px 16px rgba(0,0,0,0.2); /* Increase shadow for lifted effect */
 }
 
 .profile-card img {
@@ -75,4 +75,30 @@ body {
     font-size: 14px; /* Adjust font size for details */
     color: #666; /* Detail text color */
     text-align: center; /* Center-align the details */
+}
+
+.button-container {
+    display: flex;
+    width: 100%; /* Take the full width of the card to spread the buttons */
+    justify-content: space-between; /* Space out the buttons */
+    margin-top: 10px; /* Space from the last element above the buttons */
+}
+
+.connect-button, .reject-button {
+    flex: 1; /* Each button takes equal space */
+    margin: 0 5px; /* Margin for spacing between the buttons */
+    padding: 10px;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    font-weight: bold;
+}
+
+.connect-button {
+    background-color: #4CAF50; /* Green color for connect */
+}
+
+.reject-button {
+    background-color: #f44336; /* Red color for reject */
 }

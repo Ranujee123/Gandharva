@@ -4,6 +4,7 @@ public class User {
     private String lname;
     private String idNumber;
     private int pID;
+
     private String email;
     private String dpphoto;
     private String password;
@@ -20,6 +21,19 @@ public class User {
     private String diffabled;
    private int minAge;
    private int maxAge;
+
+   private String foodpreferences;
+   private String drinking;
+   private String smoking;
+   private String aboutme;
+   private String freli;
+   private String foccu;
+   private String mreli;
+   private String moccup;
+   private String maritalstatus;
+   private int siblings;
+   int uID;
+
 
 private static int Id;
     // Constructor
@@ -50,7 +64,7 @@ private static int Id;
         this.diffabled = diffabled;
 
     }
-    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String qualification,String occupation,String diffabled) {
+    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String foodpreferences,String drinking, String smoking,String qualification,String occupation,String diffabled) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
@@ -59,10 +73,39 @@ private static int Id;
         this.religion = religion;
         this.status=status;
         this.height=height;
+        this.foodpreferences=foodpreferences;
+        this.drinking=drinking;
+        this.smoking=smoking;
         this.qualificationName=qualification;
         this.occupationName=occupation;
         this.diffabled=diffabled;
 
+
+    }
+
+
+    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String foodpreferences,String drinking, String smoking,String qualification,String occupation,String diffabled,int age,String freli,String mreli,String foccu,String moccup,String maritalstatus,int siblings) {
+        this.fname = fname;
+        this.lname = lname;
+        this.email = email;
+        this.provinceName = province;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.status=status;
+        this.height=height;
+        this.foodpreferences=foodpreferences;
+        this.drinking=drinking;
+        this.smoking=smoking;
+        this.qualificationName=qualification;
+        this.occupationName=occupation;
+        this.diffabled=diffabled;
+        this.age=age;
+        this.freli=freli;
+        this.foccu=foccu;
+        this.mreli=mreli;
+        this.moccup=moccup;
+        this.maritalstatus=maritalstatus;
+        this.siblings=siblings;
 
     }
 
@@ -195,5 +238,45 @@ private static int Id;
 
     public static int getId() {
         return Id;
+    }
+
+    public String getFoodpreferences() {
+        return foodpreferences;
+    }
+
+    public String getDrinking() {
+        return drinking;
+    }
+
+    public String getSmoking() {
+        return smoking;
+    }
+
+    public String getMoccup() {
+        return moccup;
+    }
+
+    public String getMaritalstatus() {
+        return maritalstatus;
+    }
+
+    public String getMreli() {
+        return mreli;
+    }
+
+    public String getFoccu() {
+        return foccu;
+    }
+
+    public String getFreli() {
+        return freli;
+    }
+
+    public int getSiblings() {
+        return siblings;
+    }
+
+    public int getuID() {
+        return uID;
     }
 }

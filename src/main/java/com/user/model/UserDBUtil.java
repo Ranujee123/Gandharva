@@ -5,6 +5,7 @@ import java.sql.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDBUtil {
 
@@ -845,15 +846,19 @@ public class UserDBUtil {
           return users;
       }
   */
-    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height, String qualification, String occupation, String diffabled, String userEmail) {
+    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height,String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
-        query.append("SELECT u.fname, u.lname, u.email, p.province, pd.ethnicity, pd.religion, pd.status, pd.height, q.qualification, o.occupation, pd.diffabled, ");
+        query.append("SELECT u.fname, u.lname, u.email, p.province, pd.ethnicity, pd.religion, pd.status, pd.height,pd.foodpreferences,pd.drinking,pd.smoking, q.qualification, o.occupation, pd.diffabled, ");
         query.append("((CASE WHEN p.province = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN pd.ethnicity = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN pd.religion = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN pd.status = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN pd.height = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.foodpreferences = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.drinking = ? THEN 1 ELSE 0 END) + ");
+        query.append("(CASE WHEN pd.smoking = ? THEN 1 ELSE 0 END) + ");
+
         query.append("(CASE WHEN q.qualification = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN o.occupation = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN pd.diffabled = ? THEN 1 ELSE 0 END)) AS relevance ");
@@ -864,7 +869,7 @@ public class UserDBUtil {
         query.append("LEFT JOIN qualification q ON ud.qID = q.qID ");
         query.append("LEFT JOIN occupation o ON ud.oID = o.oID ");
         query.append("WHERE u.email <> ? ");
-        query.append("AND (p.province = ? OR pd.ethnicity = ? OR pd.religion = ? OR pd.status=? OR pd.height=? OR q.qualification=? OR o.occupation=? OR pd.diffabled=?) ");
+        query.append("AND (p.province = ? OR pd.ethnicity = ? OR pd.religion = ? OR pd.status=? OR pd.height=? OR pd.foodpreferences=? OR pd.drinking=? OR pd.smoking=? OR q.qualification=? OR o.occupation=? OR pd.diffabled=?) ");
         query.append("ORDER BY relevance DESC");
 
         List<String> parameters = new ArrayList<>();
@@ -874,6 +879,9 @@ public class UserDBUtil {
         parameters.add(religion);
         parameters.add(status);
         parameters.add(height);
+        parameters.add(foodpreferences);
+        parameters.add(drinking);
+        parameters.add(smoking);
         parameters.add(qualification);
         parameters.add(occupation);
         parameters.add(diffabled);
@@ -887,6 +895,9 @@ public class UserDBUtil {
         parameters.add(religion);
         parameters.add(status);
         parameters.add(height);
+        parameters.add(foodpreferences);
+        parameters.add(drinking);
+        parameters.add(smoking);
         parameters.add(qualification);
         parameters.add(occupation);
         parameters.add(diffabled);
@@ -912,6 +923,9 @@ public class UserDBUtil {
                         resultSet.getString("religion"),
                         resultSet.getString("status"),
                         resultSet.getString("height"),
+                        resultSet.getString("foodpreferences"),
+                        resultSet.getString("drinking"),
+                        resultSet.getString("smoking"),
                         resultSet.getString("qualification"),
                         resultSet.getString("occupation"),
                         resultSet.getString("diffabled")
@@ -925,4 +939,138 @@ public class UserDBUtil {
         return users;
     }
 
-}
+
+    public static Optional<User> getUserByEmail(String email) {
+
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT u.fname, u.lname, u.email, p.province, pd.ethnicity, pd.religion, pd.status, pd.height,pd.foodpreferences,pd.drinking,pd.smoking, q.qualification, o.occupation, pd.diffabled, u.age, fd.freli, fd.mreli, fd.foccu, fd.moccup,fd.maritalstatus, fd.siblings FROM user u LEFT JOIN province p ON u.pID = p.pID LEFT JOIN u_pdetails pd ON u.uID = pd.uID LEFT JOIN userdetails ud ON u.uID = ud.uID LEFT JOIN qualification q ON ud.qID = q.qID LEFT JOIN occupation o ON ud.oID = o.oID LEFT JOIN fdetails fd ON u.uID = fd.uID  WHERE u.email = ?";
+
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, email);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getString("fname"),
+                        rs.getString("lname"),
+                        rs.getString("email"),
+                        rs.getString("province"),
+                        rs.getString("ethnicity"),
+                        rs.getString("religion"),
+                        rs.getString("status"),
+                        rs.getString("height"),
+                        rs.getString("foodpreferences"),
+                        rs.getString("drinking"),
+                        rs.getString("smoking"),
+                        rs.getString("qualification"),
+                        rs.getString("occupation"),
+                        rs.getString("diffabled"),
+                        rs.getInt("age"),
+                        rs.getString("freli"),
+                        rs.getString("mreli"),
+                        rs.getString("foccu"),
+                        rs.getString("moccup"),
+                        rs.getString("maritalstatus"),
+                        rs.getInt("siblings")
+                      //  rs.getInt("age")
+                );
+                return Optional.of(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
+
+
+
+    public static boolean addConnectionRequest(String fromUserId, String toUserId) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "INSERT INTO connection_requests (from_user_id, to_user_id, status, timestamp) VALUES (?, ?, 'pending', NOW())";
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setString(1, fromUserId);
+                stmt.setString(2, toUserId);
+                int rowsAffected = stmt.executeUpdate();
+                return rowsAffected > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+        // Method to check if a connection request is already pending
+        public static boolean isConnectionRequestPending(int fromUserId, int toUserId) {
+            try (Connection con = DBConnect.getConnection()) {
+                String sql = "SELECT count(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'pending'";
+                try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                    stmt.setInt(1, fromUserId);
+                    stmt.setInt(2, toUserId);
+                    ResultSet rs = stmt.executeQuery();
+                    if (rs.next()) {
+                        return rs.getInt(1) > 0;
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+
+
+
+
+
+
+        public static List<ConnectionRequest> getPendingConnectionRequests(int userId) throws SQLException {
+            List<ConnectionRequest> requests = new ArrayList<>();
+            try (Connection con = DBConnect.getConnection()) {
+                String sql = "SELECT * FROM connection_requests WHERE to_user_id = ? AND status = 'pending'";
+                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                    pstmt.setInt(1, userId);
+                    ResultSet rs = pstmt.executeQuery();
+                    while (rs.next()) {
+                        ConnectionRequest request = new ConnectionRequest(
+                                rs.getInt("request_id"),
+                                rs.getInt("from_user_id"),
+                                rs.getInt("to_user_id"),
+                                rs.getString("status")
+                        );
+                        requests.add(request);
+                    }
+                }
+            }
+            return requests;
+        }
+
+        public static void updateConnectionRequestStatus(int requestId, String status) throws SQLException {
+            try (Connection con = DBConnect.getConnection()) {
+                String sql = "UPDATE connection_requests SET status = ? WHERE request_id = ?";
+                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
+                    pstmt.setString(1, status);
+                    pstmt.setInt(2, requestId);
+                    pstmt.executeUpdate();
+                }
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
