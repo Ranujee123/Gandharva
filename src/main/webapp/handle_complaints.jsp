@@ -7,160 +7,180 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html>
 <head>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <style>/* Style the table */
-  .container{
-    /*margin-top: 50px;*/
-    width: 100%;
-    border-collapse: collapse;
-    display: flex;
-    justify-content: center;
-  }
-  table {
-    margin-top: 20px;
-    width: 90%;
+  <link rel="stylesheet" type="text/css" href="admin.css">
 
-  }
-
-  /* Style the table header */
-  table th {
-    background-color: #ededed;
-    color: black;
-    padding: 15px;
-    text-align: left;
-    border: none;
-  }
-
-  /* Style the table cells */
-  table td {
-    border: none;
-    border-bottom: 1px solid #f2f2f2;
-
-    padding: 8px;
-    padding-top: 20px;
-    margin-top: 10px;
-    text-align: left;
-  }
-  table td button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 10px;
-    margin:  0px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  table tr {
-    transition: 0.5s;
-    /*padding-top: 5px;*/
-  }
-
-  /* Change the background color on mouse-over */
-  table tr:hover {background-color: rgba(240, 239, 239, 0.44);}
-
-  .content{
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    /* align-content: center; */
-    align-items: center;
-  }
-  .content h2{
-    margin-top: 50px;
-    font-size: 30px;
-    margin-bottom: 10px;
-    text-align: left;
-    width: 90%;
-  }
-  .profimage{
-    width: 50px;
-    border-radius: 50%;
-
-  }
-  .row{
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    /*align-items: center;*/
-    width: 100%;
-  }
-  .head-row{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-
-  }
-  .user-line{
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-    justify-content: center;
-    align-items: center;
-  }
+  <style>
 
   </style>
 </head>
-<body>
 
 <%@ include file="sidebar_admin.jsp" %>
+<div class="container-box" onclick="document.querySelector('.container-box').style.display='none'"  >
+  <div class="problem-box">
+    <div style="width: 100%">
 
+    <div class="problem-box-title">
+      <h2 class="complain-main-title">Complain #<span class="id">32</span> </h2>
+    </div>
+
+    <div class="box-complainer-main">
+      <div class="box-complainer"  >
+        <div class="pic-box" style="max-height: 60px; display: flex;align-items: center;justify-content: center">
+          <img class="prf_pic-complainer" src="images/no-profile.png" alt="Profile Picture">
+        </div>
+      <div class="name-box">
+        <p class="name usertext">Name : <span class="n-c"> Shyamal Test User</span> </p>
+        <p class="email usertext">Email : <span class="e-c"> sha256@tmail.com</span> </p>
+          <p class="Country usertext">Country : <span class="c-c"> </span> </p>
+        <p class="Usertype usertext">User Type : <span class="ut-c"> </span> </p>
+      </div>
+      </div>
+
+      <div class="box-complainer" style="border: none"  >
+
+        <div class="name-box">
+          <h4 style="margin: 0;padding: 5px">Complain status : <span class="status-c-active status-view">Open</span> </h4>
+          <H5 style="margin: 0;padding: 5px">Complain Id : <span class="id">32</span> </H5>
+          <H5 style="margin: 0;padding: 5px">Publish Date : <span class="date">2021-06-06</span> </H5>
+
+
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="view" style="padding: 0px 20px">
+        <h3 class="complain-title" >Complaining about the system error </h3>
+        <p class="compalain-description">I am encountering a significant issue with the system, which seems to be malfunctioning and impeding my access. Despite my attempts, I am unable to gain entry or utilize its functionalities effectively. This obstacle is hindering my productivity and causing frustration. Urgent assistance is required to rectify this problem promptly and restore normal functionality to the system. Any guidance or troubleshooting steps provided would be greatly appreciated in resolving this issue and allowing me to resume my tasks seamlessly. Thank you for your attention to this matter</p>
+
+    </div>
+    <button class="btn-resolve">Resolve</button>
+
+  </div>
+</div>
 <div class="content">
   <h2>Handle Complaints</h2>
 
-  <div class="container">
+  <div class="container-complaints">
     <table>
 
-      <tr>
-        <td><div class="row">
-          <div class="head-row">
-            <div class = "user-line">
-              <img src="images/no-profile.png" class="profimage">
-              <h5>User1</h5>
+
+      <c:forEach items="${complaints}" var="complaint">
+
+
+        <tr >
+        <td style="border: none; border-bottom: 1px solid #f2f2f2; padding: 10px 30px; padding-top: 20px; margin-top: 10px; text-align: left;">
+            <div class="row">
+              <div class="head-row">
+                <div class = "user-line">
+                  <img src="${complaint.base64Image}" class="profimage-complaints">
+                  <h5>${complaint.firstName} ${complaint.lastName}</h5>
+                </div>
+                <p>Published Date : ${complaint.date}</p>
+              </div>
+
+              <h3>Title: ${complaint.title}</h3>
+              <p>${complaint.descripion}</p>
+              <c:if test="${complaint.status == 'Open'}">
+                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}')">Go to Resolve</button>
+              </c:if>
+              <c:if test="${complaint.status == 'Closed'}">
+                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}')">View</button>
+
+              </c:if>
+
             </div>
-            <p>Published Date : 2024/03/06</p>
-          </div>
+          </td>
+        </tr>
 
-          <h3>Title: Complaining about the system error</h3>
-          <p>I am encountering a significant issue with the system, which seems to be malfunctioning and impeding my access. Despite my attempts, I am unable to gain entry or utilize its functionalities effectively. This obstacle is hindering my productivity and causing frustration. Urgent assistance is required to rectify this problem promptly and restore normal functionality to the system. Any guidance or troubleshooting steps provided would be greatly appreciated in resolving this issue and allowing me to resume my tasks seamlessly. Thank you for your attention to this matter</p>
-          <button>Go to Resolve</button>
-        </div>
-  </div>
-  </td>
 
-      </tr>
 
-      <tr>
-        <td><div class="row">
-          <div class="head-row">
-            <div class = "user-line">
-              <img src="images/no-profile.png" class="profimage">
-              <h5>User2</h5>
-            </div>
-            <p>Published Date : 2024/03/07</p>
-          </div>
 
-          <h3>Title: Complaining about the system error</h3>
-          <p>I am encountering a significant issue with the system, which seems to be malfunctioning and impeding my access. Despite my attempts, I am unable to gain entry or utilize its functionalities effectively. This obstacle is hindering my productivity and causing frustration. Urgent assistance is required to rectify this problem promptly and restore normal functionality to the system. Any guidance or troubleshooting steps provided would be greatly appreciated in resolving this issue and allowing me to resume my tasks seamlessly. Thank you for your attention to this matter</p>
-          <button>Go to Resolve</button>
-        </div>
-  </div>
-  </td>
 
-      </tr>
+
+      </c:forEach>
     </table>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+      function displayComplain(name, email, country, userType, status, id, date,title, description,URL) {
+        document.querySelector('.prf_pic-complainer').src = URL;
+        document.querySelector('.container-box').style.display = 'flex';
+        document.querySelector('.n-c').innerText = name;
+        document.querySelector('.e-c').innerText = email;
+        document.querySelector('.c-c').innerText = country;
+        document.querySelector('.ut-c').innerText = userType;
+        statustag = document.querySelector('.status-view')
+        statustag.innerText = status;
+        if (status == 'Open') {
+
+          statustag.classList.remove('status-c-deactive')
+          statustag.classList.add('status-c-active')
+          document.querySelector('.btn-resolve').style.display = 'block';
+        } else {
+          statustag.classList.remove('status-c-active')
+          statustag.classList.add('status-c-deactive')
+          document.querySelector('.btn-resolve').style.display = 'none';
+        }
+        document.querySelectorAll('.id').forEach((element) => {
+          element.innerText = id;
+        });
+        document.querySelector('.date').innerText = date;
+        document.querySelector('.complain-title').innerText = title;
+        document.querySelector('.compalain-description').innerText = description;
+
+      }
+
+        document.querySelector('.btn-resolve').addEventListener('click', () => {
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You want to resolve this complain!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#4CAF50',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, resolve it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+
+              var complaintId = document.querySelector('.id').innerText;
+              fetch('/Gandharva_main/complaints', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'id=' + encodeURIComponent(complaintId),
+              })
+                      .then(function(response) {
+                        if (response.ok) {
+                          return response.text();
+                        }
+                        throw new Error('Network response was not ok.');
+                      })
+                      .then(function(responseText) {
+                        console.log(responseText);
+                        Swal.fire(
+                                'Resolved!',
+                                'Complain has been resolved.',
+                                'success'
+                        ).then(() => {
+                          location.reload();
+                        });
+                      })
+                      .catch(function(error) {
+                        console.error('There was a problem with the fetch operation:', error);
+                      });
+
+            }
+            })
+        })
+  </script>
 
 
-
-
+  </div>
 
 </div>
-
-
-</body>
-</html>
