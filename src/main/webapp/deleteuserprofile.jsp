@@ -10,7 +10,8 @@
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
+
 
 
 <%

@@ -4,7 +4,8 @@
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="logoutbutton.jsp"/>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
+
 
 <%
     List<String> qualifications = UserDBUtil.getAllQualifications();
@@ -33,7 +34,6 @@
         body {
             margin: 0;
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
             background-color: #f0f0f0;
         }

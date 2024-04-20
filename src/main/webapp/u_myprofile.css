@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    align-items: flex-start; /* Align items at the start of the flex container */
+}
+.main-content {
+    margin-left: 100px; /* Increase margin to create space between sidebar and content */
+    margin-right: 50px;
+    width: calc(100% - 100px); /* Adjust the width of main content to take remaining space */
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+}
+
+.profile-details {
+    display: flex;
+    justify-content: center; /* Align profile details at the start */
+    align-items: center; /* Align items vertically centered */
+    margin-bottom: 60px; /* Space between profile details and cards */
+    margin-top: 50px ;
+}
+
+.profile-image-editable {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+    margin-right: 20px; /* Space between image and details */
+}
+
+.profile-info {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+.profile-info p {
+    margin: 2px 0; /* Reduced vertical space between details */
+}
+
+
+
+.cards-container {
+    display: flex;
+    justify-content: space-between; /* Space out cards evenly */
+    margin-bottom: 20px; /* Space between cards and completion bar */
+}
+
+.card {
+    flex: 1; /* Each card takes equal space */
+    margin: 0px 10px; /* Margin between cards */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 70px;
+    border-radius: 10px; /* Rounded corners */
+
+}
+
+.completion-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    margin-top: 100px;
+}
+
+.completion-fill {
+    height: 100%;
+    background-color: #4CAF50;
+}
+
+.completion-text {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.button {
+    text-align: center; /* Center the link */
+    margin-top: 10px; /* Add some space above the link for visual separation */
+}
+
+.button a {
+    color: #fff; /* White text color */
+    background-color: #4CAF50; /* Green background */
+    padding: 10px 20px; /* Padding for a button-like appearance */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline from the link */
+    display: inline-block; /* Make the link behave like a block for padding to work */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    width: 200px; /* Fixed width */
+    height: 40px; /* Fixed height */
+}
+
+.button a:hover {
+    background-color: #367C2B; /* Darker green on hover for visual feedback */
+}
+
+.dashboard-options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard-options ul li {
+    margin-bottom: 10px;
+    text-align: center;
+}
+

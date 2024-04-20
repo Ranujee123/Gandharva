@@ -121,7 +121,7 @@
 
 
   </style>
-  <script src="nic-utils.js"></script>
+  <script src="js/nic-utils.js"></script>
 
 </head>
 

@@ -78,6 +78,23 @@ public class UserDBUtil {
         return gender;
     }
 
+    public static boolean isEmailRegistered(String email) {
+        // Implementation to check email in the database
+        // Assume you have a connection and SQL statement prepared
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
     public static int getProvinceIdByName(String province) throws Exception {
         Connection con = DBConnect.getConnection();
         String sql = "SELECT pID FROM province WHERE province = ?";
@@ -846,7 +863,7 @@ public class UserDBUtil {
           return users;
       }
   */
-    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height,String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String userEmail) {
+    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
         query.append("SELECT u.fname, u.lname, u.email, p.province, pd.ethnicity, pd.religion, pd.status, pd.height,pd.foodpreferences,pd.drinking,pd.smoking, q.qualification, o.occupation, pd.diffabled, ");
@@ -973,7 +990,7 @@ public class UserDBUtil {
                         rs.getString("moccup"),
                         rs.getString("maritalstatus"),
                         rs.getInt("siblings")
-                      //  rs.getInt("age")
+                        //  rs.getInt("age")
                 );
                 return Optional.of(user);
             }
@@ -982,9 +999,6 @@ public class UserDBUtil {
         }
         return Optional.empty();
     }
-
-
-
 
 
     public static boolean addConnectionRequest(String fromUserId, String toUserId) {
@@ -1003,73 +1017,73 @@ public class UserDBUtil {
     }
 
 
-        // Method to check if a connection request is already pending
-        public static boolean isConnectionRequestPending(int fromUserId, int toUserId) {
-            try (Connection con = DBConnect.getConnection()) {
-                String sql = "SELECT count(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'pending'";
-                try (PreparedStatement stmt = con.prepareStatement(sql)) {
-                    stmt.setInt(1, fromUserId);
-                    stmt.setInt(2, toUserId);
-                    ResultSet rs = stmt.executeQuery();
-                    if (rs.next()) {
-                        return rs.getInt(1) > 0;
-                    }
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-
-
-
-
-
-
-        public static List<ConnectionRequest> getPendingConnectionRequests(int userId) throws SQLException {
-            List<ConnectionRequest> requests = new ArrayList<>();
-            try (Connection con = DBConnect.getConnection()) {
-                String sql = "SELECT * FROM connection_requests WHERE to_user_id = ? AND status = 'pending'";
-                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-                    pstmt.setInt(1, userId);
-                    ResultSet rs = pstmt.executeQuery();
-                    while (rs.next()) {
-                        ConnectionRequest request = new ConnectionRequest(
-                                rs.getInt("request_id"),
-                                rs.getInt("from_user_id"),
-                                rs.getInt("to_user_id"),
-                                rs.getString("status")
-                        );
-                        requests.add(request);
-                    }
+    // Method to check if a connection request is already pending
+    public static boolean isConnectionRequestPending(int fromUserId, int toUserId) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT count(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'pending'";
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setInt(1, fromUserId);
+                stmt.setInt(2, toUserId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
                 }
             }
-            return requests;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        public static void updateConnectionRequestStatus(int requestId, String status) throws SQLException {
-            try (Connection con = DBConnect.getConnection()) {
-                String sql = "UPDATE connection_requests SET status = ? WHERE request_id = ?";
-                try (PreparedStatement pstmt = con.prepareStatement(sql)) {
-                    pstmt.setString(1, status);
-                    pstmt.setInt(2, requestId);
-                    pstmt.executeUpdate();
-                }
-            }
-        }
+        return false;
     }
 
 
 
+    public static List<ConnectionRequest> getSentConnectionRequests(int userId) throws SQLException {
+        List<ConnectionRequest> requests = new ArrayList<>();
+        String sql = "SELECT cr.*, u.fname AS toUserFirstName, u.lname AS toUserLastName FROM connection_requests cr " +
+                "JOIN user u ON cr.to_user_id = u.uID WHERE cr.from_user_id = ? AND cr.status = 'pending'";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                ConnectionRequest request = new ConnectionRequest(
+                        rs.getInt("request_id"),
+                        userId,
+                        rs.getInt("to_user_id"),
+                        rs.getString("status"),
+                        rs.getString("toUserFirstName"),
+                        rs.getString("toUserLastName")
+                );
+                requests.add(request);
+            }
+        }
+        return requests;
+    }
 
+    public static List<ConnectionRequest> getReceivedConnectionRequests(int userId) throws SQLException {
+        List<ConnectionRequest> requests = new ArrayList<>();
+        String sql = "SELECT cr.*, u.fname AS fromUserFirstName, u.lname AS fromUserLastName FROM connection_requests cr " +
+                "JOIN user u ON cr.from_user_id = u.uID WHERE cr.to_user_id = ? AND cr.status = 'pending'";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                ConnectionRequest request = new ConnectionRequest(
+                        rs.getInt("request_id"),
+                        rs.getInt("from_user_id"),
+                        userId,
+                        rs.getString("status"),
+                        rs.getString("fromUserFirstName"),
+                        rs.getString("fromUserLastName")
+                );
+                requests.add(request);
+            }
+        }
+        return requests;
+    }
 
-
-
-
-
-
-
+}
 
 
 

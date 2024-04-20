@@ -6,6 +6,11 @@ public class ConnectionRequest {
     private int toUserId;
     private String status;
     private java.sql.Timestamp timestamp;
+    private String fromUserFirstName;
+    private String toUserFirstName;
+    private String fromUserLastName;
+    private String toUserLastName;
+
 
     // Constructor
     public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status, java.sql.Timestamp timestamp) {
@@ -23,6 +28,25 @@ public class ConnectionRequest {
         this.status = status;
 
     }
+    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status,
+                             String fromUserFirstName, String fromUserLastName) {
+        this.requestId = requestId;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.status = status;
+        this.fromUserFirstName = fromUserFirstName;
+        this.fromUserLastName = fromUserLastName;
+    }
+
+    // Getters and Setters for user details
+    public String getFromUserFullName() {
+        return fromUserFirstName + " " + fromUserLastName;
+    }
+
+    public String getToUserFullName() {
+        return toUserFirstName + " " + toUserLastName;
+    }
+
 
 
     // Getters and Setters

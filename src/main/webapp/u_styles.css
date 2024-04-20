@@ -1,43 +1,4 @@
-.sidebar {
-    background-color: black;
-    color: #fff;
-    width: 200px;
-    height: 100vh;
-    padding: 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
 
-.profile {
-    text-align: center;
-}
-
-.profile-image {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-}
-
-.profile-name {
-    margin-top: 10px;
-}
-
-.sidebar-menu {
-    list-style-type: none;
-    padding: 0;
-}
-
-.sidebar-menu li {
-    margin-bottom: 10px;
-}
-
-.sidebar-menu button {
-    background-color: transparent;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
 
 .dropdown-content {
     display: none;
@@ -99,3 +60,12 @@
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: #fff;
 }
+
+/*
+
+    select {
+        border-radius: 5px;
+        border: 2px solid #757070;
+        background-color: #f8f8f8;
+    }
+ */

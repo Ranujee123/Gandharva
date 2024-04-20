@@ -5,7 +5,7 @@
 <head>
   <title>The Chat Room</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
-  <script type="text/javascript" src="check.js"></script>
+  <script type="text/javascript" src="js/check.js"></script>
   <title>The Chat Room</title>
   <link rel="shortcut icon" href="icon.jpeg" />
   <script>

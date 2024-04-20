@@ -8,7 +8,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
+
 
 <%
 
@@ -25,18 +26,6 @@
 
 
     <style>
-        .profile-card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 40%;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 10px;
-            padding: 2px 16px;
-        }
-        .profile-card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
 
 
 
@@ -54,8 +43,14 @@
     </script>
 </head>
 <body>
+<div class="main-container">
+    <!-- Sidebar Navigation -->
 
-<!-- Filter Section -->
+    <!-- Main Content Section -->
+    <div class="main-content">
+        <!-- Filter Section -->
+        <div class="filter-section">
+
 <div class="filter-section">
     <form action="Filter" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
 
@@ -169,18 +164,20 @@
 
         <!-- Add more filters here up to 10 different filters as per your requirement -->
 
-        <button type="submit">Filter</button>
-        <button type="reset">Clear</button>
+        <button type="submit" class="filter-button">Filter</button>
+        <button type="reset" class="clear-button">Clear</button>
     </form>
 </div>
 
 <!-- Display filtered users securely using c:out to prevent XSS -->
-
+            <div class="profiles-section">
 
 <c:if test="${not empty filteredUsers}">
     <c:forEach items="${filteredUsers}" var="user">
         <div class="profile-card">
-            <h2><c:out value="${user.fname}"/> <c:out value="${user.lname}"/></h2>
+
+
+        <h2><c:out value="${user.fname}"/> <c:out value="${user.lname}"/></h2>
             <p>Email: <c:out value="${user.email}"/></p>
             <p>Province: <c:out value="${user.provinceName}"/></p>
             <p>Ethnicity: <c:out value="${user.ethnicity}"/></p>
@@ -212,6 +209,9 @@
     <p>No users found matching your criteria.</p>
 </c:if>
 
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

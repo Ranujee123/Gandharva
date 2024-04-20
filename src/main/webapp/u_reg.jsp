@@ -99,7 +99,8 @@
   </style>
 
 
-  <script src="nic-utils.js"></script>
+  <script src="js/nic-utils.js"></script>
+  <script src="js/validate.js"></script>
 
 </head>
 <body>
@@ -111,13 +112,14 @@
     <% if (request.getAttribute("errorMessage") != null) { %>
     <div style="color: red;"><%= request.getAttribute("errorMessage").toString() %></div>
     <% } %>
-    <form id="registration-form" method="post" action="reg" enctype="multipart/form-data">
+    <form id="registration-form" method="post" action="reg" enctype="multipart/form-data" >
 
       <label for="firstName">First Name<span class="required-star">*</span>:</label>
-      <input type="text" id="firstName" name="firstName" required value="<%= request.getParameter("firstName") != null ? request.getParameter("firstName") : "" %>" />
+      <input type="text" id="firstName" name="firstName" required onchange="validateFirstName()" />
+
 
       <label for="lastName">Last Name<span class="required-star">*</span>:</label>
-      <input type="text" id="lastName" name="lastName" required value="<%= request.getParameter("lastName") != null ? request.getParameter("lastName") : "" %>" />
+      <input type="text" id="lastName" name="lastName" required onchange="validateLastName()" />
 
       <!-- Your existing form structure -->
       <label for="idNumber">Nation Identity Number<span class="required-star">*</span>:</label>
@@ -151,15 +153,16 @@
 
 
       <label for="email">Email<span class="required-star">*</span>:</label>
-      <input type="email" id="email" name="email" required value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>" />
-
+      <input type="email" id="email" name="email" required onchange="validateEmail()" />
 
 
       <label for="password">Password<span class="required-star">*</span>:</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" name="password" required onchange="validatePassword()">
+
 
       <label for="confirmPassword">Confirm Password<span class="required-star">*</span>:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <input type="password" id="confirmPassword" name="confirmPassword" required onchange="validateConfirmPassword()">
+
       <h2 style="font-size: 14px" class="center-elements">Step 1 out of 2</h2><br><br> <!-- Moved the step text below the form -->
       <button type="submit" id="proceed-btn">Proceed</button>
     </form>

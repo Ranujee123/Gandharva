@@ -5,7 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="logoutbutton.jsp"/>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
 
 <%
     String userEmail = (String) session.getAttribute("userEmail");
@@ -26,64 +26,13 @@
 
 <head>
     <title>User profile </title>
-    <link rel="stylesheet" type="text/css" href="u_styles.css">
+    <link rel="stylesheet" type="text/css" href="u_myprofile.css">
+<style>
+
+</style>
 
 
-
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .main-content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        .profile-image-editable {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-        }
-
-        .completion-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #ddd;
-            margin-top: 20px;
-        }
-
-        .completion-fill {
-            height: 100%;
-            background-color: #4CAF50;
-        }
-
-        .completion-text {
-            margin-top: 10px;
-        }
-
-        .completion-link a {
-            color: #007bff;
-            text-decoration: underline;
-        }
-
-        .dashboard-options ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .dashboard-options ul li {
-            margin-bottom: 10px;
-        }
-
-
-    </style>
-    <script src="nic-utils.js"></script>
+    <script src="js/nic-utils.js"></script>
 
 </head>
 
@@ -94,21 +43,27 @@
 
 
 
-
-
-
 <div class="main-content">
     <form action="UpdateUserServlet" method="post">
         <div class="profile-details">
             <% if (user != null) { %>
-            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
+            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">
+<div class="profile-info">
             <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
+
             <p>Email: <%= user.getEmail() %></p>
 
-            <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %>
+         <p> Province:  <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %></p>
 
             <!-- Add other fields as needed -->
             <% } %>
+        </div>
+
+        </div>
+        <div class="cards-container">
+            <div class="card">New Connections</div>
+            <div class="card">Pending Requests</div>
+            <div class="card">Accepted</div>
         </div>
 
 
@@ -126,21 +81,23 @@
         </div>
         <p class="completion-text">You have <%= stepsLeft %> steps left to complete your profile.</p>
         <% } else { %>
-        <p>Your profile is fully completed.</p>
+        <p class="completion-text">Your profile is fully completed.</p>
         <% } %>
 
+        <div class="button">
+            <a href="ProfileCompletionServlet">Add Profile Details</a>
+        </div>
 
-        <a href="ProfileCompletionServlet">Add Profile Details</a>
-
-
+<div class="button">
         <div class="dashboard-options">
             <ul>
-                <li><a href="editProfile.jsp"><button type="button">Update my data</button></a></li>
-                <li><a href="cpassword.jsp"><button type="button">Change Password</button></a></li>
-                <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
-                <li><a href="deleteuserprofile.jsp"><button type="button">Deactivate Account</button></a></li>
+                <li><a href="editProfile.jsp">Update my data</a></li>
+                <li><a href="cpassword.jsp">Change Password</a></li>
+                <li><a href="pricing.jsp">Change Plan</a></li>
+                <li><a href="deleteuserprofile.jsp">Deactivate Account</a></li>
             </ul>
         </div>
+</div>
     </form>
 </div>
 

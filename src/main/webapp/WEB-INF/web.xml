@@ -203,23 +203,16 @@
     <url-pattern>/connection</url-pattern>
   </servlet-mapping>
 
-
   <servlet>
-    <servlet-name>ViewPendingRequestsServlet</servlet-name>
-    <servlet-class>com.user.controller.ViewPendingRequestsServlet</servlet-class>
+    <servlet-name>CheckEmailServlet</servlet-name>
+    <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>ViewPendingRequestsServlet</servlet-name>
-    <url-pattern>/viewPendingRequests</url-pattern>
+    <servlet-name>CheckEmailServlet</servlet-name>
+    <url-pattern>/CheckEmailServlet</url-pattern>
   </servlet-mapping>
 
-  <servlet>
-    <servlet-name>HandleRequestActionServlet</servlet-name>
-    <servlet-class>com.user.controller.HandleRequestServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>HandleRequestActionServlet</servlet-name>
-    <url-pattern>/handleRequest</url-pattern>
-  </servlet-mapping>
+
+
 
 </web-app>
