@@ -83,7 +83,7 @@ body, html {
 .profile-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
-    width: 40%;
+    width: auto;
     border-radius: 5px;
     display: inline-block;
     margin: 10px;
@@ -101,3 +101,18 @@ select {
     background-color: #f8f8f8;
 }
 
+.profile-image {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+
+}
+
+.profile-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Creates three columns */
+    gap: 25px; /* Spacing between grid items */
+    margin-top:20px ;
+    margin-bottom: 20px;
+    text-align: left;
+}

@@ -112,7 +112,7 @@
               </select><br>
 
               <label>Father's Occupation:</label>
-              <select name="fatherOccupation" required>
+              <select name="fatherOccupation" >
                 <option value=""></option>
                 <% for (String occupation : occupations) { %>
                 <option><%= occupation %></option>
@@ -120,7 +120,7 @@
               </select>
 
               <label>Mother's Occupation:</label>
-              <select name="motherOccupation" required>
+              <select name="motherOccupation" >
                 <option value=""></option>
                 <% for (String occupation : occupations) { %>
                 <option><%= occupation %></option>
@@ -137,7 +137,7 @@
               </select><br>
 
               <label>Number of Siblings:</label>
-              <input type="number" name="numberOfSiblings" min="0" required><br>
+              <input type="number" name="numberOfSiblings" min="0" ><br>
 
               <div class="completion-bar">
                 <div class="completion-fill" style="width: 43%;"></div> <!-- Adjust the width based on completion -->

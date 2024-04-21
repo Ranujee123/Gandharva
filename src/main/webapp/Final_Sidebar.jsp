@@ -5,13 +5,17 @@
   Time: 16:30
   To change this template use File | Settings | File Templates.
 --%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <title>Side bar</title>
+
+  <title>Side bar</title>
 
   <style>
     *{
@@ -45,7 +49,7 @@
     }
 
     .sidebar:hover{
-      width: 240px;
+      width: 300px;
       transition: 0.5s;
     }
 
@@ -137,13 +141,13 @@
       </a>
     </li>
     <li>
-      <a href="connection.jsp">
+      <a href="fetchConnection">
         <i class="menu-icon fas fa-bell"></i>
         <span>Connections</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="sendingReqAstorologer.jsp">
         <i class="menu-icon fas fa-bookmark"></i>
         <span>Astrology Service</span>
       </a>
@@ -168,7 +172,7 @@
       </a>
     </li>
     <li class="logout">
-      <a href="#">
+      <a href="#" onclick="Logout(); return false;">
         <i class="menu-icon fas fa-sign-out-alt"></i>
         <span>logout</span>
       </a>

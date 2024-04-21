@@ -33,6 +33,7 @@ public class User {
    private String maritalstatus;
    private int siblings;
    int uID;
+   private int personalityID;
 
 
 private static int Id;

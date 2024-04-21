@@ -37,6 +37,8 @@
     <title>User Dashboard</title>
     <link rel="stylesheet" type="text/css" href="u_styles.css">
     <link rel="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <style>
         /* Inline CSS styling */
@@ -99,10 +101,23 @@
             cursor: pointer;
         }
 
+        .connect-button, .reject-button {
+            flex: 1; /* Each button takes equal space */
+            margin: 0 5px; /* Margin for spacing between the buttons */
+            padding: 10px;
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+            background-color: #4CAF50; /* Green color for connect */
+        }
+
+
     </style>
 
     <script src="js/nic-utils.js"></script>
-    <script src="js/saveProfile.js"></script>
+    <script src="js/Status.js"></script>
 </head>
 <body>
 
@@ -118,7 +133,7 @@
         <div class="error" id="password-error"></div>
 
         <% if (user != null) { %>
-        <form action="updateu" method="post" enctype="multipart/form-data">
+        <form action="updateu" method="post" enctype="multipart/form-data" id="save">
             <div class="dp">
                 <div class="profile-img-container">
                     <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
@@ -161,7 +176,7 @@
 
 
 
-            <button type="submit" onclick="saveProfile()">Save</button>
+            <button type="button" class="connect-button" onclick="Saveprofile()">Save</button>
         </form>
 
         <% } %>

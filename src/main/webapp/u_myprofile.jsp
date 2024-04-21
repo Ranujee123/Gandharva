@@ -33,6 +33,19 @@
 
 
     <script src="js/nic-utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('fetchRequestStatusCount')  // Ensure the URL matches the servlet mapping
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('newRequestsCount').textContent = data[0];
+                    document.getElementById('pendingRequestsCount').textContent = data[1];
+                    document.getElementById('acceptedRequestsCount').textContent = data[2];
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
+
 
 </head>
 
@@ -60,35 +73,52 @@
         </div>
 
         </div>
+
         <div class="cards-container">
-            <div class="card">New Connections</div>
-            <div class="card">Pending Requests</div>
-            <div class="card">Accepted</div>
+            <div class="card">
+                <div class="card-text">
+                New Connections
+                </div>
+                <span id="newRequestsCount">0</span>
+            </div>
+            <div class="card">
+                <div class="card-text">
+                Pending Requests
+                </div>
+                <span id="pendingRequestsCount">0</span>
+
+            </div>
+            <div class="card">
+                <div class="card-text">
+                    Accepted
+                </div>
+                <span id="acceptedRequestsCount">0</span>
+
+            </div>
         </div>
 
 
 
         <%
-            Integer completedSteps = (Integer)session.getAttribute("completedSteps");
-            Integer totalSteps = 7; // Assuming there are 7 steps in total for profile completion
+            Integer completedSteps = (Integer) session.getAttribute("completedSteps");
+            Integer totalSteps = 7;
+            if (completedSteps != null && completedSteps >= totalSteps) {
+                // Profile is fully completed, don't display completion bar or Add Profile Details button
+        %>
+        <p class="completion-text">Your profile is fully completed.</p>
+        <% } else {
             if (completedSteps == null) { completedSteps = 0; }
             int stepsLeft = totalSteps - completedSteps;
-
-            if (stepsLeft > 0) {
         %>
         <div class="completion-bar">
             <div class="completion-fill" style="width: <%= ((double)completedSteps / totalSteps) * 100 %>%;"></div>
         </div>
         <p class="completion-text">You have <%= stepsLeft %> steps left to complete your profile.</p>
-        <% } else { %>
-        <p class="completion-text">Your profile is fully completed.</p>
+        <div class="button"><a href="ProfileCompletionServlet">Add Profile Details</a></div>
         <% } %>
 
-        <div class="button">
-            <a href="ProfileCompletionServlet">Add Profile Details</a>
-        </div>
 
-<div class="button">
+        <div class="button">
         <div class="dashboard-options">
             <ul>
                 <li><a href="editProfile.jsp">Update my data</a></li>

@@ -101,8 +101,7 @@
     <h1>Who are you interested in ?</h1>
     <div class="form-container">
       <form action="interestinqual" method="post">
-        <label>School / College:</label>
-        <input type="text" name="school" required><br>
+
 
 
 

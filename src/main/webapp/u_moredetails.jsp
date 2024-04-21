@@ -20,10 +20,20 @@
 <head>
   <title>More details </title>
   <link rel="stylesheet" type="text/css" href="u_styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <!-- Include SweetAlert2 from a CDN in the head section of your HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
   <style>
+    *{
+      font-family: "Poppins", sans-serif;
+    }
+
     body {
       margin: 0;
       display: flex;
@@ -52,7 +62,7 @@
 
 
     tr:nth-child(even) {
-      background-color: #d7a15e;
+      background-color: #8f8d8b;
     }
 
 
@@ -122,6 +132,42 @@
 
   </style>
   <script src="js/nic-utils.js"></script>
+  <script>
+    function confirmConnection() {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You want to send a connection request!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#4CAF50',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, send it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('connectionForm').submit(); // Submit the form programmatically if confirmed
+        }
+      });
+    }
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Select all elements that contain last names
+      const lastNameElements = document.querySelectorAll('.lname');
+
+      lastNameElements.forEach(function(element) {
+        // Get the full last name from data-lname attribute
+        const lastName = element.getAttribute('data-lname');
+        if (lastName && lastName.length > 0) {
+          // Extract the first letter and convert to uppercase
+          const firstLetter = lastName[0].toUpperCase();
+          // Update the text of the span to only show the capitalized first letter
+          element.textContent = firstLetter + '.';
+        }
+      });
+    });
+  </script>
+
 
 </head>
 
@@ -135,12 +181,12 @@
   User user = (User) request.getAttribute("user");
   if (user != null) {
 %>
-<h1>User Details</h1>
+<h1></h1>
 <div class="details-card">
   <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
-<h2 > <%= user.getFname() %></h2>
+  <h2><c:out value="${user.fname}"/> <span class="lname" data-lname="<c:out value='${user.lname}'/>"></span></h2>
   <p><%=user.getAge()%>-<%=user.getOccupationName()%>-<%=user.getHeight()%></p>
-<p>Email: <%= user.getEmail() %></p>
+
 </div>
 
 <div class="details-card">
@@ -264,9 +310,9 @@
   <p class="connect-status">Pending Request</p>
 </c:if>
 <c:if test="${not isConnectionRequestPending}">
-  <form action="connection" method="post">
+  <form action="connection" method="post" id="connectionForm">
     <input type="hidden" name="toUserEmail" value="${user.email}" />
-    <button type="submit" class="connect-button">Connect</button>
+    <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
   </form>
 </c:if>
 

@@ -213,6 +213,34 @@
   </servlet-mapping>
 
 
+  <servlet>
+    <servlet-name>FetchConnection</servlet-name>
+    <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FetchConnection</servlet-name>
+    <url-pattern>/fetchConnection</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RequestStatusCount</servlet-name>
+    <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RequestStatusCount</servlet-name>
+    <url-pattern>/fetchRequestStatusCount</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>SendRequesttoAstrologer</servlet-name>
+    <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SendRequesttoAstrologer</servlet-name>
+    <url-pattern>/SendRequest</url-pattern>
+  </servlet-mapping>
+
 
 
 </web-app>

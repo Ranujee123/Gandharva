@@ -41,6 +41,27 @@
             return true;
         }
     </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all elements that contain last names
+            const lastNameElements = document.querySelectorAll('.lname');
+
+            lastNameElements.forEach(function(element) {
+                // Get the full last name from data-lname attribute
+                const lastName = element.getAttribute('data-lname');
+                if (lastName && lastName.length > 0) {
+                    // Extract the first letter and convert to uppercase
+                    const firstLetter = lastName[0].toUpperCase();
+                    // Update the text of the span to only show the capitalized first letter
+                    element.textContent = firstLetter + '.';
+                }
+            });
+        });
+    </script>
+
+
 </head>
 <body>
 <div class="main-container">
@@ -52,7 +73,7 @@
         <div class="filter-section">
 
 <div class="filter-section">
-    <form action="Filter" method="get"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
+    <form action="Filter" method="post"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
 
 
 
@@ -177,26 +198,32 @@
         <div class="profile-card">
 
 
-        <h2><c:out value="${user.fname}"/> <c:out value="${user.lname}"/></h2>
-            <p>Email: <c:out value="${user.email}"/></p>
-            <p>Province: <c:out value="${user.provinceName}"/></p>
-            <p>Ethnicity: <c:out value="${user.ethnicity}"/></p>
-            <p>Religion: <c:out value="${user.religion}"/></p>
-            <p>Status: <c:out value="${user.status}"/></p>
-            <p>Height: <c:out value="${user.height}"/></p>
-            <p>Food Preferences: <c:out value="${user.foodpreferences}"/></p>
-            <p>Drinking: <c:out value="${user.drinking}"/></p>
-            <p>Smoking: <c:out value="${user.smoking}"/></p>
-            <p>Qualification: <c:out value="${user.qualificationName}"/></p>
-            <p>Occupation: <c:out value="${user.occupationName}"/></p>
-            <p>Differently Abled: <c:out value="${user.diffabled}"/></p>
+        <h2><c:out value="${user.fname}"/> <span class="lname" data-lname="<c:out value='${user.lname}'/>"></span></h2>
+            <div class="profile-details-grid">
+                <div class="profile-detail">
+                    <p>Province: <c:out value="${user.provinceName}"/></p>
+                </div>
+                <div class="profile-detail">
+                    <p>Religion: <c:out value="${user.religion}"/></p>
+                </div>
+                <div class="profile-detail">
+                    <p>Status: <c:out value="${user.status}"/></p>
+                </div>
+                <div class="profile-detail">
+                    <p>Height: <c:out value="${user.height}"/></p>
+                </div>
+                <div class="profile-detail">
+                    <p>Occupation: <c:out value="${user.occupationName}"/></p>
+                </div>
+            </div>
+
             <input type="hidden" name="email" value="<c:out value='${user.email}'/>">
             <div class="button-container">
-                <button class="connect-button">Connect</button>
-                <button class="reject-button">Reject</button>
+            <!--    <button class="connect-button">Connect</button>
+                <button class="reject-button">Reject</button>-->
                 <form action="moredetails" method="post">
                     <input type="hidden" name="email" value="${user.email}"/>
-                    <button type="submit" >View More</button>
+                    <button type="submit" class="connect-button">View More</button>
                 </form>
 
             </div>

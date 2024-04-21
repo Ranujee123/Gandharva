@@ -62,7 +62,7 @@
 
 
 <script>
-    function saveProfile() {
+    function staus() {
         var existingPassword = document.getElementById("existingPassword").value;
         var newPassword = document.getElementById("newPassword").value;
         var confirmPassword = document.getElementById("confirmPassword").value;

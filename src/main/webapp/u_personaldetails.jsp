@@ -129,7 +129,7 @@
 
 
         <label>Religion:</label>
-        <select name="religion" required>
+        <select name="religion" >
           <option value=""> </option>
           <option value="buddhist">Buddhist</option>
           <option value="christain">Christian</option>
@@ -142,7 +142,7 @@
         </select>
 
         <label>Civil Status :</label>
-        <select name="status" required>
+        <select name="status" >
           <option value=""> </option>
           <option value="Nevermarried">Never Married</option>
           <option value="widowed">Widowed</option>
@@ -152,7 +152,7 @@
         </select>
 
         <label>Height :</label>
-        <select name="height" required>
+        <select name="height" >
           <option value=""> </option>
           <% for (int i = 4; i <= 7; i++) {
             for (int j = 0; j < 12; j++) {
@@ -166,7 +166,7 @@
         </select>
 
         <label>Food Preference:</label>
-        <select name="foodpreferences" required>
+        <select name="foodpreferences" >
           <option value=""> </option>
           <option value="Veg">Vegetarian</option>
           <option value="Non-Veg">Non-Vegetarian</option>
@@ -174,7 +174,7 @@
         </select>
 
         <label>Drinking:</label>
-        <select name="drinking" required>
+        <select name="drinking" >
           <option value=""> </option>
           <option value="yes">Yes</option>
           <option value="No">No</option>
@@ -183,14 +183,14 @@
 
 
         <label>Smoking :</label>
-        <select name="smoking" required>
+        <select name="smoking" >
           <option value=""> </option>
           <option value="yes">Yes</option>
           <option value="No">No</option>
         </select>
 
         <label>Differently Abled :</label>
-        <select name="diffabled" required>
+        <select name="diffabled" >
           <option value=""> </option>
           <option value="yes">Yes</option>
           <option value="No">No</option>

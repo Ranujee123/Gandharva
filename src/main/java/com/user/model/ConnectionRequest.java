@@ -1,4 +1,5 @@
 package com.user.model;
+import com.user.model.RequestType;
 
 public class ConnectionRequest {
     private int requestId;
@@ -11,14 +12,24 @@ public class ConnectionRequest {
     private String fromUserLastName;
     private String toUserLastName;
 
+    private int pendingRequests;
+
+    private int acceptedRequests;
 
     // Constructor
-    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status, java.sql.Timestamp timestamp) {
+    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status, java.sql.Timestamp timestamp, int pendingRequests,int acceptedRequests) {
         this.requestId = requestId;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.status = status;
         this.timestamp = timestamp;
+        this.pendingRequests=pendingRequests;
+        this.acceptedRequests=acceptedRequests;
+    }
+    public ConnectionRequest(int pendingRequests,int acceptedRequests){
+        this.pendingRequests=pendingRequests;
+        this.acceptedRequests=acceptedRequests;
+
     }
 
     public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status) {
@@ -88,6 +99,14 @@ public class ConnectionRequest {
 
     public void setTimestamp(java.sql.Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public int getAcceptedRequests() {
+        return acceptedRequests;
+    }
+
+    public int getPendingRequests() {
+        return pendingRequests;
     }
 }
 

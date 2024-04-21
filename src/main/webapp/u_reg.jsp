@@ -19,7 +19,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
+    *{
+      font-family: "Poppins", sans-serif;
+    }
+
     body {
       margin: 0;
       padding: 0;

@@ -3,9 +3,11 @@ import javax.servlet.http.Part;
 import java.sql.*;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 public class UserDBUtil {
 
@@ -568,13 +570,13 @@ public class UserDBUtil {
 
     public static int getPersonalityIdByName(String personality) throws Exception {
         Connection con = DBConnect.getConnection();
-        String sql = "SELECT pID FROM personality WHERE personality = ?";
+        String sql = "SELECT personalityID FROM personality WHERE personality = ?";
         try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
 
             preparedStatement.setString(1, personality);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getInt("pID");
+                    return resultSet.getInt("personalityID");
                 }
             }
         }
@@ -582,16 +584,16 @@ public class UserDBUtil {
     }
 
 
-    public static boolean saveInterestDetails(int uID, String interests, int pID) {
+    public static boolean saveInterestDetails(int uID, String interests, int personalityID) {
         Connection con = null;
         PreparedStatement preparedStatement = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO uinterest (uID, interests, pID) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO uinterest (uID, interests, personalityID) VALUES (?, ?, ?)";
             preparedStatement = con.prepareStatement(sql);
             preparedStatement.setInt(1, uID);
             preparedStatement.setString(2, interests);
-            preparedStatement.setInt(3, pID);
+            preparedStatement.setInt(3, personalityID);
             int result = preparedStatement.executeUpdate();
             return result > 0;
         } catch (Exception e) {
@@ -1003,10 +1005,11 @@ public class UserDBUtil {
 
     public static boolean addConnectionRequest(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection()) {
-            String sql = "INSERT INTO connection_requests (from_user_id, to_user_id, status, timestamp) VALUES (?, ?, 'pending', NOW())";
+            String sql = "INSERT INTO connection_requests (from_user_id, to_user_id, status, timestamp) VALUES (?, ?,?, NOW())";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
                 stmt.setString(1, fromUserId);
                 stmt.setString(2, toUserId);
+                stmt.setString(3,RequestType.PENDING.name());
                 int rowsAffected = stmt.executeUpdate();
                 return rowsAffected > 0;
             }
@@ -1037,33 +1040,32 @@ public class UserDBUtil {
 
 
 
-    public static List<ConnectionRequest> getSentConnectionRequests(int userId) throws SQLException {
+
+
+    public static List<ConnectionRequest> getConnectionRequestStatus(int userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
-        String sql = "SELECT cr.*, u.fname AS toUserFirstName, u.lname AS toUserLastName FROM connection_requests cr " +
-                "JOIN user u ON cr.to_user_id = u.uID WHERE cr.from_user_id = ? AND cr.status = 'pending'";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                ConnectionRequest request = new ConnectionRequest(
-                        rs.getInt("request_id"),
-                        userId,
-                        rs.getInt("to_user_id"),
-                        rs.getString("status"),
-                        rs.getString("toUserFirstName"),
-                        rs.getString("toUserLastName")
-                );
-                requests.add(request);
+             PreparedStatement ps = con.prepareStatement("SELECT * FROM connection_requests WHERE from_user_id = ? OR to_user_id = ?")) {
+            ps.setInt(1, userId);
+            ps.setInt(2, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    ConnectionRequest request = new ConnectionRequest(
+                            rs.getInt("request_id"),
+                            rs.getInt("from_user_id"),
+                            rs.getInt("to_user_id"),
+                            rs.getString("status")
+                    );
+                    requests.add(request);
+                }
             }
         }
         return requests;
     }
 
-    public static List<ConnectionRequest> getReceivedConnectionRequests(int userId) throws SQLException {
+    public static List<ConnectionRequest> getPendingReq(int userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
-        String sql = "SELECT cr.*, u.fname AS fromUserFirstName, u.lname AS fromUserLastName FROM connection_requests cr " +
-                "JOIN user u ON cr.from_user_id = u.uID WHERE cr.to_user_id = ? AND cr.status = 'pending'";
+        String sql = "SELECT * from connection_requests cr WHERE from_user_id=? AND cr.status='PENDING'";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setInt(1, userId);
@@ -1072,10 +1074,8 @@ public class UserDBUtil {
                 ConnectionRequest request = new ConnectionRequest(
                         rs.getInt("request_id"),
                         rs.getInt("from_user_id"),
-                        userId,
-                        rs.getString("status"),
-                        rs.getString("fromUserFirstName"),
-                        rs.getString("fromUserLastName")
+                        rs.getInt("to_user_id"),
+                        rs.getString("status")
                 );
                 requests.add(request);
             }
@@ -1083,8 +1083,87 @@ public class UserDBUtil {
         return requests;
     }
 
+
+//Sending horoscope and resquest to astrologer
+    public static boolean insertNewRequest(int userId, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
+        String sql = "INSERT INTO request (id,startDate, horoscope, horoscopeSecond, status, userId) VALUES (?,?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnect.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
+            statement.setDate(2, new Date(System.currentTimeMillis())); // Use current time for startDate
+            if (horoscope != null) {
+                statement.setBytes(3, horoscope);
+            } else {
+                statement.setNull(3, Types.BLOB); // Set NULL if horoscope is null
+            }
+            if (horoscopeSecond != null) {
+                statement.setBytes(4, horoscopeSecond);
+            } else {
+                statement.setNull(4, Types.BLOB); // Set NULL if horoscopeSecond is null
+            }
+            statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a status
+            statement.setInt(6, userId); // Set userId
+
+            int result = statement.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error during database operation: " + ex.getMessage());
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
+
+    public static int countPendingRequests(int userId) throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM connection_requests WHERE from_user_id = ? AND status = 'PENDING'";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        }
+        return count;
+    }
+
+    public static int countAcceptedRequests(int userId) throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM connection_requests WHERE to_user_id = ? AND status = 'ACCEPTED'";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        }
+        return count;
+    }
+
+    public static int countNewRequests(int userId) throws SQLException {
+        int count = 0;
+        String sql = "SELECT COUNT(*) FROM connection_requests " +
+                "WHERE to_user_id = ? AND status = 'PENDING' " +
+                "AND timestamp >= NOW() - INTERVAL 12 HOUR"; // Adjust this line for different SQL dialects
+
+        // Use try-with-resources to manage database connections and statements
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+
+            pstmt.setInt(1, userId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);  // Get the count from the first column of the ResultSet
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Error counting new requests: " + e.getMessage());
+            throw e;  // Rethrow the exception after logging it
+        }
+        return count;
+    }
+
+
 }
-
-
-
-

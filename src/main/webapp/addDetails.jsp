@@ -114,10 +114,10 @@
         <div class="form-container">
             <form action="qul" method="post">
                 <label>School / College:</label>
-                <input type="text" name="school" required><br>
+                <input type="text" name="school" ><br>
 
                 <label>Heighest Education Qualification:</label>
-                <select name="eduquali" required>
+                <select name="eduquali" >
                     <option value=""></option>
                     <% for (String qualification : qualifications) { %>
                     <option><%= qualification %></option>
@@ -125,7 +125,7 @@
                 </select>
 
                 <label>Occupation :</label>
-                <select name="occupation" required>
+                <select name="occupation" >
                     <option value=""></option>
                     <% for (String occupation : occupations) { %>
                     <option><%= occupation %></option>

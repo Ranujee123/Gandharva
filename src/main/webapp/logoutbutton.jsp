@@ -18,11 +18,7 @@
         </button>
     </form>
 </div>
-<script>
-    document.getElementById('logoutForm').onsubmit = function() {
-        return confirm('Are you sure you want to log out?');
-    };
-</script>
+<script src="js/Status.js"></script>
 
 <style>
     #logout-container {

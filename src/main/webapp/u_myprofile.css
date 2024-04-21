@@ -51,13 +51,18 @@ body {
 .card {
     flex: 1; /* Each card takes equal space */
     margin: 0px 10px; /* Margin between cards */
-    padding: 20px;
+    padding: 40px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
-    height: 70px;
+    height: auto;
     border-radius: 10px; /* Rounded corners */
 
+
+}
+
+.card-text{
+    text-align: center;
 }
 
 .completion-bar {
