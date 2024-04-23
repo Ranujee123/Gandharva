@@ -12,12 +12,14 @@ import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @MultipartConfig
 public class Userinsert extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String id = UUID.randomUUID().toString();
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         String nic = req.getParameter("nic");
@@ -73,7 +75,7 @@ public class Userinsert extends HttpServlet {
             return;
 
         }
-            boolean isInserted = UserDBUtil.insertUser(firstName, lastName, nic, province, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
+            boolean isInserted = UserDBUtil.insertUser(id,firstName, lastName, nic, province, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
 
         if (isInserted) {
             req.getSession().setAttribute("successMessage", "Registration successful.");

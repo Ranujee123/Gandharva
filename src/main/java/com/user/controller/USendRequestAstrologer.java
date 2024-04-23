@@ -1,4 +1,4 @@
-package com.user.controller;
+/*package com.user.controller;
 
 import com.user.model.UserDBUtil;
 
@@ -27,7 +27,7 @@ public class USendRequestAstrologer extends HttpServlet {
         }
 
         try {
-            int userId = UserDBUtil.getUserIdByEmail(userEmail);
+            String userId = UserDBUtil.getUserIdByEmail(userEmail);
             System.out.println("User ID retrieved from DB: " + userId);
 
             Part horoscopePart = request.getPart("horoscope");
@@ -74,3 +74,4 @@ public class USendRequestAstrologer extends HttpServlet {
         }
     }
 }
+*/

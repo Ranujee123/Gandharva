@@ -26,10 +26,10 @@ public class QualificationServlet extends HttpServlet {
             String qualification = request.getParameter("qualification");
             String occupation = request.getParameter("occupation");
 
-            int uID = UserDBUtil.getUserIdByEmail(userEmail);
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
 
 
-            if (UserDBUtil.saveDetailsToDatabase(uID, qualification, occupation, school)) {
+            if (UserDBUtil.saveDetailsToDatabase(id, qualification, occupation, school)) {
                 session.setAttribute("qualificationCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

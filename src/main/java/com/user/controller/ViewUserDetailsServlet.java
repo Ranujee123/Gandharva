@@ -32,8 +32,8 @@ public class ViewUserDetailsServlet extends HttpServlet {
         request.setAttribute("user", user);
 
         try {
-            int fromUserId = UserDBUtil.getUserIdByEmail(currentUserEmail);
-            int toUserId = UserDBUtil.getUserIdByEmail(email);
+            String fromUserId = UserDBUtil.getUserIdByEmail(currentUserEmail); // Now returns a String ID
+            String toUserId = UserDBUtil.getUserIdByEmail(email); // Now returns a String ID
             boolean isPending = UserDBUtil.isConnectionRequestPending(fromUserId, toUserId);
             request.setAttribute("isConnectionRequestPending", isPending);
 

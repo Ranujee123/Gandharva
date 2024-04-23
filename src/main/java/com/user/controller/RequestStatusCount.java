@@ -25,13 +25,13 @@ public class RequestStatusCount extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
 
         try {
-            int userId = UserDBUtil.getUserIdByEmail(userEmail);
+            String userId = UserDBUtil.getUserIdByEmail(userEmail);
             int newRequests = UserDBUtil.countNewRequests(userId);
             int pendingRequests = UserDBUtil.countPendingRequests(userId);
             int acceptedRequests = UserDBUtil.countAcceptedRequests(userId);
 
             Gson gson = new Gson();
-            String jsonResponse = gson.toJson(new int[] {newRequests,pendingRequests, acceptedRequests});
+            String jsonResponse = gson.toJson(new int[] {newRequests, pendingRequests, acceptedRequests});
             response.getWriter().write(jsonResponse);
         } catch (SQLException e) {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

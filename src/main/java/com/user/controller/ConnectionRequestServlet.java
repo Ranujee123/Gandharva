@@ -15,25 +15,28 @@ public class ConnectionRequestServlet extends HttpServlet {
         String fromUserEmail = (String) session.getAttribute("userEmail");
         String toUserEmail = request.getParameter("toUserEmail");
 
-
-        // Debugging output to check IDs
-        System.out.println("From User ID: " + fromUserEmail); // Should not be null
-        System.out.println("To User ID: " + toUserEmail); // Should not be zero or null
-
+        if (fromUserEmail == null || toUserEmail == null || fromUserEmail.isEmpty() || toUserEmail.isEmpty()) {
+            // Redirecting to the error page with an appropriate message if the emails are invalid
+            response.sendRedirect("errorPage.jsp?message='Invalid user email'");
+            return;
+        }
 
         try {
-            int fromUserId = UserDBUtil.getUserIdByEmail(fromUserEmail);
-            int toUserId = UserDBUtil.getUserIdByEmail(toUserEmail);
+            String fromUserId = UserDBUtil.getUserIdByEmail(fromUserEmail);
+            String toUserId = UserDBUtil.getUserIdByEmail(toUserEmail);
 
-            if (fromUserId == -1 || toUserId == -1) {
-                response.sendRedirect("errorPage.jsp?message='Invalid user email'");
+            // Check if either user ID is null, indicating the email did not correspond to a user
+            if (fromUserId == null || toUserId == null) {
+                response.sendRedirect("errorPage.jsp?message='User not found'");
                 return;
             }
 
-            boolean isSuccess = UserDBUtil.addConnectionRequest(String.valueOf(fromUserId), String.valueOf(toUserId));
+            boolean isSuccess = UserDBUtil.addConnectionRequest(fromUserId, toUserId);
             if (isSuccess) {
+                // Redirect to a success page or dashboard after the connection request is successfully made
                 response.sendRedirect("u_dashboard.jsp");
             } else {
+                // Redirect to an error page if the connection request fails to save
                 response.sendRedirect("errorPage.jsp?message='Failed to send connection request'");
             }
         } catch (Exception e) {

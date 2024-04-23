@@ -26,10 +26,10 @@ public class UpdateUserServlet extends HttpServlet {
             return;
         }
 
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
     //  String bday = request.getParameter("bday");
-        String idNumber=request.getParameter("idNumber");
+        String nic=request.getParameter("nic");
         //String cID = request.getParameter("cID");
         String email = request.getParameter("email");
         String province = request.getParameter("province"); // Assuming the dropdown has the name "province"
@@ -41,7 +41,7 @@ public class UpdateUserServlet extends HttpServlet {
         byte[] dpPhoto = convertPartToByteArray(dpphotoPart);
 
 
-        boolean isTrue = UserDBUtil.updateUser(fname, lname, idNumber, province,  dpPhoto,email);
+        boolean isTrue = UserDBUtil.updateUser(firstName, lastName, nic, province,  dpPhoto,email);
 
 
         if (isTrue) {

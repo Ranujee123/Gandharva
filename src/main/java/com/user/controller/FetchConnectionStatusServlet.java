@@ -21,9 +21,9 @@ public class FetchConnectionStatusServlet extends HttpServlet {
         }
 
         try {
-            int userId = UserDBUtil.getUserIdByEmail(userEmail);
-            List<ConnectionRequest> requests = UserDBUtil.getConnectionRequestStatus(userId);
-            List<ConnectionRequest> requests1 = UserDBUtil.getPendingReq(userId);
+            String userId = UserDBUtil.getUserIdByEmail(userEmail);  // Get the user ID as a String
+            List<ConnectionRequest> requests = UserDBUtil.getConnectionRequestStatus(userId);  // Adjusted to accept String ID
+            List<ConnectionRequest> requests1 = UserDBUtil.getPendingReq(userId);  // Adjusted to accept String ID
             request.setAttribute("requests", requests != null ? requests : new ArrayList<>());
             request.setAttribute("requests1", requests1 != null ? requests1 : new ArrayList<>());
         } catch (Exception e) {
@@ -31,8 +31,6 @@ public class FetchConnectionStatusServlet extends HttpServlet {
             request.setAttribute("requests", new ArrayList<>()); // Ensure requests is never null
             request.setAttribute("requests1", new ArrayList<>());
         }
-
-
 
         request.getRequestDispatcher("/userconnection.jsp").forward(request, response);
     }

@@ -24,10 +24,10 @@ public class UpdateUserPersonalInfo extends HttpServlet {
             return;
         }
 
-        int uID;
+        String id;
         try {
-            uID = UserDBUtil.getUserIdByEmail(userEmail);
-            if (uID == -1) {
+            id = UserDBUtil.getUserIdByEmail(userEmail);
+            if (id == null) {
                 System.out.println("User ID not found for the email: " + userEmail);
                 response.sendRedirect("login.jsp");
                 return;
@@ -54,10 +54,10 @@ public class UpdateUserPersonalInfo extends HttpServlet {
         String smoking = request.getParameter("smoking");
         String diffabled = request.getParameter("diffabled");
 
-        boolean isUpdated = UserDBUtil.updateUserInfo(uID, ethnicity, religion, caste, status, height, qualification,school, occupation, foodpreferences, drinking, smoking, diffabled);
+        boolean isUpdated = UserDBUtil.updateUserInfo(id, ethnicity, religion, caste, status, height, qualification, school, occupation, foodpreferences, drinking, smoking, diffabled);
 
         if (isUpdated) {
-            List<User> updatedUserInfo = UserDBUtil.getUserInfo(uID); // Assuming getUserInfo now accepts uID
+            List<User> updatedUserInfo = UserDBUtil.getUserInfo(id); // Assuming getUserInfo now accepts id
             if (!updatedUserInfo.isEmpty()) {
                 session.setAttribute("userDetails", updatedUserInfo.get(0));
                 request.setAttribute("userDetails", updatedUserInfo);
@@ -66,7 +66,7 @@ public class UpdateUserPersonalInfo extends HttpServlet {
             dis.forward(request, response);
         } else {
             System.out.println("Error: User update failed for email: " + userEmail);
-            List<User> getUserInfo = UserDBUtil.getUserInfo(uID);
+            List<User> getUserInfo = UserDBUtil.getUserInfo(id);
             request.setAttribute("userDetails", getUserInfo);
             RequestDispatcher dis = request.getRequestDispatcher("u_myprofile.jsp");
             dis.forward(request, response);

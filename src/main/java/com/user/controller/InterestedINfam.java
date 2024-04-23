@@ -21,17 +21,18 @@ public class InterestedINfam extends HttpServlet {
                 return;
             }
 
-
             String freli = request.getParameter("fatherReligion");
             String foccu = request.getParameter("fatherOccupation");
-
             String mreli = request.getParameter("motherReligion");
             String moccup = request.getParameter("motherOccupation");
             String maritalstatus = request.getParameter("maritalStatus");
             int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
-            int uID = UserDBUtil.getUserIdByEmail(userEmail);
 
-            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(uID,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
+            // Fetch the user ID as a String
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
+
+            // Pass the ID as a String to your DB utility method
+            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(id, freli, foccu, mreli, moccup, maritalstatus, siblings)) {
                 session.setAttribute("interestedINFamDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {
@@ -41,10 +42,5 @@ public class InterestedINfam extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect("unsuccess.jsp");
         }
-
     }
 }
-
-
-
-

@@ -29,10 +29,10 @@ public class FamilyDetails extends HttpServlet {
             String moccup = request.getParameter("motherOccupation");
             String maritalstatus = request.getParameter("maritalStatus");
             int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
-            int uID = UserDBUtil.getUserIdByEmail(userEmail);
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
 
 
-        if (UserDBUtil.saveFamilyDetailsToDatabase(uID,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
+        if (UserDBUtil.saveFamilyDetailsToDatabase(id,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
             session.setAttribute("familyDetailsCompleted", true);
             response.sendRedirect("ProfileCompletionServlet");
         } else {

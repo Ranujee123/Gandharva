@@ -1,10 +1,9 @@
 package com.user.model;
-import com.user.model.RequestType;
 
 public class ConnectionRequest {
     private int requestId;
-    private int fromUserId;
-    private int toUserId;
+    private String fromUserId;
+    private String toUserId;
     private String status;
     private java.sql.Timestamp timestamp;
     private String fromUserFirstName;
@@ -13,40 +12,38 @@ public class ConnectionRequest {
     private String toUserLastName;
 
     private int pendingRequests;
-
     private int acceptedRequests;
 
-    // Constructor
-    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status, java.sql.Timestamp timestamp, int pendingRequests,int acceptedRequests) {
+    // Constructors
+    public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status) {
+        this.requestId = requestId;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.status = status;
+    }
+
+    public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status, java.sql.Timestamp timestamp) {
         this.requestId = requestId;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.status = status;
         this.timestamp = timestamp;
-        this.pendingRequests=pendingRequests;
-        this.acceptedRequests=acceptedRequests;
-    }
-    public ConnectionRequest(int pendingRequests,int acceptedRequests){
-        this.pendingRequests=pendingRequests;
-        this.acceptedRequests=acceptedRequests;
-
     }
 
-    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status) {
-        this.requestId = requestId;
-        this.fromUserId = fromUserId;
-        this.toUserId = toUserId;
-        this.status = status;
-
-    }
-    public ConnectionRequest(int requestId, int fromUserId, int toUserId, String status,
-                             String fromUserFirstName, String fromUserLastName) {
+    public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status,
+                             String fromUserFirstName, String fromUserLastName, java.sql.Timestamp timestamp) {
         this.requestId = requestId;
         this.fromUserId = fromUserId;
         this.toUserId = toUserId;
         this.status = status;
         this.fromUserFirstName = fromUserFirstName;
         this.fromUserLastName = fromUserLastName;
+        this.timestamp = timestamp;
+    }
+
+    public ConnectionRequest(int pendingRequests, int acceptedRequests){
+        this.pendingRequests = pendingRequests;
+        this.acceptedRequests = acceptedRequests;
     }
 
     // Getters and Setters for user details
@@ -58,8 +55,6 @@ public class ConnectionRequest {
         return toUserFirstName + " " + toUserLastName;
     }
 
-
-
     // Getters and Setters
     public int getRequestId() {
         return requestId;
@@ -69,19 +64,19 @@ public class ConnectionRequest {
         this.requestId = requestId;
     }
 
-    public int getFromUserId() {
+    public String getFromUserId() {
         return fromUserId;
     }
 
-    public void setFromUserId(int fromUserId) {
+    public void setFromUserId(String fromUserId) {
         this.fromUserId = fromUserId;
     }
 
-    public int getToUserId() {
+    public String getToUserId() {
         return toUserId;
     }
 
-    public void setToUserId(int toUserId) {
+    public void setToUserId(String toUserId) {
         this.toUserId = toUserId;
     }
 
@@ -109,4 +104,3 @@ public class ConnectionRequest {
         return pendingRequests;
     }
 }
-
