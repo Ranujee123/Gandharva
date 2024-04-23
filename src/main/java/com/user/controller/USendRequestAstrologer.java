@@ -45,7 +45,7 @@ public class USendRequestAstrologer extends HttpServlet {
             boolean insertSuccess = UserDBUtil.insertNewRequest(userId, horoscope, horoscopeSecond);
             if (insertSuccess) {
                 System.out.println("Request successfully inserted.");
-                response.sendRedirect("sucess.jsp");
+                response.sendRedirect("viewAstrologerList.jsp");
             } else {
                 System.out.println("Failed to insert the request into the database.");
                 response.sendRedirect("errorPage.jsp?message='Failed to submit request'");

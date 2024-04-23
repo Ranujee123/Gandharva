@@ -1,6 +1,7 @@
 package com.user.controller;
 
 import com.user.model.UserDBUtil;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -8,45 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.time.LocalDate;
-
 
 @MultipartConfig
 public class Userinsert extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String fname = req.getParameter("firstName");
         String lname = req.getParameter("lastName");
-        String idNumber=req.getParameter("idNumber");
-
+        String idNumber = req.getParameter("idNumber");
         String province = req.getParameter("province");
-        int pID = -1; // Default or error value, assuming your IDs are positive integers
-        try {
-            pID = UserDBUtil.getProvinceIdByName(province);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Consider handling this error more gracefully
-        }
-
-        // Check if a valid gender ID was retrieved
-        if (pID == -1) {
-            req.setAttribute("errorMessage", "Invalid province selected.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return;
-        }
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String cpassword = req.getParameter("confirmPassword");
 
-
-
-        // Check if passwords match
         if (!password.equals(cpassword)) {
             req.setAttribute("errorMessage", "Passwords do not match. Please try again.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
@@ -54,72 +33,66 @@ public class Userinsert extends HttpServlet {
             return;
         }
 
-        Part filePartFront = req.getPart("frontphoto");
-        Part filePartBack = req.getPart("backphoto");
+        Part frontPhotoPart = req.getPart("frontphoto");
+        Part backPhotoPart = req.getPart("backphoto");
 
-        String frontphoto = uploadPhoto(filePartFront, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(F)", req, resp);
-        String backphoto = uploadPhoto(filePartBack, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(B)", req, resp);
+        byte[] frontPhoto = convertPartToByteArray(frontPhotoPart);
+        byte[] backPhoto = convertPartToByteArray(backPhotoPart);
 
-        String gender= req.getParameter("gender");
-        if (frontphoto == null || backphoto == null) {
-            // Error handling is already done inside uploadPhoto
-            return; // Stop processing if there was an error uploading photos
+        if (frontPhoto == null || backPhoto == null) {
+            req.setAttribute("errorMessage", "All photos are required. Please select files to upload.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
         }
 
         password = String.valueOf(password.hashCode()); // Consider a more secure hashing method
-
-        // Inside your doPost method before inserting the user
         String dob = req.getParameter("dob");
-        LocalDate birthDate = DateUtil.parseDate(dob);
-        int age = DateUtil.calculateAge(birthDate, LocalDate.now());
+        LocalDate birthDate = LocalDate.parse(dob);
+        int age = LocalDate.now().minusYears(birthDate.getYear()).getYear();
 
         if (age < 18) {
             req.setAttribute("errorMessage", "You must be 18 years or older to register.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
             dispatcher.forward(req, resp);
-            return; // Stop execution
+            return;
         }
-        boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, pID, email, frontphoto, backphoto, password,gender,dob,age);
+
+        // Check if email is already registered
+        boolean isRegistered = UserDBUtil.isEmailRegistered(email);
+        if (isRegistered) {
+            req.setAttribute("errorMessage", "Email already registered.");
+            req.setAttribute("fname", fname);
+            req.setAttribute("lname", lname);
+            req.setAttribute("idNumber", idNumber);
+            req.setAttribute("province", province);
+            // You can also retain other non-sensitive data if needed
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
+
+        }
+            boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, province, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
 
         if (isInserted) {
-            RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
-            dis.forward(req, resp);
+            req.getSession().setAttribute("successMessage", "Registration successful.");
+            resp.sendRedirect("login.jsp");
         } else {
             req.setAttribute("errorMessage", "Registration failed. Please try again.");
-            RequestDispatcher dis2 = req.getRequestDispatcher("/u_reg.jsp");
-            dis2.forward(req, resp);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
         }
     }
 
-    private String uploadPhoto(Part filePart, String uploadsDirPath, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (filePart == null || filePart.getSubmittedFileName().isEmpty()) {
-            req.setAttribute("errorMessage", "All photos are required. Please select files to upload.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return null; // Indicate error
+    private byte[] convertPartToByteArray(Part filePart) throws IOException {
+        if (filePart == null) {
+            return null;
         }
 
-        String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        // Generate a unique file name by appending a timestamp
-        String newFileName = System.currentTimeMillis() + "_" + originalFileName;
-
-
-       // String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-
-        File uploadsDir = new File(uploadsDirPath);
-        if (!uploadsDir.exists() && !uploadsDir.mkdirs()) {
-            System.err.println("Failed to create directory for file uploads.");
-            req.setAttribute("errorMessage", "Server error: unable to create directory for file upload.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return null; // Indicate error
-        }
-
-        String photoIDPath = uploadsDirPath + File.separator + newFileName;
-        filePart.write(photoIDPath); // Save the file
-
-        return newFileName; // Return the file name for database storage
+        InputStream inputStream = filePart.getInputStream();
+        byte[] bytes = new byte[(int) filePart.getSize()];
+        inputStream.read(bytes);
+        return bytes;
     }
 }
-
-

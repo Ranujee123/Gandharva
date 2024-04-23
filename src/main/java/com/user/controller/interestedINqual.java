@@ -22,14 +22,12 @@ public class interestedINqual extends  HttpServlet{
                 }
 
 
-                String eduQualification = request.getParameter("eduquali");
+                String qualification = request.getParameter("qualification");
                 String occupation = request.getParameter("occupation");
 
                 int uID = UserDBUtil.getUserIdByEmail(userEmail);
-                int qID = UserDBUtil.getQualificationIdByName(eduQualification);
-                int oID = UserDBUtil.getOccupationIdByName(occupation);
 
-                if (UserDBUtil.saveinterestedINQualToDatabase(uID, oID, qID)) {
+                if (UserDBUtil.saveinterestedINQualToDatabase(uID, occupation, qualification)) {
                     session.setAttribute("isInterestedINQualCompleted", true);
                     response.sendRedirect("ProfileCompletionServlet");
                 } else {

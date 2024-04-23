@@ -28,10 +28,10 @@ public class InterestedINfam extends HttpServlet {
             String mreli = request.getParameter("motherReligion");
             String moccup = request.getParameter("motherOccupation");
             String maritalstatus = request.getParameter("maritalStatus");
-            String siblings = request.getParameter("numberOfSiblings");
+            int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
+            int uID = UserDBUtil.getUserIdByEmail(userEmail);
 
-
-            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(userEmail,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
+            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(uID,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
                 session.setAttribute("interestedINFamDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

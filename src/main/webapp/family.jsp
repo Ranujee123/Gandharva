@@ -137,7 +137,7 @@
               </select><br>
 
               <label>Number of Siblings:</label>
-              <input type="number" name="numberOfSiblings" min="0" ><br>
+              <input type="number" name="numberOfSiblings" min="0" required><br>
 
               <div class="completion-bar">
                 <div class="completion-fill" style="width: 43%;"></div> <!-- Adjust the width based on completion -->

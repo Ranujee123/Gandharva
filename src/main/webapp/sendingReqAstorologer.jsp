@@ -16,6 +16,10 @@
 <html>
 <head>
     <title>Send Request</title>
+    <script src="js/Status.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <style>
         .container {
@@ -50,7 +54,7 @@
     <p>Send your horoscope now</p>
     <br>
 </div>
-<form action="SendRequest" method="post" enctype="multipart/form-data">
+<form action="SendRequest" method="post" enctype="multipart/form-data" id="save">
 
     <label for="horoscope">Horoscope Image:</label>
     <input type="file" id="horoscope" name="horoscope" accept="image/*" required><br><br>
@@ -58,7 +62,7 @@
     <label for="horoscopeSecond">Second Horoscope Image:</label>
     <input type="file" id="horoscopeSecond" name="horoscopeSecond" accept="image/*" required><br><br>
 
-    <input type="submit" value="Submit Request" class="button">
+    <input type="submit" value="Submit Request" class="button" onclick="SendHoroscope()">
 
 </form>
 </div>

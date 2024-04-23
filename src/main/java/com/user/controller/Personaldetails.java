@@ -27,6 +27,7 @@ public class Personaldetails extends HttpServlet {
             // Retrieve and validate form data
             String ethnicity = request.getParameter("ethnicity");
             String religion = request.getParameter("religion");
+            String caste=request.getParameter("caste");
             String status = request.getParameter("status");
             String height = request.getParameter("height");
             String foodPreference = request.getParameter("foodpreferences");
@@ -36,7 +37,7 @@ public class Personaldetails extends HttpServlet {
 
 
             // Save personal details to database
-            boolean isSaved = UserDBUtil.savePersonalDetailsToDatabase(userEmail, ethnicity, religion, status, height, foodPreference, drinking, smoking, diffabled);
+            boolean isSaved = UserDBUtil.savePersonalDetailsToDatabase(userEmail, ethnicity, religion,caste, status, height, foodPreference, drinking, smoking, diffabled);
             if (isSaved) {
                 session.setAttribute("personalDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet"); // Redirect to the next step or confirmation page

@@ -129,7 +129,7 @@
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="userSelectEdit.jsp">
         <i class="menu-icon fas fa-user"></i>
         <span>Profile</span>
       </a>
@@ -147,19 +147,19 @@
       </a>
     </li>
     <li>
-      <a href="sendingReqAstorologer.jsp">
+      <a href="viewAstrologerList.jsp">
         <i class="menu-icon fas fa-bookmark"></i>
         <span>Astrology Service</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="ViewEventPlannerList.jsp">
         <i class="menu-icon fas fa-calendar"></i>
         <span>Event Planing Srvice</span>
       </a>
     </li>
     <li>
-      <a href="#">
+      <a href="matches.jsp">
         <i class="menu-icon fas fa-credit-card"></i>
         <span>Payment</span>
       </a>

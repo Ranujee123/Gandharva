@@ -113,7 +113,7 @@
 
 
                 <label>Enter your personality type:</label>
-                <select name="ptype" required>
+                <select name="ptype" >
                     <option value=""></option>
                     <% for (String personality : personalities) { %>
                     <option><%= personality %></option>

@@ -77,15 +77,37 @@
 
 
 
-
-
-        <label>Province<span ></span>:</label>
-        <select name="province" >
+        <label>District<span ></span>:</label>
+        <select name="province">
             <option value=""></option>
-            <% for (String pro : province) { %>
-            <option><%= pro %></option>
-            <% } %>
+            <option value="Ampara">Ampara</option>
+            <option value="Anuradhapura">Anuradhapura</option>
+            <option value="Badulla">Badulla</option>
+            <option value="Batticaloa">Batticaloa</option>
+            <option value="Colombo">Colombo</option>
+            <option value="Galle">Galle</option>
+            <option value="Gampaha">Gampaha</option>
+            <option value="Hambantota">Hambantota</option>
+            <option value="Jaffna">Jaffna</option>
+            <option value="Kalutara"> Kalutara</option>
+            <option value="Kandy">Kandy</option>
+            <option value="Kegalle">Kegalle</option>
+            <option value="Kilinochchi">Kilinochchi</option>
+            <option value="Kurunegala"> Kurunegala</option>
+            <option value="Mannar">Mannar</option>
+            <option value="Matale">Matale</option>
+            <option value="Matara">Matara</option>
+            <option value="Monaragala">Monaragala</option>
+            <option value="Mullaitivu">Mullaitivu</option>
+            <option value="Nuwara Eliya"> Nuwara Eliya</option>
+            <option value="Polonnaruwa">Polonnaruwa</option>
+            <option value="Puttalam">Puttalam</option>
+            <option value="Ratnapura"> Ratnapura</option>
+            <option value="Trincomalee">Trincomalee</option>
+            <option value="Vavuniya">Vavuniya</option>
         </select>
+
+
 
         <label>Ethnicity:</label>
         <select name="ethnicity" >
@@ -133,22 +155,56 @@
             %>
         </select>
 
-        <label>Heighest Education Qualification:</label>
-        <select name="eduquali" >
+        <label>Minimum Education Qualification:</label>
+        <select name="qualification">
             <option value=""></option>
-            <% for (String qualification : qualifications) { %>
-            <option><%= qualification %></option>
-            <% } %>
+            <option value="phd">Phd or Post Doctoral </option>
+            <option value="msc">Master's Degree or Equivalent</option>
+            <option value="diploma">Post Graduate Diploma</option>
+            <option value="bachelor">Bachelor's Degree or Equivalent</option>
+            <option value="undergrad">Undergraduate</option>
+            <option value="proffqual">Professional Qualification</option>
+            <option value="diploma">Diploma</option>
+            <option value="al">Up to GCE A/L</option>
+            <option value="ol">Up to GCE O/L</option>
+            <option value="other">Other</option>
+
         </select>
 
 
-        <label>Occupation :</label>
-        <select name="occupation" >
+        <label> Occupation :</label>
+        <select name="occupation">
             <option value=""></option>
-            <% for (String occupation : occupations) { %>
-            <option><%= occupation %></option>
-            <% } %>
-        </select>
+            <option value="Accountant">Accountant </option>
+            <option value="Architect">Architect</option>
+            <option value="Banker">Banker</option>
+            <option value="Business Owner">Business Owner</option>
+            <option value="Chef">Chef</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Driver">Driver</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Farmer">Farmer</option>
+            <option value="Governmet Service">Governmet Service</option>
+            <option value="Graphic Designer">Graphic Designer</option>
+            <option value="Hotelier">Hotelier </option>
+            <option value="House Wife">House Wife</option>
+            <option value="IT Professional">IT Professional</option>
+            <option value="Lawyer">Lawyer </option>
+            <option value="Lecturer">Lecturer</option>
+            <option value="Manager">Manager</option>
+            <option value="Medical Professional">Medical Professional</option>
+            <option value="Military">Military</option>
+            <option value="Not Employed">Not Employed</option>
+            <option value="Nurse"> Nurse</option>
+            <option value="Police Officer">Police Officer</option>
+            <option value="Quantity Surveyor">Quantity Surveyor</option>
+            <option value="Researcher">Researcher</option>
+            <option value="Sales Executive">Sales Executive</option>
+            <option value="Self Employed">Self Employed</option>
+            <option value="Surveyor">Surveyor</option>
+            <option value="Teacher">Teacher </option>
+            <option value="Technician">Technician</option>
+            <option value="Other">Other</option>
 
         <label>Food Preference:</label>
         <select name="foodpreferences" >
@@ -201,7 +257,7 @@
         <h2><c:out value="${user.fname}"/> <span class="lname" data-lname="<c:out value='${user.lname}'/>"></span></h2>
             <div class="profile-details-grid">
                 <div class="profile-detail">
-                    <p>Province: <c:out value="${user.provinceName}"/></p>
+                    <p>Province: <c:out value="${user.province}"/></p>
                 </div>
                 <div class="profile-detail">
                     <p>Religion: <c:out value="${user.religion}"/></p>
@@ -213,7 +269,7 @@
                     <p>Height: <c:out value="${user.height}"/></p>
                 </div>
                 <div class="profile-detail">
-                    <p>Occupation: <c:out value="${user.occupationName}"/></p>
+                    <p>Occupation: <c:out value="${user.occupation}"/></p>
                 </div>
             </div>
 

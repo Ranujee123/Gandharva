@@ -9,6 +9,8 @@ public class InterestedIn {
     private String nationality;
     private String country;
 
+
+
     public int getuID() {
         return uID;
     }

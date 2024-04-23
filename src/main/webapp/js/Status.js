@@ -33,3 +33,14 @@ function Saveprofile() {
     });
 }
 
+function SendHoroscope() {
+    // Perform save operation
+    Swal.fire({
+        title: "Sent Request successfully",
+        icon: "success"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('save').submit(); // Submit the form programmatically if confirmed
+        }
+    });
+}

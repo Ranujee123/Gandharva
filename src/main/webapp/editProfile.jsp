@@ -158,16 +158,37 @@
             <input type="text" id="idNumber" name="idNumber" value="<%= user.getIdNumber() %>">
 
 
+
             <label>Province:</label>
             <select name="province" required>
-                <option value=""></option>
-                <% for (String pro : province) { %>
-                <option value="<%= pro %>"
-                        <%= (user.getProvinceName() != null && user.getProvinceName().equals(pro)) ? "selected" : "" %>>
-                    <%= pro %>
-                </option>
-                <% } %>
-            </select>
+                <option value="">Select Province</option>
+                <option value="Ampara" <%= "Ampara".equals(user.getProvince()) ? "selected" : "" %>>Ampara</option>
+                <option value="Anuradhapura" <%= "Anuradhapura".equals(user.getProvince()) ? "selected" : "" %>>Anuradhapura</option>
+                <option value="Badulla" <%= "Badulla".equals(user.getProvince()) ? "selected" : "" %>>Badulla</option>
+                <option value="Batticaloa" <%= "Batticaloa".equals(user.getProvince()) ? "selected" : "" %>>Batticaloa</option>
+                <option value="Colombo" <%= "Colombo".equals(user.getProvince()) ? "selected" : "" %>>Colombo</option>
+                <option value="Galle" <%= "Galle".equals(user.getProvince()) ? "selected" : "" %>>Galle</option>
+                <option value="Gampaha" <%= "Gampaha".equals(user.getProvince()) ? "selected" : "" %>>Gampaha</option>
+                <option value="Hambantota" <%= "Hambantota".equals(user.getProvince()) ? "selected" : "" %>>Hambantota</option>
+                <option value="Jaffna" <%= "Jaffna".equals(user.getProvince()) ? "selected" : "" %>>Jaffna</option>
+                <option value="Kalutara" <%= "Kalutara".equals(user.getProvince()) ? "selected" : "" %>>Kalutara</option>
+                <option value="Kandy" <%= "Kandy".equals(user.getProvince()) ? "selected" : "" %>>Kandy</option>
+                <option value="Kegalle" <%= "Kegalle".equals(user.getProvince()) ? "selected" : "" %>>Kegalle</option>
+                <option value="Kilinochchi" <%= "Kilinochchi".equals(user.getProvince()) ? "selected" : "" %>>Kilinochchi</option>
+                <option value="Kurunegala" <%= "Kurunegala".equals(user.getProvince()) ? "selected" : "" %>>Kurunegala</option>
+                <option value="Mannar" <%= "Mannar".equals(user.getProvince()) ? "selected" : "" %>>Mannar</option>
+                <option value="Matale" <%= "Matale".equals(user.getProvince()) ? "selected" : "" %>>Matale</option>
+                <option value="Matara" <%= "Matara".equals(user.getProvince()) ? "selected" : "" %>>Matara</option>
+                <option value="Monaragala" <%= "Monaragala".equals(user.getProvince()) ? "selected" : "" %>>Monaragala</option>
+                <option value="Mullaitivu" <%= "Mullaitivu".equals(user.getProvince()) ? "selected" : "" %>>Mullaitivu</option>
+                <option value="Nuwara Eliya" <%= "Nuwara Eliya".equals(user.getProvince()) ? "selected" : "" %>>Nuwara Eliya</option>
+                <option value="Polonnaruwa" <%= "Polonnaruwa".equals(user.getProvince()) ? "selected" : "" %>>Polonnaruwa</option>
+                <option value="Puttalam" <%= "Puttalam".equals(user.getProvince()) ? "selected" : "" %>>Puttalam</option>
+                <option value="Ratnapura" <%= "Ratnapura".equals(user.getProvince()) ? "selected" : "" %>>Ratnapura</option>
+                <option value="Trincomalee" <%= "Trincomalee".equals(user.getProvince()) ? "selected" : "" %>>Trincomalee</option>
+                <option value="Vavuniya" <%= "Vavuniya".equals(user.getProvince()) ? "selected" : "" %>>Vavuniya</option>
+            </select><br>
+            <br>
 
             <br>
             <label>About Me:</label>

@@ -118,10 +118,10 @@
     <div class="form-container">
       <form action="updetails" method="post" enctype="multipart/form-data">
        <label>Ethnicity:</label>
-        <select name="ethnicity">
+        <select name="ethnicity" required>
           <option value=""> </option>
           <option value="sinhalese">Sinhalese</option>
-          <option value="tamil">tamil</option>
+          <option value="tamil">Tamil</option>
           <option value="muslim">Muslim</option>
           <option value="burger">Burger</option>
           <option value="other">Other</option>
@@ -129,7 +129,7 @@
 
 
         <label>Religion:</label>
-        <select name="religion" >
+        <select name="religion" required >
           <option value=""> </option>
           <option value="buddhist">Buddhist</option>
           <option value="christain">Christian</option>
@@ -141,7 +141,27 @@
           <option value="other">Other</option>
         </select>
 
-        <label>Civil Status :</label>
+          <label> Caste:</label>
+          <select name="caste" required>
+              <option value=""></option>
+              <option value="Radala">Radala</option>
+              <option value="Govigama">Govigama</option>
+              <option value="Bathgama">Bathgama</option>
+              <option value="Deva">Deva</option>
+              <option value="Nekathi">Nekathi</option>
+              <option value="Bodhivansha">Bodhivansha</option>
+              <option value="Rajaka">Rajaka</option>
+              <option value="kumbal">Kumbal</option>
+              <option value="Hunu">Hunu</option>
+              <option value="Durava"> Durava</option>
+              <option value="Karava">Karava</option>
+              <option value="Salagama">Salagama</option>
+              <option value="Navandanna"> Navandanna</option>
+              <!-- Add more options as needed -->
+          </select><br>
+
+
+          <label>Civil Status :</label>
         <select name="status" >
           <option value=""> </option>
           <option value="Nevermarried">Never Married</option>

@@ -61,3 +61,13 @@ function validateConfirmPassword() {
     }
     return true;
 }
+
+function validateAgeRange() {
+    var ageFrom = document.getElementById('age').value;
+    var ageTo = document.getElementById('ageto').value;
+    if (parseInt(ageFrom) > parseInt(ageTo)) {
+        alert('Age From should be less than or equal to Age To.');
+        return false;
+    }
+    return true;
+}

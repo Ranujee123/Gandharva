@@ -185,7 +185,7 @@
 <div class="details-card">
   <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
   <h2><c:out value="${user.fname}"/> <span class="lname" data-lname="<c:out value='${user.lname}'/>"></span></h2>
-  <p><%=user.getAge()%>-<%=user.getOccupationName()%>-<%=user.getHeight()%></p>
+  <p><%=user.getAge()%>-<%=user.getOccupation()%>-<%=user.getHeight()%></p>
 
 </div>
 
@@ -220,7 +220,7 @@
     </tr>
     <tr>
       <td><b>Province</b></td>
-      <td><%=user.getProvinceName()%></td>
+      <td><%=user.getProvince()%></td>
     </tr>
 
   </table>
@@ -229,12 +229,12 @@
   <table style="width:100%">
     <tr>
       <td><b>Education</b></td>
-      <td><%=user.getQualificationName()%></td>
+      <td><%=user.getQualification()%></td>
     </tr>
 
     <tr>
       <td><b>Profession</b></td>
-      <td><%=user.getOccupationName()%></td>
+      <td><%=user.getOccupation()%></td>
     </tr>
   </table>
 

@@ -4,9 +4,10 @@ public class User {
     private String lname;
     private String idNumber;
     private int pID;
+    private String province;
 
     private String email;
-    private String dpphoto;
+
     private String password;
     private String gender;
     private String dob;
@@ -19,26 +20,45 @@ public class User {
     private String qualificationName;
     private String occupationName;
     private String diffabled;
-   private int minAge;
-   private int maxAge;
+    private int minAge;
+    private int maxAge;
 
-   private String foodpreferences;
-   private String drinking;
-   private String smoking;
-   private String aboutme;
-   private String freli;
-   private String foccu;
-   private String mreli;
-   private String moccup;
-   private String maritalstatus;
-   private int siblings;
-   int uID;
-   private int personalityID;
+    private String foodpreferences;
+    private String drinking;
+    private String smoking;
+    private String aboutme;
+    private String freli;
+    private String foccu;
+    private String mreli;
+    private String moccup;
+    private String maritalstatus;
+    private int siblings;
+    int uID;
+    byte[] dpphoto;
+    private int personalityID;
+    private String occupation;
+    // private String province;
+    private String qualification;
+    private String caste;
+
+    private String foodPreferences;
+    private static int Id;
+    private String school;
+
+    public User(String fname, String lname, String idNumber, String province, String email, String dob, int age) {
+        this.fname = fname;
+        this.lname = lname;
+        this.idNumber = idNumber;
+        this.province = province;
+        this.email = email;
+        this.dpphoto = dpphoto;
+        this.dob = dob;
+        this.age = age;
+    }
 
 
-private static int Id;
-    // Constructor
-    public User(String fname, String lname, String idNumber, int pID, String email,String dpphoto, String dob, String provinceName, int age) {
+    /* Constructor
+    public User(String fname, String lname, String idNumber, String pID, String email,String dpphoto, String dob, String provinceName, int age) {
         this.fname = fname;
         this.lname = lname;
         this.idNumber = idNumber;
@@ -49,64 +69,101 @@ private static int Id;
         this.provinceName = provinceName;
         this.age = age;
     }
-
-    public User(String fname, String lname, String email, int age, String provinceName, String ethnicity, String religion, String status, String height, String qualificationName, String occupationName, String diffabled) {
+*/
+    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
         this.age = age;
-        this.provinceName = provinceName;
+        this.province = province;
         this.ethnicity = ethnicity;
         this.religion = religion;
         this.status = status;
         this.height = height;
-        this.qualificationName = qualificationName;
-        this.occupationName = occupationName;
+        this.qualification = qualification;
+        this.occupation = occupation;
         this.diffabled = diffabled;
 
     }
-    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String foodpreferences,String drinking, String smoking,String qualification,String occupation,String diffabled) {
+
+    /*
+        public User(String fname, String lname, String email, int age, String provinceName, String ethnicity, String religion, String status, String height, String qualificationName, String occupationName, String diffabled) {
+            this.fname = fname;
+            this.lname = lname;
+            this.email = email;
+            this.age = age;
+            this.provinceName = provinceName;
+            this.ethnicity = ethnicity;
+            this.religion = religion;
+            this.status = status;
+            this.height = height;
+            this.qualificationName = qualificationName;
+            this.occupationName = occupationName;
+            this.diffabled = diffabled;
+
+        }
+    */
+    public User(String ethnicity, String religion, String caste, String status,
+                String height, String qualification,String school, String occupation,
+                String foodpreferences, String drinking, String smoking,
+                String diffabled) {
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.caste = caste;
+        this.status = status;
+        this.height = height;
+        this.qualification = qualification;
+        this.school=school;
+        this.occupation = occupation;
+        this.foodpreferences = foodpreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.diffabled = diffabled;
+    }
+
+
+    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
-        this.provinceName = province;
+        this.province = province;
         this.ethnicity = ethnicity;
         this.religion = religion;
-        this.status=status;
-        this.height=height;
-        this.foodpreferences=foodpreferences;
-        this.drinking=drinking;
-        this.smoking=smoking;
-        this.qualificationName=qualification;
-        this.occupationName=occupation;
-        this.diffabled=diffabled;
+        this.status = status;
+        this.height = height;
+        this.foodpreferences = foodpreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.diffabled = diffabled;
 
 
     }
 
 
-    public User(String fname, String lname, String email, String province,String ethnicity, String religion,String status,String height,String foodpreferences,String drinking, String smoking,String qualification,String occupation,String diffabled,int age,String freli,String mreli,String foccu,String moccup,String maritalstatus,int siblings) {
+    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings) {
         this.fname = fname;
         this.lname = lname;
         this.email = email;
-        this.provinceName = province;
+        this.province = province;
         this.ethnicity = ethnicity;
         this.religion = religion;
-        this.status=status;
-        this.height=height;
-        this.foodpreferences=foodpreferences;
-        this.drinking=drinking;
-        this.smoking=smoking;
-        this.qualificationName=qualification;
-        this.occupationName=occupation;
-        this.diffabled=diffabled;
-        this.age=age;
-        this.freli=freli;
-        this.foccu=foccu;
-        this.mreli=mreli;
-        this.moccup=moccup;
-        this.maritalstatus=maritalstatus;
-        this.siblings=siblings;
+        this.status = status;
+        this.height = height;
+        this.foodpreferences = foodpreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.diffabled = diffabled;
+        this.age = age;
+        this.freli = freli;
+        this.foccu = foccu;
+        this.mreli = mreli;
+        this.moccup = moccup;
+        this.maritalstatus = maritalstatus;
+        this.siblings = siblings;
 
     }
 
@@ -211,13 +268,19 @@ private static int Id;
     }
 
     // Getter and Setter for provinceName
-    public String getProvinceName() {
+   /* public String getProvinceName() {
         return provinceName;
     }
 
+
+    */
+/*
     public void setProvinceName(String provinceName) {
         this.provinceName = provinceName;
     }
+
+
+ */
 
     // Getter and Setter for age
     public int getAge() {
@@ -228,14 +291,6 @@ private static int Id;
         this.age = age;
     }
 
-
-    public void setDpphoto(String dpphoto) {
-        this.dpphoto = dpphoto;
-    }
-
-    public String getDpphoto() {
-        return dpphoto;
-    }
 
     public static int getId() {
         return Id;
@@ -279,5 +334,41 @@ private static int Id;
 
     public int getuID() {
         return uID;
+    }
+
+    public byte[] getDpphoto() {
+        return dpphoto;
+    }
+
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getQualification() {
+        return qualification;
+    }
+
+    public String getCaste() {
+        return caste;
+    }
+
+    public void setCaste(String caste) {
+        this.caste = caste;
+    }
+
+    public String getFoodPreferences() {
+        return foodPreferences;
+    }
+
+    public String getSchool() {
+        return school;
     }
 }

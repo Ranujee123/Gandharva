@@ -30,24 +30,24 @@ public class InterestedINServlet extends HttpServlet {
 
             System.out.println("User email: " + userEmail); // Debug print
 
-            String age = request.getParameter("age");
-            String gender = request.getParameter("gender");
+            int minAge= Integer.parseInt(request.getParameter("minAge"));
+            int maxAge= Integer.parseInt(request.getParameter("maxAge"));
             String religion = request.getParameter("religion");
             String caste = request.getParameter("caste");
-            String nationality = request.getParameter("nationality");
-            String country = request.getParameter("country");
+            String ethnicity = request.getParameter("ethnicity");
+            String province = request.getParameter("province");
 
 
             // Get user ID, qpersonality ID
 
             int uID = UserDBUtil.getUserIdByEmail(userEmail);
-            int aID = UserDBUtil.getAgeIdByName(age);
+
 
 
 
             // Save the details to the database
 
-            if (UserDBUtil.saveInterestedInDetails( uID,aID,gender,religion,caste,nationality, country)) {
+            if (UserDBUtil.saveInterestedInDetails( uID,minAge,maxAge,religion,caste,ethnicity, province)) {
                 session.setAttribute("interestedINCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

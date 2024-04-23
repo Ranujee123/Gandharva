@@ -66,7 +66,7 @@
 
             <p>Email: <%= user.getEmail() %></p>
 
-         <p> Province:  <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %></p>
+         <p> Province:  <%= user.getProvince() != null ? user.getProvince() : "Not specified" %></p>
 
             <!-- Add other fields as needed -->
             <% } %>
