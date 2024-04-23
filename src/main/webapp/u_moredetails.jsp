@@ -153,11 +153,11 @@
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Select all elements that contain last names
-      const lastNameElements = document.querySelectorAll('.lname');
+      const lastNameElements = document.querySelectorAll('.lastName');
 
       lastNameElements.forEach(function(element) {
-        // Get the full last name from data-lname attribute
-        const lastName = element.getAttribute('data-lname');
+        // Get the full last name from data-lastName attribute
+        const lastName = element.getAttribute('data-lastName');
         if (lastName && lastName.length > 0) {
           // Extract the first letter and convert to uppercase
           const firstLetter = lastName[0].toUpperCase();
@@ -184,7 +184,7 @@
 <h1></h1>
 <div class="details-card">
   <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
-  <h2><c:out value="${user.fname}"/> <span class="lname" data-lname="<c:out value='${user.lname}'/>"></span></h2>
+  <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
   <p><%=user.getAge()%>-<%=user.getOccupation()%>-<%=user.getHeight()%></p>
 
 </div>

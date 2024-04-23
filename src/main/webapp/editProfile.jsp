@@ -149,13 +149,13 @@
 
             <br>
             <label>First Name:</label>
-            <input type="text" name="fname" value="<%= user.getFname() %>" >
+            <input type="text" name="firstName" value="<%= user.getfirstName() %>" >
             <label>Last Name:</label>
-            <input type="text" name="lname" value="<%= user.getLname() %>" >
+            <input type="text" name="lastName" value="<%= user.getlastName() %>" >
             <label>Email:</label>
             <input type="email" name="email" value="<%= user.getEmail() %>" >
             <label>NIC:</label>
-            <input type="text" id="idNumber" name="idNumber" value="<%= user.getIdNumber() %>">
+            <input type="text" id="nic" name="nic" value="<%= user.getnic() %>">
 
 
 

@@ -1,8 +1,8 @@
 package com.user.model;
 public class User {
-    private String fname;
-    private String lname;
-    private String idNumber;
+    private String firstName;
+    private String lastName;
+    private String nic;
     private int pID;
     private String province;
 
@@ -45,10 +45,10 @@ public class User {
     private static int Id;
     private String school;
 
-    public User(String fname, String lname, String idNumber, String province, String email, String dob, int age) {
-        this.fname = fname;
-        this.lname = lname;
-        this.idNumber = idNumber;
+    public User(String firstName, String lastName, String nic, String province, String email, String dob, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
         this.province = province;
         this.email = email;
         this.dpphoto = dpphoto;
@@ -58,10 +58,10 @@ public class User {
 
 
     /* Constructor
-    public User(String fname, String lname, String idNumber, String pID, String email,String dpphoto, String dob, String provinceName, int age) {
-        this.fname = fname;
-        this.lname = lname;
-        this.idNumber = idNumber;
+    public User(String firstName, String lastName, String nic, String pID, String email,String dpphoto, String dob, String provinceName, int age) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
         this.pID = pID;
         this.email = email;
         this.dpphoto=dpphoto;
@@ -70,9 +70,9 @@ public class User {
         this.age = age;
     }
 */
-    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation) {
-        this.fname = fname;
-        this.lname = lname;
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.age = age;
         this.province = province;
@@ -87,9 +87,9 @@ public class User {
     }
 
     /*
-        public User(String fname, String lname, String email, int age, String provinceName, String ethnicity, String religion, String status, String height, String qualificationName, String occupationName, String diffabled) {
-            this.fname = fname;
-            this.lname = lname;
+        public User(String firstName, String lastName, String email, int age, String provinceName, String ethnicity, String religion, String status, String height, String qualificationName, String occupationName, String diffabled) {
+            this.firstName = firstName;
+            this.lastName = lastName;
             this.email = email;
             this.age = age;
             this.provinceName = provinceName;
@@ -122,9 +122,9 @@ public class User {
     }
 
 
-    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled) {
-        this.fname = fname;
-        this.lname = lname;
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.province = province;
         this.ethnicity = ethnicity;
@@ -142,9 +142,9 @@ public class User {
     }
 
 
-    public User(String fname, String lname, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings) {
-        this.fname = fname;
-        this.lname = lname;
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.province = province;
         this.ethnicity = ethnicity;
@@ -195,31 +195,31 @@ public class User {
         return status;
     }
 
-    // Getter and Setter for fname
-    public String getFname() {
-        return fname;
+    // Getter and Setter for firstName
+    public String getfirstName() {
+        return firstName;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setfirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    // Getter and Setter for lname
-    public String getLname() {
-        return lname;
+    // Getter and Setter for lastName
+    public String getlastName() {
+        return lastName;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setlastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    // Getter and Setter for idNumber
-    public String getIdNumber() {
-        return idNumber;
+    // Getter and Setter for nic
+    public String getnic() {
+        return nic;
     }
 
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
+    public void setnic(String nic) {
+        this.nic = nic;
     }
 
     // Getter and Setter for pID

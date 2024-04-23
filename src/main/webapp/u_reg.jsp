@@ -130,8 +130,8 @@
       <input type="text" id="lastName" name="lastName" required onchange="validateLastName()" />
 
       <!-- Your existing form structure -->
-      <label for="idNumber">Nation Identity Number<span class="required-star">*</span>:</label>
-      <input type="text" id="idNumber" name="idNumber" onchange="updateGenderAndAgeFromNIC('idNumber', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
+      <label for="nic">Nation Identity Number<span class="required-star">*</span>:</label>
+      <input type="text" id="nic" name="nic" onchange="updateGenderAndAgeFromNIC('nic', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
 
 
       <div id="nicError" style="color: red; display: none;"></div>

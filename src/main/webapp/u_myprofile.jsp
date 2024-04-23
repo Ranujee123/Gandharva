@@ -62,7 +62,7 @@
             <% if (user != null) { %>
             <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">
 <div class="profile-info">
-            <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
+            <p>Name: <span><%= user.getfirstName() %></span> <span><%= user.getlastName() %></span></p>
 
             <p>Email: <%= user.getEmail() %></p>
 

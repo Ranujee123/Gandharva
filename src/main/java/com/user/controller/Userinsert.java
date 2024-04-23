@@ -18,9 +18,9 @@ public class Userinsert extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String fname = req.getParameter("firstName");
-        String lname = req.getParameter("lastName");
-        String idNumber = req.getParameter("idNumber");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String nic = req.getParameter("nic");
         String province = req.getParameter("province");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -62,9 +62,9 @@ public class Userinsert extends HttpServlet {
         boolean isRegistered = UserDBUtil.isEmailRegistered(email);
         if (isRegistered) {
             req.setAttribute("errorMessage", "Email already registered.");
-            req.setAttribute("fname", fname);
-            req.setAttribute("lname", lname);
-            req.setAttribute("idNumber", idNumber);
+            req.setAttribute("firstName", firstName);
+            req.setAttribute("lastName", lastName);
+            req.setAttribute("nic", nic);
             req.setAttribute("province", province);
             // You can also retain other non-sensitive data if needed
 
@@ -73,7 +73,7 @@ public class Userinsert extends HttpServlet {
             return;
 
         }
-            boolean isInserted = UserDBUtil.insertUser(fname, lname, idNumber, province, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
+            boolean isInserted = UserDBUtil.insertUser(firstName, lastName, nic, province, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
 
         if (isInserted) {
             req.getSession().setAttribute("successMessage", "Registration successful.");

@@ -17,22 +17,22 @@ public class UserDBUtil {
         ArrayList<User> users = new ArrayList<>();
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "SELECT fname, lname, idNumber, province, email, dob, age FROM user WHERE email = ? AND password = ?";
+            String sql = "SELECT firstName, lastName, nic, province, email, dob, age FROM user WHERE email = ? AND password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                String fname = resultSet.getString("fname");
-                String lname = resultSet.getString("lname");
-                String idNumber = resultSet.getString("idNumber");
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                String nic = resultSet.getString("nic");
                 String province = resultSet.getString("province");
                 String emailU = resultSet.getString("email");
                 String dob = resultSet.getString("dob");
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
 
-                User u = new User(fname, lname, idNumber, province, emailU, dob, age);
+                User u = new User(firstName, lastName, nic, province, emailU, dob, age);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -119,17 +119,17 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertUser(String fname, String lname, String idNumber, String province, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
+    public static boolean insertUser(String firstName, String lastName, String nic, String province, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO user (fname, lname, idNumber, province, email, frontphoto, backphoto, password, gender, dob, age) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO user (firstName, lastName, nic, province, email, frontphoto, backphoto, password, gender, dob, age) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, fname);
-            pstmt.setString(2, lname);
-            pstmt.setString(3, idNumber);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, nic);
             pstmt.setString(4, province);
             pstmt.setString(5, email);
             pstmt.setBytes(6, frontPhoto);
@@ -139,8 +139,12 @@ public class UserDBUtil {
             pstmt.setString(10, dob);
             pstmt.setInt(11, age);
 
+            // Log the prepared statement to see what's being sent to the DB
+            System.out.println("Executing SQL: " + pstmt.toString());
+
             int rowsAffected = pstmt.executeUpdate();
             isSuccess = rowsAffected > 0;
+            System.out.println("Insert successful? " + isSuccess);
         } catch (SQLException e) {
             System.err.println("SQL Error: " + e.getMessage());
             e.printStackTrace();
@@ -156,13 +160,13 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser(String fname, String lname, String idNumber, String province, byte[] dpphoto, String email) {
-        String sql = "UPDATE user SET fname=?, lname=?, idNumber=?, province=?, dpphoto=? WHERE email=?";
+    public static boolean updateUser(String firstName, String lastName, String nic, String province, byte[] dpphoto, String email) {
+        String sql = "UPDATE user SET firstName=?, lastName=?, nic=?, province=?, dpphoto=? WHERE email=?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, fname);
-            pstmt.setString(2, lname);
-            pstmt.setString(3, idNumber);
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, nic);
             pstmt.setString(4, province);
             pstmt.setBytes(5, dpphoto);
             pstmt.setString(6, email);
@@ -178,22 +182,22 @@ public class UserDBUtil {
 
     public static List<User> getUserDetails(String email) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT fname, lname, idNumber, province, email, dpphoto, dob, age FROM user WHERE email = ?";
+        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto, dob, age FROM user WHERE email = ?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                String fname = rs.getString("fname");
-                String lname = rs.getString("lname");
-                String idNumber = rs.getString("idNumber");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+                String nic = rs.getString("nic");
                 String provinceName = rs.getString("province");
                 String emailU = rs.getString("email");
                 byte[] dpphoto = rs.getBytes("dpphoto");
                 String dob = rs.getString("dob");
                 int age = rs.getInt("age");
 
-                users.add(new User(fname, lname, idNumber, provinceName, emailU, dob, age));
+                users.add(new User(firstName, lastName, nic, provinceName, emailU, dob, age));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -877,7 +881,7 @@ public class UserDBUtil {
     public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
-        query.append("SELECT u.fname, u.lname, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, ");
+        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, ");
         query.append("((CASE WHEN u.province = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.religion = ? THEN 1 ELSE 0 END) + ");
@@ -938,8 +942,8 @@ public class UserDBUtil {
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User(
-                        resultSet.getString("fname"),
-                        resultSet.getString("lname"),
+                        resultSet.getString("firstName"),
+                        resultSet.getString("lastName"),
                         resultSet.getString("email"),
                         resultSet.getString("province"),
                         resultSet.getString("ethnicity"),
@@ -966,7 +970,7 @@ public class UserDBUtil {
     public static Optional<User> getUserByEmail(String email) {
 
         try (Connection con = DBConnect.getConnection()) {
-            String sql = "SELECT u.fname, u.lname, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings FROM user u LEFT JOIN userInfo ui ON u.uID = ui.uID  WHERE u.email = ?";
+            String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings FROM user u LEFT JOIN userInfo ui ON u.uID = ui.uID  WHERE u.email = ?";
 
 
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -975,8 +979,8 @@ public class UserDBUtil {
 
             if (rs.next()) {
                 User user = new User(
-                        rs.getString("fname"),
-                        rs.getString("lname"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
                         rs.getString("email"),
                         rs.getString("province"),
                         rs.getString("ethnicity"),
