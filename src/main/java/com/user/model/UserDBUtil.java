@@ -1349,4 +1349,40 @@ public class UserDBUtil {
     }
 
 
+
+    public static boolean addUserReport(String fromUserId, String toUserId, String reason, String status) {
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_reports (from_user_id, to_user_id, reason, status) VALUES (?, ?, ?, ?)")) {
+            pstmt.setString(1, fromUserId);
+            pstmt.setString(2, toUserId);
+            pstmt.setString(3, reason);
+            pstmt.setString(4, status);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static boolean isReportedUser(String fromUserId, String toUserId) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT count(*) FROM user_reports WHERE from_user_id = ? AND to_user_id = ? AND status = 'REPORTED'";
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setString(1, fromUserId);
+                stmt.setString(2, toUserId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
 }

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 @WebServlet
 public class LoginServlet extends HttpServlet {
@@ -20,7 +23,14 @@ public class LoginServlet extends HttpServlet {
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        password = String.valueOf(password.hashCode());
+        try {
+            password = hashPassword(password);  // Hash the password using SHA-256 and base64
+        } catch (NoSuchAlgorithmException e) {
+            req.setAttribute("errorMessage", "Failed to secure the password.");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return;
+        }
+
 
         try {
             // Validate the user
@@ -71,4 +81,10 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("totalSteps", totalSteps);
             session.setAttribute("completionPercentage", completionPercentage);
         }
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hashedBytes);
     }
+
+}

@@ -251,6 +251,14 @@
     <url-pattern>/GetAcceptedRequests</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>ReportUsers</servlet-name>
+    <servlet-class>com.user.controller.ReportUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ReportUsers</servlet-name>
+    <url-pattern>/ReportUserServlet</url-pattern>
+  </servlet-mapping>
 
 
   <servlet>

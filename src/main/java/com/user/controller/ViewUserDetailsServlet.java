@@ -35,7 +35,11 @@ public class ViewUserDetailsServlet extends HttpServlet {
             String fromUserId = UserDBUtil.getUserIdByEmail(currentUserEmail); // Now returns a String ID
             String toUserId = UserDBUtil.getUserIdByEmail(email); // Now returns a String ID
             boolean isPending = UserDBUtil.isConnectionRequestPending(fromUserId, toUserId);
+            boolean isReported = UserDBUtil.isReportedUser(fromUserId, toUserId);
+
             request.setAttribute("isConnectionRequestPending", isPending);
+            request.setAttribute("isUserReported", isReported);
+
 
             request.getRequestDispatcher("u_moredetails.jsp").forward(request, response);
         } catch (Exception e) {

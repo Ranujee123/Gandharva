@@ -14,6 +14,11 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
+
 @MultipartConfig
 public class Userinsert extends HttpServlet {
 
@@ -35,6 +40,15 @@ public class Userinsert extends HttpServlet {
             return;
         }
 
+        try {
+            password = hashPassword(password); // Hash the password
+        } catch (NoSuchAlgorithmException e) {
+            req.setAttribute("errorMessage", "Failed to hash the password.");
+            req.getRequestDispatcher("/u_reg.jsp").forward(req, resp);
+            return;
+        }
+
+
         Part frontPhotoPart = req.getPart("frontphoto");
         Part backPhotoPart = req.getPart("backphoto");
 
@@ -48,7 +62,7 @@ public class Userinsert extends HttpServlet {
             return;
         }
 
-        password = String.valueOf(password.hashCode()); // Consider a more secure hashing method
+
         String dob = req.getParameter("dob");
         LocalDate birthDate = LocalDate.parse(dob);
         int age = LocalDate.now().minusYears(birthDate.getYear()).getYear();
@@ -97,4 +111,11 @@ public class Userinsert extends HttpServlet {
         inputStream.read(bytes);
         return bytes;
     }
+
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hashedBytes);
+    }
+
 }
