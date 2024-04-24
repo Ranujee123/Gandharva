@@ -168,6 +168,32 @@
     });
   </script>
 
+  <script>
+    function reportUser() {
+      Swal.fire({
+        title: 'Report User',
+        input: 'select',
+        inputOptions: {
+          'spam': 'Spam or misleading',
+          'harassment': 'Harassment or bullying',
+          'hateSpeech': 'Hate speech or symbols',
+          'other': 'Other'
+        },
+        inputPlaceholder: 'Select a reason',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Report'
+      }).then((result) => {
+        if (result.isConfirmed && result.value) {
+          document.getElementById('reason').value = result.value; // Set the reason
+          document.getElementById('reportForm').submit(); // Submit the form programmatically
+        }
+      });
+    }
+
+  </script>
+
 
 </head>
 
@@ -179,9 +205,17 @@
 
 <%
   User user = (User) request.getAttribute("user");
+  Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+
   if (user != null) {
 %>
 <h1></h1>
+
+  <div class="details-card">
+    <!-- User details -->
+    <p> <%= isReported ? "This user has been reported by you:" : " " %></p>
+    <!-- Show other user details -->
+  </div>
 <div class="details-card">
   <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
   <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
@@ -301,6 +335,8 @@
       <td><b>No of Siblings</b></td>
       <td><%=user.getSiblings()%></td>
     </tr>
+
+
   </table>
   </div>
 
@@ -310,12 +346,23 @@
   <p class="connect-status">Pending Request</p>
 </c:if>
 <c:if test="${not isConnectionRequestPending}">
+
+
   <form action="connection" method="post" id="connectionForm">
     <input type="hidden" name="toUserEmail" value="${user.email}" />
     <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
   </form>
 </c:if>
 
+  <!-- Reporting Section -->
+  <div class="report-user-section">
+    <button onclick="reportUser()" class="report-button">Report User</button>
+    <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
+      <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
+      <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
+      <input type="hidden" id="reason" name="reason" />
+    </form>
+  </div>
 
 
 

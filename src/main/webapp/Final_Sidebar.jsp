@@ -171,6 +171,13 @@
         <span>Settings</span>
       </a>
     </li>
+
+    <li>
+      <a href="findMatches">
+        <i class="menu-icon fas fa-cog"></i>
+        <span>Settings</span>
+      </a>
+    </li>
     <li class="logout">
       <a href="#" onclick="Logout(); return false;">
         <i class="menu-icon fas fa-sign-out-alt"></i>

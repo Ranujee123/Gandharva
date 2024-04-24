@@ -6,8 +6,6 @@ import java.sql.Date;
 import java.util.*;
 import java.util.stream.Stream;
 
-import static com.user.model.User.getId;
-
 public class UserDBUtil {
 
     private static Connection con = null;
@@ -249,6 +247,42 @@ public class UserDBUtil {
         }
         return null; // Return null when no id is found
     }
+
+    public static String getUsergenderByEmail(String email) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT gender FROM user WHERE email = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("gender");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Database error during fetching user ID by email: " + e.getMessage());
+        }
+        return null; // Return null when no id is found
+    }
+
+    public static Integer getUserAgeByEmail(String email) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT age FROM user WHERE email = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setString(1, email);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("age"); // Return age as integer directly
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Database error during fetching user age by email: " + e.getMessage());
+        }
+        return null; // Return null when no age is found
+    }
+
+
 
 
     public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion, String caste,
@@ -1349,4 +1383,137 @@ public class UserDBUtil {
     }
 
 
+
+    public static boolean addUserReport(String fromUserId, String toUserId, String reason, String status) {
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_reports (from_user_id, to_user_id, reason, status) VALUES (?, ?, ?, ?)")) {
+            pstmt.setString(1, fromUserId);
+            pstmt.setString(2, toUserId);
+            pstmt.setString(3, reason);
+            pstmt.setString(4, status);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+    public static boolean isReportedUser(String fromUserId, String toUserId) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT count(*) FROM user_reports WHERE from_user_id = ? AND to_user_id = ? AND status = 'REPORTED'";
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setString(1, fromUserId);
+                stmt.setString(2, toUserId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+
+
+        public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge) throws SQLException {
+            List<User> matchedUsers = new ArrayList<>();
+            String oppositeGender = currentUserGender.equalsIgnoreCase("Male") ? "Female" : "Male";
+            int minDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge - 10 : currentUserAge - 5;
+            int maxDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge + 5 : currentUserAge + 10;
+
+            String sql = "SELECT u.*, ui.*, uii.* FROM user u " +
+                    "LEFT JOIN userInfo ui ON u.id = ui.id " +
+                    "LEFT JOIN userinterestedIfo uii ON u.id = uii.id " +
+                    "WHERE u.gender = ? AND " +
+                    "((uii.minAge IS NOT NULL AND u.age BETWEEN uii.minAge AND uii.maxAge) " +
+                    "OR (uii.minAge IS NULL AND u.age BETWEEN ? AND ?)) AND " +
+                    "u.id != ? " +
+                    "ORDER BY ui.height DESC";
+
+            try (Connection con = DBConnect.getConnection();
+                 PreparedStatement pstmt = con.prepareStatement(sql)) {
+                pstmt.setString(1, oppositeGender);
+                pstmt.setInt(2, minDefaultAge);
+                pstmt.setInt(3, maxDefaultAge);
+                pstmt.setString(4, currentUserId);
+
+
+                ResultSet rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    User user = new User(
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("email"),
+                            rs.getString("province"),
+                            rs.getString("ethnicity"),
+                            rs.getString("religion"),
+                            rs.getString("status"),
+                            rs.getString("height"),
+                            rs.getString("foodPreferences"),
+                            rs.getString("drinking"),
+                            rs.getString("smoking"),
+                            rs.getString("qualification"),
+                            rs.getString("occupation"),
+                            rs.getString("diffabled"),
+                            rs.getInt("age"),
+                            rs.getString("freli"),
+                            rs.getString("mreli"),
+                            rs.getString("foccu"),
+                            rs.getString("moccup"),
+                            rs.getString("maritalstatus"),
+                            rs.getInt("siblings")
+                    );
+                    matchedUsers.add(user);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;  // Re-throw the exception or handle it as per your application's error handling policy
+            }
+
+            return matchedUsers;
+        }
+
+
+
+
+
+
+    public static String getUserReligionById(int id) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT religion FROM userInfo WHERE id = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("religion");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Database error during fetching religion by user ID: " + e.getMessage());
+        }
+        return null; // Return null when no religion is found
+    }
+
+    public static String getUserCasteById(int id) throws Exception {
+        Connection con = DBConnect.getConnection();
+        String sql = "SELECT caste FROM userInfo WHERE id = ?";
+        try (PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("caste");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Exception("Database error during fetching caste by user ID: " + e.getMessage());
+        }
+        return null; // Return null when no caste is found
+    }
+
 }
+
