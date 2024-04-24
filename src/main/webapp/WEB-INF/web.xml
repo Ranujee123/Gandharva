@@ -281,7 +281,7 @@
 
   <servlet>
     <servlet-name>MatchFindingServlet</servlet-name>
-    <servlet-class>com.user.controller.MatchFindingServlet</servlet-class>
+    <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>MatchFindingServlet</servlet-name>

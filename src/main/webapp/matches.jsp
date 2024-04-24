@@ -5,60 +5,31 @@
   Time: 14:43
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.user.model.User" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Your Matches</title>
-    <link rel="stylesheet" type="text/css" href="u_style.css">
+    <title>Matched Profiles</title>
+    <link rel="stylesheet" type="text/css" href="styles.css"> <!-- Ensure you link to your CSS for styling -->
 </head>
 <body>
-<h1>Potential Matches</h1>
-<div>
-    <c:if test="${not empty matches}">
-        <c:forEach items="${matches}" var="user">
-            <div class="profile-card">
-
-
-                <div class="profile-details-grid">
-                    <div class="profile-detail">
-                        <p>Province: <c:out value="${user.provinceName}"/></p>
-                    </div>
-                    <div class="profile-detail">
-                        <p>Religion: <c:out value="${user.religion}"/></p>
-                    </div>
-                    <div class="profile-detail">
-                        <p>Status: <c:out value="${user.status}"/></p>
-                    </div>
-                    <div class="profile-detail">
-                        <p>Height: <c:out value="${user.height}"/></p>
-                    </div>
-                    <div class="profile-detail">
-                        <p>Occupation: <c:out value="${user.occupationName}"/></p>
-                    </div>
-                </div>
-
-                <input type="hidden" name="email" value="<c:out value='${user.email}'/>">
-                <div class="button-container">
-                    <!--    <button class="connect-button">Connect</button>
-                        <button class="reject-button">Reject</button>-->
-                    <form action="moredetails" method="post">
-                        <input type="hidden" name="email" value="${user.email}"/>
-                        <button type="submit" class="connect-button">View More</button>
-                    </form>
-
-                </div>
-
+<h1>Matched Profiles</h1>
+<c:if test="${not empty matchedUsers}">
+    <div class="profile-container">
+        <c:forEach items="${matchedUsers}" var="user">
+            <div class="profile">
+                <h2>${user.firstName} ${user.lastName}</h2>
+                <p>Email: ${user.email}</p>
+                <p>Age: ${user.age}</p>
+                <p>Province: ${user.province}</p>
+                <!-- Additional user details can be listed here -->
             </div>
         </c:forEach>
-    </c:if>
-
-    <c:if test="${empty filteredUsers}">
-        <p>No users found matching your criteria.</p>
-    </c:if>
-</div>
+    </div>
+</c:if>
+<c:if test="${empty matchedUsers}">
+    <p>No profiles matched your criteria.</p>
+</c:if>
 </body>
 </html>

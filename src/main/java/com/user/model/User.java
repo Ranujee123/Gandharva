@@ -167,6 +167,32 @@ public class User {
 
     }
 
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings,String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.province = province;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.status = status;
+        this.height = height;
+        this.foodpreferences = foodpreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.diffabled = diffabled;
+        this.age = age;
+        this.freli = freli;
+        this.foccu = foccu;
+        this.mreli = mreli;
+        this.moccup = moccup;
+        this.maritalstatus = maritalstatus;
+        this.siblings = siblings;
+        this.gender=gender;
+
+    }
+
     public String getReligion() {
         return religion;
     }
