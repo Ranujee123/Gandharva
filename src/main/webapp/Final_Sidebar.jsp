@@ -166,7 +166,7 @@
     </li>
 
     <li>
-      <a href="#">
+      <a href="GetAcceptedRequests">
         <i class="menu-icon fas fa-cog"></i>
         <span>Settings</span>
       </a>

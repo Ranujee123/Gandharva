@@ -59,45 +59,34 @@
 <body>
 <div class="container">
   <h1>Your Connection Requests</h1>
-  <ul>
-    <c:if test="${not empty requests}">
+  <c:if test="${not empty requests}">
+    <ul>
       <c:forEach var="request" items="${requests}">
         <li class="request-item">
           <div class="request-details">
-            Request ID: ${request.requestId} from User ID: ${request.fromUserId} to User ID: ${request.toUserId} - Status: ${request.status}
+            Request from ${request.fromUserFullName} to ${request.toUserFullName} - Status: ${request.status}
           </div>
           <div class="buttons">
-            <div class="connect-button">Connect</div>
-            <div class="reject-button">Reject</div>
+            <form method="post" action="${pageContext.request.contextPath}/updateConnectionStatus">
+              <input type="hidden" name="requestId" value="${request.requestId}" />
+              <c:choose>
+                <c:when test="${request.status eq 'PENDING'}">
+                  <button type="submit" name="action" value="Accept" class="connect-button">Accept</button>
+                  <button type="submit" name="action" value="Reject" class="reject-button">Reject</button>
+                </c:when>
+                <c:otherwise>
+                  <span class="connect-status">Accepted</span>
+                </c:otherwise>
+              </c:choose>
+            </form>
           </div>
         </li>
       </c:forEach>
-    </c:if>
-    <c:if test="${empty requests}">
-      <li>No connection requests found.</li>
-    </c:if>
-  </ul>
-
-  <h2>Pending Requests Sent By You</h2>
-  <ul>
-    <c:if test="${not empty requests1}">
-      <c:forEach var="pendingRequest" items="${requests1}">
-        <li class="request-item">
-          <div class="request-details">
-            Request ID: ${pendingRequest.requestId} from User ID: ${pendingRequest.fromUserId} to User ID: ${pendingRequest.toUserId} - Status: ${pendingRequest.status}
-          </div>
-        </li>
-      </c:forEach>
-    </c:if>
-    <c:if test="${empty requests1}">
-      <li>No pending connection requests sent by you.</li>
-    </c:if>
-  </ul>
+    </ul>
+  </c:if>
+  <c:if test="${empty requests}">
+    <p>No connection requests found.</p>
+  </c:if>
 </div>
-
-
-
-
-
 </body>
 </html>

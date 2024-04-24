@@ -1036,7 +1036,7 @@ public class UserDBUtil {
     // Method to check if a connection request is already pending
     public static boolean isConnectionRequestPending(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection()) {
-            String sql = "SELECT count(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'pending'";
+            String sql = "SELECT count(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'PENDING'";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
                 stmt.setString(1, fromUserId);
                 stmt.setString(2, toUserId);
@@ -1058,16 +1058,26 @@ public class UserDBUtil {
     public static List<ConnectionRequest> getConnectionRequestStatus(String userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT * FROM connection_requests WHERE from_user_id = ? OR to_user_id = ?")) {
+             PreparedStatement ps = con.prepareStatement(
+                     "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                             "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
+                             "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
+                             "FROM connection_requests cr " +
+                             "JOIN user u1 ON cr.from_user_id = u1.id " +
+                             "JOIN user u2 ON cr.to_user_id = u2.id " +
+                             "WHERE cr.to_user_id = ? AND cr.status='PENDING'")) {  // Only include requests where the current user is the recipient
             ps.setString(1, userId);
-            ps.setString(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    String fromUserFullName = rs.getString("fromFirstName") + " " + rs.getString("fromLastName");
+                    String toUserFullName = rs.getString("toFirstName") + " " + rs.getString("toLastName");
                     ConnectionRequest request = new ConnectionRequest(
                             rs.getInt("request_id"),
                             rs.getString("from_user_id"),
                             rs.getString("to_user_id"),
-                            rs.getString("status")
+                            rs.getString("status"),
+                            fromUserFullName,
+                            toUserFullName
                     );
                     requests.add(request);
                 }
@@ -1076,19 +1086,46 @@ public class UserDBUtil {
         return requests;
     }
 
+    public static boolean updateConnectionRequestStatus(String requestId, String action) {
+        String status = (action.equals("Accept") ? "ACCEPTED" : "REJECTED");
+        String sql = "UPDATE connection_requests SET status = ? WHERE request_id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, status);
+            pstmt.setString(2, requestId);
+            int affectedRows = pstmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+
+
     public static List<ConnectionRequest> getPendingReq(String userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
-        String sql = "SELECT * from connection_requests cr WHERE from_user_id=? AND cr.status='PENDING'";
+        String sql = "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
+                "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
+                "FROM connection_requests cr " +
+                "JOIN user u1 ON cr.from_user_id = u1.id " +
+                "JOIN user u2 ON cr.to_user_id = u2.id " +
+                "WHERE cr.from_user_id = ? AND cr.status = 'PENDING'";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
+                String fromUserFullName = rs.getString("fromFirstName") + " " + rs.getString("fromLastName");
+                String toUserFullName = rs.getString("toFirstName") + " " + rs.getString("toLastName");
                 ConnectionRequest request = new ConnectionRequest(
                         rs.getInt("request_id"),
                         rs.getString("from_user_id"),
                         rs.getString("to_user_id"),
-                        rs.getString("status")
+                        rs.getString("status"),
+                        fromUserFullName,
+                        toUserFullName
                 );
                 requests.add(request);
             }
@@ -1097,33 +1134,57 @@ public class UserDBUtil {
     }
 
 
-    //Sending horoscope and resquest to astrologer
-    public static boolean insertNewRequest(int userId, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
-        String sql = "INSERT INTO request (id,startDate, horoscope, horoscopeSecond, status, userId) VALUES (?,?, ?, ?, ?, ?)";
-        try (Connection conn = DBConnect.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
-            statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
-            statement.setDate(2, new Date(System.currentTimeMillis())); // Use current time for startDate
-            if (horoscope != null) {
-                statement.setBytes(3, horoscope);
-            } else {
-                statement.setNull(3, Types.BLOB); // Set NULL if horoscope is null
+    public static List<ConnectionRequest> getAcceptedReq(String userId) throws SQLException {
+        List<ConnectionRequest> requests = new ArrayList<>();
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement ps = con.prepareStatement(
+                     "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                             "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
+                             "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
+                             "FROM connection_requests cr " +
+                             "JOIN user u1 ON cr.from_user_id = u1.id " +
+                             "JOIN user u2 ON cr.to_user_id = u2.id " +
+                             "WHERE (cr.from_user_id = ? OR cr.to_user_id = ?) AND cr.status='ACCEPTED'")) {
+            ps.setString(1, userId);
+            ps.setString(2, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String oppositeUserFullName;
+                    if (rs.getString("from_user_id").equals(userId)) {
+                        // Current user is the sender; display the receiver's name
+                        oppositeUserFullName = rs.getString("toFirstName") + " " + rs.getString("toLastName");
+                    } else {
+                        // Current user is the receiver; display the sender's name
+                        oppositeUserFullName = rs.getString("fromFirstName") + " " + rs.getString("fromLastName");
+                    }
+                    ConnectionRequest request = new ConnectionRequest(
+                            rs.getInt("request_id"),
+                            rs.getString("from_user_id"),
+                            rs.getString("to_user_id"),
+                            rs.getString("status"),
+                            oppositeUserFullName
+                    );
+                    requests.add(request);
+                }
             }
-            if (horoscopeSecond != null) {
-                statement.setBytes(4, horoscopeSecond);
-            } else {
-                statement.setNull(4, Types.BLOB); // Set NULL if horoscopeSecond is null
-            }
-            statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a status
-            statement.setInt(6, userId); // Set userId
-
-            int result = statement.executeUpdate();
-            return result > 0;
-        } catch (SQLException ex) {
-            System.err.println("Error during database operation: " + ex.getMessage());
-            ex.printStackTrace();
-            throw ex;
         }
+        return requests;
+    }
+
+
+    public static boolean isConnectionAccepted(String fromUserId, String toUserId) {
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'ACCEPTED'")) {
+            ps.setString(1, fromUserId);
+            ps.setString(2, toUserId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 
@@ -1169,6 +1230,38 @@ public class UserDBUtil {
         }
         return count;
     }
+
+
+
+    //Sending horoscope and resquest to astrologer
+    public static boolean insertNewRequest(int userId, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
+        String sql = "INSERT INTO request (id,startDate, horoscope, horoscopeSecond, status, userId) VALUES (?,?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnect.getConnection();
+             PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
+            statement.setDate(2, new Date(System.currentTimeMillis())); // Use current time for startDate
+            if (horoscope != null) {
+                statement.setBytes(3, horoscope);
+            } else {
+                statement.setNull(3, Types.BLOB); // Set NULL if horoscope is null
+            }
+            if (horoscopeSecond != null) {
+                statement.setBytes(4, horoscopeSecond);
+            } else {
+                statement.setNull(4, Types.BLOB); // Set NULL if horoscopeSecond is null
+            }
+            statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a status
+            statement.setInt(6, userId); // Set userId
+
+            int result = statement.executeUpdate();
+            return result > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error during database operation: " + ex.getMessage());
+            ex.printStackTrace();
+            throw ex;
+        }
+    }
+
 
 
 

@@ -22,9 +22,10 @@ public class FetchConnectionStatusServlet extends HttpServlet {
 
         try {
             String userId = UserDBUtil.getUserIdByEmail(userEmail);  // Get the user ID as a String
-            List<ConnectionRequest> requests = UserDBUtil.getConnectionRequestStatus(userId);  // Adjusted to accept String ID
-            List<ConnectionRequest> requests1 = UserDBUtil.getPendingReq(userId);  // Adjusted to accept String ID
+            List<ConnectionRequest> requests = UserDBUtil.getConnectionRequestStatus(userId);// Adjusted to accept String ID
             request.setAttribute("requests", requests != null ? requests : new ArrayList<>());
+
+            List<ConnectionRequest> requests1 = UserDBUtil.getPendingReq(userId);  // Adjusted to accept String ID
             request.setAttribute("requests1", requests1 != null ? requests1 : new ArrayList<>());
         } catch (Exception e) {
             e.printStackTrace();

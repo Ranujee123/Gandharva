@@ -232,6 +232,27 @@
   </servlet-mapping>
 
 
+
+  <servlet>
+    <servlet-name>UpdateRequestStatus</servlet-name>
+    <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateRequestStatus</servlet-name>
+    <url-pattern>/updateConnectionStatus</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdateAccepetedreqList</servlet-name>
+    <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateAccepetedreqList</servlet-name>
+    <url-pattern>/GetAcceptedRequests</url-pattern>
+  </servlet-mapping>
+
+
+
   <servlet>
     <servlet-name>SendRequesttoAstrologer</servlet-name>
     <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>

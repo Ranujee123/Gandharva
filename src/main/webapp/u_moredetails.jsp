@@ -175,7 +175,7 @@
 
 <body style="margin: 0;">
 
-<div
+<div>
 
 <%
   User user = (User) request.getAttribute("user");
