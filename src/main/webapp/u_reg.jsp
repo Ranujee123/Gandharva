@@ -19,7 +19,15 @@
 <head>
   <meta charset="UTF-8">
   <title>Registration</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
+    *{
+      font-family: "Poppins", sans-serif;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -99,7 +107,8 @@
   </style>
 
 
-  <script src="nic-utils.js"></script>
+  <script src="js/nic-utils.js"></script>
+  <script src="js/validate.js"></script>
 
 </head>
 <body>
@@ -111,17 +120,18 @@
     <% if (request.getAttribute("errorMessage") != null) { %>
     <div style="color: red;"><%= request.getAttribute("errorMessage").toString() %></div>
     <% } %>
-    <form id="registration-form" method="post" action="reg" enctype="multipart/form-data">
+    <form id="registration-form" method="post" action="reg" enctype="multipart/form-data" >
 
       <label for="firstName">First Name<span class="required-star">*</span>:</label>
-      <input type="text" id="firstName" name="firstName" required value="<%= request.getParameter("firstName") != null ? request.getParameter("firstName") : "" %>" />
+      <input type="text" id="firstName" name="firstName" required onchange="validateFirstName()" />
+
 
       <label for="lastName">Last Name<span class="required-star">*</span>:</label>
-      <input type="text" id="lastName" name="lastName" required value="<%= request.getParameter("lastName") != null ? request.getParameter("lastName") : "" %>" />
+      <input type="text" id="lastName" name="lastName" required onchange="validateLastName()" />
 
       <!-- Your existing form structure -->
-      <label for="idNumber">Nation Identity Number<span class="required-star">*</span>:</label>
-      <input type="text" id="idNumber" name="idNumber" onchange="updateGenderAndAgeFromNIC('idNumber', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
+      <label for="nic">Nation Identity Number<span class="required-star">*</span>:</label>
+      <input type="text" id="nic" name="nic" onchange="updateGenderAndAgeFromNIC('nic', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
 
 
       <div id="nicError" style="color: red; display: none;"></div>
@@ -131,17 +141,39 @@
       <input type="hidden" id="age" name="age" value="" />
 
 
-      <label>Province<span class="required-star">*</span>:</label>
-      <select name="province" required>
+      <label> District:</label>
+      <select name="province">
         <option value=""></option>
-        <% for (String pro : province) { %>
-        <option><%= pro %></option>
-        <% } %>
-      </select>
+        <option value="Ampara">Ampara</option>
+        <option value="Anuradhapura">Anuradhapura</option>
+        <option value="Badulla">Badulla</option>
+        <option value="Batticaloa">Batticaloa</option>
+        <option value="Colombo">Colombo</option>
+        <option value="Galle">Galle</option>
+        <option value="Gampaha">Gampaha</option>
+        <option value="Hambantota">Hambantota</option>
+        <option value="Jaffna">Jaffna</option>
+        <option value="Kalutara"> Kalutara</option>
+        <option value="Kandy">Kandy</option>
+        <option value="Kegalle">Kegalle</option>
+        <option value="Kilinochchi">Kilinochchi</option>
+        <option value="Kurunegala"> Kurunegala</option>
+        <option value="Mannar">Mannar</option>
+        <option value="Matale">Matale</option>
+        <option value="Matara">Matara</option>
+        <option value="Monaragala">Monaragala</option>
+        <option value="Mullaitivu">Mullaitivu</option>
+        <option value="Nuwara Eliya"> Nuwara Eliya</option>
+        <option value="Polonnaruwa">Polonnaruwa</option>
+        <option value="Puttalam">Puttalam</option>
+        <option value="Ratnapura"> Ratnapura</option>
+        <option value="Trincomalee">Trincomalee</option>
+        <option value="Vavuniya">Vavuniya</option>
+      </select><br>
 
 
 
-        <label for="frontphoto">ID photo (front)<span class="required-star">*</span>:</label>
+      <label for="frontphoto">ID photo (front)<span class="required-star">*</span>:</label>
         <input type="file" id="frontphoto" name="frontphoto" required>
 
       <label for="backphoto">ID photo (back)<span class="required-star">*</span>:</label>
@@ -151,15 +183,16 @@
 
 
       <label for="email">Email<span class="required-star">*</span>:</label>
-      <input type="email" id="email" name="email" required value="<%= request.getParameter("email") != null ? request.getParameter("email") : "" %>" />
-
+      <input type="email" id="email" name="email" required onchange="validateEmail()" />
 
 
       <label for="password">Password<span class="required-star">*</span>:</label>
-      <input type="password" id="password" name="password" required>
+      <input type="password" id="password" name="password" required onchange="validatePassword()">
+
 
       <label for="confirmPassword">Confirm Password<span class="required-star">*</span>:</label>
-      <input type="password" id="confirmPassword" name="confirmPassword" required>
+      <input type="password" id="confirmPassword" name="confirmPassword" required onchange="validateConfirmPassword()">
+
       <h2 style="font-size: 14px" class="center-elements">Step 1 out of 2</h2><br><br> <!-- Moved the step text below the form -->
       <button type="submit" id="proceed-btn">Proceed</button>
     </form>

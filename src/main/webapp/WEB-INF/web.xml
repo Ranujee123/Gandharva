@@ -16,7 +16,7 @@
   <display-name>Gandhrva</display-name>
 
   <welcome-file-list>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>HomePage.jsp</welcome-file>
   </welcome-file-list>
 
   <servlet>
@@ -213,6 +213,105 @@
   <servlet-mapping>
     <servlet-name>LoadMessages</servlet-name>
     <url-pattern>/LoadMessages</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+  <servlet-name>ViewMoreDetails</servlet-name>
+  <servlet-class>com.user.controller.ViewUserDetailsServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>ViewMoreDetails</servlet-name>
+<url-pattern>/moredetails</url-pattern>
+</servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>Connection</servlet-name>
+    <servlet-class>com.user.controller.ConnectionRequestServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>Connection</servlet-name>
+    <url-pattern>/connection</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CheckEmailServlet</servlet-name>
+    <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckEmailServlet</servlet-name>
+    <url-pattern>/CheckEmailServlet</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>FetchConnection</servlet-name>
+    <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FetchConnection</servlet-name>
+    <url-pattern>/fetchConnection</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>RequestStatusCount</servlet-name>
+    <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RequestStatusCount</servlet-name>
+    <url-pattern>/fetchRequestStatusCount</url-pattern>
+  </servlet-mapping>
+
+
+
+  <servlet>
+    <servlet-name>UpdateRequestStatus</servlet-name>
+    <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateRequestStatus</servlet-name>
+    <url-pattern>/updateConnectionStatus</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdateAccepetedreqList</servlet-name>
+    <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateAccepetedreqList</servlet-name>
+    <url-pattern>/GetAcceptedRequests</url-pattern>
+  </servlet-mapping>
+
+
+
+  <servlet>
+    <servlet-name>SendRequesttoAstrologer</servlet-name>
+    <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SendRequesttoAstrologer</servlet-name>
+    <url-pattern>/SendRequest</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>UpdatePersonalInfo</servlet-name>
+    <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdatePersonalInfo</servlet-name>
+    <url-pattern>/updatepersonalInfo</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>MatchFindingServlet</servlet-name>
+    <servlet-class>com.user.controller.MatchFindingServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MatchFindingServlet</servlet-name>
+    <url-pattern>/findMatches</url-pattern>
   </servlet-mapping>
 
 

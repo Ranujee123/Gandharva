@@ -5,7 +5,7 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="logoutbutton.jsp"/>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
 
 <%
     String userEmail = (String) session.getAttribute("userEmail");
@@ -26,64 +26,26 @@
 
 <head>
     <title>User profile </title>
-    <link rel="stylesheet" type="text/css" href="u_styles.css">
+    <link rel="stylesheet" type="text/css" href="u_myprofile.css">
+<style>
+
+</style>
 
 
+    <script src="js/nic-utils.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('fetchRequestStatusCount')  // Ensure the URL matches the servlet mapping
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('newRequestsCount').textContent = data[0];
+                    document.getElementById('pendingRequestsCount').textContent = data[1];
+                    document.getElementById('acceptedRequestsCount').textContent = data[2];
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    </script>
 
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f0f0f0;
-        }
-        .main-content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        .profile-image-editable {
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            cursor: pointer;
-        }
-
-        .completion-bar {
-            width: 100%;
-            height: 20px;
-            background-color: #ddd;
-            margin-top: 20px;
-        }
-
-        .completion-fill {
-            height: 100%;
-            background-color: #4CAF50;
-        }
-
-        .completion-text {
-            margin-top: 10px;
-        }
-
-        .completion-link a {
-            color: #007bff;
-            text-decoration: underline;
-        }
-
-        .dashboard-options ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .dashboard-options ul li {
-            margin-bottom: 10px;
-        }
-
-
-    </style>
-    <script src="nic-utils.js"></script>
 
 </head>
 
@@ -94,53 +56,78 @@
 
 
 
-
-
-
 <div class="main-content">
     <form action="UpdateUserServlet" method="post">
         <div class="profile-details">
             <% if (user != null) { %>
-            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
-            <p>Name: <span><%= user.getFname() %></span> <span><%= user.getLname() %></span></p>
+            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">
+<div class="profile-info">
+            <p>Name: <span><%= user.getfirstName() %></span> <span><%= user.getlastName() %></span></p>
+
             <p>Email: <%= user.getEmail() %></p>
 
-            <%= user.getProvinceName() != null ? user.getProvinceName() : "Not specified" %>
+         <p> Province:  <%= user.getProvince() != null ? user.getProvince() : "Not specified" %></p>
 
             <!-- Add other fields as needed -->
             <% } %>
         </div>
 
+        </div>
+
+        <div class="cards-container">
+            <div class="card">
+                <div class="card-text">
+                New Connections
+                </div>
+                <span id="newRequestsCount">0</span>
+            </div>
+            <div class="card">
+                <div class="card-text">
+                Pending Requests
+                </div>
+                <span id="pendingRequestsCount">0</span>
+
+            </div>
+            <div class="card">
+                <div class="card-text">
+                    Accepted
+                </div>
+                <span id="acceptedRequestsCount">0</span>
+
+            </div>
+        </div>
+
 
 
         <%
-            Integer completedSteps = (Integer)session.getAttribute("completedSteps");
-            Integer totalSteps = 7; // Assuming there are 7 steps in total for profile completion
+            Integer completedSteps = (Integer) session.getAttribute("completedSteps");
+            Integer totalSteps = 7;
+            if (completedSteps != null && completedSteps >= totalSteps) {
+                // Profile is fully completed, don't display completion bar or Add Profile Details button
+        %>
+        <p class="completion-text">Your profile is fully completed.</p>
+        <% } else {
             if (completedSteps == null) { completedSteps = 0; }
             int stepsLeft = totalSteps - completedSteps;
-
-            if (stepsLeft > 0) {
         %>
         <div class="completion-bar">
             <div class="completion-fill" style="width: <%= ((double)completedSteps / totalSteps) * 100 %>%;"></div>
         </div>
         <p class="completion-text">You have <%= stepsLeft %> steps left to complete your profile.</p>
-        <% } else { %>
-        <p>Your profile is fully completed.</p>
+        <div class="button"><a href="ProfileCompletionServlet">Add Profile Details</a></div>
         <% } %>
 
 
-        <a href="ProfileCompletionServlet">Add Profile Details</a>
-
-
+        <div class="button">
         <div class="dashboard-options">
             <ul>
-                <li><a href="editProfile.jsp"><button type="button">Update my data</button></a></li>
-                <li><a href="cpassword.jsp"><button type="button">Change Password</button></a></li>
-                <li><a href="pricing.jsp"><button>Change Plan</button></a></li>
-                <li><a href="deleteuserprofile.jsp"><button type="button">Deactivate Account</button></a></li>
+                <li><a href="editProfile.jsp">Update my data</a></li>
+                <li><a href="cpassword.jsp">Change Password</a></li>
+                <li><a href="pricing.jsp">Change Plan</a></li>
+                <li><a href="deleteuserprofile.jsp">Deactivate Account</a></li>
             </ul>
         </div>
+</div>
     </form>
 </div>
 

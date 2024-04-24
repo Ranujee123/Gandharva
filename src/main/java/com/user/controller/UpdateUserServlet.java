@@ -9,6 +9,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.List;
 
@@ -25,28 +26,22 @@ public class UpdateUserServlet extends HttpServlet {
             return;
         }
 
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
     //  String bday = request.getParameter("bday");
-        String idNumber=request.getParameter("idNumber");
+        String nic=request.getParameter("nic");
         //String cID = request.getParameter("cID");
         String email = request.getParameter("email");
-        String provinceName = request.getParameter("province"); // Assuming the dropdown has the name "province"
+        String province = request.getParameter("province"); // Assuming the dropdown has the name "province"
+
+        Part dpphotoPart = request.getPart("dpphoto");
 
 
 
+        byte[] dpPhoto = convertPartToByteArray(dpphotoPart);
 
 
-        Part filePartDP = request.getPart("dpphoto");
-        String uploadsDirPath = "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/DP"; // Update this path
-        String dpphoto = uploadPhoto(filePartDP, uploadsDirPath, request, response);
-        if (dpphoto == null) {
-            // Error handling already done inside uploadPhoto
-            return; // Stop processing if there was an error uploading the photo
-        }
-
-
-        boolean isTrue = UserDBUtil.updateUser(fname, lname, idNumber, provinceName, email, dpphoto);
+        boolean isTrue = UserDBUtil.updateUser(firstName, lastName, nic, province,  dpPhoto,email);
 
 
         if (isTrue) {
@@ -74,24 +69,18 @@ public class UpdateUserServlet extends HttpServlet {
         }
     }
 
-    private String uploadPhoto(Part filePart, String uploadsDirPath, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        String newFileName = System.currentTimeMillis() + "_" + originalFileName;
-
-        File uploadsDir = new File(uploadsDirPath);
-        if (!uploadsDir.exists() && !uploadsDir.mkdirs()) {
-            request.setAttribute("errorMessage", "Server error: unable to create directory for file upload.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/errorPage.jsp");
-            dispatcher.forward(request, response);
+    private byte[] convertPartToByteArray(Part filePart) throws IOException {
+        if (filePart == null) {
             return null;
         }
 
-        String photoPath = uploadsDirPath + File.separator + newFileName;
-        filePart.write(photoPath);
-
-        return newFileName;
+        InputStream inputStream = filePart.getInputStream();
+        byte[] bytes = new byte[(int) filePart.getSize()];
+        inputStream.read(bytes);
+        return bytes;
     }
+
+
 }
 
 
