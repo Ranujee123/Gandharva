@@ -322,5 +322,21 @@
     <url-pattern>/findMatches</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>EventPlannerRegisterServlet</servlet-name>
+    <servlet-class>event.servlet.EventUserRegister</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPlannerRegisterServlet</servlet-name>
+    <url-pattern>/EventPlanner/eventPlannerReg</url-pattern>
+  </servlet-mapping>
 
+  <servlet>
+    <servlet-name>EventPlannerLoginServlet</servlet-name>
+    <servlet-class>event.servlet.EventPlannerLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPlannerLoginServlet</servlet-name>
+    <url-pattern>/EventPlanner/eventPlannerLog</url-pattern>
+  </servlet-mapping>
 </web-app>

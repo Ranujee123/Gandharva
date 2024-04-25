@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Binali Ukwatte
-  Date: 26-09-2023
-  Time: 17:18
-  To change this template use File | Settings | File Templates.
---%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Event Planner Home</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
     <style>
         /* Reset some default styles */
@@ -25,13 +18,14 @@
 
 
         body {
+            background-image: url("../images/background.jpg");
             padding: 0;
             overflow-x: hidden;
             background-size: cover;
             background-repeat: no-repeat;
+            min-height: 100vh;
             /*background-attachment: fixed;*/
             font-family: Arial, sans-serif;
-
         }
 
 
@@ -364,8 +358,6 @@
             padding: 5px;
             align: left;
         }
-
-
     </style>
 </head>
 <body>
@@ -373,93 +365,90 @@
 
 
     <div class="section--1">
-        <video id="video-background" autoplay muted loop>
-            <source src="https://res.cloudinary.com/dejithzc7/video/upload/v1705389563/Gandharva/rings_odeouz.mp4" type="video/mp4"> </video>
+<%--        <video id="video-background" autoplay muted loop>--%>
+<%--            <source src="https://res.cloudinary.com/dejithzc7/video/upload/v1705389563/Gandharva/rings_odeouz.mp4" type="video/mp4"> </video>--%>
         <header>
             <nav>
                 <div class="logo">
-                    <img src='images/logo.png' alt="Logo">
+                    <img src='../images/logo.png' alt="Logo">
                 </div>
                 <ul class="navbar">
                     <li><a href="#">About Us</a></li>
                     <li><a href="#">Our Services</a>
                         <ul class="submenu">
-                            <li><a href="ourServices-Astrologer.jsp">Astrologer</a></li>
+                            <li><a href="../ourServices-Astrologer.jsp">Astrologer</a></li>
 
-                            <li><a href="EventPlanner/EventPlannerHome.jsp">Event Planner</a></li>
+                            <li><a href="#">Event Planner</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Help</a></li>
                 </ul>
                 <div class="buttons">
-                    <a href="login.jsp"> <button class="signin">Sign In </button></a>
+                    <a href="EventPlannerLogin.jsp"> <button class="signin">Sign In </button></a>
                     <button class="divider"> | </button>
-                    <a href="u_reg.jsp"> <button class="signup">Sign Up</button> </a>
+                    <a href="EventPlannerRegister.jsp"> <button class="signup">Sign Up</button> </a>
                 </div>
 
             </nav>
         </header>
-        <button class="find-match"><a href="login">Find Your Match</a></button>
     </div>
 </section>
 
-<section id="--2">
-    <div class="section--2">
-        <img src="images/bg1.jpg">
+<%--<section id="--2">--%>
+<%--    <div class="section--2">--%>
+<%--        <img src="images/bg1.jpg">--%>
 
-        <div class="vision--card">
-            <h2> Our Vision</h2>
-            <br>
-            <p> To create a harmonious and fulfilling journey for individuals <br>
-                seeking lifelong companionship by providing a comprehensive <br>
-                platform that integrates astrology, personalized matchmaking, <br>
-                and event planning services.</p>
+<%--        <div class="vision--card">--%>
+<%--            <h2> Our Vision</h2>--%>
+<%--            <br>--%>
+<%--            <p> To create a harmonious and fulfilling journey for individuals <br>--%>
+<%--                seeking lifelong companionship by providing a comprehensive <br>--%>
+<%--                platform that integrates astrology, personalized matchmaking, <br>--%>
+<%--                and event planning services.</p>--%>
 
-        </div>
-        <div class="mission--card">
-            <h2> Our Mission</h2>
-            <br>
-            <p> To create a harmonious and fulfilling journey for individuals <br>
-                seeking lifelong companionship by providing a comprehensive <br>
-                platform that integrates astrology, personalized matchmaking, <br>
-                and event planning services.</p>
+<%--        </div>--%>
+<%--        <div class="mission--card">--%>
+<%--            <h2> Our Mission</h2>--%>
+<%--            <br>--%>
+<%--            <p> To create a harmonious and fulfilling journey for individuals <br>--%>
+<%--                seeking lifelong companionship by providing a comprehensive <br>--%>
+<%--                platform that integrates astrology, personalized matchmaking, <br>--%>
+<%--                and event planning services.</p>--%>
 
-        </div>
-    </div>
-</section>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</section>--%>
 
-<section id="--3">
-    <div class="section--3">
-        <img src="images/contactusBG.jpg" class="bgimg">
+<%--<section id="--3">--%>
+<%--    <div class="section--3">--%>
+<%--        <img src="images/contactusBG.jpg" class="bgimg">--%>
 
-        <div class="inquiries--card">
-            <form enctype="multipart/form-data" id="#">
-                <H2>
-                    GET IN TOUCH
-                </H2>
-                <br>
+<%--        <div class="inquiries--card">--%>
+<%--            <form enctype="multipart/form-data" id="#">--%>
+<%--                <H2>--%>
+<%--                    GET IN TOUCH--%>
+<%--                </H2>--%>
+<%--                <br>--%>
 
-                <label for="name"> Name in Full: </label> <p class="require"> * </p>
-                <input type="text" id="name" class="input-field" placeholder="John Doe" required> <br><br>
+<%--                <label for="name"> Name in Full: </label> <p class="require"> * </p>--%>
+<%--                <input type="text" id="name" class="input-field" placeholder="John Doe" required> <br><br>--%>
 
-                <label for="email"> E-mail address: </label> <p class="require"> * </p>
-                <input type="email" id="email" class="input-field" placeholder="johndoe@email.com" required><br><br>
+<%--                <label for="email"> E-mail address: </label> <p class="require"> * </p>--%>
+<%--                <input type="email" id="email" class="input-field" placeholder="johndoe@email.com" required><br><br>--%>
 
-                <label for="inquire"> How can we help? </label>  <p class="require"> * </p>
-                <textarea id="inquire" class="input-field" placeholder="Type your message here" required></textarea><br><br>
-
-
-            </form>
-
-            <%--            <img src="images/contact_us.jpg" id="contact--img">--%>
-
-        </div>
-
-    </div>
+<%--                <label for="inquire"> How can we help? </label>  <p class="require"> * </p>--%>
+<%--                <textarea id="inquire" class="input-field" placeholder="Type your message here" required></textarea><br><br>--%>
 
 
-</section>
+<%--            </form>--%>
+
+<%--            &lt;%&ndash;            <img src="images/contact_us.jpg" id="contact--img">&ndash;%&gt;--%>
+
+<%--        </div>--%>
+
+<%--    </div>--%>
+
+
+<%--</section>--%>
 
 
 
@@ -504,4 +493,3 @@
 
 </body>
 </html>
-
