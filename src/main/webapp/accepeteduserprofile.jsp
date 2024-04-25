@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ranu
-  Date: 2024-04-18
-  Time: 14:56
+  Date: 2024-04-25
+  Time: 00:28
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="com.user.model.User" %>
@@ -41,7 +41,7 @@
       align-items: center;
       min-height: 100vh;
       background-color: #f0f0f0;
-      }
+    }
     .details-card {
 
       margin: 15px; /* Space between cards */
@@ -203,95 +203,102 @@
 
 <div>
 
-<%
-  User user = (User) request.getAttribute("user");
-  Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+  <%
+    User user = (User) request.getAttribute("user");
+    Boolean isReported = (Boolean) request.getAttribute("isUserReported");
 
-  if (user != null) {
-%>
-<h1></h1>
+    if (user != null) {
+  %>
+  <h1></h1>
 
   <div class="details-card">
     <!-- User details -->
     <p> <%= isReported ? "This user has been reported by you:" : " " %></p>
     <!-- Show other user details -->
   </div>
-<div class="details-card">
-  <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
-  <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
-  <p><%=user.getAge()%>-<%=user.getProvince() %></p>
+  <div class="details-card">
+    <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
+    <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
+    <p><%=user.getAge()%>-<%=user.getProvince() %></p>
 
-</div>
-
-<div class="details-card">
-  <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
-</div>
-
-<div class="details-card">
-  <h3>Personal Info</h3>
-  <h4>Basic</h4>
-  <table style="width:100%">
-<tr>
-  <td><b>Ethnicity</b></td>
-  <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>
-</tr>
-
-    <tr>
-      <td><b>Religion</b></td>
-      <td><%=user.getReligion() != null ? user.getReligion() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Age</b></td>
-      <td><%=user.getAge()%></td>
-    </tr>
-    <tr>
-      <td><b>Civil Status</b></td>
-      <td><%=user.getStatus() != null ? user.getStatus() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Height</b></td>
-      <td><%=user.getHeight()%></td>
-    </tr>
-    <tr>
-      <td><b>Province</b></td>
-      <td><%=user.getProvince()%></td>
-    </tr>
-
-  </table>
-
-  <h4>Education & Profession</h4>
-  <table style="width:100%">
-    <tr>
-      <td><b>Highest Education Qualification</b></td>
-      <td><%=user.getQualification() != null ? user.getQualification() : "Not Shared"%></td>
-    </tr>
-
-    <tr>
-      <td><b>Profession</b></td>
-      <td><%=user.getOccupation() != null ? user.getOccupation() : "Not Shared"%></td>
-    </tr>
-  </table>
-
-  <h4>Habits</h4>
-  <table style="width:100%">
-    <tr>
-      <td><b>Food Preference</b></td>
-      <td><%=user.getFoodpreferences() != null ? user.getFoodpreferences() : "Not Shared"%></td>
-    </tr>
-
-    <tr>
-      <td><b>Drinking</b></td>
-      <td><%=user.getDrinking() != null ? user.getDrinking() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Smoking</b></td>
-      <td><%=user.getSmoking() != null ? user.getSmoking() : "Not Shared"%></td>
-    </tr>
-  </table>
-</div>
+  </div>
 
 
-<div class="details-card">
+    <div class="details-card">
+      <h3>Contact Details</h3>
+      <table style="width:100%">
+        <tr>
+          <td><b>Email</b></td>
+          <td><%=user.getEmail() != null ? user.getEmail() : "Not Shared" %></td>
+        </tr>
+      </table>
+    </div>
+
+  <div class="details-card">
+    <h3>Personal Info</h3>
+    <h4>Basic</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Ethnicity</b></td>
+        <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>
+      </tr>
+
+      <tr>
+        <td><b>Religion</b></td>
+        <td><%=user.getReligion() != null ? user.getReligion() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Age</b></td>
+        <td><%=user.getAge()%></td>
+      </tr>
+      <tr>
+        <td><b>Civil Status</b></td>
+        <td><%=user.getStatus() != null ? user.getStatus() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Height</b></td>
+        <td><%=user.getHeight()%></td>
+      </tr>
+      <tr>
+        <td><b>Province</b></td>
+        <td><%=user.getProvince()%></td>
+      </tr>
+
+    </table>
+
+    <h4>Education & Profession</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Highest Education Qualification</b></td>
+        <td><%=user.getQualification() != null ? user.getQualification() : "Not Shared"%></td>
+      </tr>
+
+      <tr>
+        <td><b>Profession</b></td>
+        <td><%=user.getOccupation() != null ? user.getOccupation() : "Not Shared"%></td>
+      </tr>
+    </table>
+
+    <h4>Habits</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Food Preference</b></td>
+        <td><%=user.getFoodpreferences() != null ? user.getFoodpreferences() : "Not Shared"%></td>
+      </tr>
+
+      <tr>
+        <td><b>Drinking</b></td>
+        <td><%=user.getDrinking() != null ? user.getDrinking() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Smoking</b></td>
+        <td><%=user.getSmoking() != null ? user.getSmoking() : "Not Shared"%></td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="details-card">
 
     <h3>Family Info</h3>
 
@@ -326,33 +333,33 @@
 
 
     </div>
-  <table>
-    <tr>
-      <td><b>Marital Status of parents</b></td>
-      <td><%=user.getMaritalstatus() != null ? user.getMaritalstatus() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>No of Siblings</b></td>
-      <td><%=user.getSiblings() %></td>
-    </tr>
+    <table>
+      <tr>
+        <td><b>Marital Status of parents</b></td>
+        <td><%=user.getMaritalstatus() != null ? user.getMaritalstatus() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>No of Siblings</b></td>
+        <td><%=user.getSiblings() %></td>
+      </tr>
 
 
-  </table>
+    </table>
   </div>
 
 
 
-<c:if test="${isConnectionRequestPending}">
-  <p class="connect-status">Pending Request</p>
-</c:if>
-<c:if test="${not isConnectionRequestPending}">
+  <c:if test="${isConnectionRequestPending}">
+    <p class="connect-status">Pending Request</p>
+  </c:if>
+  <c:if test="${not isConnectionRequestPending}">
 
 
-  <form action="connection" method="post" id="connectionForm">
-    <input type="hidden" name="toUserEmail" value="${user.email}" />
-    <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
-  </form>
-</c:if>
+    <form action="connection" method="post" id="connectionForm">
+      <input type="hidden" name="toUserEmail" value="${user.email}" />
+      <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
+    </form>
+  </c:if>
 
   <!-- Reporting Section -->
   <div class="report-user-section">
@@ -371,7 +378,7 @@
 <br>
 <br>
 
-  <!-- Add other fields similarly -->
+<!-- Add other fields similarly -->
 <% } else { %>
 <p>User details not found.</p>
 <% } %>

@@ -314,6 +314,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>UpdateUserFamInfo</servlet-name>
+    <servlet-class>com.user.controller.UpdateUserFamInfo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserFamInfo</servlet-name>
+    <url-pattern>/updateuserfamInfo</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
     <servlet-name>MatchFindingServlet</servlet-name>
     <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
   </servlet>
@@ -321,6 +331,26 @@
     <servlet-name>MatchFindingServlet</servlet-name>
     <url-pattern>/findMatches</url-pattern>
   </servlet-mapping>
+
+
+  <servlet>
+    <servlet-name>UserPayment</servlet-name>
+    <servlet-class>com.user.controller.PaymentServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserPayment</servlet-name>
+    <url-pattern>/userpayment</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>PremiumUserPayment</servlet-name>
+    <servlet-class>com.user.controller.PremiumUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PremiumUserPayment</servlet-name>
+    <url-pattern>/premiumuserpayment</url-pattern>
+  </servlet-mapping>
+
 
 
 </web-app>

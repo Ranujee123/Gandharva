@@ -93,51 +93,114 @@
             <form action="fam" method="post">
 
               <label>Father's Religion:</label>
-              <select name="fatherReligion">
-                <option value=""></option>
-                <option value="Hindu">Hindu</option>
-                <option value="Christian">Christian</option>
-                <option value="Muslim">Muslim</option>
-                <!-- Add more options as needed -->
-              </select><br>
+              <select name="freli">
+                <option value=""> </option>
+                <option value="buddhist">Buddhist</option>
+                <option value="christain">Christian</option>
+                <option value="hindu">Hindu</option>
+                <option value="islam">Islam</option>
+                <option value="agonistics">Agonistic</option>
+                <option value="catholic">Catholic</option>
+                <option value="none">None</option>
+                <option value="other">Other</option>
+              </select>
 
 
               <label>Mother's Religion:</label>
-              <select name="motherReligion">
-                <option value=""></option>
-                <option value="Hindu">Hindu</option>
-                <option value="Christian">Christian</option>
-                <option value="Muslim">Muslim</option>
-                <!-- Add more options as needed -->
-              </select><br>
+              <select name="foccu">
+                <option value=""> </option>
+                <option value="buddhist">Buddhist</option>
+                <option value="christain">Christian</option>
+                <option value="hindu">Hindu</option>
+                <option value="islam">Islam</option>
+                <option value="agonistics">Agonistic</option>
+                <option value="catholic">Catholic</option>
+                <option value="none">None</option>
+                <option value="other">Other</option>
+              </select>
+
 
               <label>Father's Occupation:</label>
-              <select name="fatherOccupation" >
+              <select name="mreli" required>
                 <option value=""></option>
-                <% for (String occupation : occupations) { %>
-                <option><%= occupation %></option>
-                <% } %>
+                <option value="Accountant">Accountant </option>
+                <option value="Architect">Architect</option>
+                <option value="Banker">Banker</option>
+                <option value="Business Owner">Business Owner</option>
+                <option value="Chef">Chef</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Driver">Driver</option>
+                <option value="Engineer">Engineer</option>
+                <option value="Farmer">Farmer</option>
+                <option value="Governmet Service">Governmet Service</option>
+                <option value="Graphic Designer">Graphic Designer</option>
+                <option value="Hotelier">Hotelier </option>
+                <option value="House Wife">House Wife</option>
+                <option value="IT Professional">IT Professional</option>
+                <option value="Lawyer">Lawyer </option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Manager">Manager</option>
+                <option value="Medical Professional">Medical Professional</option>
+                <option value="Military">Military</option>
+                <option value="Not Employed">Not Employed</option>
+                <option value="Nurse"> Nurse</option>
+                <option value="Police Officer">Police Officer</option>
+                <option value="Quantity Surveyor">Quantity Surveyor</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Sales Executive">Sales Executive</option>
+                <option value="Self Employed">Self Employed</option>
+                <option value="Surveyor">Surveyor</option>
+                <option value="Teacher">Teacher </option>
+                <option value="Technician">Technician</option>
+                <option value="Other">Other</option>
               </select>
 
               <label>Mother's Occupation:</label>
-              <select name="motherOccupation" >
+              <select name="moccup" >
                 <option value=""></option>
-                <% for (String occupation : occupations) { %>
-                <option><%= occupation %></option>
-                <% } %>
+                <option value="Accountant">Accountant </option>
+                <option value="Architect">Architect</option>
+                <option value="Banker">Banker</option>
+                <option value="Business Owner">Business Owner</option>
+                <option value="Chef">Chef</option>
+                <option value="Doctor">Doctor</option>
+                <option value="Driver">Driver</option>
+                <option value="Engineer">Engineer</option>
+                <option value="Farmer">Farmer</option>
+                <option value="Governmet Service">Governmet Service</option>
+                <option value="Graphic Designer">Graphic Designer</option>
+                <option value="Hotelier">Hotelier </option>
+                <option value="House Wife">House Wife</option>
+                <option value="IT Professional">IT Professional</option>
+                <option value="Lawyer">Lawyer </option>
+                <option value="Lecturer">Lecturer</option>
+                <option value="Manager">Manager</option>
+                <option value="Medical Professional">Medical Professional</option>
+                <option value="Military">Military</option>
+                <option value="Not Employed">Not Employed</option>
+                <option value="Nurse"> Nurse</option>
+                <option value="Police Officer">Police Officer</option>
+                <option value="Quantity Surveyor">Quantity Surveyor</option>
+                <option value="Researcher">Researcher</option>
+                <option value="Sales Executive">Sales Executive</option>
+                <option value="Self Employed">Self Employed</option>
+                <option value="Surveyor">Surveyor</option>
+                <option value="Teacher">Teacher </option>
+                <option value="Technician">Technician</option>
+                <option value="Other">Other</option>
               </select>
 
               <label>Marital Status of Parents:</label>
-              <select name="maritalStatus">
+              <select name="maritalstatus">
                 <option value=""></option>
-                <option value="Married">Married</option>
-                <option value="Divorced">Divorced</option>
-                <option value="Widowed">Widowed</option>
-                <!-- Add more options as needed -->
-              </select><br>
+                <option value="widowed">Widowed</option>
+                <option value="divorced">Divorced</option>
+                <option value="seperated">Seperated</option>
+                <option value="other">Other</option>
+              </select>
 
               <label>Number of Siblings:</label>
-              <input type="number" name="numberOfSiblings" min="0" required><br>
+              <input type="number" name="siblings" min="0 " required><br>
 
               <div class="completion-bar">
                 <div class="completion-fill" style="width: 43%;"></div> <!-- Adjust the width based on completion -->

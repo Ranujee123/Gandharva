@@ -23,12 +23,12 @@ public class FamilyDetails extends HttpServlet {
             }
 
 
-            String freli = request.getParameter("fatherReligion");
-            String foccu = request.getParameter("fatherOccupation");
-            String mreli = request.getParameter("motherReligion");
-            String moccup = request.getParameter("motherOccupation");
-            String maritalstatus = request.getParameter("maritalStatus");
-            int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
+            String freli = request.getParameter("freli");
+            String foccu = request.getParameter("foccu");
+            String mreli = request.getParameter("mreli");
+            String moccup = request.getParameter("moccup");
+            String maritalstatus = request.getParameter("maritalstatus");
+            int siblings = Integer.parseInt(request.getParameter("siblings"));
             String id = UserDBUtil.getUserIdByEmail(userEmail);
 
 

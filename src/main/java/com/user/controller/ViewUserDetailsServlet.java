@@ -42,6 +42,7 @@ public class ViewUserDetailsServlet extends HttpServlet {
 
 
             request.getRequestDispatcher("u_moredetails.jsp").forward(request, response);
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("errorPage.jsp?message='Internal error occurred'");
