@@ -31,6 +31,7 @@ public class UpdateUserServlet extends HttpServlet {
     //  String bday = request.getParameter("bday");
         String nic=request.getParameter("nic");
         //String cID = request.getParameter("cID");
+        String phonenumber=request.getParameter("phonenumber");
         String email = request.getParameter("email");
         String province = request.getParameter("province"); // Assuming the dropdown has the name "province"
 
@@ -41,7 +42,7 @@ public class UpdateUserServlet extends HttpServlet {
         byte[] dpPhoto = convertPartToByteArray(dpphotoPart);
 
 
-        boolean isTrue = UserDBUtil.updateUser(firstName, lastName, nic, province,  dpPhoto,email);
+        boolean isTrue = UserDBUtil.updateUser(firstName, lastName, nic, province, phonenumber, dpPhoto,email);
 
 
         if (isTrue) {

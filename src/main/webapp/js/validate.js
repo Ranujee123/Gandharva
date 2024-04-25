@@ -19,6 +19,17 @@ function validateLastName() {
     return true;
 }
 
+function validateSriLankanPhoneNumber() {
+    var phonenumber = document.getElementById('phonenumber').value;
+    var regex = /^(?:0(?:(7\d{8})|(1[1-8]\d{6})))$/;
+    if (!regex.test(phonenumber)) {
+        alert("Please enter a valid Sri Lankan phone number.");
+        return false;
+    }
+    return true;
+}
+
+
 function validateEmail() {
     var email = document.getElementById('email').value;
     var regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;

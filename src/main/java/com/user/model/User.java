@@ -44,12 +44,14 @@ public class User {
     private String foodPreferences;
     private static int Id;
     private String school;
+    private String phonenumber;
 
-    public User(String firstName, String lastName, String nic, String province, String email, String dob, int age) {
+    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nic = nic;
         this.province = province;
+        this.phonenumber=phonenumber;
         this.email = email;
         this.dpphoto = dpphoto;
         this.dob = dob;
@@ -401,8 +403,9 @@ public class User {
         this.caste = caste;
     }
 
-
-
+    public String getPhonenumber() {
+        return phonenumber;
+    }
 
     public String getSchool() {
         return school;

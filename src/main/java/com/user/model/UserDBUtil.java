@@ -17,7 +17,7 @@ public class UserDBUtil {
         ArrayList<User> users = new ArrayList<>();
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "SELECT firstName, lastName, nic, province, email, dob, age FROM user WHERE email = ? AND password = ?";
+            String sql = "SELECT firstName, lastName, nic, province,phonenumber, email, dob, age FROM user WHERE email = ? AND password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -28,11 +28,12 @@ public class UserDBUtil {
                 String lastName = resultSet.getString("lastName");
                 String nic = resultSet.getString("nic");
                 String province = resultSet.getString("province");
+                String phonenumber=resultSet.getString("phonenumber");
                 String emailU = resultSet.getString("email");
                 String dob = resultSet.getString("dob");
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
 
-                User u = new User(firstName, lastName, nic, province, emailU, dob, age);
+                User u = new User(firstName, lastName, nic, province,phonenumber, emailU, dob, age);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -119,26 +120,27 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertUser(String id,String firstName, String lastName, String nic, String province, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
+    public static boolean insertUser(String id,String firstName, String lastName, String nic, String province,String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, email, frontphoto, backphoto, password, gender, dob, age) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, phonenumber,email, frontphoto, backphoto, password, gender, dob, age) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, UUID.randomUUID().toString());
             pstmt.setString(2, firstName);
             pstmt.setString(3, lastName);
             pstmt.setString(4, nic);
             pstmt.setString(5, province);
-            pstmt.setString(6, email);
-            pstmt.setBytes(7, frontPhoto);
-            pstmt.setBytes(8, backPhoto);
-            pstmt.setString(9, password);
-            pstmt.setString(10, gender);
-            pstmt.setString(11, dob);
-            pstmt.setInt(12, age);
+            pstmt.setString(6,phonenumber);
+            pstmt.setString(7, email);
+            pstmt.setBytes(8, frontPhoto);
+            pstmt.setBytes(9, backPhoto);
+            pstmt.setString(10, password);
+            pstmt.setString(11, gender);
+            pstmt.setString(12, dob);
+            pstmt.setInt(13, age);
 
             // Log the prepared statement to see what's being sent to the DB
             System.out.println("Executing SQL: " + pstmt.toString());
@@ -161,16 +163,17 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUser(String firstName, String lastName, String nic, String province, byte[] dpphoto, String email) {
-        String sql = "UPDATE user SET firstName=?, lastName=?, nic=?, province=?, dpphoto=? WHERE email=?";
+    public static boolean updateUser(String firstName, String lastName, String nic, String province, String phonenumber,byte[] dpphoto, String email) {
+        String sql = "UPDATE user SET firstName=?, lastName=?, nic=?, province=?, phonenumber=?,dpphoto=? WHERE email=?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, firstName);
             pstmt.setString(2, lastName);
             pstmt.setString(3, nic);
             pstmt.setString(4, province);
-            pstmt.setBytes(5, dpphoto);
-            pstmt.setString(6, email);
+            pstmt.setString(5,phonenumber);
+            pstmt.setBytes(6, dpphoto);
+            pstmt.setString(7, email);
 
             int rowsAffected = pstmt.executeUpdate();
             return rowsAffected > 0;
@@ -183,7 +186,7 @@ public class UserDBUtil {
 
     public static List<User> getUserDetails(String email) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto, dob, age FROM user WHERE email = ?";
+        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto,phonenumber, dob, age FROM user WHERE email = ?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, email);
@@ -193,12 +196,13 @@ public class UserDBUtil {
                 String lastName = rs.getString("lastName");
                 String nic = rs.getString("nic");
                 String provinceName = rs.getString("province");
+                String phonenumber=rs.getString("phonenumber");
                 String emailU = rs.getString("email");
                 byte[] dpphoto = rs.getBytes("dpphoto");
                 String dob = rs.getString("dob");
                 int age = rs.getInt("age");
 
-                users.add(new User(firstName, lastName, nic, provinceName, emailU, dob, age));
+                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1648,6 +1652,122 @@ public class UserDBUtil {
         }
     }
 
+
+    public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        boolean isSuccess = false;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO payment (userId, paymentDate, paymentTime, paymentMethod, paymentAmount, paymentStatus, cusAddress, cusCity, payment_reason) VALUES (?, NOW(), NOW(), ?, ?, ?, ?, ?, ?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, paymentMethod);
+            pstmt.setDouble(3, paymentAmount);
+            pstmt.setString(4, paymentStatus);
+            pstmt.setString(5, cusAddress);
+            pstmt.setString(6, cusCity);
+            pstmt.setString(7, paymentReason);
+
+            int rowsAffected = pstmt.executeUpdate();
+            isSuccess = rowsAffected > 0;
+            return isSuccess;
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+    }
+
+
+    public static boolean updateUserType(String userId, String userType) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "UPDATE user SET usertype = ? WHERE id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userType);
+            pstmt.setString(2, userId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0; // Return true if the update was successful
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
+
+    public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        boolean isSuccess = false;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO payment (userId, paymentDate, paymentTime, paymentMethod, paymentAmount, paymentStatus, cusAddress, cusCity, payment_reason) VALUES (?, NOW(), NOW(), ?, ?, ?, ?, ?, ?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, paymentMethod);
+            pstmt.setDouble(3, paymentAmount);
+            pstmt.setString(4, paymentStatus);
+            pstmt.setString(5, cusAddress);
+            pstmt.setString(6, cusCity);
+            pstmt.setString(7, paymentReason);
+
+            int rowsAffected = pstmt.executeUpdate();
+            isSuccess = rowsAffected > 0;
+            return isSuccess;
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+    }
+
+
+    public static boolean updatePREMIUMUserType(String userId, String userType) {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "UPDATE user SET usertype = ? WHERE id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userType);
+            pstmt.setString(2, userId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0; // Return true if the update was successful
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            try {
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 
 
