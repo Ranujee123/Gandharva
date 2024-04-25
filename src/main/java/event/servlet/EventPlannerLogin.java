@@ -37,6 +37,7 @@ public class EventPlannerLogin extends HttpServlet {
             session.setAttribute("lastName", user.getLastName());
             session.setAttribute("email", user.getEmail());
 
+            request.getSession().setAttribute("successMessage", "Login successful!");
             response.sendRedirect("EventPlannerDashboard.jsp");
         } else {
             response.sendRedirect("EventPlannerLogin.jsp?error=1");

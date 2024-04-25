@@ -39,7 +39,7 @@
                     >
                 </li>
                 <li>
-                    <a href="packages.jsp"
+                    <a href="EventPackages.jsp"
                     ><img src="../images/packages.png" alt="" />Packages</a
                     >
                 </li>
