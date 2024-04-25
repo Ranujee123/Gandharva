@@ -1,7 +1,6 @@
 <!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
+        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+        "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
@@ -9,318 +8,279 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <display-name>Gandhrva</display-name>
 
+    <welcome-file-list>
+        <welcome-file>/Astrologer/HomePage.jsp</welcome-file>
+    </welcome-file-list>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/Astrologer/404.jsp</location>
+    </error-page>
 
+    <session-config>
+        <session-timeout>45</session-timeout>
+    </session-config>
 
-  <display-name>Gandhrva</display-name>
-
-  <welcome-file-list>
-    <welcome-file>HomePage.jsp</welcome-file>
-  </welcome-file-list>
-
-  <servlet>
-  <servlet-name>login</servlet-name>
-  <servlet-class>com.user.controller.LoginServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-</servlet>
-
-<servlet-mapping>
-  <servlet-name>login</servlet-name>
-  <url-pattern>/log</url-pattern>
-</servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>deleteUserServlet</servlet-name>
-    <servlet-class>com.user.controller.DeleteUserServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>deleteUserServlet</servlet-name>
-    <url-pattern>/delete</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UserInsertServlet</servlet-name>
-    <servlet-class>com.user.controller.Userinsert</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserInsertServlet</servlet-name>
-    <url-pattern>/reg</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>UpdateuserServlet</servlet-name>
-    <servlet-class>com.user.controller.UpdateUserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateuserServlet</servlet-name>
-    <url-pattern>/updateu</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UPersonalDetails</servlet-name>
-    <servlet-class>com.user.controller.Personaldetails</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UPersonalDetails</servlet-name>
-    <url-pattern>/updetails</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>UserinsertDeatils</servlet-name>
-    <servlet-class>com.user.controller.QualificationServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserinsertDeatils</servlet-name>
-    <url-pattern>/qul</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>Userlist</servlet-name>
-    <servlet-class>com.user.controller.UserListControler</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Userlist</servlet-name>
-    <url-pattern>/userlist</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>complaints</servlet-name>
-    <servlet-class>com.user.controller.ComplaintsController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>complaints</servlet-name>
-    <url-pattern>/complaints</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>verifyuser</servlet-name>
-    <servlet-class>com.user.controller.userVerifyControler</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>verifyuser</servlet-name>
-    <url-pattern>/verifyuser</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>activateuser</servlet-name>
-    <servlet-class>com.user.controller.activateuserController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>activateuser</servlet-name>
-    <url-pattern>/activateuser</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>FamilyDetailsServlet</servlet-name>
-    <servlet-class>com.user.controller.FamilyDetails</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FamilyDetailsServlet</servlet-name>
-    <url-pattern>/fam</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>UserinteerstsServlet</servlet-name>
-    <servlet-class>com.user.controller.Interest</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserinteerstsServlet</servlet-name>
-    <url-pattern>/interest</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UserinteresedINServlet</servlet-name>
-    <servlet-class>com.user.controller.InterestedINServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserinteresedINServlet</servlet-name>
-    <url-pattern>/interestin</url-pattern>
-  </servlet-mapping>
-
- <servlet>
-  <servlet-name>ProfileCompletionServlet</servlet-name>
-  <servlet-class>com.user.controller.ProfileCompletionServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-<servlet-name>ProfileCompletionServlet</servlet-name>
-<url-pattern>/ProfileCompletionServlet</url-pattern>
-</servlet-mapping>
-
-  <servlet>
-    <servlet-name>UserinteresedINQualServlet</servlet-name>
-    <servlet-class>com.user.controller.interestedINqual</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserinteresedINQualServlet</servlet-name>
-    <url-pattern>/interestinqual</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>UserinteresedINFamServlet</servlet-name>
-    <servlet-class>com.user.controller.InterestedINfam</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserinteresedINFamServlet</servlet-name>
-    <url-pattern>/interestinfam</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UserLogout</servlet-name>
-    <servlet-class>com.user.controller.LogoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UserLogout</servlet-name>
-    <url-pattern>/userlogout</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>Filterservlet</servlet-name>
-    <servlet-class>com.user.controller.FilterServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Filterservlet</servlet-name>
-    <url-pattern>/Filter</url-pattern>
-  </servlet-mapping>
-
-
-
-  <servlet>
-    <servlet-name>ChatStore</servlet-name>
-    <servlet-class>com.user.controller.ChatStore</servlet-class>
-  </servlet>
+<!--    USER-->
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <servlet-class>com.user.controller.LoginServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
 
     <servlet-mapping>
-      <servlet-name>ChatStore</servlet-name>
-      <url-pattern>/chatstore</url-pattern>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/log</url-pattern>
     </servlet-mapping>
 
 
-  <servlet>
-    <servlet-name>LoadMessages</servlet-name>
-    <servlet-class>com.user.controller.LoadMessages</servlet-class>
-  </servlet>
+    <servlet>
+        <servlet-name>deleteUserServlet</servlet-name>
+        <servlet-class>com.user.controller.DeleteUserServlet</servlet-class>
+    </servlet>
 
-  <servlet-mapping>
-    <servlet-name>LoadMessages</servlet-name>
-    <url-pattern>/LoadMessages</url-pattern>
-  </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteUserServlet</servlet-name>
+        <url-pattern>/delete</url-pattern>
+    </servlet-mapping>
 
-
-  <servlet>
-  <servlet-name>ViewMoreDetails</servlet-name>
-  <servlet-class>com.user.controller.ViewUserDetailsServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-<servlet-name>ViewMoreDetails</servlet-name>
-<url-pattern>/moredetails</url-pattern>
-</servlet-mapping>
+    <servlet>
+        <servlet-name>UserInsertServlet</servlet-name>
+        <servlet-class>com.user.controller.Userinsert</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserInsertServlet</servlet-name>
+        <url-pattern>/reg</url-pattern>
+    </servlet-mapping>
 
 
-  <servlet>
-    <servlet-name>Connection</servlet-name>
-    <servlet-class>com.user.controller.ConnectionRequestServlet</servlet-class>
-  </servlet>
+    <servlet>
+        <servlet-name>UpdateuserServlet</servlet-name>
+        <servlet-class>com.user.controller.UpdateUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateuserServlet</servlet-name>
+        <url-pattern>/updateu</url-pattern>
+    </servlet-mapping>
 
-  <servlet-mapping>
-    <servlet-name>Connection</servlet-name>
-    <url-pattern>/connection</url-pattern>
-  </servlet-mapping>
+    <servlet>
+        <servlet-name>UPersonalDetails</servlet-name>
+        <servlet-class>com.user.controller.Personaldetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UPersonalDetails</servlet-name>
+        <url-pattern>/updetails</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserinsertDeatils</servlet-name>
+        <servlet-class>com.user.controller.QualificationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserinsertDeatils</servlet-name>
+        <url-pattern>/qul</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Userlist</servlet-name>
+        <servlet-class>com.user.controller.UserListControler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Userlist</servlet-name>
+        <url-pattern>/userlist</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>complaints</servlet-name>
+        <servlet-class>com.user.controller.ComplaintsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>complaints</servlet-name>
+        <url-pattern>/complaints</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>verifyuser</servlet-name>
+        <servlet-class>com.user.controller.userVerifyControler</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>verifyuser</servlet-name>
+        <url-pattern>/verifyuser</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>activateuser</servlet-name>
+        <servlet-class>com.user.controller.activateuserController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>activateuser</servlet-name>
+        <url-pattern>/activateuser</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FamilyDetailsServlet</servlet-name>
+        <servlet-class>com.user.controller.FamilyDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FamilyDetailsServlet</servlet-name>
+        <url-pattern>/fam</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserinteerstsServlet</servlet-name>
+        <servlet-class>com.user.controller.Interest</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserinteerstsServlet</servlet-name>
+        <url-pattern>/interest</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserinteresedINServlet</servlet-name>
+        <servlet-class>com.user.controller.InterestedINServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserinteresedINServlet</servlet-name>
+        <url-pattern>/interestin</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ProfileCompletionServlet</servlet-name>
+        <servlet-class>com.user.controller.ProfileCompletionServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProfileCompletionServlet</servlet-name>
+        <url-pattern>/ProfileCompletionServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserinteresedINQualServlet</servlet-name>
+        <servlet-class>com.user.controller.interestedINqual</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserinteresedINQualServlet</servlet-name>
+        <url-pattern>/interestinqual</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserinteresedINFamServlet</servlet-name>
+        <servlet-class>com.user.controller.InterestedINfam</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserinteresedINFamServlet</servlet-name>
+        <url-pattern>/interestinfam</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserLogout</servlet-name>
+        <servlet-class>com.user.controller.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserLogout</servlet-name>
+        <url-pattern>/userlogout</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Filterservlet</servlet-name>
+        <servlet-class>com.user.controller.FilterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Filterservlet</servlet-name>
+        <url-pattern>/Filter</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ChatStore</servlet-name>
+        <servlet-class>com.user.controller.ChatStore</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChatStore</servlet-name>
+        <url-pattern>/chatstore</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>LoadMessages</servlet-name>
+        <servlet-class>com.user.controller.LoadMessages</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoadMessages</servlet-name>
+        <url-pattern>/LoadMessages</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ViewMoreDetails</servlet-name>
+        <servlet-class>com.user.controller.ViewUserDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewMoreDetails</servlet-name>
+        <url-pattern>/moredetails</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Connection</servlet-name>
+        <servlet-class>com.user.controller.ConnectionRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Connection</servlet-name>
+        <url-pattern>/connection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CheckEmailServlet</servlet-name>
+        <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckEmailServlet</servlet-name>
+        <url-pattern>/CheckEmailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchConnection</servlet-name>
+        <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchConnection</servlet-name>
+        <url-pattern>/fetchConnection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RequestStatusCount</servlet-name>
+        <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestStatusCount</servlet-name>
+        <url-pattern>/fetchRequestStatusCount</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateRequestStatus</servlet-name>
+        <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateRequestStatus</servlet-name>
+        <url-pattern>/updateConnectionStatus</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateAccepetedreqList</servlet-name>
+        <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateAccepetedreqList</servlet-name>
+        <url-pattern>/GetAcceptedRequests</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ReportUsers</servlet-name>
+        <servlet-class>com.user.controller.ReportUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportUsers</servlet-name>
+        <url-pattern>/ReportUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SendRequesttoAstrologer</servlet-name>
+        <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SendRequesttoAstrologer</servlet-name>
+        <url-pattern>/SendRequest</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <url-pattern>/updatepersonalInfo</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>MatchFindingServlet</servlet-name>
+        <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MatchFindingServlet</servlet-name>
+        <url-pattern>/findMatches</url-pattern>
+    </servlet-mapping>
 
-  <servlet>
-    <servlet-name>CheckEmailServlet</servlet-name>
-    <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CheckEmailServlet</servlet-name>
-    <url-pattern>/CheckEmailServlet</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>FetchConnection</servlet-name>
-    <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FetchConnection</servlet-name>
-    <url-pattern>/fetchConnection</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>RequestStatusCount</servlet-name>
-    <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RequestStatusCount</servlet-name>
-    <url-pattern>/fetchRequestStatusCount</url-pattern>
-  </servlet-mapping>
-
-
-
-  <servlet>
-    <servlet-name>UpdateRequestStatus</servlet-name>
-    <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateRequestStatus</servlet-name>
-    <url-pattern>/updateConnectionStatus</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UpdateAccepetedreqList</servlet-name>
-    <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateAccepetedreqList</servlet-name>
-    <url-pattern>/GetAcceptedRequests</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>ReportUsers</servlet-name>
-    <servlet-class>com.user.controller.ReportUserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ReportUsers</servlet-name>
-    <url-pattern>/ReportUserServlet</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>SendRequesttoAstrologer</servlet-name>
-    <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SendRequesttoAstrologer</servlet-name>
-    <url-pattern>/SendRequest</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UpdatePersonalInfo</servlet-name>
-    <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdatePersonalInfo</servlet-name>
-    <url-pattern>/updatepersonalInfo</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>MatchFindingServlet</servlet-name>
-    <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MatchFindingServlet</servlet-name>
-    <url-pattern>/findMatches</url-pattern>
-  </servlet-mapping>
-
-
+<!--    ASTROLOGER-->
 </web-app>
