@@ -11,6 +11,7 @@ public class FamilyDetails {
     private String maritalstatus;
     private String siblings;
 
+
     public String getFathername() {
         return fathername;
     }

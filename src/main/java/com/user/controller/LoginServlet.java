@@ -42,7 +42,8 @@ public class LoginServlet extends HttpServlet {
                 // Set userEmail and userId in session
                 HttpSession session = req.getSession();
                 session.setAttribute("userEmail", email);
-                session.setAttribute("userId", user.getId());  // Assuming User class has getId method
+                session.setAttribute("userId", user.getId());// Assuming User class has getId method
+
 
                 // Calculate and set profile completion status
                 updateProfileCompletionStatus(session, email);

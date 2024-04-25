@@ -280,6 +280,16 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>UpdateUserFamInfo</servlet-name>
+    <servlet-class>com.user.controller.UpdateUserFamInfo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserFamInfo</servlet-name>
+    <url-pattern>/updateuserfamInfo</url-pattern>
+  </servlet-mapping>
+
+
+  <servlet>
     <servlet-name>MatchFindingServlet</servlet-name>
     <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
   </servlet>

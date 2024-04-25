@@ -62,7 +62,7 @@
     <a href="editpersonalInfo.jsp" style="text-decoration: none; color: inherit;">
     <div class="card">
         <div class="card-text">Personal Information</div></div></a>
-    <a href="#" style="text-decoration: none; color: inherit;">
+    <a href="edituserfamilyInfo.jsp" style="text-decoration: none; color: inherit;">
     <div class="card">
         <div class="card-text">Family Details</div></div></a>
     <a href="#" style="text-decoration: none; color: inherit;">
