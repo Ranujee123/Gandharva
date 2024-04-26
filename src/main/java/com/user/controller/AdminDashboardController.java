@@ -27,7 +27,7 @@ public class AdminDashboardController extends HttpServlet {
 
         try {
             connection = DBConnect.getConnection();
-            String query = "SELECT count(*) as total, COUNT(CASE WHEN userType = 'ASTROLOGER' THEN 1 END) AS astrologer_count, COUNT(CASE WHEN userType = 'USER' THEN 1 END) AS user_count, COUNT(CASE WHEN userType = 'PREMIUM_USER' THEN 1 END) AS premium_count, COUNT(CASE WHEN userType = 'EVENT_PLANNER' THEN 1 END) AS eventpalanner_count FROM user;";
+            String query = "SELECT count(CASE WHEN isActivated = 1 THEN 1 END) as total, COUNT(CASE WHEN userType = 'ASTROLOGER' THEN 1 END) AS astrologer_count, COUNT(CASE WHEN userType = 'USER' THEN 1 END) AS user_count, COUNT(CASE WHEN userType = 'PREMIUM_USER' THEN 1 END) AS premium_count, COUNT(CASE WHEN userType = 'EVENT_PLANNER' THEN 1 END) AS eventpalanner_count FROM user;";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             AdminDashboardmodels adminDashboardmodels = new AdminDashboardmodels();
