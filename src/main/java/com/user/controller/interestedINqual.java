@@ -24,6 +24,12 @@ public class interestedINqual extends  HttpServlet{
 
                 String qualification = request.getParameter("qualification");
                 String occupation = request.getParameter("occupation");
+                String otheroccupation = request.getParameter("other_occupation");
+
+                if ("Other".equals(occupation) && otheroccupation!= null && !otheroccupation.isEmpty()) {
+                    occupation = otheroccupation;
+                }
+
 
                 String id = UserDBUtil.getUserIdByEmail(userEmail);
 

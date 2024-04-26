@@ -206,6 +206,7 @@
 <%
   User user = (User) request.getAttribute("user");
   Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+  Boolean isConnected=(Boolean)request.getAttribute("isConnectedUser") ;
 
   if (user != null) {
 %>
@@ -214,6 +215,7 @@
   <div class="details-card">
     <!-- User details -->
     <p> <%= isReported ? "This user has been reported by you:" : " " %></p>
+    <p> <%= isConnected? "You both are mutually connected:" : " " %></p>
     <!-- Show other user details -->
   </div>
 <div class="details-card">
@@ -342,12 +344,17 @@
 
 
 
-<c:if test="${isConnectionRequestPending}">
-  <p class="connect-status">Pending Request</p>
-</c:if>
-<c:if test="${not isConnectionRequestPending}">
+  <c:if test="${isConnectionRequestPending}">
+    <!-- Displayed if there is a pending connection request -->
+    <p class="connect-status">Pending Request</p>
+  </c:if>
 
+  <c:if test="${isConnectedUser}">
+    <!-- Displayed if the users are already connected -->
+    <p class="connect-status">You both are mutually connected</p>
+  </c:if>
 
+  <c:if test="${!isConnectionRequestPending and !isConnectedUser}">
   <form action="connection" method="post" id="connectionForm">
     <input type="hidden" name="toUserEmail" value="${user.email}" />
     <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>

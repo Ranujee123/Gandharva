@@ -262,7 +262,7 @@
     </div>
 
     <div class="form-box">
-        <a href="login.jsp"> <h1 class="heading">User</h1> </a>
+        <a href="u_reg.jsp"> <h1 class="heading">User</h1> </a>
     </div>
 
     <div class="form-box">

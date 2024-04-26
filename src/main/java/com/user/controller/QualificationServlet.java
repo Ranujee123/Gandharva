@@ -25,8 +25,14 @@ public class QualificationServlet extends HttpServlet {
             String school = request.getParameter("school");
             String qualification = request.getParameter("qualification");
             String occupation = request.getParameter("occupation");
+            String otheroccupation = request.getParameter("other_occupation");
 
             String id = UserDBUtil.getUserIdByEmail(userEmail);
+
+            if ("Other".equals(occupation) && otheroccupation!= null && !otheroccupation.isEmpty()) {
+                occupation = otheroccupation;
+            }
+
 
 
             if (UserDBUtil.saveDetailsToDatabase(id, qualification, occupation, school)) {

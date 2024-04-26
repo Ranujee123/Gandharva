@@ -95,6 +95,20 @@
             color: red;
             margin-bottom: 10px;
         }
+        .form-container .button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -144,10 +158,10 @@
                 <p class="completion-text">4 out of 7 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
-                <button type="submit" name="action" value="proceed">Proceed</button>
+                <button type="submit" name="action" value="proceed" class="form-container button">Save & Next</button>
 
                 <!-- Save Progress button -->
-                <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
+                <a href="u_myprofile.jsp" class="form-container button">Back to Profile</a>
             </form>
 
         </div>

@@ -396,7 +396,7 @@
                 <div class="buttons">
                     <a href="login.jsp"> <button class="signin">Sign In </button></a>
                     <button class="divider"> | </button>
-                    <a href="u_reg.jsp"> <button class="signup">Sign Up</button> </a>
+                    <a href="NavigatePage.jsp"> <button class="signup">Sign Up</button> </a>
                 </div>
 
             </nav>

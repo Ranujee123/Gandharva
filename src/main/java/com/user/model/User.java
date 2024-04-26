@@ -45,7 +45,10 @@ public class User {
     private static int Id;
     private String school;
     private String phonenumber;
+    private String personalitytype;
 
+
+    //editprofile (userDetails)
     public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -58,7 +61,7 @@ public class User {
         this.age = age;
     }
 
-
+//update userfamily info
     public User(String freli, String foccu, String mreli, String moccup, String maritalstatus,  int siblings) {
         this.freli = freli;
         this.foccu = foccu;
@@ -83,21 +86,30 @@ public class User {
         this.age = age;
     }
 */
-    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation, String string, String resultSetString, String diffabled, String setString, String s, String personalitytype) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.age = age;
-        this.province = province;
-        this.ethnicity = ethnicity;
-        this.religion = religion;
-        this.status = status;
-        this.height = height;
-        this.qualification = qualification;
-        this.occupation = occupation;
-        this.diffabled = this.diffabled;
 
-    }
+    //display filter box card method constructor
+    public User(String firstName, String lastName, String email, String province, String ethnicity,String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype)
+    {
+
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.email = email;
+            this.province = province;
+            this.ethnicity = ethnicity;
+            this.religion = religion;
+            this.caste=caste;
+            this.status = status;
+            this.height = height;
+            this.foodpreferences=foodpreferences;
+            this.drinking=drinking;
+            this.smoking=smoking;
+            this.qualification = qualification;
+            this.occupation = occupation;
+            this.diffabled = diffabled;
+            this.personalitytype=personalitytype;
+
+        }
+
 
     /*
         public User(String firstName, String lastName, String email, int age, String provinceName, String ethnicity, String religion, String status, String height, String qualificationName, String occupationName, String diffabled) {
@@ -116,6 +128,9 @@ public class User {
 
         }
     */
+
+
+    //
     public User(String ethnicity, String religion, String caste, String status,
                 String height, String qualification,String school, String occupation,
                 String foodpreferences, String drinking, String smoking,
@@ -154,7 +169,7 @@ public class User {
 
     }
 
-
+//user viewmore
     public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings) {
         this.firstName = firstName;
         this.lastName = lastName;

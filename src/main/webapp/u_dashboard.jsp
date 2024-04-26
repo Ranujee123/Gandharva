@@ -112,53 +112,52 @@
         <label>Ethnicity:</label>
         <select name="ethnicity" >
             <option value=""> </option>
-            <option value="sinhalese">Sinhalese</option>
-            <option value="tamil">tamil</option>
-            <option value="muslim">Muslim</option>
-            <option value="burger">Burger</option>
-            <option value="other">Other</option>
+            <option value="Burger">Burger</option>
+            <option value="Muslim">Muslim</option>
+            <option value="Sinhalese">Sinhalese</option>
+            <option value="Tamil">Tamil</option>
+            <option value="Other">Other</option>
         </select>
 
         <label>Religion:</label>
         <select name="religion" >
             <option value=""> </option>
-            <option value="buddhist">Buddhist</option>
-            <option value="christain">Christian</option>
-            <option value="hindu">Hindu</option>
-            <option value="islam">Islam</option>
-            <option value="agonistics">Agonistic</option>
-            <option value="catholic">Catholic</option>
-            <option value="none">None</option>
-            <option value="other">Other</option>
+            <option value="Atheists">Atheists</option>
+            <option value="Buddhist">Buddhist</option>
+            <option value="Catholic">Catholic</option>
+            <option value="Christian">Christian</option>
+            <option value="Hindu">Hindu</option>
+            <option value="Islam">Islam</option>
+            <option value="Other">Other</option>
         </select>
 
-        <label> Caste:</label>
-        <select name="caste" >
-            <option value=""></option>
-            <option value="Radala">Radala</option>
-            <option value="Govigama">Govigama</option>
-            <option value="Bathgama">Bathgama</option>
-            <option value="Deva">Deva</option>
-            <option value="Nekathi">Nekathi</option>
-            <option value="Bodhivansha">Bodhivansha</option>
-            <option value="Rajaka">Rajaka</option>
-            <option value="kumbal">Kumbal</option>
-            <option value="Hunu">Hunu</option>
-            <option value="Durava"> Durava</option>
-            <option value="Karava">Karava</option>
-            <option value="Salagama">Salagama</option>
-            <option value="Navandanna"> Navandanna</option>
-            <!-- Add more options as needed -->
-        </select>
+            <label>Caste:</label>
+            <select name="caste">
+                <option value="">Select Caste</option>
+                <option value="Bathgama">Bathgama</option>
+                <option value="Bodhivansha">Bodhivansha</option>
+                <option value="Deva">Deva</option>
+                <option value="Durava">Durava</option>
+                <option value="Govigama">Govigama</option>
+                <option value="Hunu">Hunu</option>
+                <option value="Karava">Karava</option>
+                <option value="Kumbal">Kumbal</option>
+                <option value="Navandanna">Navandanna</option>
+                <option value="Nekathi">Nekathi</option>
+                <option value="Rajaka">Rajaka</option>
+                <option value="Radala">Radala</option>
+                <option value="Salagama">Salagama</option>
+                <option value="Other">Other</option>
+            </select>
 
-        <label>Civil Status :</label>
+            <label>Civil Status :</label>
         <select name="status" >
             <option value=""> </option>
+            <option value="Divorced">Divorced</option>
             <option value="Nevermarried">Never Married</option>
-            <option value="widowed">Widowed</option>
-            <option value="divorced">Divorced</option>
-            <option value="seperated">Seperated</option>
-            <option value="other">Other</option>
+            <option value="Seperated">Separated</option>
+            <option value="Widowed">Widowed</option>
+            <option value="Other">Other</option>
         </select>
 
         <label>Height :</label>
@@ -176,18 +175,18 @@
         </select>
 
         <label>Minimum Education Qualification:</label>
-        <select name="qualification">
+        <select name="qualification" >
             <option value=""></option>
-            <option value="phd">Phd or Post Doctoral </option>
-            <option value="msc">Master's Degree or Equivalent</option>
-            <option value="diploma">Post Graduate Diploma</option>
-            <option value="bachelor">Bachelor's Degree or Equivalent</option>
-            <option value="undergrad">Undergraduate</option>
-            <option value="proffqual">Professional Qualification</option>
-            <option value="diploma">Diploma</option>
-            <option value="al">Up to GCE A/L</option>
-            <option value="ol">Up to GCE O/L</option>
-            <option value="other">Other</option>
+            <option value="Phd or Post Doctoral">Phd or Post Doctoral </option>
+            <option value="Master's Degree or Equivalent">Master's Degree or Equivalent</option>
+            <option value="Post Graduate Diploma">Post Graduate Diploma</option>
+            <option value="Bachelor's Degree or Equivalent">Bachelor's Degree or Equivalent</option>
+            <option value="Undergraduate">Undergraduate</option>
+            <option value="Professional Qualification">Professional Qualification</option>
+            <option value="Diploma">Diploma</option>
+            <option value="Up to GCE A/L">Up to GCE A/L</option>
+            <option value="Up to GCE O/L">Up to GCE O/L</option>
+            <option value="Other">Other</option>
 
         </select>
 
@@ -230,31 +229,30 @@
         <label>Food Preference:</label>
         <select name="foodpreferences" >
             <option value=""> </option>
-            <option value="Veg">Vegetarian</option>
-            <option value="Non-Veg">Non-Vegetarian</option>
-            <option value="vegan">Vegan</option>
+            <option value="Vegetarian">Vegetarian</option>
+            <option value="Non-Vegetarian">Non-Vegetarian</option>
+            <option value="Vegan">Vegan</option>
         </select>
 
         <label>Drinking:</label>
         <select name="drinking" >
             <option value=""> </option>
-            <option value="yes">Yes</option>
+            <option value="Yes">Yes</option>
             <option value="No">No</option>
-            <option value="occationally">Occationally</option>
+            <option value="Occationally">Occationally</option>
         </select>
-
 
         <label>Smoking :</label>
         <select name="smoking" >
             <option value=""> </option>
-            <option value="yes">Yes</option>
+            <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
         <label>Differently Abled :</label>
         <select name="diffabled" >
             <option value=""> </option>
-            <option value="yes">Yes</option>
+            <option value="Yes">Yes</option>
             <option value="No">No</option>
         </select>
 
@@ -303,13 +301,13 @@
                     <p>Province: <c:out value="${user.province}"/></p>
                 </div>
                 <div class="profile-detail">
-                    <p>Religion: <c:out value="${user.religion}"/></p>
+                    <p>Ethnicity: <c:out value="${user.ethnicity}"/></p>
                 </div>
                 <div class="profile-detail">
-                    <p>Status: <c:out value="${user.status}"/></p>
+                    <p>Religion: <c:out value=" ${user.religion}"/></p>
                 </div>
                 <div class="profile-detail">
-                    <p>Height: <c:out value="${user.height}"/></p>
+                    <p>Caste: <c:out value="${user.caste}"/></p>
                 </div>
                 <div class="profile-detail">
                     <p>Occupation: <c:out value="${user.occupation}"/></p>

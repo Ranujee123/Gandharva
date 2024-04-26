@@ -30,13 +30,13 @@ public class ProfileCompletionServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        // Handle "Save Progress" action
+      /*  // Handle "Save Progress" action
         if ("save".equals(action)) {
             response.sendRedirect("u_myprofile.jsp");
             return;
         }
 
-
+*/
         boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
         boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
         boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);

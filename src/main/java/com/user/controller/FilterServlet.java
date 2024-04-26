@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
-import java.util.SplittableRandom;
+
 
 public class FilterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,7 +30,7 @@ public class FilterServlet extends HttpServlet {
         String province = request.getParameter("province");
         String ethnicity = request.getParameter("ethnicity");
         String religion = request.getParameter("religion");
-        String caste=request.getParameter("caste");
+        String caste = request.getParameter("caste");
         String status=request.getParameter("status");
         String height=request.getParameter("height");
         String foodpreferences=request.getParameter("foodpreferences");
@@ -40,6 +40,8 @@ public class FilterServlet extends HttpServlet {
         String occupation=request.getParameter("occupation");
         String diffabled= request.getParameter("diffabled");
         String personalitytype=request.getParameter("personalitytype");
+
+
 
 
         // Call the model to get filtered users, excluding the current user
