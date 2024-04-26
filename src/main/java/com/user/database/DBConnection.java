@@ -15,11 +15,16 @@ public class DBConnection {
 //    private final String password = appConfig.getDatabasePassword();
 
     private final String host = "localhost";
-    private final String port = "3306";
-    private final String database = "gandharva";
-    private final String username = "binali";
-//    private final String username = "root";
-    private final String password = "password";
+//    private final String port = "3306";
+//    private final String database = "gandharva";
+//    private final String username = "binali";
+//    private final String password = "password";
+
+//    VIDARA
+    private final String port = "8889";
+    private final String database = "Gandharva";
+    private final String username = "root";
+    private final String password = "root";
 
     private Connection connection;
     private static DBConnection dbconnection;
