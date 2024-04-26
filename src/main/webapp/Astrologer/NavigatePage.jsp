@@ -239,7 +239,7 @@
             <li><a href="#">About Us</a></li>
             <li><a href="#">Our Services</a>
                 <ul class="submenu">
-                    <li><a href="Astrologer/Astrologer_Registration.jsp">Astrologer</a></li>
+                    <li><a href="astrologerRegistration">Astrologer</a></li>
                     <li><a href="#">Event Planner</a></li>
                 </ul>
             </li>
@@ -258,15 +258,15 @@
 
 <div class="container">
     <div class="form-box">
-        <a href="Astrologer/Astrologer_Registration.jsp"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="astrologerRegistration"> <h1 class="heading">Astrologer</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="login"> <h1 class="heading">User</h1> </a>
+        <a href="u_reg.jsp"> <h1 class="heading">User</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="astrologer"> <h1 class="heading">Event Planner</h1> </a>
+        <a href="login"> <h1 class="heading">Event Planner</h1> </a>
     </div>
 </div>
 

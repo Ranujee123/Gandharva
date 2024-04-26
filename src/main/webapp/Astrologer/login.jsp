@@ -110,7 +110,7 @@
     <input type="submit" value="Login" class="login-button"><br><br>
     <a href="forgotPassword.jsp">Forgot Password?</a><br>
   </form>
-  <p class="signup-text">Don't have an account? <a href="u_reg.jsp">Sign Up</a></p>
+  <p class="signup-text">Don't have an account? <a href="registration">Sign Up</a></p>
 </div>
 
 <!-- Add more HTML and CSS as needed for styling and responsiveness -->

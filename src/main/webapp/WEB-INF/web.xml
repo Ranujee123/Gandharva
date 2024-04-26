@@ -542,4 +542,22 @@
         <servlet-name>homePageController</servlet-name>
         <url-pattern>/home</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>astrologerRegistrationController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.AstrologerRegistrationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>astrologerRegistrationController</servlet-name>
+        <url-pattern>/astrologerRegistration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AstrologerNavigateController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.AstrologerNavigateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AstrologerNavigateController</servlet-name>
+        <url-pattern>/navigation</url-pattern>
+    </servlet-mapping>
 </web-app>
