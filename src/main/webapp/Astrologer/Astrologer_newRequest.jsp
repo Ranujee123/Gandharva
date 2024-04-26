@@ -11,9 +11,8 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
     <title>Dashboard</title>
-
 </head>
 <body>
 <div class="sidebar">
@@ -24,37 +23,37 @@
     </a>
     <ul class="menu">
         <li class="active">
-            <a href="astrologer" >
+            <a href="astrologer">
                 <i class="menu-icon fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_profile.jsp">
+            <a href="Astrologer/Astrologer_profile.jsp">
                 <i class="menu-icon fas fa-user"></i>
                 <span>Profile </span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_pending.jsp">
+            <a href="Astrologer/Astrologer_pending.jsp">
                 <i class="menu-icon fas fa-hourglass-half"></i>
                 <span>User Requests</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_reservations.jsp">
+            <a href="Astrologer/Astrologer_reservations.jsp">
                 <i class="menu-icon fas fa-bookmark"></i>
                 <span>Reservations</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_schedule.jsp">
+            <a href="Astrologer/Astrologer_schedule.jsp">
                 <i class="menu-icon fas fa-calendar"></i>
                 <span>Schedule</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_payment.jsp">
+            <a href="Astrologer/Astrologer_payment.jsp">
                 <i class="menu-icon fas fa-credit-card"></i>
                 <span>Payment</span>
             </a>
@@ -66,7 +65,7 @@
             </a>
         </li>
         <li>
-            <a href="Astrologer_settings.jsp">
+            <a href="Astrologer/Astrologer_settings.jsp">
                 <i class="menu-icon fas fa-cog"></i>
                 <span>Settings</span>
             </a>
@@ -83,7 +82,7 @@
 
 </div>
 
-<div class="main--content" >
+<div class="main--content">
     <div class="header--wrapper">
         <div class="header--title">
             <span> Primary</span>
@@ -97,7 +96,7 @@
                 <input type="text" placeholder="Search">
             </div>
 
-            <a href="Astrologer_profile.jsp"><img src="images/img.png">
+            <a href="Astrologer/Astrologer_profile.jsp"><img src="images/img.png">
             </a>
 
         </div>
@@ -133,22 +132,6 @@
                     </div>
                     <i class="icon fas fa-bell"></i>
                 </div>
-                <%--                <span class="current--date" id="currentDate"> </span>--%>
-
-                <%--                <!-- JavaScript to get and display the current date -->--%>
-                <%--                <script>--%>
-                <%--                    // Get the current date--%>
-                <%--                    var currentDate = new Date();--%>
-
-                <%--                    // Format the date as desired (e.g., "January 31, 2024")--%>
-                <%--                    var options = { year: 'numeric', month: 'long', day: 'numeric' };--%>
-                <%--                    var formattedDate = currentDate.toLocaleDateString('en-US', options);--%>
-
-                <%--                    // Display the current date in the HTML element with id="currentDate"--%>
-                <%--                    document.getElementById("currentDate").innerHTML = "Today's Date: " + formattedDate;--%>
-                <%--                </script>--%>
-
-
             </div>
 
             <div class="request--card light-purple">
@@ -163,22 +146,6 @@
                     </div>
                     <i class="icon fas fa-hourglass-half dark-purple"></i>
                 </div>
-                <%--                <span class="current--date" id="currentDate2"> </span>--%>
-
-                <%--                <!-- JavaScript to get and display the current date -->--%>
-                <%--                <script>--%>
-                <%--                    // Get the current date--%>
-                <%--                    var currentDate = new Date();--%>
-
-                <%--                    // Format the date as desired (e.g., "January 31, 2024")--%>
-                <%--                    var options = { year: 'numeric', month: 'long', day: 'numeric' };--%>
-                <%--                    var formattedDate = currentDate.toLocaleDateString('en-US', options);--%>
-
-                <%--                    // Display the current date in the HTML element with id="currentDate"--%>
-                <%--                    document.getElementById("currentDate2").innerHTML = "As at " + formattedDate;--%>
-                <%--                </script>--%>
-
-
             </div>
 
             <div class="request--card light-green">
@@ -217,10 +184,10 @@
             <table>
                 <thead>
                 <tr>
-                    <th> Date </th>
+                    <th> Date</th>
                     <th> Name of the customer</th>
-                    <th> Accept </th>
-                    <th> Reject </th>
+                    <th> Accept</th>
+                    <th> Reject</th>
 
 
                 </tr>
@@ -239,7 +206,6 @@
                     <td>
                         <input type="radio" class="radio">
                     </td>
-
 
 
                 </tr>

@@ -384,7 +384,7 @@
                 <li><a href="#">About Us</a></li>
                 <li><a href="#">Our Services</a>
                     <ul class="submenu">
-                        <li><a href="ourServices-Astrologer.jsp">Astrologer</a></li>
+                        <li><a href="Astrologer/ourServices-Astrologer.jsp">Astrologer</a></li>
 
                         <li><a href="#">Event Planner</a></li>
                     </ul>
@@ -393,7 +393,7 @@
                 <li><a href="#">Help</a></li>
             </ul>
             <div class="buttons">
-                <a href="Astrologer_Login.jsp"> <button class="signin">Sign In </button></a>
+                <a href="login"> <button class="signin">Sign In </button></a>
                 <button class="divider"> | </button>
                 <a href="registration"> <button class="signup">Sign Up</button> </a>
             </div>

@@ -161,7 +161,8 @@
             <label for="email" class="input-label">E-mail<span class="required">*</span></label><br>
             <input type="email" id="email" name="email" class="input-field" required><br>
 
-            <label for="astrologerPayment" class="input-label">Set Your Base Price<span class="required">*</span></label><br>
+            <label for="astrologerPayment" class="input-label">Set Your Base Price<span
+                    class="required">*</span></label><br>
             <input type="text" id="astrologerPayment" name="email" class="input-field" required><br>
 
             <label for="password" class="input-label">Password<span class="required">*</span></label><br>
@@ -171,7 +172,8 @@
             <input type="password" id="confirmPassword" name="confirm_password" class="input-field" required><br>
 
             <label for="certificates" class="input-label">Upload Certificates<span class="required">*</span></label><br>
-            <input type="file" id="certificates" name="certificate" class="input-field" accept=".pdf, .jpg, .png" multiple><br>
+            <input type="file" id="certificates" name="certificate" class="input-field" accept=".pdf, .jpg, .png"
+                   multiple><br>
 
             <input type="submit" class="proceed" id="proceedBtn" name="proceed" value="Proceed">
 
@@ -179,7 +181,7 @@
                 <a href="#">Terms and Conditions</a>
             </div>
             <div class="login-link">
-                <span>Already have an account? </span><a href="Astrologer_Login.jsp">Sign In</a>
+                <span>Already have an account? </span><a href="login">Sign In</a>
             </div>
         </form>
     </div>
@@ -187,7 +189,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="js/astrologerRegistration.js" defer></script>
+<script src="Astrologer/js/astrologerRegistration.js" defer></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="java.util.Base64" %>
-<%@ page import="org.gandharva.gandharva.model.AllUser" %>
+<%@ page import="com.user.model.astrologer.AllUser" %>
 <%--
   Created by IntelliJ IDEA.
   User: Binali Ukwatte
@@ -10,15 +10,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-
-
 <html>
-
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
     <title>My Profile</title>
 
     <style>
@@ -51,7 +48,8 @@
             background-color: rgb(173, 172, 172, 0.001);
             box-shadow: 2px 4px 4px rgb(0, 0, 0, 0.644);
         }
-        .profile--info h1{
+
+        .profile--info h1 {
             font-family: "monospace", Poppins;
             color: #24333E;
             font-size: 1.2rem;
@@ -59,7 +57,7 @@
             margin-bottom: 35px;
         }
 
-        .profile--info h2{
+        .profile--info h2 {
             color: #777;
             font-family: "monospace", Poppins;
             text-transform: uppercase;
@@ -68,21 +66,24 @@
             margin-left: 2px;
             margin-top: 10px;
         }
-        .profile--info .input, p{
+
+        .profile--info .input, p {
             border: 0;
             border-bottom: 1px solid #3fb6a8;
             width: 80%;
             font-family: "monospace", sans-serif;
-            font-size: .7em ;
+            font-size: .7em;
             padding: 7px 0;
             color: #070707;
             outline: none;
         }
-        .profile--info span{
+
+        .profile--info span {
             font-size: 0.7em;
             color: #777;
 
         }
+
         .error-message {
             color: red;
             font-size: 12px;
@@ -95,10 +96,10 @@
 </head>
 <body>
 <div class="sidebar">
-    <a href="HomePage.jsp">
+    <a href="astrologer">
         <div class="logo">
-        <img src="images/logo.png" alt="Logo">
-    </div>
+            <img src="images/logo.png" alt="Logo">
+        </div>
     </a>
     <%
         String base64Image = null;
@@ -112,55 +113,43 @@
     %>
     <ul class="menu">
         <li>
-            <a href="astrologer" >
+            <a href="astrologer">
                 <i class="menu-icon fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
         </li>
         <li class="active">
-            <a href="Astrologer_profile.jsp">
+            <a href="astrologerProfile">
                 <i class="menu-icon fas fa-user"></i>
                 <span>Profile </span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_pending.jsp">
+            <a href="request">
                 <i class="menu-icon fas fa-hourglass-half"></i>
                 <span>User Requests</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_reservations.jsp">
-                <i class="menu-icon fas fa-bookmark"></i>
-                <span>Reservations</span>
-            </a>
-        </li>
-        <li>
-            <a href="Astrologer_schedule.jsp">
+            <a href="astrologerSchedule">
                 <i class="menu-icon fas fa-calendar"></i>
                 <span>Schedule</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_payment.jsp">
+            <a href="astrologerPayment">
                 <i class="menu-icon fas fa-credit-card"></i>
                 <span>Payment</span>
             </a>
         </li>
         <li>
-            <a href="#">
-                <i class="menu-icon fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-        </li>
-        <li>
-            <a href="Astrologer_settings.jsp">
+            <a href="astrologerSettings">
                 <i class="menu-icon fas fa-cog"></i>
                 <span>Settings</span>
             </a>
         </li>
         <li class="logout">
-            <a href="Astrologer_logout.jsp">
+            <a href="astrologerLogout">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
                 <span>logout</span>
             </a>
@@ -172,8 +161,7 @@
 </div>
 
 
-
-<div class="main--content" >
+<div class="main--content">
     <div class="header--wrapper">
         <div class="header--title">
             <span> Profile</span>
@@ -184,7 +172,7 @@
             <div class="search--box">
                 <i class="menu-icon fas fa-search">
 
-                <input type="text" placeholder="Search"></i>
+                    <input type="text" placeholder="Search"></i>
             </div>
 
             <img src="data:image/png;base64, <%= base64Image %>" alt="User Image">
@@ -214,7 +202,7 @@
     <div class="header--wrapper-container">
         <div class="profile--details--container">
             <div class="profile--details--container--image">
-                <div class="image--wrapper" >
+                <div class="image--wrapper">
                     <!-- Image display -->
                     <img src="data:image/png;base64, <%= base64Image %>" alt="User Image" id="photo">
 
@@ -232,17 +220,23 @@
                 <form class="profile--info" id="profile-info">
                     <h1> Profile Info </h1>
                     <h2> First Name </h2>
-                    <input type="text" class="input" id="firstNameUpdate" value='<c:out value="${sessionScope.astrologer.firstName}" />'>
+                    <input type="text" class="input" id="firstNameUpdate"
+                           value='<c:out value="${sessionScope.astrologer.firstName}" />'>
                     <h2> Last Name </h2>
-                    <input type="text" class="input" id="lastNameUpdate" value='<c:out value="${sessionScope.astrologer.lastName}" />'>
+                    <input type="text" class="input" id="lastNameUpdate"
+                           value='<c:out value="${sessionScope.astrologer.lastName}" />'>
                     <h2> Years of Experience </h2>
-                    <input type="text" class="input" id="yearsOfExperienceUpdate" value='<c:out value="${sessionScope.astrologer.yearsOfExperience}" />'>
+                    <input type="text" class="input" id="yearsOfExperienceUpdate"
+                           value='<c:out value="${sessionScope.astrologer.yearsOfExperience}" />'>
                     <h2> District </h2>
-                    <input type="text" class="input" id="districtUpdate" value='<c:out value="${sessionScope.astrologer.district}" />'>
+                    <input type="text" class="input" id="districtUpdate"
+                           value='<c:out value="${sessionScope.astrologer.district}" />'>
                     <h2> E-mail </h2>
-                    <input type="text" class="input" id="emailUpdate" value='<c:out value="${sessionScope.astrologer.email}" />'>
+                    <input type="text" class="input" id="emailUpdate"
+                           value='<c:out value="${sessionScope.astrologer.email}" />'>
                     <h2> Astrologer Payment </h2>
-                    <input type="text" class="input" id="astrologerPaymentUpdate" value='<c:out value="${sessionScope.astrologer.astrologerPayment}" />'>
+                    <input type="text" class="input" id="astrologerPaymentUpdate"
+                           value='<c:out value="${sessionScope.astrologer.astrologerPayment}" />'>
                     <div id="error-container"></div>
                 </form>
             </div>
@@ -258,11 +252,11 @@
             </div>
         </div>
     </div>
-    </div>
+</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="js/astrologerProfile.js" defer></script>
+<script src="Astrologer/js/astrologerProfile.js" defer></script>
 
 </html>
 

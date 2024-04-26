@@ -15,7 +15,7 @@ $(document).ready(function() {
                 // dataType: "json",
                 // contentType: "application/json",
                 success: function(result) {
-                    window.location.href = "HomePage.jsp";
+                    window.location.href = "home";
                 },
                 error: function(error) {
                     console.log(error);

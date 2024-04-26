@@ -12,7 +12,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
     <title>Dashboard</title>
 
 </head>
@@ -30,31 +30,31 @@
             </a>
         </li>
         <li>
-            <a href="Astrologer_profile.jsp">
+            <a href="Astrologer/Astrologer_profile.jsp">
                 <i class="menu-icon fas fa-user"></i>
                 <span>Profile </span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_pending.jsp">
+            <a href="Astrologer/Astrologer_pending.jsp">
                 <i class="menu-icon fas fa-hourglass-half"></i>
                 <span>User Requests</span>
             </a>
         </li>
         <li class="active">
-            <a href="Astrologer_reservations.jsp">
+            <a href="Astrologer/Astrologer_reservations.jsp">
                 <i class="menu-icon fas fa-bookmark"></i>
                 <span>Reservations</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_schedule.jsp">
+            <a href="Astrologer/Astrologer_schedule.jsp">
                 <i class="menu-icon fas fa-calendar"></i>
                 <span>Schedule</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_payment.jsp">
+            <a href="Astrologer/Astrologer_payment.jsp">
                 <i class="menu-icon fas fa-credit-card"></i>
                 <span>Payment</span>
             </a>
@@ -66,13 +66,13 @@
             </a>
         </li>
         <li>
-            <a href="Astrologer_settings.jsp">
+            <a href="Astrologer/Astrologer_settings.jsp">
                 <i class="menu-icon fas fa-cog"></i>
                 <span>Settings</span>
             </a>
         </li>
         <li class="logout">
-            <a href="Astrologer_logout.jsp">
+            <a href="Astrologer/Astrologer_logout.jsp">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
                 <span>logout</span>
             </a>
@@ -97,7 +97,7 @@
                 <input type="text" placeholder="Search">
             </div>
 
-            <a href="Astrologer_profile.jsp"><img src="images/img.png">
+            <a href="Astrologer/Astrologer_profile.jsp"><img src="images/img.png">
             </a>
 
         </div>

@@ -81,7 +81,7 @@
 
         <input type="submit" class="btn" id="submitBtn" name="submit" value="Reset Password">
     </form>
-    <a href="Astrologer_Login.jsp" class="back-to-login">Back to Login</a>
+    <a href="login" class="back-to-login">Back to Login</a>
 </div>
 
 </body>

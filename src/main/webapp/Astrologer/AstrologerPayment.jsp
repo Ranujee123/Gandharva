@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.math.BigInteger, java.security.MessageDigest, java.security.NoSuchAlgorithmException, java.text.DecimalFormat" %>
-<%@ page import="org.gandharva.gandharva.constants.HashGenerator" %>
-<%@ page import="static org.gandharva.gandharva.constants.Constants.MERCHANT_SECRET" %>
-<%@ page import="static org.gandharva.gandharva.constants.Constants.MERCHANT_ID" %>
+<%@ page import="com.user.constants.HashGenerator" %>
+<%@ page import="static com.user.constants.Constants.MERCHANT_ID" %>
+<%@ page import="static com.user.constants.Constants.MERCHANT_SECRET" %>
+
 <!DOCTYPE html>
 <html>
 <head>

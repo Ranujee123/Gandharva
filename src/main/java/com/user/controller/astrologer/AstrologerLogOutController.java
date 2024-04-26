@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class UserController extends HttpServlet {
+public class AstrologerLogOutController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("u_myprofile.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Astrologer/Astrologer_logout.jsp");
         requestDispatcher.forward(req,resp);
     }
 }

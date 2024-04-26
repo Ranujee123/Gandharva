@@ -1,5 +1,6 @@
 <%@ page import="java.util.Base64" %>
-<%@ page import="org.gandharva.gandharva.model.AllUser" %><%--
+<%@ page import="com.user.model.astrologer.AllUser" %>
+<%--
   Created by IntelliJ IDEA.
   User: Binali Ukwatte
   Date: 01-02-2024
@@ -14,8 +15,8 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/astrologerSettings.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
+    <link rel="stylesheet" href="Astrologer/css/astrologerSettings.css">
     <title>Settings </title>
 
 
@@ -33,49 +34,37 @@
             </a>
         </li>
         <li>
-            <a href="Astrologer_profile.jsp">
+            <a href="astrologerProfile">
                 <i class="menu-icon fas fa-user"></i>
                 <span>Profile</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_pending.jsp">
+            <a href="request">
                 <i class="menu-icon fas fa-hourglass-half"></i>
                 <span>User Requests</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_reservations.jsp">
-                <i class="menu-icon fas fa-bookmark"></i>
-                <span>Reservations</span>
-            </a>
-        </li>
-        <li>
-            <a href="Astrologer_schedule.jsp">
+            <a href="astrologerSchedule">
                 <i class="menu-icon fas fa-calendar"></i>
                 <span>Schedule</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_payment.jsp">
+            <a href="astrologerPayment">
                 <i class="menu-icon fas fa-credit-card"></i>
                 <span>Payment</span>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <i class="menu-icon fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-        </li>
         <li class="active">
-            <a href="Astrologer_settings.jsp">
+            <a href="astrologerSettings">
                 <i class="menu-icon fas fa-cog"></i>
                 <span>Settings</span>
             </a>
         </li>
         <li class="logout">
-            <a href="Astrologer_logout.jsp">
+            <a href="astrologerLogout">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
                 <span>logout</span>
             </a>
@@ -112,7 +101,7 @@
                 </label>
             </div>
 
-            <a href="Astrologer_profile.jsp">
+            <a href="astrologerProfile">
                 <img src="data:image/png;base64, <%= base64Image %>" alt="User Image">
             </a>
 
@@ -170,6 +159,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/3.3.1/sha256.min.js"
         integrity="sha512-qw5xqZrce8QejL/YnoVvHaXggvfJK3bP2rczgxPSL+JhACfJhOU6gG+/c1LFyRxIpwaF8pZlfwUXLIK+5EEiKA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" defer></script>
-<script src="js/astrologerSettings.js" defer></script>
+<script src="Astrologer/js/astrologerSettings.js" defer></script>
 </html>
 

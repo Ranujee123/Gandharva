@@ -459,7 +459,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>astrologerProfileController</servlet-name>
-        <url-pattern>/astrologer/profile</url-pattern>
+        <url-pattern>/astrologerProfile</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -505,5 +505,41 @@
     <servlet-mapping>
         <servlet-name>paymentGetAllController</servlet-name>
         <url-pattern>/payment/getAll/requestId</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>astrologerScheduleController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.AstrologerScheduleController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>astrologerScheduleController</servlet-name>
+        <url-pattern>/astrologerSchedule</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>astrologerLogOutController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.AstrologerLogOutController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>astrologerLogOutController</servlet-name>
+        <url-pattern>/astrologerLogout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>astrologerSettingsController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.AstrologerSettingsController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>astrologerSettingsController</servlet-name>
+        <url-pattern>/astrologerSettings</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>homePageController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.HomePageController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>homePageController</servlet-name>
+        <url-pattern>/home</url-pattern>
     </servlet-mapping>
 </web-app>

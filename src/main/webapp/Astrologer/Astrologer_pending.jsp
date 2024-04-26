@@ -1,4 +1,4 @@
-<%@ page import="org.gandharva.gandharva.model.AllUser" %>
+<%@ page import="com.user.model.astrologer.AllUser" %>
 <%@ page import="java.util.Base64" %><%--
   Created by IntelliJ IDEA.
   User: Binali Ukwatte
@@ -12,12 +12,12 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
     <title>User Requests</title>
 </head>
 <body>
 <div class="sidebar">
-    <a href="HomePage.jsp">
+    <a href="astrologer">
         <div class="logo">
             <img src="images/logo.png">
         </div>
@@ -30,49 +30,37 @@
             </a>
         </li>
         <li>
-            <a href="Astrologer_profile.jsp">
+            <a href="astrologerProfile">
                 <i class="menu-icon fas fa-user"></i>
                 <span>Profile</span>
             </a>
         </li>
         <li class="active">
-            <a href="Astrologer_pending.jsp">
+            <a href="request">
                 <i class="menu-icon fas fa-hourglass-half"></i>
                 <span>User Requests</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_reservations.jsp">
-                <i class="menu-icon fas fa-bookmark"></i>
-                <span>Reservations</span>
-            </a>
-        </li>
-        <li>
-            <a href="Astrologer_schedule.jsp">
+            <a href="astrologerSchedule">
                 <i class="menu-icon fas fa-calendar"></i>
                 <span>Schedule</span>
             </a>
         </li>
         <li>
-            <a href="Astrologer_payment.jsp">
+            <a href="astrologerPayment">
                 <i class="menu-icon fas fa-credit-card"></i>
                 <span>Payment</span>
             </a>
         </li>
         <li>
-            <a href="#">
-                <i class="menu-icon fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-        </li>
-        <li>
-            <a href="Astrologer_settings.jsp">
+            <a href="astrologerSettings">
                 <i class="menu-icon fas fa-cog"></i>
                 <span>Settings</span>
             </a>
         </li>
         <li class="logout">
-            <a href="Astrologer_logout.jsp">
+            <a href="astrologerLogout">
                 <i class="menu-icon fas fa-sign-out-alt"></i>
                 <span>Logout</span>
             </a>
@@ -105,7 +93,7 @@
                 <i class="menu-icon fas fa-search"></i>
                 <input type="text" placeholder="Search">
             </div>
-            <a href="Astrologer_profile.jsp">
+            <a href="astrologerProfile">
                 <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image">
             </a>
         </div>
@@ -165,5 +153,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
 <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js" defer></script>
-<script src="js/astrologerPending.js" defer></script>
+<script src="Astrologer/js/astrologerPending.js" defer></script>
 </html>

@@ -21,7 +21,7 @@ import java.util.UUID;
 public class RequestController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Astrologer_pending.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("Astrologer/Astrologer_pending.jsp");
         requestDispatcher.forward(req, resp);
     }
 

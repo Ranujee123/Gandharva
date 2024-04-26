@@ -12,7 +12,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="Astrologer/styles.css">
     <title>Dashboard</title>
 
 
@@ -25,7 +25,7 @@
     </div>
     <ul class="menu">
         <li class="active">
-            <a href="#" >
+            <a href="#">
                 <i class="menu-icon fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
@@ -78,33 +78,23 @@
                 <span>logout</span>
             </a>
         </li>
-
-
-</ul>
-
+    </ul>
 </div>
 
-<div class="main--content" >
+<div class="main--content">
     <div class="header--wrapper">
         <div class="header--title">
             <span> Primary</span>
             <h2>Dashboard</h2>
-
-    </div>
+        </div>
         <div class="user--info">
             <div class="search--box">
                 <i class="menu-icon fas fa-search"></i>
-
-                    <input type="text" placeholder="Search">
+                <input type="text" placeholder="Search">
             </div>
-
-            <img src="images/img.png">
-
+            <img src="images/img.png" alt="logo">
         </div>
-
-</div>
-
-
+    </div>
 </div>
 
 </body>

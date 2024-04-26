@@ -15,29 +15,35 @@ public class LogOutController extends HttpServlet {
         System.out.println("Logout controller called");
         PrintWriter out = resp.getWriter();
         HttpSession session = req.getSession();
+
+//        UserType userType = UserType.valueOf((String) session.getAttribute("userType"));
+//        System.out.println(session.getAttribute("userType"));
+//        System.out.println(userType);
         session.removeAttribute("loggedInUser");
+        session.removeAttribute("id");
+        session.removeAttribute("firstName");
+        session.removeAttribute("lastName");
+        session.removeAttribute("userType");
 
-        UserType userType = UserType.valueOf((String) session.getAttribute("userType"));
-
-        switch (userType) {
-            case PREMIUM_USER:
-                session.removeAttribute("premiumUser");
-                break;
-            case STANDARD_USER:
-                session.removeAttribute("standardUser");
-                break;
-            case ASTROLOGER:
-                session.removeAttribute("astrologer");
-                break;
-            case EVENT_PLANNER:
-                session.removeAttribute("eventPlanner");
-                break;
-            case ADMIN:
-                session.removeAttribute("admin");
-                break;
-            default:
-                break;
-        }
+//        switch (userType) {
+//            case PREMIUM_USER:
+//                session.removeAttribute("premiumUser");
+//                break;
+//            case STANDARD_USER:
+//                session.removeAttribute("standardUser");
+//                break;
+//            case ASTROLOGER:
+//                session.removeAttribute("astrologer");
+//                break;
+//            case EVENT_PLANNER:
+//                session.removeAttribute("eventPlanner");
+//                break;
+//            case ADMIN:
+//                session.removeAttribute("admin");
+//                break;
+//            default:
+//                break;
+//        }
 
         session.invalidate();
         out.write("1");

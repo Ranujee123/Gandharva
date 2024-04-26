@@ -109,13 +109,13 @@
 
         <input type="submit" class="btn" id="proceedBtn" name="proceed" value="Login">
     </form>
-    <a href="NavigatePage.jsp" class="sign-up-link">Don't have an account? Sign Up</a>
-    <a href="forgotPassword.jsp" class="forgot-password">Forgot Password?</a>
+    <a href="Astrologer/NavigatePage.jsp" class="sign-up-link">Don't have an account? Sign Up</a>
+    <a href="Astrologer/forgotPassword.jsp" class="forgot-password">Forgot Password?</a>
 </div>
 
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="js/login.js" defer></script>
+<script src="Astrologer/js/login.js" defer></script>
 </html>
