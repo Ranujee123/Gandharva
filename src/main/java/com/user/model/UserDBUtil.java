@@ -1,4 +1,5 @@
 package com.user.model;
+
 import java.sql.*;
 import java.sql.Date;
 import java.util.*;
@@ -15,24 +16,25 @@ public class UserDBUtil {
         ArrayList<User> users = new ArrayList<>();
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "SELECT firstName, lastName, nic, province,phonenumber, email, dob, age, userType FROM user WHERE email = ? AND password = ?";
+            String sql = "SELECT id, firstName, lastName, nic, province,phonenumber, email, dob, age, userType FROM user WHERE email = ? AND password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+            	String id = resultSet.getString("id");
                 String firstName = resultSet.getString("firstName");
                 String lastName = resultSet.getString("lastName");
                 String nic = resultSet.getString("nic");
                 String province = resultSet.getString("province");
-                String phonenumber=resultSet.getString("phonenumber");
+                String phonenumber = resultSet.getString("phonenumber");
                 String emailU = resultSet.getString("email");
                 String dob = resultSet.getString("dob");
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
                 String userType = resultSet.getString("userType");
 
-                User u = new User(firstName, lastName, nic, province,phonenumber, emailU, dob, age, userType);
+                User u = new User(id, firstName, lastName, nic, province, phonenumber, emailU, dob, age, userType);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -40,7 +42,6 @@ public class UserDBUtil {
         }
         return users;
     }
-
 
     public static int getgenderIdByName(String gender) throws Exception {
         Connection con = DBConnect.getConnection();
@@ -56,11 +57,10 @@ public class UserDBUtil {
         return -1; // Handle the case when no oID is found
     }
 
-
     public static List<String> getAllGender() {
         List<String> gender = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT gender FROM gender";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -76,7 +76,7 @@ public class UserDBUtil {
         // Implementation to check email in the database
         // Assume you have a connection and SQL statement prepared
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
+                PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -87,7 +87,6 @@ public class UserDBUtil {
         }
         return false;
     }
-
 
     public static int getProvinceIdByName(String province) throws Exception {
         Connection con = DBConnect.getConnection();
@@ -106,7 +105,7 @@ public class UserDBUtil {
     public static List<String> getAllProvince() {
         List<String> province = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT province FROM province";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -118,8 +117,9 @@ public class UserDBUtil {
         return province;
     }
 
-
-    public static boolean insertUser(String id,String firstName, String lastName, String nic, String province,String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
+    public static boolean insertUser(String id, String firstName, String lastName, String nic, String province,
+            String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender,
+            String dob, int age) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
@@ -132,7 +132,7 @@ public class UserDBUtil {
             pstmt.setString(3, lastName);
             pstmt.setString(4, nic);
             pstmt.setString(5, province);
-            pstmt.setString(6,phonenumber);
+            pstmt.setString(6, phonenumber);
             pstmt.setString(7, email);
             pstmt.setBytes(8, frontPhoto);
             pstmt.setBytes(9, backPhoto);
@@ -152,8 +152,10 @@ public class UserDBUtil {
             e.printStackTrace();
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -162,53 +164,53 @@ public class UserDBUtil {
     }
 
     public static boolean insertGuest(String id, String firstName, String lastName, String email, String password) {
-		boolean isSuccess = false;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		try {
-			con = DBConnect.getConnection();
-			String sql = "INSERT INTO user (id,firstName, lastName, email, password, userType, phonenumber) VALUES (?,?,?,?,?,?,?)";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setString(1, UUID.randomUUID().toString());
-			pstmt.setString(2, firstName);
-			pstmt.setString(3, lastName);
-			pstmt.setString(4, email);
-			pstmt.setString(5, password);
-			pstmt.setString(6, "GUEST_USER");
-			pstmt.setString(7, "0");
+        boolean isSuccess = false;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO user (id,firstName, lastName, email, password, userType, phonenumber) VALUES (?,?,?,?,?,?,?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, UUID.randomUUID().toString());
+            pstmt.setString(2, firstName);
+            pstmt.setString(3, lastName);
+            pstmt.setString(4, email);
+            pstmt.setString(5, password);
+            pstmt.setString(6, "GUEST_USER");
+            pstmt.setString(7, "0");
 
-			// Log the prepared statement to see what's being sent to the DB
-			System.out.println("Executing SQL: " + pstmt.toString());
+            // Log the prepared statement to see what's being sent to the DB
+            System.out.println("Executing SQL: " + pstmt.toString());
 
-			int rowsAffected = pstmt.executeUpdate();
-			isSuccess = rowsAffected > 0;
-			System.out.println("Insert successful? " + isSuccess);
-		} catch (SQLException e) {
-			System.err.println("SQL Error: " + e.getMessage());
-			e.printStackTrace();
-		} finally {
-			try {
-				if (pstmt != null)
-					pstmt.close();
-				if (con != null)
-					con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return isSuccess;
-	}
+            int rowsAffected = pstmt.executeUpdate();
+            isSuccess = rowsAffected > 0;
+            System.out.println("Insert successful? " + isSuccess);
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return isSuccess;
+    }
 
-
-    public static boolean updateUser(String firstName, String lastName, String nic, String province, String phonenumber,byte[] dpphoto, String email) {
+    public static boolean updateUser(String firstName, String lastName, String nic, String province, String phonenumber,
+            byte[] dpphoto, String email) {
         String sql = "UPDATE user SET firstName=?, lastName=?, nic=?, province=?, phonenumber=?,dpphoto=? WHERE email=?";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, firstName);
             pstmt.setString(2, lastName);
             pstmt.setString(3, nic);
             pstmt.setString(4, province);
-            pstmt.setString(5,phonenumber);
+            pstmt.setString(5, phonenumber);
             pstmt.setBytes(6, dpphoto);
             pstmt.setString(7, email);
 
@@ -220,27 +222,28 @@ public class UserDBUtil {
         return false;
     }
 
-
-    public static List<User> getUserDetails(String email) {
+    public static List<User> getUserDetails(String emailOrId) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto, phonenumber, dob, age, userType FROM user WHERE email = ?";
+        String sql = "SELECT id, firstName, lastName, nic, province, email, dpphoto, phonenumber, dob, age, userType FROM user WHERE email = ? OR id = ?";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, email);
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, emailOrId);
+            pstmt.setString(2, emailOrId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
+            	String id = rs.getString("id");
                 String firstName = rs.getString("firstName");
                 String lastName = rs.getString("lastName");
                 String nic = rs.getString("nic");
                 String provinceName = rs.getString("province");
-                String phonenumber=rs.getString("phonenumber");
+                String phonenumber = rs.getString("phonenumber");
                 String emailU = rs.getString("email");
                 byte[] dpphoto = rs.getBytes("dpphoto");
                 String dob = rs.getString("dob");
                 int age = rs.getInt("age");
                 String userType = rs.getString("userType");
 
-                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age, userType));
+                users.add(new User(id, firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age, userType));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -248,10 +251,9 @@ public class UserDBUtil {
         return users;
     }
 
-
     public static boolean deleteUser(String email) {
 
-        //int convId = Integer.parseInt(id);
+        // int convId = Integer.parseInt(id);
 
         try {
 
@@ -324,11 +326,9 @@ public class UserDBUtil {
         return null; // Return null when no age is found
     }
 
-
-
-
-    public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion, String caste,
-                                                        String status, String height, String foodpreferences, String drinking, String smoking, String diffabled) {
+    public static boolean savePersonalDetailsToDatabase(String userEmail, String ethnicity, String religion,
+            String caste,
+            String status, String height, String foodpreferences, String drinking, String smoking, String diffabled) {
         try {
             String id = getUserIdByEmail(userEmail);
             if (id == null) { // Check if the ID is null, indicating not found
@@ -360,17 +360,18 @@ public class UserDBUtil {
         }
     }
 
-
-
     public static boolean isPersonalDetailsCompleted(String userEmail) {
         String sql = "SELECT ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.diffabled FROM userInfo ui WHERE ui.id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return Stream.of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"), rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"), rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"))
-                            .allMatch(Objects::nonNull);  // Check if all fields are not null
+                    return Stream
+                            .of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"),
+                                    rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"),
+                                    rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"))
+                            .allMatch(Objects::nonNull); // Check if all fields are not null
                 }
             }
         } catch (SQLException e) {
@@ -378,8 +379,6 @@ public class UserDBUtil {
         }
         return false;
     }
-
-
 
     public static int getQualificationIdByName(String qualification) throws Exception {
         Connection con = DBConnect.getConnection();
@@ -409,7 +408,8 @@ public class UserDBUtil {
         return -1; // Handle the case when no oID is found
     }
 
-    public static boolean saveDetailsToDatabase(String id, String qualification, String occupation, String school) throws Exception {
+    public static boolean saveDetailsToDatabase(String id, String qualification, String occupation, String school)
+            throws Exception {
         if (id == null || id.trim().isEmpty()) {
             System.out.println("Invalid or empty user ID.");
             return false; // Invalid or empty user ID
@@ -440,7 +440,7 @@ public class UserDBUtil {
         params.add(id); // Add id as the last parameter for the WHERE clause
 
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             for (int i = 0; i < params.size(); i++) {
                 pstmt.setObject(i + 1, params.get(i));
             }
@@ -454,7 +454,7 @@ public class UserDBUtil {
     }
 
     public static boolean saveFamilyDetailsToDatabase(String id, String freli, String foccu,
-                                                      String mreli, String moccup, String maritalstatus, int siblings) {
+            String mreli, String moccup, String maritalstatus, int siblings) {
         if (id == null || id.trim().isEmpty()) {
             System.out.println("Invalid or empty user ID.");
             return false; // User ID not found or invalid
@@ -495,7 +495,7 @@ public class UserDBUtil {
         params.add(id); // Add id as the last parameter for the WHERE clause
 
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             for (int i = 0; i < params.size(); i++) {
                 pstmt.setObject(i + 1, params.get(i));
             }
@@ -508,12 +508,10 @@ public class UserDBUtil {
         }
     }
 
-
-
     public static List<String> getAllQualifications() {
         List<String> qualifications = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT qualification FROM qualification";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -528,7 +526,7 @@ public class UserDBUtil {
     public static List<String> getAllOccupations() {
         List<String> occupations = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT occupation FROM occupation";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -540,16 +538,19 @@ public class UserDBUtil {
         return occupations;
     }
 
-
     public static boolean isQualificationDetailsCompleted(String userEmail) {
         String sql = "SELECT ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.diffabled, ui.qualification, ui.occupation, ui.school FROM userInfo ui WHERE ui.id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return Stream.of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"), rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"), rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"), rs.getString("qualification"), rs.getString("occupation"), rs.getString("school"))
-                            .allMatch(Objects::nonNull);  // Check if all fields are not null
+                    return Stream
+                            .of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"),
+                                    rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"),
+                                    rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"),
+                                    rs.getString("qualification"), rs.getString("occupation"), rs.getString("school"))
+                            .allMatch(Objects::nonNull); // Check if all fields are not null
                 }
             }
         } catch (SQLException e) {
@@ -561,12 +562,18 @@ public class UserDBUtil {
     public static boolean isFamilyDetailsCompleted(String userEmail) {
         String sql = "SELECT ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.diffabled, ui.qualification, ui.occupation, ui.school ,ui.freli, ui.foccu, ui.mreli,ui.moccup,ui.maritalstatus,ui.siblings FROM userInfo ui WHERE ui.id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    return Stream.of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"), rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"), rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"), rs.getString("qualification"), rs.getString("occupation"), rs.getString("school"), rs.getString("freli"), rs.getString("foccu"), rs.getString("mreli"), rs.getString("moccup"), rs.getString("maritalstatus"), rs.getInt("siblings"))
-                            .allMatch(Objects::nonNull);  // Check if all fields are not null
+                    return Stream
+                            .of(rs.getString("ethnicity"), rs.getString("religion"), rs.getString("caste"),
+                                    rs.getString("status"), rs.getString("height"), rs.getString("foodpreferences"),
+                                    rs.getString("drinking"), rs.getString("smoking"), rs.getString("diffabled"),
+                                    rs.getString("qualification"), rs.getString("occupation"), rs.getString("school"),
+                                    rs.getString("freli"), rs.getString("foccu"), rs.getString("mreli"),
+                                    rs.getString("moccup"), rs.getString("maritalstatus"), rs.getInt("siblings"))
+                            .allMatch(Objects::nonNull); // Check if all fields are not null
                 }
             }
         } catch (SQLException e) {
@@ -575,12 +582,12 @@ public class UserDBUtil {
         return false;
     }
 
-//interest
+    // interest
 
     public static List<String> getAllpersonality() {
         List<String> personality = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT personality FROM personality";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -592,16 +599,15 @@ public class UserDBUtil {
         return personality;
     }
 
-
     public static boolean isInterestCompleted(String userEmail) {
         String sql = "SELECT ui.interests, ui.personalitytype FROM userInfo ui WHERE ui.id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return Stream.of(rs.getString("interests"), rs.getString("personalitytype"))
-                            .allMatch(Objects::nonNull);  // Check if all fields are not null
+                            .allMatch(Objects::nonNull); // Check if all fields are not null
                 }
             }
         } catch (SQLException e) {
@@ -625,7 +631,6 @@ public class UserDBUtil {
         return -1; // Handle the case when no oID is found
     }
 
-
     public static boolean saveInterestDetails(String id, String interests, String personalitytype) {
 
         if (id == null || id.trim().isEmpty()) {
@@ -646,8 +651,6 @@ public class UserDBUtil {
             params.add(personalitytype);
         }
 
-
-
         if (fieldsToUpdate.isEmpty()) {
             System.out.println("No updates specified.");
             return false; // Nothing to update
@@ -657,7 +660,7 @@ public class UserDBUtil {
         params.add(id); // Add id as the last parameter for the WHERE clause
 
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             for (int i = 0; i < params.size(); i++) {
                 pstmt.setObject(i + 1, params.get(i));
             }
@@ -676,14 +679,12 @@ public class UserDBUtil {
         }
     }
 
-
-
-//interested IN
+    // interested IN
 
     public static List<String> getAge() {
         List<String> age = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             Statement stmt = con.createStatement()) {
+                Statement stmt = con.createStatement()) {
             String sql = "SELECT age FROM age";
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
@@ -694,7 +695,6 @@ public class UserDBUtil {
         }
         return age;
     }
-
 
     public static int getAgeIdByName(String age) throws Exception {
         Connection con = DBConnect.getConnection();
@@ -710,9 +710,9 @@ public class UserDBUtil {
         return -1; // Handle the case when no oID is found
     }
 
-
     // Method to save interested in details to the database
-    public static boolean saveInterestedInDetails(String id, int minAge, int maxAge, String religion, String caste, String ethnicity, String province) throws Exception {
+    public static boolean saveInterestedInDetails(String id, int minAge, int maxAge, String religion, String caste,
+            String ethnicity, String province) throws Exception {
         Connection con = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -732,27 +732,29 @@ public class UserDBUtil {
             e.printStackTrace();
             return false;
         } finally {
-            if (preparedStatement != null) preparedStatement.close();
-            if (con != null) con.close();
+            if (preparedStatement != null)
+                preparedStatement.close();
+            if (con != null)
+                con.close();
         }
     }
 
     public static boolean isInterestedINCompleted(String userEmail) {
         String sql = "SELECT minAge, maxAge, religion, caste, ethnicity, province FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    // Check if all specific fields are not null, indicating that the 'Interested In' details are complete.
+                    // Check if all specific fields are not null, indicating that the 'Interested
+                    // In' details are complete.
                     return Stream.of(
                             rs.getObject("minAge"),
                             rs.getObject("maxAge"),
                             rs.getString("religion"),
                             rs.getString("caste"),
                             rs.getString("ethnicity"),
-                            rs.getString("province")
-                    ).noneMatch(Objects::isNull);
+                            rs.getString("province")).noneMatch(Objects::isNull);
                 }
             }
         } catch (SQLException e) {
@@ -761,10 +763,10 @@ public class UserDBUtil {
         return false;
     }
 
+    // inteersted IN qualification
 
-    //inteersted IN qualification
-
-    public static boolean saveinterestedINQualToDatabase(String id, String occupation, String qualification) throws Exception {
+    public static boolean saveinterestedINQualToDatabase(String id, String occupation, String qualification)
+            throws Exception {
         Connection con = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -801,8 +803,10 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (con != null) con.close();
+                if (preparedStatement != null)
+                    preparedStatement.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -812,15 +816,15 @@ public class UserDBUtil {
     public static boolean isInterestedINQualCompleted(String userEmail) {
         String sql = "SELECT occupation, qualification FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    // Check if all specific fields are not null, indicating that the 'Interested In' details are complete.
+                    // Check if all specific fields are not null, indicating that the 'Interested
+                    // In' details are complete.
                     return Stream.of(
                             rs.getObject("occupation"),
-                            rs.getObject("qualification")
-                    ).noneMatch(Objects::isNull);
+                            rs.getObject("qualification")).noneMatch(Objects::isNull);
                 }
             }
         } catch (SQLException e) {
@@ -829,11 +833,10 @@ public class UserDBUtil {
         return false;
     }
 
-
-// interestedIn family details
+    // interestedIn family details
 
     public static boolean saveinterestedINFamDetailsToDatabase(String id, String freli, String foccu,
-                                                               String mreli, String moccup, String maritalstatus, int siblings) {
+            String mreli, String moccup, String maritalstatus, int siblings) {
         Connection con = null;
         PreparedStatement preparedStatement = null;
         try {
@@ -888,32 +891,32 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (preparedStatement != null) preparedStatement.close();
-                if (con != null) con.close();
+                if (preparedStatement != null)
+                    preparedStatement.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
-
     public static boolean isinterestedINFamDetailsCompleted(String userEmail) {
         String sql = "SELECT freli, foccu, mreli, moccup, maritalstatus,siblings FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
-                    // Check if all specific fields are not null, indicating that the 'Interested In' details are complete.
+                    // Check if all specific fields are not null, indicating that the 'Interested
+                    // In' details are complete.
                     return Stream.of(
                             rs.getObject("freli"),
                             rs.getObject("foccu"),
                             rs.getString("mreli"),
                             rs.getString("moccup"),
                             rs.getString("maritalstatus"),
-                            rs.getString("siblings")
-                    ).noneMatch(Objects::isNull);
+                            rs.getString("siblings")).noneMatch(Objects::isNull);
                 }
             }
         } catch (SQLException e) {
@@ -922,11 +925,10 @@ public class UserDBUtil {
         return false;
     }
 
-
     public static String getProfileImagePath(String userEmail) {
         String defaultImagePath = "DP/defaultDP.jpeg"; // Path to the default image
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM user WHERE email = ?")) {
+                PreparedStatement pstmt = con.prepareStatement("SELECT dpphoto FROM user WHERE email = ?")) {
             pstmt.setString(1, userEmail);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next() && rs.getString("dpphoto") != null && !rs.getString("dpphoto").trim().isEmpty()) {
@@ -939,34 +941,39 @@ public class UserDBUtil {
         return defaultImagePath; // Return default image path if none found or error occurs
     }
 
-
-    /*  public static List<User> getUsersByProvince(String province) {
-          List<User> users = new ArrayList<>();
-          try (Connection con = DBConnect.getConnection();
-               PreparedStatement preparedStatement = con.prepareStatement("SELECT * FROM user JOIN province ON user.pID = province.pID WHERE province.province = ?")) {
-
-              preparedStatement.setString(1, province);
-              ResultSet resultSet = preparedStatement.executeQuery();
-
-              while (resultSet.next()) {
-                  // Assuming you have a constructor that suits this data structure
-                  User user = new User(
-                          resultSet.getString("fname"),
-                          resultSet.getString("lname"),
-                          resultSet.getString("email"),
-                          resultSet.getString("province"));
-                  users.add(user);
-              }
-          } catch (SQLException e) {
-              e.printStackTrace();
-          }
-          return users;
-      }
-  */
-    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String caste,String status, String height,String foodpreferences,  String drinking, String smoking, String qualification, String occupation, String diffabled,String personalitytype, String userEmail) {
+    /*
+     * public static List<User> getUsersByProvince(String province) {
+     * List<User> users = new ArrayList<>();
+     * try (Connection con = DBConnect.getConnection();
+     * PreparedStatement preparedStatement = con.
+     * prepareStatement("SELECT * FROM user JOIN province ON user.pID = province.pID WHERE province.province = ?"
+     * )) {
+     * 
+     * preparedStatement.setString(1, province);
+     * ResultSet resultSet = preparedStatement.executeQuery();
+     * 
+     * while (resultSet.next()) {
+     * // Assuming you have a constructor that suits this data structure
+     * User user = new User(
+     * resultSet.getString("fname"),
+     * resultSet.getString("lname"),
+     * resultSet.getString("email"),
+     * resultSet.getString("province"));
+     * users.add(user);
+     * }
+     * } catch (SQLException e) {
+     * e.printStackTrace();
+     * }
+     * return users;
+     * }
+     */
+    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String caste,
+            String status, String height, String foodpreferences, String drinking, String smoking, String qualification,
+            String occupation, String diffabled, String personalitytype, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
-        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion,ui.caste, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled,ui.personalitytype, ");
+        query.append(
+                "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion,ui.caste, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled,ui.personalitytype, ");
         query.append("((CASE WHEN u.province = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.religion = ? THEN 1 ELSE 0 END) + ");
@@ -983,11 +990,12 @@ public class UserDBUtil {
         query.append("FROM user u ");
         query.append("LEFT JOIN userInfo ui ON u.id = ui.id ");
         query.append("WHERE u.email <> ? ");
-        query.append("AND (u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
+        query.append(
+                "AND (u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
         query.append("ORDER BY relevance DESC");
 
         List<String> parameters = new ArrayList<>();
-// Add parameters for relevance scoring
+        // Add parameters for relevance scoring
         parameters.add(province);
         parameters.add(ethnicity);
         parameters.add(religion);
@@ -1002,10 +1010,10 @@ public class UserDBUtil {
         parameters.add(diffabled);
         parameters.add(personalitytype);
 
-// Add user email for exclusion in WHERE clause
+        // Add user email for exclusion in WHERE clause
         parameters.add(userEmail);
 
-// Add parameters again for filtering conditions in WHERE clause
+        // Add parameters again for filtering conditions in WHERE clause
         parameters.add(province);
         parameters.add(ethnicity);
         parameters.add(religion);
@@ -1023,9 +1031,8 @@ public class UserDBUtil {
         System.out.println("Executing SQL: " + query.toString());
         System.out.println("With parameters: " + parameters);
 
-
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement preparedStatement = con.prepareStatement(query.toString())) {
+                PreparedStatement preparedStatement = con.prepareStatement(query.toString())) {
             for (int i = 0; i < parameters.size(); i++) {
                 preparedStatement.setString(i + 1, parameters.get(i));
             }
@@ -1048,8 +1055,7 @@ public class UserDBUtil {
                         resultSet.getString("qualification"),
                         resultSet.getString("occupation"),
                         resultSet.getString("diffabled"),
-                        resultSet.getString("personalitytype")
-                );
+                        resultSet.getString("personalitytype"));
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -1059,12 +1065,10 @@ public class UserDBUtil {
         return users;
     }
 
-
     public static Optional<User> getUserByEmail(String email) {
 
         try (Connection con = DBConnect.getConnection()) {
             String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings FROM user u LEFT JOIN userInfo ui ON u.id = ui.id  WHERE u.email = ?";
-
 
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, email);
@@ -1093,7 +1097,7 @@ public class UserDBUtil {
                         rs.getString("moccup"),
                         rs.getString("maritalstatus"),
                         rs.getInt("siblings")
-                        //  rs.getInt("age")
+                // rs.getInt("age")
                 );
                 return Optional.of(user);
             }
@@ -1103,14 +1107,13 @@ public class UserDBUtil {
         return Optional.empty();
     }
 
-
     public static boolean addConnectionRequest(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection()) {
             String sql = "INSERT INTO connection_requests (from_user_id, to_user_id, status, timestamp) VALUES (?, ?,?, NOW())";
             try (PreparedStatement stmt = con.prepareStatement(sql)) {
                 stmt.setString(1, fromUserId);
                 stmt.setString(2, toUserId);
-                stmt.setString(3,RequestType.PENDING.name());
+                stmt.setString(3, RequestType.PENDING.name());
                 int rowsAffected = stmt.executeUpdate();
                 return rowsAffected > 0;
             }
@@ -1119,7 +1122,6 @@ public class UserDBUtil {
             return false;
         }
     }
-
 
     // Method to check if a connection request is already pending
     public static boolean isConnectionRequestPending(String fromUserId, String toUserId) {
@@ -1139,21 +1141,18 @@ public class UserDBUtil {
         return false;
     }
 
-
-
-
-
     public static List<ConnectionRequest> getConnectionRequestStatus(String userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                     "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
-                             "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
-                             "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
-                             "FROM connection_requests cr " +
-                             "JOIN user u1 ON cr.from_user_id = u1.id " +
-                             "JOIN user u2 ON cr.to_user_id = u2.id " +
-                             "WHERE cr.to_user_id = ? AND cr.status='PENDING'")) {  // Only include requests where the current user is the recipient
+                PreparedStatement ps = con.prepareStatement(
+                        "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                                "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
+                                "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
+                                "FROM connection_requests cr " +
+                                "JOIN user u1 ON cr.from_user_id = u1.id " +
+                                "JOIN user u2 ON cr.to_user_id = u2.id " +
+                                "WHERE cr.to_user_id = ? AND cr.status='PENDING'")) { // Only include requests where the
+                                                                                      // current user is the recipient
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -1165,8 +1164,7 @@ public class UserDBUtil {
                             rs.getString("to_user_id"),
                             rs.getString("status"),
                             fromUserFullName,
-                            toUserFullName
-                    );
+                            toUserFullName);
                     requests.add(request);
                 }
             }
@@ -1178,7 +1176,7 @@ public class UserDBUtil {
         String status = (action.equals("Accept") ? "ACCEPTED" : "REJECTED");
         String sql = "UPDATE connection_requests SET status = ? WHERE request_id = ?";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, status);
             pstmt.setString(2, requestId);
             int affectedRows = pstmt.executeUpdate();
@@ -1188,8 +1186,6 @@ public class UserDBUtil {
             return false;
         }
     }
-
-
 
     public static List<ConnectionRequest> getPendingReq(String userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
@@ -1201,7 +1197,7 @@ public class UserDBUtil {
                 "JOIN user u2 ON cr.to_user_id = u2.id " +
                 "WHERE cr.from_user_id = ? AND cr.status = 'PENDING'";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -1213,26 +1209,24 @@ public class UserDBUtil {
                         rs.getString("to_user_id"),
                         rs.getString("status"),
                         fromUserFullName,
-                        toUserFullName
-                );
+                        toUserFullName);
                 requests.add(request);
             }
         }
         return requests;
     }
 
-
     public static List<ConnectionRequest> getAcceptedReq(String userId) throws SQLException {
         List<ConnectionRequest> requests = new ArrayList<>();
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement(
-                     "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
-                             "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
-                             "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
-                             "FROM connection_requests cr " +
-                             "JOIN user u1 ON cr.from_user_id = u1.id " +
-                             "JOIN user u2 ON cr.to_user_id = u2.id " +
-                             "WHERE (cr.from_user_id = ? OR cr.to_user_id = ?) AND cr.status='ACCEPTED'")) {
+                PreparedStatement ps = con.prepareStatement(
+                        "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                                "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
+                                "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
+                                "FROM connection_requests cr " +
+                                "JOIN user u1 ON cr.from_user_id = u1.id " +
+                                "JOIN user u2 ON cr.to_user_id = u2.id " +
+                                "WHERE (cr.from_user_id = ? OR cr.to_user_id = ?) AND cr.status='ACCEPTED'")) {
             ps.setString(1, userId);
             ps.setString(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
@@ -1250,8 +1244,7 @@ public class UserDBUtil {
                             rs.getString("from_user_id"),
                             rs.getString("to_user_id"),
                             rs.getString("status"),
-                            oppositeUserFullName
-                    );
+                            oppositeUserFullName);
                     requests.add(request);
                 }
             }
@@ -1259,10 +1252,10 @@ public class UserDBUtil {
         return requests;
     }
 
-
     public static boolean isConnectionAccepted(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement("SELECT COUNT(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'ACCEPTED'")) {
+                PreparedStatement ps = con.prepareStatement(
+                        "SELECT COUNT(*) FROM connection_requests WHERE from_user_id = ? AND to_user_id = ? AND status = 'ACCEPTED'")) {
             ps.setString(1, fromUserId);
             ps.setString(2, toUserId);
             ResultSet rs = ps.executeQuery();
@@ -1275,12 +1268,11 @@ public class UserDBUtil {
         return false;
     }
 
-
     public static int countPendingRequests(String userId) throws SQLException {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM connection_requests WHERE from_user_id = ? AND status = 'PENDING'";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -1290,12 +1282,11 @@ public class UserDBUtil {
         return count;
     }
 
-
     public static int countNewRequests(String userId) throws SQLException {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM connection_requests WHERE to_user_id = ? AND status = 'PENDING' AND timestamp >= NOW() - INTERVAL 12 HOUR";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -1309,7 +1300,7 @@ public class UserDBUtil {
         int count = 0;
         String sql = "SELECT COUNT(*) FROM connection_requests WHERE to_user_id = ? AND status = 'ACCEPTED'";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, userId);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
@@ -1319,13 +1310,11 @@ public class UserDBUtil {
         return count;
     }
 
-
-
-    //Sending horoscope and resquest to astrologer
+    // Sending horoscope and resquest to astrologer
     public static boolean insertNewRequest(int userId, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
         String sql = "INSERT INTO request (id,startDate, horoscope, horoscopeSecond, status, userId) VALUES (?,?, ?, ?, ?, ?)";
         try (Connection conn = DBConnect.getConnection();
-             PreparedStatement statement = conn.prepareStatement(sql)) {
+                PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
             statement.setDate(2, new Date(System.currentTimeMillis())); // Use current time for startDate
             if (horoscope != null) {
@@ -1338,7 +1327,8 @@ public class UserDBUtil {
             } else {
                 statement.setNull(4, Types.BLOB); // Set NULL if horoscopeSecond is null
             }
-            statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a status
+            statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a
+                                                                // status
             statement.setInt(6, userId); // Set userId
 
             int result = statement.executeUpdate();
@@ -1350,10 +1340,9 @@ public class UserDBUtil {
         }
     }
 
-
-
-
-    public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status, String height, String qualification, String school, String occupation, String foodPreferences, String drinking, String smoking, String diffabled) {
+    public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status,
+            String height, String qualification, String school, String occupation, String foodPreferences,
+            String drinking, String smoking, String diffabled) {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -1363,18 +1352,54 @@ public class UserDBUtil {
             List<String> updates = new ArrayList<>();
             List<Object> params = new ArrayList<>();
 
-            if (ethnicity != null) { updates.add("ethnicity = ?"); params.add(ethnicity); }
-            if (religion != null) { updates.add("religion = ?"); params.add(religion); }
-            if (caste != null) { updates.add("caste = ?"); params.add(caste); }
-            if (status != null) { updates.add("status = ?"); params.add(status); }
-            if (height != null) { updates.add("height = ?"); params.add(height); }
-            if (qualification != null) { updates.add("qualification = ?"); params.add(qualification); }
-            if (school != null) { updates.add("school = ?"); params.add(school); }
-            if (occupation != null) { updates.add("occupation = ?"); params.add(occupation); }
-            if (foodPreferences != null) { updates.add("foodPreferences = ?"); params.add(foodPreferences); }
-            if (drinking != null) { updates.add("drinking = ?"); params.add(drinking); }
-            if (smoking != null) { updates.add("smoking = ?"); params.add(smoking); }
-            if (diffabled != null) { updates.add("diffabled = ?"); params.add(diffabled); }
+            if (ethnicity != null) {
+                updates.add("ethnicity = ?");
+                params.add(ethnicity);
+            }
+            if (religion != null) {
+                updates.add("religion = ?");
+                params.add(religion);
+            }
+            if (caste != null) {
+                updates.add("caste = ?");
+                params.add(caste);
+            }
+            if (status != null) {
+                updates.add("status = ?");
+                params.add(status);
+            }
+            if (height != null) {
+                updates.add("height = ?");
+                params.add(height);
+            }
+            if (qualification != null) {
+                updates.add("qualification = ?");
+                params.add(qualification);
+            }
+            if (school != null) {
+                updates.add("school = ?");
+                params.add(school);
+            }
+            if (occupation != null) {
+                updates.add("occupation = ?");
+                params.add(occupation);
+            }
+            if (foodPreferences != null) {
+                updates.add("foodPreferences = ?");
+                params.add(foodPreferences);
+            }
+            if (drinking != null) {
+                updates.add("drinking = ?");
+                params.add(drinking);
+            }
+            if (smoking != null) {
+                updates.add("smoking = ?");
+                params.add(smoking);
+            }
+            if (diffabled != null) {
+                updates.add("diffabled = ?");
+                params.add(diffabled);
+            }
 
             if (updates.isEmpty()) {
                 return false; // No update is needed if no fields are changed
@@ -1397,21 +1422,22 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
     public static List<User> getUserInfo(String id) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT ethnicity, religion, caste, status, height, qualification, school, occupation, foodpreferences, drinking, smoking, diffabled FROM userInfo WHERE id = ?";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, id);  // Set ID as a string
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id); // Set ID as a string
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 String ethnicity = rs.getString("ethnicity");
@@ -1427,7 +1453,8 @@ public class UserDBUtil {
                 String smoking = rs.getString("smoking");
                 String diffabled = rs.getString("diffabled");
 
-                User user = new User(ethnicity, religion, caste, status, height, qualification, school, occupation, foodpreferences, drinking, smoking, diffabled);
+                User user = new User(ethnicity, religion, caste, status, height, qualification, school, occupation,
+                        foodpreferences, drinking, smoking, diffabled);
                 users.add(user);
             }
         } catch (SQLException e) {
@@ -1436,11 +1463,10 @@ public class UserDBUtil {
         return users;
     }
 
-
-
     public static boolean addUserReport(String fromUserId, String toUserId, String reason, String status) {
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement("INSERT INTO user_reports (from_user_id, to_user_id, reason, status,timestamp) VALUES (?, ?, ?, ?,NOW())")) {
+                PreparedStatement pstmt = con.prepareStatement(
+                        "INSERT INTO user_reports (from_user_id, to_user_id, reason, status,timestamp) VALUES (?, ?, ?, ?,NOW())")) {
             pstmt.setString(1, fromUserId);
             pstmt.setString(2, toUserId);
             pstmt.setString(3, reason);
@@ -1452,7 +1478,6 @@ public class UserDBUtil {
             return false;
         }
     }
-
 
     public static boolean isReportedUser(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection()) {
@@ -1471,71 +1496,63 @@ public class UserDBUtil {
         return false;
     }
 
+    public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge)
+            throws SQLException {
+        List<User> matchedUsers = new ArrayList<>();
+        String oppositeGender = currentUserGender.equalsIgnoreCase("Male") ? "Female" : "Male";
+        int minDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge - 10 : currentUserAge - 5;
+        int maxDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge + 5 : currentUserAge + 10;
 
+        String sql = "SELECT u.*, ui.*, uii.* FROM user u " +
+                "LEFT JOIN userInfo ui ON u.id = ui.id " +
+                "LEFT JOIN userinterestedIfo uii ON u.id = uii.id " +
+                "WHERE u.gender = ? AND " +
+                "((uii.minAge IS NOT NULL AND u.age BETWEEN uii.minAge AND uii.maxAge) " +
+                "OR (uii.minAge IS NULL AND u.age BETWEEN ? AND ?)) AND " +
+                "u.id != ? " +
+                "ORDER BY ui.height DESC";
 
+        try (Connection con = DBConnect.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, oppositeGender);
+            pstmt.setInt(2, minDefaultAge);
+            pstmt.setInt(3, maxDefaultAge);
+            pstmt.setString(4, currentUserId);
 
-        public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge) throws SQLException {
-            List<User> matchedUsers = new ArrayList<>();
-            String oppositeGender = currentUserGender.equalsIgnoreCase("Male") ? "Female" : "Male";
-            int minDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge - 10 : currentUserAge - 5;
-            int maxDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge + 5 : currentUserAge + 10;
-
-            String sql = "SELECT u.*, ui.*, uii.* FROM user u " +
-                    "LEFT JOIN userInfo ui ON u.id = ui.id " +
-                    "LEFT JOIN userinterestedIfo uii ON u.id = uii.id " +
-                    "WHERE u.gender = ? AND " +
-                    "((uii.minAge IS NOT NULL AND u.age BETWEEN uii.minAge AND uii.maxAge) " +
-                    "OR (uii.minAge IS NULL AND u.age BETWEEN ? AND ?)) AND " +
-                    "u.id != ? " +
-                    "ORDER BY ui.height DESC";
-
-            try (Connection con = DBConnect.getConnection();
-                 PreparedStatement pstmt = con.prepareStatement(sql)) {
-                pstmt.setString(1, oppositeGender);
-                pstmt.setInt(2, minDefaultAge);
-                pstmt.setInt(3, maxDefaultAge);
-                pstmt.setString(4, currentUserId);
-
-
-                ResultSet rs = pstmt.executeQuery();
-                while (rs.next()) {
-                    User user = new User(
-                            rs.getString("firstName"),
-                            rs.getString("lastName"),
-                            rs.getString("email"),
-                            rs.getString("province"),
-                            rs.getString("ethnicity"),
-                            rs.getString("religion"),
-                            rs.getString("status"),
-                            rs.getString("height"),
-                            rs.getString("foodPreferences"),
-                            rs.getString("drinking"),
-                            rs.getString("smoking"),
-                            rs.getString("qualification"),
-                            rs.getString("occupation"),
-                            rs.getString("diffabled"),
-                            rs.getInt("age"),
-                            rs.getString("freli"),
-                            rs.getString("mreli"),
-                            rs.getString("foccu"),
-                            rs.getString("moccup"),
-                            rs.getString("maritalstatus"),
-                            rs.getInt("siblings")
-                    );
-                    matchedUsers.add(user);
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-                throw e;  // Re-throw the exception or handle it as per your application's error handling policy
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("email"),
+                        rs.getString("province"),
+                        rs.getString("ethnicity"),
+                        rs.getString("religion"),
+                        rs.getString("status"),
+                        rs.getString("height"),
+                        rs.getString("foodPreferences"),
+                        rs.getString("drinking"),
+                        rs.getString("smoking"),
+                        rs.getString("qualification"),
+                        rs.getString("occupation"),
+                        rs.getString("diffabled"),
+                        rs.getInt("age"),
+                        rs.getString("freli"),
+                        rs.getString("mreli"),
+                        rs.getString("foccu"),
+                        rs.getString("moccup"),
+                        rs.getString("maritalstatus"),
+                        rs.getInt("siblings"));
+                matchedUsers.add(user);
             }
-
-            return matchedUsers;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // Re-throw the exception or handle it as per your application's error handling
+                     // policy
         }
 
-
-
-
-
+        return matchedUsers;
+    }
 
     public static String getUserReligionById(int id) throws Exception {
         Connection con = DBConnect.getConnection();
@@ -1569,7 +1586,8 @@ public class UserDBUtil {
         return null; // Return null when no caste is found
     }
 
-    public static boolean updateUserFamInfo(String id, String freli, String foccu, String mreli, String moccup, String maritalstatus, Integer siblings) {
+    public static boolean updateUserFamInfo(String id, String freli, String foccu, String mreli, String moccup,
+            String maritalstatus, Integer siblings) {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -1579,14 +1597,30 @@ public class UserDBUtil {
             List<String> updates = new ArrayList<>();
             List<Object> params = new ArrayList<>();
 
-            if (freli != null) { updates.add("freli = ?"); params.add(freli); }
-            if (foccu != null) { updates.add("foccu = ?"); params.add(foccu); }
-            if (mreli != null) { updates.add("mreli = ?"); params.add(mreli); }
-            if (moccup != null) { updates.add("moccup = ?"); params.add(moccup); }
-            if (maritalstatus != null) { updates.add("maritalstatus = ?"); params.add(maritalstatus); }
-            if (siblings != null) { updates.add("siblings = ?"); params.add(siblings); }
-
-
+            if (freli != null) {
+                updates.add("freli = ?");
+                params.add(freli);
+            }
+            if (foccu != null) {
+                updates.add("foccu = ?");
+                params.add(foccu);
+            }
+            if (mreli != null) {
+                updates.add("mreli = ?");
+                params.add(mreli);
+            }
+            if (moccup != null) {
+                updates.add("moccup = ?");
+                params.add(moccup);
+            }
+            if (maritalstatus != null) {
+                updates.add("maritalstatus = ?");
+                params.add(maritalstatus);
+            }
+            if (siblings != null) {
+                updates.add("siblings = ?");
+                params.add(siblings);
+            }
 
             if (updates.isEmpty()) {
                 return false; // No update is needed if no fields are changed
@@ -1609,21 +1643,22 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
     public static List<User> getUserfamInfo(String id) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT freli, foccu, mreli, moccup, maritalstatus, siblings FROM userInfo WHERE id = ?";
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, id);  // Set ID as a string
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id); // Set ID as a string
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 String freli = rs.getString("freli");
@@ -1642,13 +1677,12 @@ public class UserDBUtil {
         return users;
     }
 
-
     public static InterestedIn getInterestedInDetails(String userId) {
         InterestedIn interestedIn = null;
         String sql = "SELECT min_age, max_age, gender, religion, caste, nationality, country FROM interested_in WHERE user_id = ?";
 
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -1659,8 +1693,7 @@ public class UserDBUtil {
                             rs.getString("religion"),
                             rs.getString("caste"),
                             rs.getString("nationality"),
-                            rs.getString("country")
-                    );
+                            rs.getString("country"));
                 }
             }
         } catch (SQLException e) {
@@ -1669,11 +1702,12 @@ public class UserDBUtil {
         return interestedIn;
     }
 
-    public static boolean updateInterestedInDetails(String userId, int minAge, int maxAge, String religion, String caste, String ethnicity, String province) {
+    public static boolean updateInterestedInDetails(String userId, int minAge, int maxAge, String religion,
+            String caste, String ethnicity, String province) {
         String sql = "UPDATE interested_in SET min_age = ?, max_age = ?, religion = ?, caste = ?, ethnicity = ?, province = ? WHERE user_id = ?";
 
         try (Connection con = DBConnect.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+                PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setInt(1, minAge);
             ps.setInt(2, maxAge);
             ps.setString(3, religion);
@@ -1690,8 +1724,8 @@ public class UserDBUtil {
         }
     }
 
-
-    public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+    public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount,
+            String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         boolean isSuccess = false;
@@ -1715,11 +1749,12 @@ public class UserDBUtil {
             e.printStackTrace();
             return false;
         } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
+            if (pstmt != null)
+                pstmt.close();
+            if (con != null)
+                con.close();
         }
     }
-
 
     public static boolean updateUserType(String userId, String userType) {
         Connection con = null;
@@ -1739,19 +1774,18 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
-
-
-
-
-    public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+    public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount,
+            String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         boolean isSuccess = false;
@@ -1775,11 +1809,12 @@ public class UserDBUtil {
             e.printStackTrace();
             return false;
         } finally {
-            if (pstmt != null) pstmt.close();
-            if (con != null) con.close();
+            if (pstmt != null)
+                pstmt.close();
+            if (con != null)
+                con.close();
         }
     }
-
 
     public static boolean updatePREMIUMUserType(String userId, String userType) {
         Connection con = null;
@@ -1799,15 +1834,51 @@ public class UserDBUtil {
             return false;
         } finally {
             try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (con != null)
+                    con.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
 
+    public static List<UserListModel> getServiceProviders(String serviceType) {
+        List<UserListModel> astrogers = new ArrayList<>();
+        String sql = "SELECT * FROM user WHERE usertype = ?";
+        try (Connection con = DBConnect.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, serviceType);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
 
+                    UserListModel astroger = new UserListModel(
+                            rs.getString("id"),
+                            rs.getString("firstName"),
+                            rs.getString("lastName"),
+                            rs.getString("email"),
+                            rs.getString("countryOfResidence"),
+                            rs.getString("province"),
+                            rs.getString("district"),
+                            rs.getInt("numberOfCasesHandled"),
+                            rs.getInt("yearsOfExperience"));
 
+                    byte[] imageData = rs.getBytes("userImage");
+                    if (imageData != null && imageData.length > 0) {
+                        String base64Image = Base64.getEncoder().encodeToString(imageData);
+                        astroger.setBase64Image("data:image/jpeg;base64," + base64Image);
+                    } else {
+                        // Set a default image URL if userImage is null
+                        astroger.setBase64Image("images/no-profile.png"); // or you can set a default value here if required
+                    }
+
+                    astrogers.add(astroger);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return astrogers;
+    }
 }
-

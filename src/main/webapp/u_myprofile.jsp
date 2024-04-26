@@ -78,10 +78,12 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 					<p>
 						Province:
 						<%=user.getProvince() != null ? user.getProvince() : "Not specified"%></p>
+					<%
+					}
+					%>
 
 				</div>
 				<%
-				}
 				}
 				%>
 

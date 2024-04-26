@@ -1,6 +1,6 @@
 package com.user.model;
-import java.sql.Date;
 
+import java.sql.Date;
 
 public class UserListModel {
     private String id;
@@ -18,8 +18,23 @@ public class UserListModel {
     private String brFileUpload;
     private byte[] userImage;
     private String base64Image;
-    private  String status;
+    private String status;
 
+    public UserListModel() {
+    }
+
+    public UserListModel(String id, String firstName, String lastName, String email, String countryOfResidence,
+            String province, String district,
+            int numberOfCasesHandled, int yearsOfExperience) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.countryOfResidence = countryOfResidence;
+        this.district = district;
+        this.numberOfCasesHandled = numberOfCasesHandled;
+        this.yearsOfExperience = yearsOfExperience;
+    }
 
     public String getId() {
         return id;
