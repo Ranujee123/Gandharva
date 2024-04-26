@@ -1,14 +1,14 @@
 package com.user.model;
 public class User {
-    private String firstName;
-    private String lastName;
+    protected String firstName;
+    protected String lastName;
     private String nic;
     private int pID;
     private String province;
 
-    private String email;
+    protected String email;
 
-    private String password;
+    protected String password;
     private String gender;
     private String dob;
     private String provinceName;
@@ -45,6 +45,10 @@ public class User {
     private static int Id;
     private String school;
     private String phonenumber;
+    
+    public User() {
+    	
+    }
 
     public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age) {
         this.firstName = firstName;

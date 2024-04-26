@@ -8,10 +8,10 @@ import java.util.stream.Stream;
 
 public class UserDBUtil {
 
-    private static Connection con = null;
-    private static Statement stmt = null;
-    private static ResultSet resultSet = null;
-    private static boolean isSuccess;
+    protected static Connection con = null;
+    protected static Statement stmt = null;
+    protected static ResultSet resultSet = null;
+    protected static boolean isSuccess;
 
     public static List<User> validate(String email, String password) {
         ArrayList<User> users = new ArrayList<>();
