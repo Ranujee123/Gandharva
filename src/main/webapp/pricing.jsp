@@ -69,7 +69,11 @@
         <li>Feature 3</li>
     </ul>
     <p>Price: $X per month</p>
-    <button class="subscribe-button">Subscribe</button>
+
+    <a href="UserPayement.jsp">
+        <button class="subscribe-button" >Subscribe</button>
+    </a>
+
 </div>
 <div class="card">
     <h2>Premium User</h2>
@@ -80,7 +84,10 @@
         <li>Feature C</li>
     </ul>
     <p>Price: $Y per month</p>
-    <button class="subscribe-button">Subscribe</button>
+    <a href="premiumUserPayment.jsp">
+        <button class="subscribe-button" >Subscribe</button>
+    </a>
+
 </div>
 </body>
 </html>

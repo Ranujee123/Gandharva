@@ -113,13 +113,26 @@
 
 
                 <label>Enter your personality type:</label>
-                <select name="ptype" >
-                    <option value=""></option>
-                    <% for (String personality : personalities) { %>
-                    <option><%= personality %></option>
-                    <% } %>
-                </select>
+                <select name="personalitytype" >
+                        <option value=""></option>
+                        <option value="ENTJ">ENTJ </option>
+                        <option value="INFP">INFP</option>
+                        <option value="ENFJ">ENFJ</option>
+                        <option value="ESFP">ESFP</option>
+                        <option value="ISFP">ISFP</option>
+                        <option value="ENTP">ENTP</option>
+                        <option value="INTJ">INTJ</option>
+                        <option value="ENFP">ENFP</option>
+                        <option value="ESTJ">ESTJ</option>
+                        <option value="ISTJ">ISTJ</option>
+                        <option value="INFJ">INFJ</option>
+                        <option value="INTP">INTP </option>
+                        <option value="ESFJ">ESFJ</option>
+                        <option value="ESTP">ESTP</option>
+                        <option value="ISTP">ISTP</option>
+                        <option value="ISFJ">ISFJ</option>
 
+                    </select>
 
 
                 <label>You want to find it out? : <a href="https://www.16personalities.com/free-personality-test" target="_blank">Click here</a></label>

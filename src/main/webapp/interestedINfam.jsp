@@ -101,7 +101,7 @@ To change this template use File | Settings | File Templates.
       <form action="interestinfam" method="post">
 
         <label>Father's Religion:</label>
-        <select name="fatherReligion">
+        <select name="freli">
           <option value=""> </option>
           <option value="buddhist">Buddhist</option>
           <option value="christain">Christian</option>
@@ -116,7 +116,7 @@ To change this template use File | Settings | File Templates.
 
 
         <label>Mother's Religion:</label>
-        <select name="motherReligion">
+        <select name="foccu">
           <option value=""> </option>
           <option value="buddhist">Buddhist</option>
           <option value="christain">Christian</option>
@@ -129,7 +129,7 @@ To change this template use File | Settings | File Templates.
         </select>
 
         <label>Father's Occupation:</label>
-        <select name="fatherOccupation" required>
+        <select name="mreli" required>
           <option value=""></option>
           <option value="Accountant">Accountant </option>
           <option value="Architect">Architect</option>
@@ -164,7 +164,7 @@ To change this template use File | Settings | File Templates.
         </select>
 
         <label>Mother's Occupation:</label>
-        <select name="motherOccupation" >
+        <select name="moccup" >
           <option value=""></option>
           <option value="Accountant">Accountant </option>
           <option value="Architect">Architect</option>
@@ -200,7 +200,7 @@ To change this template use File | Settings | File Templates.
 
 
         <label>Marital Status of Parents:</label>
-        <select name="maritalStatus">
+        <select name="maritalstatus">
           <option value=""></option>
           <option value="widowed">Widowed</option>
           <option value="divorced">Divorced</option>
@@ -209,7 +209,7 @@ To change this template use File | Settings | File Templates.
         </select>
 
         <label>Number of Siblings:</label>
-        <input type="number" name="numberOfSiblings" min="0" required><br>
+        <input type="number" name="siblings" min="0" required><br>
 
 
 

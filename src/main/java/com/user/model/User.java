@@ -44,16 +44,29 @@ public class User {
     private String foodPreferences;
     private static int Id;
     private String school;
+    private String phonenumber;
 
-    public User(String firstName, String lastName, String nic, String province, String email, String dob, int age) {
+    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nic = nic;
         this.province = province;
+        this.phonenumber=phonenumber;
         this.email = email;
         this.dpphoto = dpphoto;
         this.dob = dob;
         this.age = age;
+    }
+
+
+    public User(String freli, String foccu, String mreli, String moccup, String maritalstatus,  int siblings) {
+        this.freli = freli;
+        this.foccu = foccu;
+        this.mreli = mreli;
+        this.moccup = moccup;
+        this.maritalstatus = maritalstatus;
+        this.siblings = siblings;
+
     }
 
 
@@ -70,7 +83,7 @@ public class User {
         this.age = age;
     }
 */
-    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation) {
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String qualification, String occupation, String string, String resultSetString, String diffabled, String setString, String s, String personalitytype) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -82,7 +95,7 @@ public class User {
         this.height = height;
         this.qualification = qualification;
         this.occupation = occupation;
-        this.diffabled = diffabled;
+        this.diffabled = this.diffabled;
 
     }
 
@@ -390,8 +403,8 @@ public class User {
         this.caste = caste;
     }
 
-    public String getFoodPreferences() {
-        return foodPreferences;
+    public String getPhonenumber() {
+        return phonenumber;
     }
 
     public String getSchool() {

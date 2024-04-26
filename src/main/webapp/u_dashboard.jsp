@@ -131,6 +131,26 @@
             <option value="none">None</option>
             <option value="other">Other</option>
         </select>
+
+        <label> Caste:</label>
+        <select name="caste" >
+            <option value=""></option>
+            <option value="Radala">Radala</option>
+            <option value="Govigama">Govigama</option>
+            <option value="Bathgama">Bathgama</option>
+            <option value="Deva">Deva</option>
+            <option value="Nekathi">Nekathi</option>
+            <option value="Bodhivansha">Bodhivansha</option>
+            <option value="Rajaka">Rajaka</option>
+            <option value="kumbal">Kumbal</option>
+            <option value="Hunu">Hunu</option>
+            <option value="Durava"> Durava</option>
+            <option value="Karava">Karava</option>
+            <option value="Salagama">Salagama</option>
+            <option value="Navandanna"> Navandanna</option>
+            <!-- Add more options as needed -->
+        </select>
+
         <label>Civil Status :</label>
         <select name="status" >
             <option value=""> </option>
@@ -205,6 +225,7 @@
             <option value="Teacher">Teacher </option>
             <option value="Technician">Technician</option>
             <option value="Other">Other</option>
+        </select>
 
         <label>Food Preference:</label>
         <select name="foodpreferences" >
@@ -235,6 +256,28 @@
             <option value=""> </option>
             <option value="yes">Yes</option>
             <option value="No">No</option>
+        </select>
+
+        <label>Enter your personality type:</label>
+        <select name="personalitytype" >
+            <option value=""></option>
+            <option value="ENTJ">ENTJ </option>
+            <option value="INFP">INFP</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="ESFP">ESFP</option>
+            <option value="ISFP">ISFP</option>
+            <option value="ENTP">ENTP</option>
+            <option value="INTJ">INTJ</option>
+            <option value="ENFP">ENFP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INTP">INTP </option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ISFJ">ISFJ</option>
+
         </select>
 
         <!-- Add more filters here up to 10 different filters as per your requirement -->
