@@ -29,6 +29,9 @@ public class AllUser {
     private byte[] backphoto;
     private String gender;
     private int age;
+    private String province;
+    private String dob;
+    private String phoneNumber;
 
     public AllUser() {
     }
@@ -234,5 +237,29 @@ public class AllUser {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

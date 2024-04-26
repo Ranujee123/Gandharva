@@ -98,11 +98,15 @@ public class AuthDao {
             if(allUser.getUserType().equals(UserType.USER) || allUser.getUserType().equals(UserType.PREMIUM_USER) || allUser.getUserType().equals(UserType.STANDARD_USER)){
                 allUser.setNic(resultSet.getString(9));
                 allUser.setBirthday(resultSet.getDate(10).toLocalDate());
-                allUser.setDpphoto(resultSet.getBytes(19));
-                allUser.setFrontphoto(resultSet.getBytes(20));
-                allUser.setBackphoto(resultSet.getBytes(21));
-                allUser.setGender(resultSet.getString(22));
-                allUser.setAge(resultSet.getInt(23));
+                allUser.setProvince(resultSet.getString(19));
+
+                allUser.setDpphoto(resultSet.getBytes(20));
+                allUser.setFrontphoto(resultSet.getBytes(21));
+                allUser.setBackphoto(resultSet.getBytes(22));
+                allUser.setGender(resultSet.getString(23));
+                allUser.setDob(resultSet.getString(24));
+                allUser.setAge(resultSet.getInt(25));
+                allUser.setPhoneNumber(resultSet.getString(26));
             } else if (allUser.getUserType().equals(UserType.ASTROLOGER)) {
                 allUser.setNumberOfCasesHandled(resultSet.getInt(11));
                 allUser.setYearsOfExperience(resultSet.getInt(12));
