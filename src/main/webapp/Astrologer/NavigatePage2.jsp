@@ -219,7 +219,10 @@
             margin-right: 5px;
         }
 
-
+        /*.remember{*/
+        /*    margin-top: 5px;*/
+        /*    opacity: 0.75;*/
+        /*}*/
 
 
     </style>
@@ -231,23 +234,23 @@
     <nav>
         <div class="logo">
             <a href="HomePage.jsp"> <img src='images/logo.png' alt="Logo" ></a>
-        </div>
-        <ul class="navbar">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Our Services</a>
-                <ul class="submenu">
-                    <li><a href="astrologerRegistration">Astrologer</a></li>
-                    <li><a href="#">Event Planner</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Help</a></li>
-        </ul>
+            <%--        </div>--%>
+            <%--        <ul class="navbar">--%>
+            <%--            <li><a href="#">About Us</a></li>--%>
+            <%--            <li><a href="#">Our Services</a>--%>
+            <%--                <ul class="submenu">--%>
+            <%--                    <li><a href="Astrologer_Registration.jsp">Astrologer</a></li>--%>
+            <%--                    <li><a href="#">Event Planner</a></li>--%>
+            <%--                </ul>--%>
+            <%--            </li>--%>
+            <%--            <li><a href="#">Pricing</a></li>--%>
+            <%--            <li><a href="#">Help</a></li>--%>
+            <%--        </ul>--%>
 
-        <div class="buttons">
-            <a href="login"> <button class="signin">Sign In </button></a>
-            <a href="registration"><button class="signup"> |  Sign Up </button> </a>
-        </div>
+            <%--        <div class="buttons">--%>
+            <%--            <a href="Astrologer_Login.jsp"> <button class="signin">Sign In </button></a>--%>
+            <%--            <a href="Astrologer_Registration.jsp"><button class="signup"> |  Sign Up </button> </a>--%>
+            <%--        </div>--%>
 
 
     </nav>
@@ -255,16 +258,14 @@
 
 <div class="container">
     <div class="form-box">
-        <a href="registration"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="#"> <h1 class="heading">Guest User</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="u_reg.jsp"> <h1 class="heading">User</h1> </a>
+        <a href="login"> <h1 class="heading">Paid User</h1> </a>
     </div>
 
-    <div class="form-box">
-        <a href="login"> <h1 class="heading">Event Planner</h1> </a>
-    </div>
+
 </div>
 
 </body>
