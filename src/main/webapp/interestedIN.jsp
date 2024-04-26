@@ -86,19 +86,63 @@ To change this template use File | Settings | File Templates.
             color: red;
             margin-bottom: 10px;
         }
+
+        .form-container .button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
     </style>
 
     <script>
         function validateAgeRange() {
             var ageFrom = document.getElementById('minAge').value;
             var ageTo = document.getElementById('maxAge').value;
-            if (parseInt(ageFrom) > parseInt(ageTo)) {
-                alert('Age From should be less than or equal to Age To.');
-                return false;
+
+            // Convert input values to integers
+            var from = parseInt(ageFrom);
+            var to = parseInt(ageTo);
+
+            // Check if the values are numeric
+            if (isNaN(from) || isNaN(to)) {
+                alert('Please enter valid numeric ages.');
+                return false; // Prevent form submission on non-numeric input
             }
-            return true;
+
+            // Check if the ages are within the allowed range and 'Age From' is less than or equal to 'Age To'
+            if ((from < 18 || from > 60 || to < 18 || to > 60) || (from > to)) {
+                alert('Please ensure that both ages are between 18 and 60, and that Age From is less than or equal to Age To.');
+                return false; // Prevent form submission if the conditions are not met
+            }
+
+            return true; // Allow form submission if all checks are passed
         }
+
     </script>
+
+    <script>
+        function showOtherInput() {
+            console.log("Dropdown changed"); // Check if function is called
+            var select = document.getElementById('caste');
+            var otherInput = document.getElementById('other_caste');
+            if (select.value === "Other") { // Ensure the comparison is correct
+                otherInput.style.display = 'block';
+            } else {
+                otherInput.style.display = 'none';
+            }
+        }
+
+    </script>
+
+
 
 </head>
 <body>
@@ -111,7 +155,7 @@ To change this template use File | Settings | File Templates.
         <h1>Who are you interested in ?</h1>
         <div class="form-container">
             <form action="interestin" method="post">
-             <!--   <label>Age range :</label>
+                <!--   <label>Age range :</label>
                 <select name="age" required>
                     <option value=""></option>
 
@@ -120,11 +164,11 @@ To change this template use File | Settings | File Templates.
                         <% } %>
                     </select>-->
                 <label for="minAge" >Age From:</label>
-                <input type="number" id="minAge" name="minAge" min="18" max="60" oninput="validateAge(this)" required>
+                <input type="number" id="minAge" name="minAge" min="18" max="60" onsubmit="return validateAgeRange()" required>
                 <span id="age-error" style="color: red;"></span>
 
                 <label for="maxAge">To:</label>
-                <input type="number" id="maxAge" name="maxAge" min="18" max="60" oninput="validateAge(this)" required>
+                <input type="number" id="maxAge" name="maxAge" min="18" max="60" onsubmit="return validateAgeRange()" required>
                 <span id="ageto-error" style="color: red;"></span>
 
 
@@ -141,41 +185,46 @@ To change this template use File | Settings | File Templates.
                 <label> Ethnicity:</label>
                 <select name="ethnicity" required>
                     <option value=""> </option>
-                    <option value="sinhalese">Sinhalese</option>
-                    <option value="tamil">Tamil</option>
-                    <option value="muslim">Muslim</option>
-                    <option value="burger">Burger</option>
-                    <option value="other">Other</option>
+                    <option value="Burger">Burger</option>
+                    <option value="Muslim">Muslim</option>
+                    <option value="Sinhalese">Sinhalese</option>
+                    <option value="Tamil">Tamil</option>
+                    <option value="Other">Other</option>
                 </select>
 
 
                 <label> Religion:</label>
                 <select name="religion" required>
-                    <option value=""></option>
-                    <option value="Hindu">Hindu</option>
+                    <option value=""> </option>
+                    <option value="Atheists">Atheists</option>
+                    <option value="Buddhist">Buddhist</option>
+                    <option value="Catholic">Catholic</option>
                     <option value="Christian">Christian</option>
-                    <option value="Muslim">Muslim</option>
-                    <!-- Add more options as needed -->
-                </select><br>
+                    <option value="Hindu">Hindu</option>
+                    <option value="Islam">Islam</option>
+                    <option value="Other">Other</option>
+                </select>
+                <br>
 
                 <label> Caste:</label>
-                <select name="caste" required>
+                <select name="caste" id="caste"  onchange="showOtherInput()" required>
                     <option value=""></option>
-                    <option value="Radala">Radala</option>
-                    <option value="Govigama">Govigama</option>
                     <option value="Bathgama">Bathgama</option>
-                    <option value="Deva">Deva</option>
-                    <option value="Nekathi">Nekathi</option>
                     <option value="Bodhivansha">Bodhivansha</option>
-                    <option value="Rajaka">Rajaka</option>
-                    <option value="kumbal">Kumbal</option>
+                    <option value="Deva">Deva</option>
+                    <option value="Durava">Durava</option>
+                    <option value="Govigama">Govigama</option>
                     <option value="Hunu">Hunu</option>
-                    <option value="Durava"> Durava</option>
                     <option value="Karava">Karava</option>
+                    <option value="kumbal">Kumbal</option>
+                    <option value="Navandanna">Navandanna</option>
+                    <option value="Nekathi">Nekathi</option>
+                    <option value="Rajaka">Rajaka</option>
+                    <option value="Radala">Radala</option>
                     <option value="Salagama">Salagama</option>
-                    <option value="Navandanna"> Navandanna</option>
-                    <!-- Add more options as needed -->
-                </select><br>
+                    <option value="Other">Other</option>
+                </select>
+                <input type="text" name="other_caste" id="other_caste" style="display:none;" placeholder="Specify your caste">
 
 
 
@@ -217,11 +266,14 @@ To change this template use File | Settings | File Templates.
                 <p class="completion-text">3 out of 7 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
-                <button type="submit" name="action" value="proceed">Proceed</button>
+                <button type="submit" name="action" value="proceed" class="form-container button">Save & Next</button>
 
                 <!-- Save Progress button -->
-                <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
+                <!-- Link styled as a button to directly navigate to 'u_myprofile.jsp' -->
+                <a href="u_myprofile.jsp" class="form-container button">Back to Profile</a>
+
             </form>
+
         </div>
 
 

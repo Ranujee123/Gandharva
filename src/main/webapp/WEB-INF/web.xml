@@ -81,6 +81,36 @@
         <servlet-name>UserinsertDeatils</servlet-name>
         <url-pattern>/qul</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateUserFamInfo</servlet-name>
+        <servlet-class>com.user.controller.UpdateUserFamInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateUserFamInfo</servlet-name>
+        <url-pattern>/updateuserfamInfo</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserPayment</servlet-name>
+        <servlet-class>com.user.controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserPayment</servlet-name>
+        <url-pattern>/userpayment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PremiumUserPayment</servlet-name>
+        <servlet-class>com.user.controller.PremiumUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PremiumUserPayment</servlet-name>
+        <url-pattern>/premiumuserpayment</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>Userlist</servlet-name>
         <servlet-class>com.user.controller.UserListControler</servlet-class>

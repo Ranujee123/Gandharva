@@ -34,7 +34,7 @@ public class LoginDAO {
             if(parentUser.getUserType().equals(UserType.USER) || parentUser.getUserType().equals(UserType.PREMIUM_USER) || parentUser.getUserType().equals(UserType.STANDARD_USER)){
                 User user = new User(parentUser);
                 user.setNic(resultSet.getString(9));
-                user.setBirthday(resultSet.getDate(10).toLocalDate());
+           //     user.setBirthday(resultSet.getDate(10).toLocalDate());
                 return user;
             } else if (parentUser.getUserType().equals(UserType.ASTROLOGER)) {
                 Astrologer astrologer = new Astrologer(parentUser);
