@@ -21,11 +21,12 @@ public class Payment {
     private byte[] statement;
 //    private Date newExpireDate;
     private UUID userId;
-    private UUID requestId;
+    private UUID Link_Id;
+    private String payment_reason;
 
     public Payment() {}
 
-    public Payment(Date paymentDate, Time paymentTime, double paymentAmount, String paymentStatus, String cusFirstName, String cusLastName, String cusAddress, String cusCity, byte[] statement, UUID userId, UUID requestId) {
+    public Payment(Date paymentDate, Time paymentTime, double paymentAmount, String paymentStatus, String cusFirstName, String cusLastName, String cusAddress, String cusCity, byte[] statement, UUID userId, UUID Link_Id, String payment_reason) {
         this.id = UUID.randomUUID();
         this.paymentDate = paymentDate;
         this.paymentTime = paymentTime;
@@ -37,10 +38,11 @@ public class Payment {
         this.cusCity = cusCity;
         this.statement = statement;
         this.userId = userId;
-        this.requestId = requestId;
+        this.Link_Id = Link_Id;
+        this.payment_reason = payment_reason;
     }
 
-    public Payment(UUID id, Date paymentDate, Time paymentTime, double paymentAmount, String paymentStatus, String cusFirstName, String cusLastName, String cusAddress, String cusCity, byte[] statement, UUID userId, UUID requestId) {
+    public Payment(UUID id, Date paymentDate, Time paymentTime, double paymentAmount, String paymentStatus, String cusFirstName, String cusLastName, String cusAddress, String cusCity, byte[] statement, UUID userId, UUID Link_Id, String payment_reason) {
         this.id = id;
         this.paymentDate = paymentDate;
         this.paymentTime = paymentTime;
@@ -52,7 +54,8 @@ public class Payment {
         this.cusCity = cusCity;
         this.statement = statement;
         this.userId = userId;
-        this.requestId = requestId;
+        this.Link_Id = Link_Id;
+        this.payment_reason = payment_reason;
     }
 
     public UUID getId() {
@@ -135,19 +138,27 @@ public class Payment {
         this.userId = userId;
     }
 
-    public UUID getRequestId() {
-        return requestId;
-    }
-
-    public void setRequestId(UUID requestId) {
-        this.requestId = requestId;
-    }
-
     public Time getPaymentTime() {
         return paymentTime;
     }
 
     public void setPaymentTime(Time paymentTime) {
         this.paymentTime = paymentTime;
+    }
+
+    public UUID getLink_Id() {
+        return Link_Id;
+    }
+
+    public void setLink_Id(UUID link_Id) {
+        Link_Id = link_Id;
+    }
+
+    public String getPayment_reason() {
+        return payment_reason;
+    }
+
+    public void setPayment_reason(String payment_reason) {
+        this.payment_reason = payment_reason;
     }
 }

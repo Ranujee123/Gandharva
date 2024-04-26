@@ -74,6 +74,7 @@ public class PaymentController extends HttpServlet {
         String cusAddress = req.getParameter("cusAddress");
         String cusCity = req.getParameter("cusCity");
         Part filePart = req.getPart("statement");
+        String payment_reason = req.getParameter("payment_reason");
         byte[] statement = null;
         if (filePart != null) {
             System.out.println("File part is not null!");
@@ -95,7 +96,7 @@ public class PaymentController extends HttpServlet {
             return;
         }
 
-        Payment payment = new Payment(paymentDate, paymentTime, paymentAmount, paymentStatus, cusFirstName, cusLastName, cusAddress, cusCity, statement, requestId, userId);
+        Payment payment = new Payment(paymentDate, paymentTime, paymentAmount, paymentStatus, cusFirstName, cusLastName, cusAddress, cusCity, statement, userId, requestId, payment_reason);
 
         boolean success = false;
         try {

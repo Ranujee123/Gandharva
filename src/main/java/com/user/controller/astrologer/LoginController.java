@@ -67,10 +67,14 @@ public class LoginController extends HttpServlet {
                 if (checkLogin(login, loginData)) {
                     switch (userType) {
                         case PREMIUM_USER:
+                            session.setAttribute("userEmail", loginData.getEmail());
+                            session.setAttribute("userId", loginData.getId());
                             session.setAttribute("premiumUser", allUser);
                             out.print("1");
                             break;
                         case STANDARD_USER:
+                            session.setAttribute("userEmail", loginData.getEmail());
+                            session.setAttribute("userId", loginData.getId());
                             session.setAttribute("standardUser", allUser);
                             out.print("2");
                             break;
