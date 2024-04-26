@@ -1,7 +1,6 @@
 package com.user.controller;
 
 import com.user.model.UserDBUtil;
-import com.user.model.GuestDBUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,7 +29,7 @@ public class GuestRegisterServlet extends HttpServlet {
 
 		if (!password.equals(cpassword)) {
 			req.setAttribute("errorMessage", "Passwords do not match. Please try again.");
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/guest_register.jsp");
 			dispatcher.forward(req, resp);
 			return;
 		}
@@ -39,7 +38,7 @@ public class GuestRegisterServlet extends HttpServlet {
 			password = hashPassword(password); // Hash the password
 		} catch (NoSuchAlgorithmException e) {
 			req.setAttribute("errorMessage", "Failed to hash the password.");
-			req.getRequestDispatcher("/u_reg.jsp").forward(req, resp);
+			req.getRequestDispatcher("/guest_register.jsp").forward(req, resp);
 			return;
 		}
 
@@ -55,14 +54,14 @@ public class GuestRegisterServlet extends HttpServlet {
 			return;
 
 		}
-		boolean isInserted = GuestDBUtil.insertUser(id, firstName, lastName, email, password);
+		boolean isInserted = UserDBUtil.insertGuest(id, firstName, lastName, email, password);
 
 		if (isInserted) {
 			req.getSession().setAttribute("successMessage", "Registration successful.");
-			resp.sendRedirect("guest_login.jsp");
+			resp.sendRedirect("login.jsp");
 		} else {
 			req.setAttribute("errorMessage", "Registration failed. Please try again.");
-			RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+			RequestDispatcher dispatcher = req.getRequestDispatcher("/guest_register.jsp");
 			dispatcher.forward(req, resp);
 		}
 	}

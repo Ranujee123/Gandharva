@@ -25,17 +25,6 @@
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>guestLogin</servlet-name>
-    <servlet-class>com.user.controller.GuestLoginServlet</servlet-class>
-    <load-on-startup>1</load-on-startup>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>guestLogin</servlet-name>
-    <url-pattern>/guestLog</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
     <servlet-name>deleteUserServlet</servlet-name>
     <servlet-class>com.user.controller.DeleteUserServlet</servlet-class>
   </servlet>

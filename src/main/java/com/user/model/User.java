@@ -46,6 +46,8 @@ public class User {
     private String school;
     private String phonenumber;
     
+    private String userType;
+    
     public User() {
     	
     }
@@ -60,6 +62,19 @@ public class User {
         this.dpphoto = dpphoto;
         this.dob = dob;
         this.age = age;
+    }
+    
+    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age, String userType) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
+        this.province = province;
+        this.phonenumber=phonenumber;
+        this.email = email;
+        this.dpphoto = dpphoto;
+        this.dob = dob;
+        this.age = age;
+        this.userType = userType;
     }
 
 
@@ -413,5 +428,9 @@ public class User {
 
     public String getSchool() {
         return school;
+    }
+    
+    public String getUserType() {
+    	return userType;
     }
 }

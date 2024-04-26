@@ -1,7 +1,5 @@
 package com.user.model;
 import java.sql.*;
-import java.util.UUID;
-
 import java.sql.Date;
 import java.util.*;
 import java.util.stream.Stream;
@@ -17,7 +15,7 @@ public class UserDBUtil {
         ArrayList<User> users = new ArrayList<>();
         try {
             Connection con = DBConnect.getConnection();
-            String sql = "SELECT firstName, lastName, nic, province,phonenumber, email, dob, age FROM user WHERE email = ? AND password = ?";
+            String sql = "SELECT firstName, lastName, nic, province,phonenumber, email, dob, age, userType FROM user WHERE email = ? AND password = ?";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, password);
@@ -32,8 +30,9 @@ public class UserDBUtil {
                 String emailU = resultSet.getString("email");
                 String dob = resultSet.getString("dob");
                 int age = resultSet.getInt("age"); // Assuming age is stored as an integer in the database
+                String userType = resultSet.getString("userType");
 
-                User u = new User(firstName, lastName, nic, province,phonenumber, emailU, dob, age);
+                User u = new User(firstName, lastName, nic, province,phonenumber, emailU, dob, age, userType);
                 users.add(u);
             }
         } catch (Exception e) {
@@ -162,6 +161,44 @@ public class UserDBUtil {
         return isSuccess;
     }
 
+    public static boolean insertGuest(String id, String firstName, String lastName, String email, String password) {
+		boolean isSuccess = false;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = DBConnect.getConnection();
+			String sql = "INSERT INTO user (id,firstName, lastName, email, password, userType, phonenumber) VALUES (?,?,?,?,?,?,?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, UUID.randomUUID().toString());
+			pstmt.setString(2, firstName);
+			pstmt.setString(3, lastName);
+			pstmt.setString(4, email);
+			pstmt.setString(5, password);
+			pstmt.setString(6, "GUEST_USER");
+			pstmt.setString(7, "0");
+
+			// Log the prepared statement to see what's being sent to the DB
+			System.out.println("Executing SQL: " + pstmt.toString());
+
+			int rowsAffected = pstmt.executeUpdate();
+			isSuccess = rowsAffected > 0;
+			System.out.println("Insert successful? " + isSuccess);
+		} catch (SQLException e) {
+			System.err.println("SQL Error: " + e.getMessage());
+			e.printStackTrace();
+		} finally {
+			try {
+				if (pstmt != null)
+					pstmt.close();
+				if (con != null)
+					con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return isSuccess;
+	}
+
 
     public static boolean updateUser(String firstName, String lastName, String nic, String province, String phonenumber,byte[] dpphoto, String email) {
         String sql = "UPDATE user SET firstName=?, lastName=?, nic=?, province=?, phonenumber=?,dpphoto=? WHERE email=?";
@@ -186,7 +223,7 @@ public class UserDBUtil {
 
     public static List<User> getUserDetails(String email) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto,phonenumber, dob, age FROM user WHERE email = ?";
+        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto, phonenumber, dob, age, userType FROM user WHERE email = ?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, email);
@@ -201,8 +238,9 @@ public class UserDBUtil {
                 byte[] dpphoto = rs.getBytes("dpphoto");
                 String dob = rs.getString("dob");
                 int age = rs.getInt("age");
+                String userType = rs.getString("userType");
 
-                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age));
+                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age, userType));
             }
         } catch (SQLException e) {
             e.printStackTrace();
