@@ -103,11 +103,11 @@
                     <td>${user.nic}</td>
                     <td>${user.countryOfResidence}</td>
 
-                    <c:if test="${user.stat == 'active'}">
+                    <c:if test="${user.stat == '1'}">
                         <td style="text-align: center">Active</td>
                         <td style="display: flex;align-items: center;justify-content: center;"><button class="btn-deactivate" onclick="UpdateStatus('Deactive','${user.id}')">Deactivate</button></td>
                     </c:if>
-                    <c:if test="${user.stat == 'Deactive'}">
+                    <c:if test="${user.stat == '0'}">
                         <td style="text-align: center">Deactive</td>
                         <td style="display: flex;align-items: center;justify-content: center;"><button class="btn-activate" onclick="UpdateStatus('active','${user.id}')">Activate</button></td>
                     </c:if>
@@ -121,6 +121,11 @@
 
 <script>
     function UpdateStatus(status, id) {
+
+        let statusINT= 0;
+        if(status == 'active'){
+            statusINT = 1;
+        }
 
         Swal.fire({
             title: 'Are you sure?',
@@ -139,7 +144,7 @@
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'id=' + encodeURIComponent(id)+'&status='+encodeURIComponent(status)
+            body: 'id=' + encodeURIComponent(id)+'&status='+encodeURIComponent(statusINT)
         })
             .then(function(response) {
                 if (response.ok) {
