@@ -219,7 +219,10 @@
             margin-right: 5px;
         }
 
-
+        /*.remember{*/
+        /*    margin-top: 5px;*/
+        /*    opacity: 0.75;*/
+        /*}*/
 
 
     </style>
@@ -255,16 +258,14 @@
 
 <div class="container">
     <div class="form-box">
-        <a href="registration"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="#"> <h1 class="heading">Guest User</h1> </a>
     </div>
-
-    <%--    <div class="form-box">--%>
-    <%--        <a href="login"> <h1 class="heading">User</h1> </a>--%>
-    <%--    </div>--%>
 
     <div class="form-box">
-        <a href="astrologer"> <h1 class="heading">Event Planner</h1> </a>
+        <a href="login"> <h1 class="heading">Paid User</h1> </a>
     </div>
+
+
 </div>
 
 </body>
