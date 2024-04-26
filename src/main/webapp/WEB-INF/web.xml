@@ -107,6 +107,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>dash_admin</servlet-name>
+    <servlet-class>com.user.controller.AdminDashboardController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dash_admin</servlet-name>
+    <url-pattern>/admin</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>FamilyDetailsServlet</servlet-name>
     <servlet-class>com.user.controller.FamilyDetails</servlet-class>
   </servlet>
