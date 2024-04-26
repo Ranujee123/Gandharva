@@ -245,7 +245,7 @@
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'action=' + encodeURIComponent('verified')+'&userid='+encodeURIComponent(uid)
+            body: 'action='+1+'&userid='+encodeURIComponent(uid)
           })
                   .then(function(response) {
                     if (response.ok) {
@@ -290,7 +290,7 @@
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'action=' + encodeURIComponent('rejected')+'&userid='+encodeURIComponent(uid)
+            body: 'action='+2+'&userid='+encodeURIComponent(uid)
           })
                   .then(function(response) {
                     if (response.ok) {
