@@ -392,6 +392,15 @@ h5 {
     /* border: 5px solid #fff; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+.prf_pic-complainer2{
+    width: 60px;
+    clip-path: circle();
+    /* height: 150px; */
+    /* border-radius: 50%; */
+    /* margin-bottom: 20px; */
+    /* border: 5px solid #fff; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .box-complainer-main{
     display: flex;
     width: 100%;
@@ -455,12 +464,35 @@ h5 {
 .btn-resolve{
     background-color: #4CAF50;
     color: white;
-    padding: 10px 70px;
+    padding: 10px 20px;
     margin: 0px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     align-self: self-end;
+    width: 200px;
+}
+.btn-ban{
+    background-color: #ff000d;
+    color: white;
+    padding: 10px 20px;
+    margin: 0px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: self-end;
+    width: 200px;
+}
+.btn-view{
+    background-color: #606060;
+    color: white;
+    padding: 10px 20px;
+    margin: 0px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: self-end;
+    width: 200px;
 }
 .box-verify{
     width: 500px;
