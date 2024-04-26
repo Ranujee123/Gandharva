@@ -52,12 +52,36 @@
     </div>
     </div>
 
-    <div class="view" style="padding: 0px 20px">
-        <h3 class="complain-title" >Complaining about the system error </h3>
-        <p class="compalain-description">I am encountering a significant issue with the system, which seems to be malfunctioning and impeding my access. Despite my attempts, I am unable to gain entry or utilize its functionalities effectively. This obstacle is hindering my productivity and causing frustration. Urgent assistance is required to rectify this problem promptly and restore normal functionality to the system. Any guidance or troubleshooting steps provided would be greatly appreciated in resolving this issue and allowing me to resume my tasks seamlessly. Thank you for your attention to this matter</p>
+    <div class="view" style="padding: 0px 20px; display: flex;flex-direction: row; width: 100%; ">
+       <div class="box-con" style="width: 70%;padding: 20px 0">
+         <h3 class="complain-title" >Reported User</h3>
+         <div class="box-complainer"  style="padding: 20px" >
+           <div class="pic-box" style="max-height: 150px; display: flex;align-items: center;justify-content: center">
+             <img class="prf_pic-complainer2" src="images/no-profile.png" alt="Profile Picture" style="width: 150px">
+           </div>
+           <div class="name-box">
+             <p class="name usertext" >Name : <span class="n-r"> Shyamal Test User</span> </p>
+             <p class="email usertext">Email : <span class="e-r"> sha256@tmail.com</span> </p>
+             <p class="Usertype usertext">User Type : <span class="ut-r"> </span> </p>
+             <p class="Country usertext">Country : <span class="c-r"> </span> </p>
+             <p class="Disrtict usertext">District : <span class="dis-r"> sha256@tmail.com</span> </p>
+             <p class="Nic usertext">NIC : <span class="nic-r"> </span> </p>
+             <p class="Birthday usertext">Birthday : <span class="bd-r"> </span> </p>
+             <p class="Experience usertext">Experience : <span class="exp-r"> </span> </p>
+             <p class="Report usertext">Report Count : <span class="rc-r"> </span> </p>
+           </div>
+         </div>
+       </div>
+
+      <div class="buttons-box" style="    padding-top: 150px; flex-direction: column; display: flex; gap: 10px; justify-content: center; padding-left: 15px;">
+        <button class="btn-view"> View past Complains</button>
+        <button class="btn-ban"> Ban this user</button>
+        <button class="btn-resolve"> Ignore</button>
+      </div>
+
 
     </div>
-    <button class="btn-resolve">Resolve</button>
+
 
   </div>
 </div>
@@ -85,10 +109,10 @@
               <h3>Title: ${complaint.title}</h3>
               <p>${complaint.descripion}</p>
               <c:if test="${complaint.status == 'Open'}">
-                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}')">Go to Resolve</button>
+                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}','${complaint.receiver_firstName} ${complaint.receiver_lastName}','${complaint.receiver_email}','${complaint.receiver_countryOfResidence}','${complaint.receiver_userType}','${complaint.receiver_district}','${complaint.receiver_nic}','${complaint.receiver_birthday}','${complaint.receiver_numberOfCasesHandled}','${complaint.receiver_yearsOfExperience}','${complaint.receiver_userImage}','${complaint.receiver_complaint_count}','${complaint.receiverid}')">Go to Resolve</button>
               </c:if>
-              <c:if test="${complaint.status == 'Closed'}">
-                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}')">View</button>
+              <c:if test="${complaint.status == 'Resolved'}">
+                <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}','${complaint.receiver_firstName} ${complaint.receiver_lastName}','${complaint.receiver_email}','${complaint.receiver_countryOfResidence}','${complaint.receiver_userType}','${complaint.receiver_district}','${complaint.receiver_nic}','${complaint.receiver_birthday}','${complaint.receiver_numberOfCasesHandled}','${complaint.receiver_yearsOfExperience}','${complaint.receiver_userImage}','${complaint.receiver_complaint_count}','${complaint.receiverid}')">View</button>
 
               </c:if>
 
@@ -107,13 +131,91 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-      function displayComplain(name, email, country, userType, status, id, date,title, description,URL) {
+      function displayComplain(name, email, country, userType, status, id, date,title, description,URL,r_name,r_email,r_country,r_userType,r_district,r_nic,r_birthday,no_cases,r_exp,r_image,r_reportcount,r_id) {
         document.querySelector('.prf_pic-complainer').src = URL;
         document.querySelector('.container-box').style.display = 'flex';
         document.querySelector('.n-c').innerText = name;
         document.querySelector('.e-c').innerText = email;
         document.querySelector('.c-c').innerText = country;
         document.querySelector('.ut-c').innerText = userType;
+        document.querySelector('.n-r').innerText = r_name;
+        document.querySelector('.e-r').innerText = r_email;
+        document.querySelector('.c-r').innerText = r_country;
+        document.querySelector('.ut-r').innerText = r_userType;
+        document.querySelector('.dis-r').innerText = r_district;
+        document.querySelector('.nic-r').innerText = r_nic;
+        document.querySelector('.bd-r').innerText = r_birthday;
+        document.querySelector('.exp-r').innerText = r_exp;
+        document.querySelector('.rc-r').innerText = r_reportcount;
+        document.querySelector('.prf_pic-complainer2').src = r_image;
+        document.querySelector('.btn-view').onclick= function(){
+          window.location.href = '/Gandharva_main/complaints?id='+r_id;
+        }
+        document.querySelector('.btn-ban').onclick = function(){
+
+                  Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You want to "+'Ban'+" this user!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, '+'Ban'+' it!'
+                  }).then((result) => {
+                    if (result.isConfirmed) {
+
+
+                      fetch('/Gandharva_main/activateuser', {
+                        method: 'POST',
+                        headers: {
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: 'id=' + encodeURIComponent(r_id)+'&status='+encodeURIComponent('Deactive')
+                      })
+                              .then(function(response) {
+                                if (response.ok) {
+                                  return response.text();
+                                }
+                                throw new Error('Network response was not ok.');
+                              })
+                              .then(function(responseText) {
+                                  fetch('/Gandharva_main/complaints', {
+                                    method: 'POST',
+                                    headers: {
+                                      'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: 'id=' + encodeURIComponent(complaintId),
+                                  })
+                                          .then(function(response) {
+                                            if (response.ok) {
+                                              return response.text();
+                                            }
+                                            throw new Error('Network response was not ok.');
+                                          })
+                                          .then(function(responseText) {
+                                            console.log(responseText);
+                                            Swal.fire(
+                                                    'Resolved!',
+                                                    'Complain has been resolved.',
+                                                    'success'
+                                            ).then(() => {
+                                              location.reload();
+                                            });
+                                          })
+                                          .catch(function(error) {
+                                            console.error('There was a problem with the fetch operation:', error);
+                                          });
+
+
+
+                              })
+                              .catch(function(error) {
+                                console.error('There was a problem with the fetch operation:', error);
+                              });
+                    }
+                  })
+                }
+
         statustag = document.querySelector('.status-view')
         statustag.innerText = status;
         if (status == 'Open') {
@@ -121,17 +223,20 @@
           statustag.classList.remove('status-c-deactive')
           statustag.classList.add('status-c-active')
           document.querySelector('.btn-resolve').style.display = 'block';
+          document.querySelector('.btn-ban').style.display = 'block';
+            document.querySelector('.btn-view').style.display = 'block';
         } else {
           statustag.classList.remove('status-c-active')
           statustag.classList.add('status-c-deactive')
           document.querySelector('.btn-resolve').style.display = 'none';
+          document.querySelector('.btn-ban').style.display = 'none';
+          document.querySelector('.btn-view').style.display = 'none';
         }
         document.querySelectorAll('.id').forEach((element) => {
           element.innerText = id;
         });
         document.querySelector('.date').innerText = date;
-        document.querySelector('.complain-title').innerText = title;
-        document.querySelector('.compalain-description').innerText = description;
+
 
       }
 
