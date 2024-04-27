@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var experience = parseInt(experienceInput.value);
         var errorMessage = "";
 
-        if (isNaN(experience) || experience < 0 || experience > 30) {
-            errorMessage = "Please enter a valid number between 0 and 30 for years of experience";
+        if (isNaN(experience) || experience < 0 || experience > 50) {
+            errorMessage = "Please enter a valid number between 0 and 50 for years of experience";
         }
 
         displayErrorMessage(experienceInput, errorMessage);

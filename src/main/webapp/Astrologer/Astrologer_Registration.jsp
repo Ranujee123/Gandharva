@@ -190,7 +190,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="Astrologer/js/astrologerRegistration.js" defer></script>
+<script src="../Astrologer/js/astrologerRegistration.js" defer></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -229,8 +229,26 @@
 
         experienceInput.addEventListener("input", function() {
             validateExperience();
+            var experience = parseInt(experienceInput.value);
+            var errorMessage = "";
+
+            if (isNaN(experience) || experience < 0 || experience > 50) {
+                errorMessage = "Please enter a valid number between 0 and 50 for years of experience";
+            }
+
+            displayErrorMessage(experienceInput, errorMessage);
         });
 
+        function displayErrorMessage(inputElement, message) {
+            var errorContainer = inputElement.nextElementSibling;
+            if (!errorContainer || !errorContainer.classList.contains('error-message')) {
+                errorContainer = document.createElement('div');
+                errorContainer.className = 'error-message';
+                inputElement.parentNode.insertBefore(errorContainer, inputElement.nextSibling);
+            }
+
+            errorContainer.textContent = message;
+        }
         emailInput.addEventListener("input", function() {
             validateEmail();
         });
@@ -287,6 +305,7 @@
                 errorMessage.remove(); // Remove error message if it exists
             }
         }
+
 
     });
 </script>
