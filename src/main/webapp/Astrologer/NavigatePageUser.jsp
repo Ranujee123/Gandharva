@@ -240,7 +240,7 @@
 <div class="container">
 
     <div class="form-box">
-        <a href="login"> <h1 class="heading">Guest User</h1> </a>
+        <a href="#"> <h1 class="heading">Guest User</h1> </a>
     </div>
 
     <div class="form-box">

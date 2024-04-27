@@ -245,7 +245,7 @@
     </div>
 
     <div class="form-box">
-        <a href="#"> <h1 class="heading">Event Planner</h1> </a>
+        <a href="login"> <h1 class="heading">Event Planner</h1> </a>
     </div>
 </div>
 
