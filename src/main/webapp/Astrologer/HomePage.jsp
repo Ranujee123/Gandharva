@@ -442,7 +442,6 @@
                 <div class="dropdown-container">
                     <button class="signup" onclick="toggleDropdown()">Sign Up</button>
                     <div id="signupDropdown" class="dropdown-content">
-                        <!-- Dropdown content goes here -->
                         <a href="Astrologer/NavigatePageUser.jsp">User</a>
                         <a href="Astrologer/NavigatePageSp.jsp">Service Provider</a>
                     </div>
