@@ -20,7 +20,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 20px 0;
+            margin: 120px 0;
         }
 
         .form-box {
@@ -33,6 +33,7 @@
         }
 
         .heading {
+            color: whitesmoke;
             text-align: center;
             margin-bottom: 20px;
         }
@@ -115,10 +116,10 @@
     </style>
 </head>
 <body>
-
+<h1 class="heading">Astrologer Registration</h1>
 <div class="container">
     <div class="form-box">
-        <h1 class="heading">Astrologer Registration</h1>
+
         <form enctype="multipart/form-data" id="registration-form">
             <label for="first_name" class="input-label">First Name<span class="required">*</span></label><br>
             <input type="text" id="first_name" name="first_name" class="input-field" required><br>
