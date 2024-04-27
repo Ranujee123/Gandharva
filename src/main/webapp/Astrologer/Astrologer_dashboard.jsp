@@ -54,12 +54,12 @@
                 <span>Payment</span>
             </a>
         </li>
-        <li>
-            <a href="#">
-                <i class="menu-icon fas fa-bell"></i>
-                <span>Notifications</span>
-            </a>
-        </li>
+<%--        <li>--%>
+<%--            <a href="#">--%>
+<%--                <i class="menu-icon fas fa-bell"></i>--%>
+<%--                <span>Notifications</span>--%>
+<%--            </a>--%>
+<%--        </li>--%>
         <li>
             <a href="astrologerSettings">
                 <i class="menu-icon fas fa-cog"></i>
