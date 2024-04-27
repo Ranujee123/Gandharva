@@ -443,8 +443,8 @@
                     <button class="signup" onclick="toggleDropdown()">Sign Up</button>
                     <div id="signupDropdown" class="dropdown-content">
                         <!-- Dropdown content goes here -->
-                        <a href="#">User</a>
-                        <a href="registration">Service Provider</a>
+                        <a href="Astrologer/NavigatePageUser.jsp">User</a>
+                        <a href="Astrologer/NavigatePageSp.jsp">Service Provider</a>
                     </div>
                 </div>
             </div>
