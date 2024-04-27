@@ -125,7 +125,7 @@
             font-size: 20px;
         }
 
-        .navbar :hover {
+        .navbar li:hover {
             transition: all 0.3s ease-in-out;
             transform: translateY(3px);
             /*background-color: #ddd;*/
@@ -135,19 +135,7 @@
 
         }
 
-        .submenu {
-            margin-top: 2px;
-            list-style-type: none;
-            display: none;
-            position: absolute;
-            background-color: rgba(0, 0, 0, 0.25);
-            color: white;
-            padding: 10px;
-            margin-left: 5px;
-            margin-right: 5px;
-            border-radius: 20px;
-            border: none;
-        }
+
 
         .navbar li:hover .submenu {
             background-color: rgba(255, 255, 255, 0.5);
@@ -372,6 +360,19 @@
             position: relative;
             transition: all 0.3s ease;
         }
+        #services{
+            transition: all 0.3s ease;
+            position: sticky;
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .services :hover {
+            transition: all 0.3s ease-in-out;
+            transform: translateY(3px);
+        }
 
         /* Dropdown content (hidden by default) */
         .dropdown-content {
@@ -382,13 +383,14 @@
             z-index: 1;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
-            transform: translateY(-10px);
+            /*transition: all 0.3s ease;*/
+            /*transform: translateY(-10px);*/
         }
 
         /* Links inside the dropdown */
         .dropdown-content a {
-            color: black;
+            background-color: rgba(0, 0, 0, 0.58);
+            color: white;
             padding: 12px 16px;
             text-decoration: none;
             display: block;
@@ -396,14 +398,15 @@
 
         /* Change color of dropdown links on hover */
         .dropdown-content a:hover {
-            background-color: #f1f1f1;
+            background-color: rgba(0, 0, 0, 0.68);
+            color: white;
         }
 
         /* Show the dropdown content when hovering or focusing on the dropdown button */
         .show {
             opacity: 1;
             visibility: visible;
-            transform: translateY(0);
+            /*transform: translateY(0);*/
         }
 
         /*.header-nav {*/
@@ -424,14 +427,18 @@
             <div class="logo">
                 <img src='images/logo.png' alt="Logo">
             </div>
+
             <ul class="navbar">
                 <li><a href="#">About Us</a></li>
-                <li><a href="#">Our Services</a>
-                    <ul class="submenu">
-                        <li><a href="Astrologer/ourServices-Astrologer.jsp">Astrologer</a></li>
-
-                        <li><a href="#">Event Planner</a></li>
-                    </ul>
+                <li>
+<%--                    <a href="#">Our Services</a>--%>
+                    <div class="dropdown-container">
+                        <div class="buttons"> <button id="services" onclick ="displayDropdown()">Our Services</button> </div>
+                        <div id="ourServicesDropdown" class="dropdown-content">
+                            <a href="Astrologer/NavigatePageUser.jsp">Astrologer</a>
+                            <a href="Astrologer/NavigatePageSp.jsp">Event Planner</a>
+                        </div>
+                    </div>
                 </li>
                 <li><a href="#">Pricing</a></li>
                 <li><a href="#">Help</a></li>
@@ -440,7 +447,7 @@
                 <a href="login"><button class="signin">Sign In</button></a>
                 <button class="divider">|</button>
                 <div class="dropdown-container">
-                    <button class="signup" onclick="toggleDropdown()">Sign Up</button>
+                    <button class="signup" onclick ="toggleDropdown()">Sign Up</button>
                     <div id="signupDropdown" class="dropdown-content">
                         <a href="Astrologer/NavigatePageUser.jsp">User</a>
                         <a href="Astrologer/NavigatePageSp.jsp">Service Provider</a>
@@ -556,7 +563,10 @@ function toggleDropdown() {
     var dropdown = document.getElementById("signupDropdown");
     dropdown.classList.toggle("show");
 }
-
+function displayDropdown(){
+    var dropdown = document.getElementById("ourServicesDropdown");
+    dropdown.classList.toggle("show");
+}
 
 </script>
 
