@@ -200,12 +200,16 @@
         }
 
         .vision--card {
+            display: flex; /* Makes it a flexbox container */
+            justify-content: space-between;
+            flex-direction: column;
+            width: 500px;
             font-size: 20px;
             position: absolute;
             top: 1000px;
             left: 600px;
             transform: translate(-50%, -50%); /* Center the card */
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Add shadow for depth */
@@ -213,12 +217,16 @@
         }
 
         .mission--card{
+            display: flex; /* Makes it a flexbox container */
+            justify-content: space-between;
+            flex-direction: column;
+            width: 500px;
             font-size: 20px;
             position: absolute;
             top: 1200px;
             left: 900px;
             transform: translate(-50%, -50%); /* Center the card */
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.7); /* Add shadow for depth */
@@ -468,19 +476,22 @@
         <div class="vision--card">
             <h2> Our Vision</h2>
             <br>
-            <p> To create a harmonious and fulfilling journey for individuals <br>
-                seeking lifelong companionship by providing a comprehensive <br>
-                platform that integrates astrology, personalized matchmaking, <br>
-                and event planning services.</p>
+            <p> A world where love knows no bounds,
+                and technology empowers
+                individuals to find their happily ever after.
+                Our vision is to create
+                a supportive community where individuals can
+                embark on their journeys to love with confidence and joy.</p>
 
         </div>
         <div class="mission--card">
             <h2> Our Mission</h2>
             <br>
-            <p> To create a harmonious and fulfilling journey for individuals <br>
-                seeking lifelong companionship by providing a comprehensive <br>
-                platform that integrates astrology, personalized matchmaking, <br>
-                and event planning services.</p>
+            <p> We are dedicated to providing a secure and culturally
+                sensitive platform that fosters genuine connections
+                between compatible individuals seeking marriage.
+                We leverage advanced matching algorithms and prioritize
+                building a supportive community to guide them on their journey to love.</p>
 
         </div>
     </div>
