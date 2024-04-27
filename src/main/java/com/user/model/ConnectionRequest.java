@@ -7,9 +7,23 @@ public class ConnectionRequest {
     private String status;
     private String fromUserFullName;
     private String toUserFullName;
+    private String fromUserEmail;
+    private String toUserEmail;
     private String oppositeUserFullName;
+    private String oppositeUserEmail;
 
     // Constructor using IDs and names
+    public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status, String fromUserFullName, String toUserFullName,String oppositeUserEmail) {
+        this.requestId = requestId;
+        this.fromUserId = fromUserId;
+        this.toUserId = toUserId;
+        this.status = status;
+        this.fromUserFullName = fromUserFullName;
+        this.oppositeUserEmail=oppositeUserEmail;
+    }
+
+
+
     public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status, String fromUserFullName, String toUserFullName) {
         this.requestId = requestId;
         this.fromUserId = fromUserId;
@@ -17,16 +31,14 @@ public class ConnectionRequest {
         this.status = status;
         this.fromUserFullName = fromUserFullName;
         this.toUserFullName = toUserFullName;
+
     }
 
-    public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status, String oppositeUserFullName) {
-        this.requestId = requestId;
-        this.fromUserId = fromUserId;
-        this.toUserId = toUserId;
-        this.status = status;
-        this.oppositeUserFullName = oppositeUserFullName;
-    }
 
+    public ConnectionRequest(String oppositeUserEmail){
+        this.oppositeUserEmail=oppositeUserEmail;
+
+    }
 
     // Getters and setters as needed
     public int getRequestId() {
@@ -55,5 +67,21 @@ public class ConnectionRequest {
 
     public String getOppositeUserFullName() {
         return oppositeUserFullName;
+    }
+    public String getOppositeUserEmail() {
+        return oppositeUserEmail;
+    }
+
+    // Optionally add a setter if needed
+    public void setOppositeUserEmail(String oppositeUserEmail) {
+        this.oppositeUserEmail = oppositeUserEmail;
+    }
+
+    public String getFromUserEmail() {
+        return fromUserEmail;
+    }
+
+    public String getToUserEmail() {
+        return toUserEmail;
     }
 }

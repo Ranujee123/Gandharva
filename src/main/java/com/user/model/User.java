@@ -1,5 +1,6 @@
 package com.user.model;
 public class User {
+    private String maritalStatus;
     private String firstName;
     private String lastName;
     private String nic;
@@ -46,6 +47,23 @@ public class User {
     private String school;
     private String phonenumber;
     private String personalitytype;
+   private int isVerified;
+
+
+
+
+    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age,int isVerified) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
+        this.province = province;
+        this.phonenumber=phonenumber;
+        this.email = email;
+        this.dpphoto = dpphoto;
+        this.dob = dob;
+        this.age = age;
+        this.isVerified=isVerified;
+    }
 
 
     //editprofile (userDetails)
@@ -59,6 +77,7 @@ public class User {
         this.dpphoto = dpphoto;
         this.dob = dob;
         this.age = age;
+
     }
 
     //update userfamily info
@@ -220,6 +239,37 @@ public class User {
         this.gender=gender;
 
     }
+
+
+
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion,
+                String status, String height, String foodPreferences, String drinking, String smoking,
+                String qualification, String occupation, String diffabled, int age, String freli, String mreli,
+                String foccu, String moccup, String maritalStatus, int siblings, int isVerified) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.province = province;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.status = status;
+        this.height = height;
+        this.foodPreferences = foodPreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.diffabled = diffabled;
+        this.age = age;
+        this.freli = freli;
+        this.mreli = mreli;
+        this.foccu = foccu;
+        this.moccup = moccup;
+        this.maritalStatus = maritalStatus;
+        this.siblings = siblings;
+        this.isVerified = isVerified;
+    }
+
 
     public String getReligion() {
         return religion;
@@ -424,5 +474,10 @@ public class User {
 
     public String getSchool() {
         return school;
+    }
+
+
+    public int getIsVerified() {
+        return isVerified;
     }
 }
