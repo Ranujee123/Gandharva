@@ -69,13 +69,13 @@ public class LoginController extends HttpServlet {
                         case PREMIUM_USER:
                             session.setAttribute("userEmail", loginData.getEmail());
                             session.setAttribute("userId", loginData.getId());
-                            session.setAttribute("premiumUser", allUser);
+                            session.setAttribute("user", allUser);
                             out.print("1");
                             break;
                         case STANDARD_USER:
                             session.setAttribute("userEmail", loginData.getEmail());
                             session.setAttribute("userId", loginData.getId());
-                            session.setAttribute("standardUser", allUser);
+                            session.setAttribute("user", allUser);
                             out.print("2");
                             break;
                         case ASTROLOGER:

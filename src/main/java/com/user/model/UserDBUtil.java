@@ -120,13 +120,13 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertUser(String id,String firstName, String lastName, String nic, String province,String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
+    public static boolean insertUser(String id,String firstName, String lastName, String nic, String province,String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age,byte[] dpphoto) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, phonenumber,email, frontphoto, backphoto, password, gender, dob, age) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, phonenumber,email, frontphoto, backphoto, password, gender, dob, age,dpphoto) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, UUID.randomUUID().toString());
             pstmt.setString(2, firstName);
@@ -141,6 +141,7 @@ public class UserDBUtil {
             pstmt.setString(11, gender);
             pstmt.setString(12, dob);
             pstmt.setInt(13, age);
+            pstmt.setBytes(14,dpphoto);
 
             // Log the prepared statement to see what's being sent to the DB
             System.out.println("Executing SQL: " + pstmt.toString());

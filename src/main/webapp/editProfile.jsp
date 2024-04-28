@@ -8,6 +8,8 @@
 <%@ page import="com.user.model.User" %>
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.user.model.astrologer.AllUser" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="logoutbutton.jsp"/>
@@ -30,6 +32,22 @@
         }
     }
 
+%>
+
+<%
+    String base64Image = null;
+    String firstName = "Not";
+    String lastName = "Applicable";
+    if (session.getAttribute("id") == null) {
+        response.sendRedirect("login");
+    } else {
+        AllUser astrologer = (AllUser) session.getAttribute("user");
+        byte[] blobData = astrologer.getDpphoto();
+
+        base64Image = Base64.getEncoder().encodeToString(blobData);
+        firstName = astrologer.getFirstName();
+        lastName = astrologer.getLastName();
+    }
 %>
 <!DOCTYPE html>
 <html>
@@ -136,7 +154,8 @@
         <form action="updateu" method="post" enctype="multipart/form-data" id="save">
             <div class="dp">
                 <div class="profile-img-container">
-                    <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image">
+                    <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image">
+                  <!--  <img src="<%= base64Image %>" alt="Profile Image" class="profile-image">-->
                     <i class="fas fa-pencil-alt edit-icon" onclick="document.getElementById('dpphoto').click();"></i>
 
 
