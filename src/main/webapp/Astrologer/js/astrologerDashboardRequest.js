@@ -13,6 +13,7 @@ $(document).ready(function() {
                         <td>${x.startDate}</td>
                         <td>${x.deadline}</td>
                         <td>${x.firstName} ${x.lastName}</td>
+                        <td>${x.userType}</td>
                         <td>
                             ${x.feedback}
                             <i class="view-icon fas fa-eye" onClick='viewDocument("${x.id}", "${x.feedbackImage}")'></i>

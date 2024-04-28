@@ -3,6 +3,7 @@ package com.user.controller.astrologer;
 import com.google.gson.Gson;
 import com.user.dao.RequestDAO;
 import com.user.model.astrologer.Request;
+import com.user.model.astrologer.RequestUserDAO;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,7 +30,7 @@ public class RequestGetAllController extends HttpServlet {
 //        UUID userId = UUID.fromString(idString);
 
         try {
-            List<Request> Requests = RequestDAO.getRequests(userId);
+            List<RequestUserDAO> Requests = RequestDAO.getRequests(userId);
             Gson gson = new Gson();
             String requestJSON = gson.toJson(Requests);
             resp.setContentType("application/json");
