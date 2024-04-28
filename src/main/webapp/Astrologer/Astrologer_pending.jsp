@@ -134,6 +134,7 @@
                     <tr>
                         <th style="text-align: center;">Start Date</th>
                         <th style="text-align: center;">Customer Name</th>
+                        <th style="text-align: center;">User Type</th>
                         <th style="text-align: center;">Download Horoscope</th>
                         <th style="text-align: center;">Deadline</th>
                         <th style="text-align: center;">Status</th>

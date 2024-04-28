@@ -214,6 +214,7 @@
                     <th> Start Date</th>
                     <th> Deadline</th>
                     <th> Name of the customer</th>
+                    <th> User Type</th>
                     <th> Feedback</th>
                     <th> Payment received</th>
                     <th> Status</th>

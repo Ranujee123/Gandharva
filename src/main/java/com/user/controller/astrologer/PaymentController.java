@@ -6,6 +6,7 @@ import com.user.dao.PaymentDAO;
 import com.user.dao.RequestDAO;
 import com.user.model.astrologer.Payment;
 import com.user.model.astrologer.Request;
+import com.user.model.astrologer.RequestUserDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -41,7 +42,7 @@ public class PaymentController extends HttpServlet {
 //        UUID userId = UUID.fromString(idString);
 
         try {
-            List<Request> Requests = RequestDAO.getRequests(userId);
+            List<RequestUserDAO> Requests = RequestDAO.getRequests(userId);
             Gson gson = new Gson();
             String requestJSON = gson.toJson(Requests);
             resp.setContentType("application/json");
