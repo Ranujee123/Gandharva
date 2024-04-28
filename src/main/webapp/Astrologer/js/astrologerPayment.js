@@ -8,6 +8,14 @@ $(document).ready(function() {
         method: "GET",
         url: "payment/getAll/requestId",
         success: function(result) {
+        if (Array.isArray(result)) {
+            $('#payment--card--text-last').append(
+                `<h3>Date </h3>
+                <h4>There is no payment</h4>
+                <div class="month">Last payment done</div>`
+                );
+            }
+
             $.each(result, function(index, x) {
                 console.log(x);
                 console.log(index);
