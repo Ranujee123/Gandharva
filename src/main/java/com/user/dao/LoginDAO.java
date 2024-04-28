@@ -30,23 +30,27 @@ public class LoginDAO {
             parentUser.setPassword(resultSet.getString(6));
             parentUser.setCountryOfResidence(resultSet.getString(7));
             parentUser.setDistrict(resultSet.getString(8));
+            parentUser.setUserImage(resultSet.getBytes(15));
+            parentUser.setActivated(resultSet.getBoolean(16));
 
             if(parentUser.getUserType().equals(UserType.USER) || parentUser.getUserType().equals(UserType.PREMIUM_USER) || parentUser.getUserType().equals(UserType.STANDARD_USER)){
                 User user = new User(parentUser);
                 user.setNic(resultSet.getString(9));
-                user.setBirthday(resultSet.getDate(10).toLocalDate());
+//                user.setBirthday(resultSet.getDate(10).toLocalDate());
+
                 return user;
             } else if (parentUser.getUserType().equals(UserType.ASTROLOGER)) {
                 Astrologer astrologer = new Astrologer(parentUser);
-                astrologer.setNumberOfCasesHandled(resultSet.getInt(9));
-                astrologer.setYearsOfExperience(resultSet.getInt(10));
-                astrologer.setCertificateFileUpload(resultSet.getBytes(11));
+                astrologer.setNumberOfCasesHandled(resultSet.getInt(11));
+                astrologer.setYearsOfExperience(resultSet.getInt(12));
+                astrologer.setCertificateFileUpload(resultSet.getBytes(13));
+                astrologer.setAstrologerPayment(resultSet.getInt(17));
                 return astrologer;
             } else if (parentUser.getUserType().equals(UserType.EVENT_PLANNER)) {
                 EventPlanner eventPlanner = new EventPlanner(parentUser);
-                eventPlanner.setNumberOfCasesHandled(resultSet.getInt(9));
-                eventPlanner.setYearsOfExperience(resultSet.getInt(10));
-                eventPlanner.setBrFileUpload(resultSet.getBytes(11));
+                eventPlanner.setNumberOfCasesHandled(resultSet.getInt(11));
+                eventPlanner.setYearsOfExperience(resultSet.getInt(12));
+                eventPlanner.setBrFileUpload(resultSet.getBytes(14));
             }else {
                 throw new RuntimeException("UserType not present in the database");
             }

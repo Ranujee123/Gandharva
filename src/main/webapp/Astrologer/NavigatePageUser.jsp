@@ -24,8 +24,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            /*background: rgba(70, 70, 70, 0.55);*/
-            /*z-index: -1;*/
+            z-index: -1;
         }
 
         * {
@@ -46,13 +45,13 @@
 
 
         header {
-            /*background-color: rgba(0, 0, 0, 0.8);*/
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 20px 0;
         }
 
         nav {
 
-            /*color: black;*/
+            color: black;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -169,7 +168,7 @@
         }
 
         .link a:hover {
-            text-decoration: underline;
+         text-decoration: underline;
         }
         .proceed {
             font-size: large;
@@ -219,7 +218,10 @@
             margin-right: 5px;
         }
 
-
+        .remember{
+            margin-top: 5px;
+            opacity: 0.75;
+        }
 
 
     </style>
@@ -232,38 +234,17 @@
         <div class="logo">
             <a href="home"> <img src='images/logo.png' alt="Logo" ></a>
         </div>
-        <ul class="navbar">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Our Services</a>
-                <ul class="submenu">
-                    <li><a href="astrologerRegistration">Astrologer</a></li>
-                    <li><a href="#">Event Planner</a></li>
-                </ul>
-            </li>
-            <li><a href="#">Pricing</a></li>
-            <li><a href="#">Help</a></li>
-        </ul>
-
-        <div class="buttons">
-            <a href="login"> <button class="signin">Sign In </button></a>
-            <a href="registration"><button class="signup"> |  Sign Up </button> </a>
-        </div>
-
-
     </nav>
 </header>
 
 <div class="container">
+
     <div class="form-box">
-        <a href="registration"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="#"> <h1 class="heading">Guest User</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="u_reg.jsp"> <h1 class="heading">User</h1> </a>
-    </div>
-
-    <div class="form-box">
-        <a href="login"> <h1 class="heading">Event Planner</h1> </a>
+        <a href="userRegistration"> <h1 class="heading">Paid User</h1> </a>
     </div>
 </div>
 

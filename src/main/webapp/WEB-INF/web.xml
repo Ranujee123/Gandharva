@@ -560,4 +560,31 @@
         <servlet-name>AstrologerNavigateController</servlet-name>
         <url-pattern>/navigation</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>serviceProviderNavigateController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.ServiceProviderNavigateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>serviceProviderNavigateController</servlet-name>
+        <url-pattern>/spnavigation</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userRegistrationController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.UserRegistrationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userRegistrationController</servlet-name>
+        <url-pattern>/userRegistration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>userNavigationController</servlet-name>
+        <servlet-class>com.user.controller.astrologer.UserNavigationController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>userNavigationController</servlet-name>
+        <url-pattern>/userNavigation</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -10,6 +10,8 @@ public class User extends ParentUser {
     private byte[] backphoto;
     private String gender;
     private int age;
+    private String province;
+    private String phoneNumber;
 
     public User() {}
 
@@ -84,5 +86,21 @@ public class User extends ParentUser {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }

@@ -92,7 +92,7 @@ public class PaymentController extends HttpServlet {
         UUID requestId = UUID.fromString(requestTypeString);
 
         if(session.getAttribute("id") == null) {
-            resp.sendRedirect("Astrologer_Login.jsp");
+            resp.sendRedirect("login");
             return;
         }
 

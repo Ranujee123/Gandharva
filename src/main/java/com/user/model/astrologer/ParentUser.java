@@ -14,6 +14,7 @@ public class ParentUser {
     private String countryOfResidence;
     private String district;
     private byte[] userImage;
+    private boolean isActivated;
 
     public ParentUser(){}
 
@@ -121,5 +122,13 @@ public class ParentUser {
 
     public void setUserImage(byte[] userImage) {
         this.userImage = userImage;
+    }
+
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        isActivated = activated;
     }
 }
