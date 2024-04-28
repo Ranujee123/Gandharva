@@ -55,19 +55,28 @@
 </head>
 <body>
 <div class="main-content">
-    <h1>Accepted Requests</h1>
+    <h1>Your Connected Profiles</h1>
     <c:if test="${not empty acceptedRequests}">
+        <!-- viewAcceptedReqU.jsp -->
+        <!-- In your JSP file: ViewAcceptedReqU.jsp -->
         <c:forEach var="request" items="${acceptedRequests}">
             <div class="details-card">
                 <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
                 <div>
                     <h2>${request.oppositeUserFullName}</h2>
                     <p>Status: ${request.status}</p>
-                    <!-- You can add a link or button to view more details -->
-                    <a href="u_moredetails.jsp?userId=${request.toUserId}">View Details</a>
+                    <input type="hidden" name="email" value="<c:out value='${request.oppositeUserEmail}'/>">
+                    <div class="button-container">
+                        <!-- Correctly setting the form action and method -->
+                        <form action="moredetails" method="post">
+                            <input type="hidden" name="email" value="${request.oppositeUserEmail}"/>
+                            <button type="submit" class="connect-button">View More</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </c:forEach>
+
     </c:if>
 
     <c:if test="${empty acceptedRequests}">

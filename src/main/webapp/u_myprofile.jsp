@@ -67,6 +67,15 @@
             <p>Email: <%= user.getEmail() %></p>
 
          <p> Province:  <%= user.getProvince() != null ? user.getProvince() : "Not specified" %></p>
+    <p>Verification Status:
+        <% if (user.getIsVerified() == 1) { %>
+        <i class="fas fa-check-circle" style="color: green;"></i> Verified
+        <% } else { %>
+        <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
+        <% } %>
+    </p>
+
+            <!-- Displaying the Verification Status -->
 
             <!-- Add other fields as needed -->
             <% } %>

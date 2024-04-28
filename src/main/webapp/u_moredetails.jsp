@@ -127,6 +127,10 @@
       display: block; /* Ensures the text takes its own line */
       margin-top: 10px; /* Extra space above the status for clarity */
     }
+    .report-button {
+      color: #d9534f; /* Red color for the report icon */
+      font-size: 24px; /* Size of the icon */
+    }
 
 
 
@@ -214,16 +218,59 @@
 
   <div class="details-card">
     <!-- User details -->
-    <p> <%= isReported ? "This user has been reported by you:" : " " %></p>
-    <p> <%= isConnected? "You both are mutually connected:" : " " %></p>
+    <p class="connect-status"> <%= isReported ? "This user has been reported by you" : " " %></p>
+    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>
     <!-- Show other user details -->
   </div>
+
   <div class="details-card">
     <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
     <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
     <p><%=user.getAge()%>-<%=user.getProvince() %></p>
+    <p>Verification Status:
+    <% if (user.getIsVerified() == 1) { %>
+    <i class="fas fa-check-circle" style="color: green;"></i> Verified
+    <% } else { %>
+    <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
+    <% } %>
+  </p>
+
+
+
+    <!-- Reporting Section -->
+    <div class="report-user-section">
+      <!-- Using a Font Awesome icon instead of a button -->
+      <i onclick="reportUser()" class="fas fa-flag report-button" style="cursor: pointer;"></i>
+
+      <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
+        <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
+        <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
+        <input type="hidden" id="reason" name="reason" />
+      </form>
+    </div>
 
   </div>
+
+  <c:if test="${isConnectedUser}">
+    <div class="details-card">
+
+      <h3>Contact Info</h3>
+      <p class="connect-status">You both are mutually connected</p>
+      <table>
+        <tr>
+          <td><b>Phone number</b></td>
+          <td><%=user.getPhonenumber() != null ? user.getPhonenumber() : "Not Shared"%></td>
+        </tr>
+        <tr>
+          <td><b>Email</b></td>
+          <td><%=user.getEmail() %></td>
+        </tr>
+
+      </table>
+    </div>
+  </c:if>
+
+
 
   <div class="details-card">
     <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
@@ -338,13 +385,16 @@
         <td><%=user.getSiblings() %></td>
       </tr>
 
-
     </table>
+
   </div>
 
 
 
-  <c:if test="${isConnectionRequestPending}">
+
+
+
+      <c:if test="${isConnectionRequestPending}">
     <!-- Displayed if there is a pending connection request -->
     <p class="connect-status">Pending Request</p>
   </c:if>
@@ -361,19 +411,10 @@
     </form>
   </c:if>
 
-  <!-- Reporting Section -->
-  <div class="report-user-section">
-    <button onclick="reportUser()" class="report-button">Report User</button>
-    <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
-      <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
-      <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
-      <input type="hidden" id="reason" name="reason" />
-    </form>
-  </div>
 
 
 
-</div>
+    </div>
 <br>
 <br>
 <br>

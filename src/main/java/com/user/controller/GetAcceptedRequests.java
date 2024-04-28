@@ -28,7 +28,7 @@ public class GetAcceptedRequests extends HttpServlet {
             String userId = UserDBUtil.getUserIdByEmail(userEmail);
             List<ConnectionRequest> acceptedRequests = UserDBUtil.getAcceptedReq(userId);
             request.setAttribute("acceptedRequests", acceptedRequests != null ? acceptedRequests : new ArrayList<>());
-            request.getRequestDispatcher("/ViewAcceptedReqU.jsp").forward(request, response);
+            request.getRequestDispatcher("ViewAcceptedReqU.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("acceptedRequests", new ArrayList<>());

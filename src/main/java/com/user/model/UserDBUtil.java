@@ -186,7 +186,7 @@ public class UserDBUtil {
 
     public static List<User> getUserDetails(String email) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto,phonenumber, dob, age FROM user WHERE email = ?";
+        String sql = "SELECT firstName, lastName, nic, province, email, dpphoto,phonenumber, dob, age,isVerified FROM user WHERE email = ?";
         try (Connection con = DBConnect.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, email);
@@ -201,8 +201,9 @@ public class UserDBUtil {
                 byte[] dpphoto = rs.getBytes("dpphoto");
                 String dob = rs.getString("dob");
                 int age = rs.getInt("age");
+                int isVerified=rs.getInt("isVerified");
 
-                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age));
+                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age,isVerified));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -324,6 +325,36 @@ public class UserDBUtil {
         }
     }
 
+    public static List<User> getPersonalDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT  ethnicity, religion, caste, status, height, foodpreferences, drinking, smoking, diffabled FROM userInfo WHERE id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+              //  String id = rs.getString("id");
+                String ethnicity = rs.getString("ethnicity");
+                String religion = rs.getString("religion");
+                String caste = rs.getString("caste");
+                String status = rs.getString("status");
+                String height = rs.getString("height");
+                String foodPreferences = rs.getString("foodpreferences");
+                String drinking = rs.getString("drinking");
+                String smoking = rs.getString("smoking");
+                String diffabled = rs.getString("diffabled");
+
+                // Assuming you have a constructor in User class that matches these parameters
+                User user = new User(id, ethnicity, religion, caste, status, height, foodPreferences, drinking, smoking, diffabled);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving personal details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
+    }
+
 
     public static boolean isPersonalDetailsCompleted(String userEmail) {
         String sql = "SELECT ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.diffabled FROM userInfo ui WHERE ui.id = (SELECT id FROM user WHERE email = ?)";
@@ -415,6 +446,31 @@ public class UserDBUtil {
         }
     }
 
+
+    public static List<User> getQualificationDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, qualification, occupation, school FROM userInfo WHERE id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String qualification = rs.getString("qualification");
+                String occupation = rs.getString("occupation");
+                String school = rs.getString("school");
+
+                // Assuming you have a constructor in User class that accepts these parameters
+                User user = new User(id, qualification, occupation, school);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving qualification details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
     public static boolean saveFamilyDetailsToDatabase(String id, String freli, String foccu,
                                                       String mreli, String moccup, String maritalstatus, int siblings) {
         if (id == null || id.trim().isEmpty()) {
@@ -468,6 +524,33 @@ public class UserDBUtil {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    public static List<User> getFamilyDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT freli, foccu, mreli, moccup, maritalstatus, siblings FROM userInfo WHERE id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String freli = rs.getString("freli");
+                String foccu = rs.getString("foccu");
+                String mreli = rs.getString("mreli");
+                String moccup = rs.getString("moccup");
+                String maritalstatus = rs.getString("maritalstatus");
+                int siblings = rs.getInt("siblings");
+
+                // Assuming you have a constructor in User class that matches these parameters
+                User user = new User(freli, foccu, mreli, moccup, maritalstatus, siblings);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving family details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
     }
 
 
@@ -636,6 +719,28 @@ public class UserDBUtil {
         }
     }
 
+    public static List<User> getInterestDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT interests, personalitytype FROM userInfo WHERE id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                String interests = rs.getString("interests");
+                String personalitytype = rs.getString("personalitytype");
+
+                // Assuming you have a constructor in User class that matches these parameters
+                User user = new User(id, interests, personalitytype);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving interest details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
+    }
+
 
 //interested IN
 
@@ -702,6 +807,47 @@ public class UserDBUtil {
             if (con != null) con.close();
         }
     }
+
+    public static List<User> getInterestedInforUpdate(String id) {
+        List<User> users = new ArrayList<>();
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT id, minAge, maxAge, religion, caste, ethnicity, province FROM userinterestedIfo WHERE id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String userId = rs.getString("id");
+                int minAge = rs.getInt("minAge");
+                int maxAge = rs.getInt("maxAge");
+                String religion = rs.getString("religion");
+                String caste = rs.getString("caste");
+                String ethnicity = rs.getString("ethnicity");
+                String province = rs.getString("province");
+
+                // Assuming constructor exists that matches these parameters
+                User user = new User(userId, minAge, maxAge, religion, caste, ethnicity, province);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstmt != null) pstmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.err.println("Error closing resources: " + e.getMessage());
+            }
+        }
+        return users;
+    }
+
 
     public static boolean isInterestedINCompleted(String userEmail) {
         String sql = "SELECT minAge, maxAge, religion, caste, ethnicity, province FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
@@ -774,6 +920,34 @@ public class UserDBUtil {
             }
         }
     }
+
+
+    public static List<User> getInterestedInQualDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, occupation, qualification FROM userinterestedIfo WHERE id = ?";
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String userId = rs.getString("id");
+                String occupation = rs.getString("occupation");
+                String qualification = rs.getString("qualification");
+
+                // Assuming there is a constructor in User class to handle this data
+                User user = new User(userId, occupation, qualification);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving interested in qualifications details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
 
     public static boolean isInterestedINQualCompleted(String userEmail) {
         String sql = "SELECT occupation, qualification FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
@@ -863,6 +1037,35 @@ public class UserDBUtil {
     }
 
 
+    public static List<User> getInterestedInFamDetails(String id) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT id, freli, foccu, mreli, moccup, maritalstatus, siblings FROM userinterestedIfo WHERE id = ?";
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, id);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String userId = rs.getString("id");
+                String freli = rs.getString("freli");
+                String foccu = rs.getString("foccu");
+                String mreli = rs.getString("mreli");
+                String moccup = rs.getString("moccup");
+                String maritalstatus = rs.getString("maritalstatus");
+                int siblings = rs.getInt("siblings");
+
+                // Assuming there is a constructor in the User class that accepts these parameters
+                User user = new User(userId, freli, foccu, mreli, moccup, maritalstatus, siblings);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            System.err.println("Error retrieving interested in family details: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     public static boolean isinterestedINFamDetailsCompleted(String userEmail) {
         String sql = "SELECT freli, foccu, mreli, moccup, maritalstatus,siblings FROM userinterestedIfo WHERE id = (SELECT id FROM user WHERE email = ?)";
         try (Connection con = DBConnect.getConnection();
@@ -928,10 +1131,10 @@ public class UserDBUtil {
           return users;
       }
   */
-    public static List<User> getFilteredUsers(String province, String ethnicity, String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype, String userEmail) {
+    public static List<User> getFilteredUsers(int minAge,int maxAge,String province, String ethnicity, String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
-        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion,ui.caste, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled,ui.personalitytype, ");
+        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.qualification, ui.occupation, ui.diffabled, ui.personalitytype,u.age, ");
         query.append("((CASE WHEN u.province = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.religion = ? THEN 1 ELSE 0 END) + ");
@@ -947,9 +1150,10 @@ public class UserDBUtil {
         query.append("(CASE WHEN ui.personalitytype = ? THEN 1 ELSE 0 END)) AS relevance ");
         query.append("FROM user u ");
         query.append("LEFT JOIN userInfo ui ON u.id = ui.id ");
-        query.append("WHERE u.email <> ? ");
-        query.append("AND (u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
+        query.append("WHERE u.email <> ? AND u.age BETWEEN ? AND ? ");
+        query.append("OR (u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
         query.append("ORDER BY relevance DESC");
+
 
         List<String> parameters = new ArrayList<>();
 // Add parameters for relevance scoring
@@ -966,11 +1170,11 @@ public class UserDBUtil {
         parameters.add(occupation);
         parameters.add(diffabled);
         parameters.add(personalitytype);
-
-// Add user email for exclusion in WHERE clause
         parameters.add(userEmail);
+        parameters.add(Integer.toString(minAge));
+        parameters.add(Integer.toString(maxAge));
 
-// Add parameters again for filtering conditions in WHERE clause
+// Parameters again for WHERE conditions filtering
         parameters.add(province);
         parameters.add(ethnicity);
         parameters.add(religion);
@@ -984,6 +1188,7 @@ public class UserDBUtil {
         parameters.add(occupation);
         parameters.add(diffabled);
         parameters.add(personalitytype);
+
 
         System.out.println("Executing SQL: " + query.toString());
         System.out.println("With parameters: " + parameters);
@@ -1013,7 +1218,8 @@ public class UserDBUtil {
                         resultSet.getString("qualification"),
                         resultSet.getString("occupation"),
                         resultSet.getString("diffabled"),
-                        resultSet.getString("personalitytype")
+                        resultSet.getString("personalitytype"),
+                        resultSet.getInt("age")
                 );
 
                 users.add(user);
@@ -1029,7 +1235,7 @@ public class UserDBUtil {
     public static Optional<User> getUserByEmail(String email) {
 
         try (Connection con = DBConnect.getConnection()) {
-            String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings FROM user u LEFT JOIN userInfo ui ON u.id = ui.id  WHERE u.email = ?";
+            String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings,u.isVerified FROM user u LEFT JOIN userInfo ui ON u.id = ui.id  WHERE u.email = ?";
 
 
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -1058,7 +1264,8 @@ public class UserDBUtil {
                         rs.getString("foccu"),
                         rs.getString("moccup"),
                         rs.getString("maritalstatus"),
-                        rs.getInt("siblings")
+                        rs.getInt("siblings"),
+                        rs.getInt("isVerified")
                         //  rs.getInt("age")
                 );
                 return Optional.of(user);
@@ -1104,6 +1311,7 @@ public class UserDBUtil {
         }
         return false;
     }
+
 
 
     public static List<ConnectionRequest> getConnectionRequestStatus(String userId) throws SQLException {
@@ -1213,6 +1421,7 @@ public class UserDBUtil {
         try (Connection con = DBConnect.getConnection();
              PreparedStatement ps = con.prepareStatement(
                      "SELECT cr.request_id, cr.status, cr.from_user_id, cr.to_user_id, " +
+                             "u1.email AS fromUserEmail, u2.email AS toUserEmail, " +  // Include toUserEmail
                              "u1.firstName AS fromFirstName, u1.lastName AS fromLastName, " +
                              "u2.firstName AS toFirstName, u2.lastName AS toLastName " +
                              "FROM connection_requests cr " +
@@ -1223,12 +1432,15 @@ public class UserDBUtil {
             ps.setString(2, userId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
+                    String oppositeUserEmail;
                     String oppositeUserFullName;
                     if (rs.getString("from_user_id").equals(userId)) {
-                        // Current user is the sender; display the receiver's name
+                        // Current user is the sender; display the receiver's info
+                        oppositeUserEmail = rs.getString("toUserEmail");  // Access toUserEmail
                         oppositeUserFullName = rs.getString("toFirstName") + " " + rs.getString("toLastName");
                     } else {
-                        // Current user is the receiver; display the sender's name
+                        // Current user is the receiver; display the sender's info
+                        oppositeUserEmail = rs.getString("fromUserEmail");  // Access fromUserEmail
                         oppositeUserFullName = rs.getString("fromFirstName") + " " + rs.getString("fromLastName");
                     }
                     ConnectionRequest request = new ConnectionRequest(
@@ -1236,7 +1448,8 @@ public class UserDBUtil {
                             rs.getString("from_user_id"),
                             rs.getString("to_user_id"),
                             rs.getString("status"),
-                            oppositeUserFullName
+                            oppositeUserFullName,
+                            oppositeUserEmail  // Add oppositeUserEmail to constructor
                     );
                     requests.add(request);
                 }
@@ -1244,7 +1457,6 @@ public class UserDBUtil {
         }
         return requests;
     }
-
 
     public static boolean isConnectionAccepted(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection();
@@ -1336,74 +1548,120 @@ public class UserDBUtil {
     }
 
 
-    public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status, String height, String qualification, String school, String occupation, String foodPreferences, String drinking, String smoking, String diffabled) {
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            con = DBConnect.getConnection();
+    public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking,  String diffabled, String qualification, String occupation, String school) {
+        if (id == null) {
+            System.out.println("No user ID provided.");
+            return false;
+        }
 
-            StringBuilder sql = new StringBuilder("UPDATE userInfo SET ");
-            List<String> updates = new ArrayList<>();
-            List<Object> params = new ArrayList<>();
+        StringBuilder sql = new StringBuilder("UPDATE userInfo SET ");
+        List<Object> params = new ArrayList<>();
 
-            if (ethnicity != null) {
-                updates.add("ethnicity = ?");
-                params.add(ethnicity);
-            }
-            if (religion != null) {
-                updates.add("religion = ?");
-                params.add(religion);
-            }
-            if (caste != null) {
-                updates.add("caste = ?");
-                params.add(caste);
-            }
-            if (status != null) {
-                updates.add("status = ?");
-                params.add(status);
-            }
-            if (height != null) {
-                updates.add("height = ?");
-                params.add(height);
-            }
-            if (qualification != null) {
-                updates.add("qualification = ?");
-                params.add(qualification);
-            }
-            if (school != null) {
-                updates.add("school = ?");
-                params.add(school);
-            }
-            if (occupation != null) {
-                updates.add("occupation = ?");
-                params.add(occupation);
-            }
-            if (foodPreferences != null) {
-                updates.add("foodPreferences = ?");
-                params.add(foodPreferences);
-            }
-            if (drinking != null) {
-                updates.add("drinking = ?");
-                params.add(drinking);
-            }
-            if (smoking != null) {
-                updates.add("smoking = ?");
-                params.add(smoking);
-            }
-            if (diffabled != null) {
-                updates.add("diffabled = ?");
-                params.add(diffabled);
-            }
+        // Append each non-null parameter to the SQL query and parameter list
+        if (ethnicity != null) { sql.append("ethnicity = ?, "); params.add(ethnicity); }
+        if (religion != null) { sql.append("religion = ?, "); params.add(religion); }
+        if (caste != null) { sql.append("caste = ?, "); params.add(caste); }
+        if (status != null) { sql.append("status = ?, "); params.add(status); }
+        if (height != null) { sql.append("height = ?, "); params.add(height); }
+        if (foodpreferences != null) { sql.append("foodpreferences = ?, "); params.add(foodpreferences); }
+        if (drinking != null) { sql.append("drinking = ?, "); params.add(drinking); }
+        if (smoking != null) { sql.append("smoking = ?, "); params.add(smoking); }
+        if (diffabled != null) { sql.append("diffabled = ?, "); params.add(diffabled); }
+        if (qualification != null) { sql.append("qualification = ?, "); params.add(qualification); }
+        if (occupation != null) { sql.append("occupation = ?, "); params.add(occupation); }
+        if (school != null) { sql.append("school = ?, "); params.add(school); }
 
-            if (updates.isEmpty()) {
-                return false; // No update is needed if no fields are changed
+
+
+
+        if (params.isEmpty()) {
+            System.out.println("No fields to update for user ID: " + id);
+            return false;  // No update is necessary if all inputs are null
+        }
+
+        // Remove the last comma and space, add the WHERE clause
+        sql.delete(sql.length() - 2, sql.length());
+        sql.append(" WHERE id = ?");
+        params.add(id);  // Add the ID as the last parameter for the WHERE clause
+
+        // Execute the update
+        try (Connection con = DBConnect.getConnection();  // Auto-closable resource
+             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
+            for (int i = 0; i < params.size(); i++) {
+                pstmt.setObject(i + 1, params.get(i));
             }
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-            sql.append(String.join(", ", updates));
-            sql.append(" WHERE id = ?");
-            params.add(id); // Add id as the last parameter
+    /*    public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status, String height, String qualification, String school, String occupation, String foodPreferences, String drinking, String smoking, String diffabled) {
+        StringBuilder sql = new StringBuilder("UPDATE userInfo SET ");
+        List<String> updates = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
 
-            pstmt = con.prepareStatement(sql.toString());
+        if (ethnicity != null) {
+            updates.add("ethnicity = ?");
+            params.add(ethnicity);
+        }
+        if (religion != null) {
+            updates.add("religion = ?");
+            params.add(religion);
+        }
+        if (caste != null) {
+            updates.add("caste = ?");
+            params.add(caste);
+        }
+        if (status != null) {
+            updates.add("status = ?");
+            params.add(status);
+        }
+        if (height != null) {
+            updates.add("height = ?");
+            params.add(height);
+        }
+        if (qualification != null) {
+            updates.add("qualification = ?");
+            params.add(qualification);
+        }
+        if (school != null) {
+            updates.add("school = ?");
+            params.add(school);
+        }
+        if (occupation != null) {
+            updates.add("occupation = ?");
+            params.add(occupation);
+        }
+        if (foodPreferences != null) {
+            updates.add("foodPreferences = ?");
+            params.add(foodPreferences);
+        }
+        if (drinking != null) {
+            updates.add("drinking = ?");
+            params.add(drinking);
+        }
+        if (smoking != null) {
+            updates.add("smoking = ?");
+            params.add(smoking);
+        }
+        if (diffabled != null) {
+            updates.add("diffabled = ?");
+            params.add(diffabled);
+        }
+
+        if (updates.isEmpty()) {
+            return false; // No update is needed if no fields are changed
+        }
+
+        sql.append(String.join(", ", updates));
+        sql.append(" WHERE id = ?");
+        params.add(id); // Add id as the last parameter
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql.toString())) {
 
             for (int i = 0; i < params.size(); i++) {
                 pstmt.setObject(i + 1, params.get(i));
@@ -1414,17 +1672,10 @@ public class UserDBUtil {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (con != null) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
         }
     }
 
-
+*/
     public static List<User> getUserInfo(String id) {
         List<User> users = new ArrayList<>();
         String sql = "SELECT ethnicity, religion, caste, status, height, qualification, school, occupation, foodpreferences, drinking, smoking, diffabled FROM userInfo WHERE id = ?";
@@ -1441,7 +1692,7 @@ public class UserDBUtil {
                 String qualification = rs.getString("qualification");
                 String school = rs.getString("school");
                 String occupation = rs.getString("occupation");
-                String foodpreferences = rs.getString("foodPreferences");
+                String foodpreferences = rs.getString("foodpreferences");
                 String drinking = rs.getString("drinking");
                 String smoking = rs.getString("smoking");
                 String diffabled = rs.getString("diffabled");
@@ -1514,7 +1765,7 @@ public class UserDBUtil {
 
 
 
-    public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge) throws SQLException {
+ /*   public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge) throws SQLException {
         List<User> matchedUsers = new ArrayList<>();
         String oppositeGender = currentUserGender.equalsIgnoreCase("Male") ? "Female" : "Male";
         int minDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge - 10 : currentUserAge - 5;
@@ -1571,6 +1822,161 @@ public class UserDBUtil {
 
         return matchedUsers;
     }
+*/
+
+
+
+    private static UserInterestedInfo getCurrentUserInterestedInfo(String userId) throws SQLException {
+        UserInterestedInfo userInfo = null;
+        String sql = "SELECT minAge, maxAge, religion, caste, ethnicity, occupation, qualification, freli, foccu, mreli, moccup, maritalstatus, siblings FROM userinterestedIfo WHERE id = ?";
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                userInfo = new UserInterestedInfo();
+                userInfo.setMinAge(rs.getInt("minAge"));
+                userInfo.setMaxAge(rs.getInt("maxAge"));
+                userInfo.setReligion(rs.getString("religion"));
+                userInfo.setCaste(rs.getString("caste"));
+                userInfo.setEthnicity(rs.getString("ethnicity"));
+                userInfo.setOccupation(rs.getString("occupation"));
+                userInfo.setQualification(rs.getString("qualification"));
+                userInfo.setFreli(rs.getString("freli"));
+                userInfo.setFoccu(rs.getString("foccu"));
+                userInfo.setMreli(rs.getString("mreli"));
+                userInfo.setMoccup(rs.getString("moccup"));
+                userInfo.setMaritalstatus(rs.getString("maritalstatus"));
+                userInfo.setSiblings(rs.getString("siblings"));
+            }
+        }
+        return userInfo;
+    }
+
+
+
+
+
+    public static List<User> findMatchingUsers(String currentUserId, String currentUserGender, int currentUserAge) throws SQLException {
+        List<User> matchedUsers = new ArrayList<>();
+        String oppositeGender = currentUserGender.equalsIgnoreCase("Male") ? "Female" : "Male";
+        int minDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge - 10 : currentUserAge - 5;
+        int maxDefaultAge = currentUserGender.equalsIgnoreCase("Male") ? currentUserAge + 5 : currentUserAge + 10;
+
+        UserInterestedInfo currentUserInfo = getCurrentUserInterestedInfo(currentUserId);
+        if (currentUserInfo == null) {
+            throw new SQLException("Required user interest information is missing or incomplete.");
+        }
+
+        String sql = "SELECT u.*, ui.*, " +
+                "(CASE WHEN u.userType = 'PREMIUM_USER' THEN 10 ELSE 1 END) AS premium_score, " +
+                "(CASE WHEN ui.religion = ? THEN 3 ELSE 0 END + " +
+                "CASE WHEN ui.caste = ? THEN 2 ELSE 0 END + " +
+                "CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.occupation = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.qualification = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.freli = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.foccu = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.mreli = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.moccup = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.maritalstatus = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.siblings = ? THEN 1 ELSE 0 END) AS additional_score, " +
+                "(CASE WHEN u.userType = 'PREMIUM_USER' THEN 10 ELSE 1 END + " +
+                "CASE WHEN ui.religion = ? THEN 3 ELSE 0 END + " +
+                "CASE WHEN ui.caste = ? THEN 2 ELSE 0 END + " +
+                "CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.occupation = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.qualification = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.freli = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.foccu = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.mreli = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.moccup = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.maritalstatus = ? THEN 1 ELSE 0 END + " +
+                "CASE WHEN ui.siblings = ? THEN 1 ELSE 0 END) AS total_score " +
+                "FROM user u " +
+                "LEFT JOIN userInfo ui ON u.id = ui.id " +
+                "WHERE u.gender = ? AND u.id != ? AND " +
+                "u.age BETWEEN ? AND ? " +
+                "ORDER BY total_score DESC, premium_score DESC, additional_score DESC, u.userType DESC";
+
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(sql)) {
+            int paramIndex = 1;
+            for (int i = 0; i < 2; i++) {  // Set the parameters twice due to their use in both additional_score and total_score
+                pstmt.setString(paramIndex++, currentUserInfo.getReligion());
+                pstmt.setString(paramIndex++, currentUserInfo.getCaste());
+                pstmt.setString(paramIndex++, currentUserInfo.getEthnicity());
+                pstmt.setString(paramIndex++, currentUserInfo.getOccupation());
+                pstmt.setString(paramIndex++, currentUserInfo.getQualification());
+                pstmt.setString(paramIndex++, currentUserInfo.getFreli());
+                pstmt.setString(paramIndex++, currentUserInfo.getFoccu());
+                pstmt.setString(paramIndex++, currentUserInfo.getMreli());
+                pstmt.setString(paramIndex++, currentUserInfo.getMoccup());
+                pstmt.setString(paramIndex++, currentUserInfo.getMaritalstatus());
+                pstmt.setString(paramIndex++, currentUserInfo.getSiblings());
+            }
+            pstmt.setString(paramIndex++, oppositeGender);
+            pstmt.setString(paramIndex++, currentUserId);
+            int minAge = currentUserInfo.getMinAge() != null ? currentUserInfo.getMinAge() : minDefaultAge;
+            int maxAge = currentUserInfo.getMaxAge() != null ? currentUserInfo.getMaxAge() : maxDefaultAge;
+            pstmt.setInt(paramIndex++, minAge);
+            pstmt.setInt(paramIndex++, maxAge);
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                User user = new User(
+                        rs.getString("firstName"),
+                        rs.getString("lastName"),
+                        rs.getString("email"),
+                        rs.getString("province"),
+                        rs.getString("ethnicity"),
+                        rs.getString("religion"),
+                        rs.getString("status"),
+                        rs.getString("height"),
+                        rs.getString("foodPreferences"),
+                        rs.getString("drinking"),
+                        rs.getString("smoking"),
+                        rs.getString("qualification"),
+                        rs.getString("occupation"),
+                        rs.getString("diffabled"),
+                        rs.getInt("age"),
+                        rs.getString("freli"),
+                        rs.getString("mreli"),
+                        rs.getString("foccu"),
+                        rs.getString("moccup"),
+                        rs.getString("maritalstatus"),
+                        rs.getInt("siblings")
+                );
+                int premiumScore = rs.getInt("premium_score");
+                int additionalScore = rs.getInt("additional_score");
+                int totalScore = premiumScore + additionalScore;  // Calculate total score dynamically if not directly available
+
+                System.out.println("Matched User: " + user);
+                System.out.println("Premium Score: " + premiumScore);
+                System.out.println("Additional Score: " + additionalScore);
+                System.out.println("Total Score: " + totalScore);
+
+                matchedUsers.add(user);
+            }
+
+
+        } catch (SQLException e) {
+            System.err.println("SQL Exception: " + e.getMessage());
+
+            e.printStackTrace();
+            throw e;  // Handle or re-throw the exception as needed
+        }
+
+        return matchedUsers;
+    }
+
+
+
+
+
+
 
 
     public static String getUserReligionById(int id) throws Exception {
@@ -1744,7 +2150,7 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+ /*   public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         boolean isSuccess = false;
@@ -1772,6 +2178,48 @@ public class UserDBUtil {
             if (con != null) con.close();
         }
     }
+*/
+
+
+    public static boolean insertPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        boolean isSuccess = false;
+        try {
+            con = DBConnect.getConnection();
+            String sql = "INSERT INTO payment (userId, paymentDate, paymentTime, paymentMethod, paymentAmount, paymentStatus, cusAddress, cusCity, payment_reason) "
+                    + "VALUES (?, NOW(), NOW(), ?, ?, ?, ?, ?, ?) "
+                    + "ON DUPLICATE KEY UPDATE "
+                    + "paymentMethod = VALUES(paymentMethod), "
+                    + "paymentAmount = VALUES(paymentAmount), "
+                    + "paymentStatus = VALUES(paymentStatus), "
+                    + "cusAddress = VALUES(cusAddress), "
+                    + "cusCity = VALUES(cusCity), "
+                    + "payment_reason = VALUES(payment_reason)";
+
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, paymentMethod);
+            pstmt.setDouble(3, paymentAmount);
+            pstmt.setString(4, paymentStatus);
+            pstmt.setString(5, cusAddress);
+            pstmt.setString(6, cusCity);
+            pstmt.setString(7, paymentReason);
+
+
+            int rowsAffected = pstmt.executeUpdate();
+            isSuccess = rowsAffected > 0;
+            return isSuccess;
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+    }
+
 
 
     public static boolean updateUserType(String userId, String userType) {
@@ -1801,13 +2249,53 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+ /*   public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
         Connection con = null;
         PreparedStatement pstmt = null;
         boolean isSuccess = false;
         try {
             con = DBConnect.getConnection();
             String sql = "INSERT INTO payment (userId, paymentDate, paymentTime, paymentMethod, paymentAmount, paymentStatus, cusAddress, cusCity, payment_reason) VALUES (?, NOW(), NOW(), ?, ?, ?, ?, ?, ?)";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setString(1, userId);
+            pstmt.setString(2, paymentMethod);
+            pstmt.setDouble(3, paymentAmount);
+            pstmt.setString(4, paymentStatus);
+            pstmt.setString(5, cusAddress);
+            pstmt.setString(6, cusCity);
+            pstmt.setString(7, paymentReason);
+
+            int rowsAffected = pstmt.executeUpdate();
+            isSuccess = rowsAffected > 0;
+            return isSuccess;
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally {
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+    }
+*/
+
+    public static boolean insertPREMIUMuserPaymentDetails(String userId, String paymentMethod, double paymentAmount, String paymentStatus, String cusAddress, String cusCity, String paymentReason) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        boolean isSuccess = false;
+        try {
+            con = DBConnect.getConnection();
+            // SQL statement with ON DUPLICATE KEY UPDATE
+            String sql = "INSERT INTO payment (userId, paymentDate, paymentTime, paymentMethod, paymentAmount, paymentStatus, cusAddress, cusCity, payment_reason) "
+                    + "VALUES (?, NOW(), NOW(), ?, ?, ?, ?, ?, ?) "
+                    + "ON DUPLICATE KEY UPDATE "
+                    + "paymentMethod = VALUES(paymentMethod), "
+                    + "paymentAmount = VALUES(paymentAmount), "
+                    + "paymentStatus = VALUES(paymentStatus), "
+                    + "cusAddress = VALUES(cusAddress), "
+                    + "cusCity = VALUES(cusCity), "
+                    + "payment_reason = VALUES(payment_reason)";
+
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, userId);
             pstmt.setString(2, paymentMethod);
@@ -1856,5 +2344,25 @@ public class UserDBUtil {
             }
         }
     }
+
+
+
+
+    public static boolean isUserVerified(String userId) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT isVerified FROM user WHERE id = ?";
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setString(1, userId);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getInt("isVerified") == 1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

@@ -1,6 +1,8 @@
 package com.user.controller;
 
+import com.user.constants.UserType;
 import com.user.model.User;
+import com.user.model.ConnectionRequest;
 import com.user.model.UserDBUtil;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -11,6 +13,7 @@ public class ViewUserDetailsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         String currentUserEmail = (String) session.getAttribute("userEmail"); // Logged-in user's email
+        UserType userType = (UserType) session.getAttribute("userType");
         String email = request.getParameter("email"); // Email of the user whose details are being viewed
         System.out.println("Current User Email: " + currentUserEmail);
         System.out.println("Email received for details: " + email);
@@ -22,7 +25,11 @@ public class ViewUserDetailsServlet extends HttpServlet {
         }
 
         Optional<User> userOptional = UserDBUtil.getUserByEmail(email);
+
+
         if (!userOptional.isPresent()) {
+
+
             request.setAttribute("errorMessage", "No user found with the given email address!");
             request.getRequestDispatcher("errorPage.jsp").forward(request, response);
             return;
@@ -37,7 +44,9 @@ public class ViewUserDetailsServlet extends HttpServlet {
             boolean isPending = UserDBUtil.isConnectionRequestPending(fromUserId, toUserId);
             boolean isReported = UserDBUtil.isReportedUser(fromUserId, toUserId);
             boolean isConnected= UserDBUtil.isConnected(fromUserId,toUserId);
+            boolean isPremiumUser = userType == UserType.PREMIUM_USER;
 
+            request.setAttribute("isPremiumUser", isPremiumUser);
             request.setAttribute("isConnectionRequestPending", isPending);
             request.setAttribute("isUserReported", isReported);
             request.setAttribute("isConnectedUser",isConnected);

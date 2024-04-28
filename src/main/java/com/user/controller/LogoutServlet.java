@@ -19,7 +19,7 @@ public class LogoutServlet extends HttpServlet {
             session.invalidate();
         }
         // Redirect to the login page or home page after logout
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("login");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
