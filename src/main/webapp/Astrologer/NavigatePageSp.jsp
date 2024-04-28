@@ -233,7 +233,7 @@
 <header>
     <nav>
         <div class="logo">
-            <a href="HomePage.jsp"> <img src='images/logo.png' alt="Logo" ></a>
+            <a href="home"> <img src='images/logo.png' alt="Logo" ></a>
         </div>
 
     </nav>
@@ -241,7 +241,7 @@
 
 <div class="container">
     <div class="form-box">
-        <a href="Astrologer_Registration.jsp"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="astrologerRegistration"> <h1 class="heading">Astrologer</h1> </a>
     </div>
 
     <div class="form-box">

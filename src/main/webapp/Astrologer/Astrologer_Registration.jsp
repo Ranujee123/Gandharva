@@ -190,7 +190,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
-<script src="../Astrologer/js/astrologerRegistration.js" defer></script>
+<script src="Astrologer/js/astrologerRegistration.js" defer></script>
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {

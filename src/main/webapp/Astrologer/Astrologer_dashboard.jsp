@@ -139,7 +139,7 @@
                     // Attach a click event listener to the button
                     button.addEventListener("click", function() {
                         // Redirect
-                        window.location.href = "Astrologer_pending.jsp";
+                        window.location.href = "request";
                     });
 
 
@@ -159,7 +159,7 @@
                         // Attach a click event listener to the button
                         button.addEventListener("click", function() {
                             // Redirect
-                            window.location.href = "Astrologer_pending.jsp";
+                            window.location.href = "request";
                         });
 
 
@@ -177,7 +177,7 @@
                         // Attach a click event listener to the button
                         button.addEventListener("click", function() {
                             // Redirect
-                            window.location.href = "Astrologer_pending.jsp";
+                            window.location.href = "request";
                         });
 
 
@@ -196,7 +196,7 @@
                         // Attach a click event listener to the button
                         button.addEventListener("click", function() {
                             // Redirect
-                            window.location.href = "Astrologer_pending.jsp";
+                            window.location.href = "request";
                         });
 
 

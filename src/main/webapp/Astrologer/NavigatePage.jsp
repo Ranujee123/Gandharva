@@ -230,7 +230,7 @@
 <header>
     <nav>
         <div class="logo">
-            <a href="HomePage.jsp"> <img src='images/logo.png' alt="Logo" ></a>
+            <a href="home"> <img src='images/logo.png' alt="Logo" ></a>
         </div>
         <ul class="navbar">
             <li><a href="#">About Us</a></li>

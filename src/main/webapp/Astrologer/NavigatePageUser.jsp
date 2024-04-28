@@ -232,7 +232,7 @@
 <header>
     <nav>
         <div class="logo">
-            <a href="HomePage.jsp"> <img src='images/logo.png' alt="Logo" ></a>
+            <a href="home"> <img src='images/logo.png' alt="Logo" ></a>
         </div>
     </nav>
 </header>
@@ -244,7 +244,7 @@
     </div>
 
     <div class="form-box">
-        <a href="../u_reg.jsp"> <h1 class="heading">Paid User</h1> </a>
+        <a href="userRegistration"> <h1 class="heading">Paid User</h1> </a>
     </div>
 </div>
 
