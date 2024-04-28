@@ -33,7 +33,7 @@ public class EventUserImpl implements IEventUser {
 
             String hashedPassword = hashPassword(eventUser.getPassword());
 
-            String insertSql = "INSERT INTO user (id, firstName, lastName, email, userType, password, numberOfCasesHandled, yearsOfExperience) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertSql = "INSERT INTO user (id, firstName, lastName, email, userType, password, numberOfCasesHandled, yearsOfExperience, aboutMe, phonenumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(insertSql);
             statement.setString(1, eventUser.getId());
             statement.setString(2, eventUser.getFirstName());
@@ -43,6 +43,8 @@ public class EventUserImpl implements IEventUser {
             statement.setString(6, hashedPassword);
             statement.setInt(7, eventUser.getNumberOfEventsHandled());
             statement.setInt(8, eventUser.getYearsOfExperience());
+            statement.setString(9, eventUser.getAboutMe());
+            statement.setString(10, eventUser.getPhoneNo());
 
             statement.executeUpdate();
             System.out.println("User registered successfully.");
@@ -106,7 +108,7 @@ public class EventUserImpl implements IEventUser {
 
         try {
             connection = DBConnect.getConnection();
-            String sql = "SELECT id, firstName, lastName, email, userType FROM user WHERE email = ?";
+            String sql = "SELECT id, firstName, lastName, email, userType, aboutMe FROM user WHERE email = ?";
             statement = connection.prepareStatement(sql);
             statement.setString(1, email);
             resultSet = statement.executeQuery();
@@ -117,8 +119,9 @@ public class EventUserImpl implements IEventUser {
                 String lastName = resultSet.getString("lastName");
                 String userEmail = resultSet.getString("email");
                 String userType = resultSet.getString("userType");
+                String aboutMe = resultSet.getString("aboutMe");
 
-                user = new EventUser(id, firstName, lastName, userEmail, userType);
+                user = new EventUser(id, firstName, lastName, userEmail, userType, aboutMe);
             }
         } catch (SQLException e) {
             e.printStackTrace();

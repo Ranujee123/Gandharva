@@ -18,12 +18,14 @@ public class EventUserRegister extends HttpServlet {
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
         String email = request.getParameter("email");
+        String aboutMe = request.getParameter("about");
+        String phoneNo = request.getParameter("phone");
         String userType = String.valueOf(UserType.EVENT_PLANNER);
         int numberOfEventsHandled = Integer.parseInt(request.getParameter("events"));
         String password = request.getParameter("password");
         int yearsOfExperience = Integer.parseInt(request.getParameter("exp"));
 
-        EventUser eventUser = new EventUser(id, firstName, lastName, email, userType, password, numberOfEventsHandled, yearsOfExperience);
+        EventUser eventUser = new EventUser(id, firstName, lastName, email, userType, password, numberOfEventsHandled, yearsOfExperience, aboutMe, phoneNo);
 
         EventUserImpl eventUserImpl = new EventUserImpl();
         try {

@@ -8,11 +8,14 @@ public class EventPackage {
     private int tablesChairs;
     private String audioFacilities;
     private String decorations;
-    private String localDJ;
-    private String budgetRange;
+    private String foodPartner;
+    private String decoPartner;
+    private String audioPartner;
+    private String tablesPartner;
+    private float budgetRange;
 
     public EventPackage(int packageNo, int numberOfGuests, int foodFor, int beveragesFor, int tablesChairs,
-                        String audioFacilities, String decorations, String localDJ, String budgetRange) {
+                        String audioFacilities, String decorations, float budgetRange, String foodPartner, String decoPartner, String audioPartner, String tablesPartner) {
         this.packageNo = packageNo;
         this.numberOfGuests = numberOfGuests;
         this.foodFor = foodFor;
@@ -20,8 +23,11 @@ public class EventPackage {
         this.tablesChairs = tablesChairs;
         this.audioFacilities = audioFacilities;
         this.decorations = decorations;
-        this.localDJ = localDJ;
         this.budgetRange = budgetRange;
+        this.tablesPartner = tablesPartner;
+        this.decoPartner = decoPartner;
+        this.audioPartner = audioPartner;
+        this.foodPartner = foodPartner;
     }
 
     public int getPackageNo() {
@@ -80,19 +86,43 @@ public class EventPackage {
         this.decorations = decorations;
     }
 
-    public String getLocalDJ() {
-        return localDJ;
-    }
-
-    public void setLocalDJ(String localDJ) {
-        this.localDJ = localDJ;
-    }
-
-    public String getBudgetRange() {
+    public float getBudgetRange() {
         return budgetRange;
     }
 
-    public void setBudgetRange(String budgetRange) {
+    public void setBudgetRange(float budgetRange) {
         this.budgetRange = budgetRange;
+    }
+
+    public String getFoodPartner() {
+        return foodPartner;
+    }
+
+    public void setFoodPartner(String foodPartner) {
+        this.foodPartner = foodPartner;
+    }
+
+    public String getDecoPartner() {
+        return decoPartner;
+    }
+
+    public void setDecoPartner(String decoPartner) {
+        this.decoPartner = decoPartner;
+    }
+
+    public String getAudioPartner() {
+        return audioPartner;
+    }
+
+    public void setAudioPartner(String audioPartner) {
+        this.audioPartner = audioPartner;
+    }
+
+    public String getTablesPartner() {
+        return tablesPartner;
+    }
+
+    public void setTablesPartner(String tablesPartner) {
+        this.tablesPartner = tablesPartner;
     }
 }

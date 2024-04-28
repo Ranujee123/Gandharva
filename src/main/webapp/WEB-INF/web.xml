@@ -339,4 +339,13 @@
     <servlet-name>EventPlannerLoginServlet</servlet-name>
     <url-pattern>/EventPlanner/eventPlannerLog</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventPartnerServlet</servlet-name>
+    <servlet-class>event.servlet.EventPartnerServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPartnerServlet</servlet-name>
+    <url-pattern>/EventPlanner/eventPartner</url-pattern>
+  </servlet-mapping>
 </web-app>

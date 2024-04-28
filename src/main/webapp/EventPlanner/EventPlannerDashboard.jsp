@@ -19,12 +19,12 @@
     <img src="../images/logo.png" alt="company-logo"
     />
 
-<%--    <div class="buttons">--%>
-<%--        <a href=""--%>
-<%--        ><img src="../images/sign-out-icon.png" alt="" id="sign-out-icon" />Log--%>
-<%--            out</a--%>
-<%--        >--%>
-<%--    </div>--%>
+    <div class="buttons">
+        <a href=""
+        ><img src="../images/sign-out-icon.png" alt="" id="sign-out-icon" />Log
+            out</a
+        >
+    </div>
 </nav>
 
 <div class="content">
@@ -109,7 +109,7 @@
         <div class="bottom">
             <button>New Event Requests</button>
             <button>Next Event</button>
-            <button><a href="partners.jsp">View Partners</a></button>
+            <button><a href="Partners.jsp">View Partners</a></button>
         </div>
     </div>
 </div>

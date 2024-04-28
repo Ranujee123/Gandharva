@@ -8,62 +8,124 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="addPackage.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="addPackage.css"/>
     <title>Add New Packages</title>
 </head>
 <body>
-<nav>
-    <div class="buttons">
-        <a href="EventPlannerDashboard.jsp"
-        ><img src="../images/sign-out-icon.png" alt="" id="sign-out-icon" />Back</a
-        >
-    </div>
-</nav>
-
+<jsp:include page="NavBarBack.jsp"/>
 <div class="content">
     <form action="#" method="POST">
         <div class="form-group">
             <label for="packageNo">Package No:</label>
-            <input type="text" name="packageNo" id="packageNo">
+            <input required type="number" name="packageNo" id="packageNo">
         </div>
         <div class="form-group">
             <label for="noOfGuests">Number of Guests:</label>
-            <input type="text" name="noOfGuests" id="noOfGuests">
+            <input required type="number" name="noOfGuests" id="noOfGuests">
         </div>
         <div class="form-group">
-            <label for="foodFor">Food for:</label>
-            <input type="text" name="foodFor" id="foodFor">
+            <label>Food For:</label>
+            <input required type="number" name="food" id="food">
         </div>
         <div class="form-group">
-            <label for="beveragesFor">Beverages for:</label>
-            <input type="text" name="beveragesFor" id="beveragesFor">
+            <label>Beverage For:</label>
+            <input required type="number" name="beverage" id="beverage">
         </div>
         <div class="form-group">
-            <label for="tablesChairs">Tables/Chairs:</label>
-            <input type="text" name="tablesChairs" id="tablesChairs">
+            <label>Tables/Chairs For:</label>
+            <input required type="number" name="table" id="table">
         </div>
         <div class="form-group">
-            <label for="audio">Audio Facilities:</label>
-            <input type="text" name="audio" id="audio">
+            <label>Tables/Chairs Partner:</label>
+            <select name="tablePartner" id="tablePartner">
+                <option value="">Select Partner</option>
+                <option value="food">Food and Beverage</option>
+                <option value="table">Tables and Chairs</option>
+                <option value="dj">Local DJ</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="deco">Decorations:</label>
-            <input type="text" name="deco" id="deco">
+            <label>Food/Beverage Partner:</label>
+            <select name="foodPartner" id="foodPartner">
+                <option value="">Select Partner</option>
+                <option value="food">Food and Beverage</option>
+                <option value="table">Tables and Chairs</option>
+                <option value="dj">Local DJ</option>
+            </select>
         </div>
         <div class="form-group">
-            <label for="dj">Local DJ:</label>
-            <input type="text" name="dj" id="dj">
+            <label>Decorations:</label>
+            <div>
+                <input type="radio" name="decoRadio" id="decoYes" value="yes" checked>
+                <label for="decoYes">Yes</label>
+                <input type="radio" name="decoRadio" id="decoNo" value="no">
+                <label for="decoNo">No</label>
+            </div>
+            <select name="decoPartner" id="decoPartner">
+                <option value="">Select Partner</option>
+                <option value="food">Food and Beverage</option>
+                <option value="table">Tables and Chairs</option>
+                <option value="dj">Local DJ</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Audio Facilities/Local DJ:</label>
+            <div>
+                <input type="radio" name="djRadio" id="djYes" value="yes" checked>
+                <label for="djYes">Yes</label>
+                <input type="radio" name="djRadio" id="djNo" value="no">
+                <label for="djNo">No</label>
+            </div>
+            <select name="djPartner" id="djPartner">
+                <option value="">Select Partner</option>
+                <option value="food">Food and Beverage</option>
+                <option value="table">Tables and Chairs</option>
+                <option value="dj">Local DJ</option>
+            </select>
         </div>
         <div class="form-group">
             <label for="budget">Budget Range:</label>
-            <input type="text" name="budget" id="budget">
+            <input required type="number" name="budget" id="budget">
         </div>
         <div class="form-group">
             <button type="submit">Add Package</button>
         </div>
     </form>
+    <script>
+        const decoYesRadio = document.getElementById("decoYes");
+        const decoNoRadio = document.getElementById("decoNo");
+        const decoPartnerSelect = document.getElementById("decoPartner");
+
+        const djYesRadio = document.getElementById("djYes");
+        const djNoRadio = document.getElementById("djNo");
+        const djPartnerSelect = document.getElementById("djPartner");
+
+        function showHideSelect(element, select) {
+            if (element.value === "yes") {
+                select.style.display = "inline-block";
+            } else {
+                select.style.display = "none";
+            }
+        }
+
+        decoYesRadio.addEventListener("change", function () {
+            showHideSelect(this, decoPartnerSelect);
+        });
+
+        decoNoRadio.addEventListener("change", function () {
+            showHideSelect(this, decoPartnerSelect);
+        });
+
+        djYesRadio.addEventListener("change", function () {
+            showHideSelect(this, djPartnerSelect);
+        });
+
+        djNoRadio.addEventListener("change", function () {
+            showHideSelect(this, djPartnerSelect);
+        });
+    </script>
 </div>
 </body>
 </html>

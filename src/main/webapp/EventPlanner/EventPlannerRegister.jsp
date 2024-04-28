@@ -125,6 +125,12 @@
         padding: 10px;
         width: 50%;
     }
+
+    .form-item textarea {
+        color: #000000;
+        padding: 10px;
+        width: 50%;
+    }
 </style>
 <body>
 <nav>
@@ -167,8 +173,18 @@
             </div>
 
             <div class="form-item">
+                <label for="phone">Phone Number</label>
+                <input required type="text" name="phone" id="phone"/>
+            </div>
+
+            <div class="form-item">
                 <label for="noofevents">Number of Events Handled</label>
                 <input required type="number" name="events" id="noofevents"/>
+            </div>
+
+            <div class="form-item">
+                <label for="aboutme">About Me</label>
+                <textarea required  name="about" id="aboutme"></textarea>
             </div>
 
             <div class="form-item">

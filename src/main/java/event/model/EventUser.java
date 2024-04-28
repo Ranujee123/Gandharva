@@ -7,10 +7,12 @@ public class EventUser {
     private String email;
     private String userType;
     private String password;
+    private String aboutMe;
+    private String phoneNo;
     private int numberOfEventsHandled;
     private int yearsOfExperience;
 
-    public EventUser(String id, String firstName, String lastName, String email, String userType, String password, int numberOfCasesHandled, int yearsOfExperience) {
+    public EventUser(String id, String firstName, String lastName, String email, String userType, String password, int numberOfCasesHandled, int yearsOfExperience, String aboutMe, String phoneNo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,14 +21,17 @@ public class EventUser {
         this.password = password;
         this.numberOfEventsHandled = numberOfCasesHandled;
         this.yearsOfExperience = yearsOfExperience;
+        this.aboutMe = aboutMe;
+        this.phoneNo = phoneNo;
     }
 
-    public EventUser(String id, String firstName, String lastName, String email, String userType) {
+    public EventUser(String id, String firstName, String lastName, String email, String userType, String aboutMe) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.userType = userType;
+        this.aboutMe = aboutMe;
     }
 
     public String getId() {
@@ -91,5 +96,21 @@ public class EventUser {
 
     public void setYearsOfExperience(int yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
+    }
+
+    public String getAboutMe() {
+        return aboutMe;
+    }
+
+    public void setAboutMe(String aboutMe) {
+        this.aboutMe = aboutMe;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 }

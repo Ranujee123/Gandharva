@@ -18,8 +18,8 @@ public class EventPackageImpl implements IEventPackage {
         try {
             connection = DBConnect.getConnection();
 
-            String insertSql = "INSERT INTO event_packages (packageNo, numberOfGuests, foodFor, beveragesFor, tablesChairs, audioFacilities, decorations, localDJ, budgetRange) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertSql = "INSERT INTO event_packages (packageNo, numberOfGuests, foodFor, beveragesFor, tablesChairs, audioFacilities, decorations, budgetRange, foodPartner, decoPartner, tablePartner, audioPartner) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(insertSql);
             statement.setInt(1, eventPackage.getPackageNo());
             statement.setInt(2, eventPackage.getNumberOfGuests());
@@ -28,8 +28,11 @@ public class EventPackageImpl implements IEventPackage {
             statement.setInt(5, eventPackage.getTablesChairs());
             statement.setString(6, eventPackage.getAudioFacilities());
             statement.setString(7, eventPackage.getDecorations());
-            statement.setString(8, eventPackage.getLocalDJ());
-            statement.setString(9, eventPackage.getBudgetRange());
+            statement.setFloat(8, eventPackage.getBudgetRange());
+            statement.setString(9, eventPackage.getFoodPartner());
+            statement.setString(10, eventPackage.getDecoPartner());
+            statement.setString(11, eventPackage.getTablesPartner());
+            statement.setString(12, eventPackage.getAudioPartner());
 
             statement.executeUpdate();
             System.out.println("Event package added successfully.");
@@ -68,12 +71,15 @@ public class EventPackageImpl implements IEventPackage {
                 int tablesChairs = resultSet.getInt("tablesChairs");
                 String audioFacilities = resultSet.getString("audioFacilities");
                 String decorations = resultSet.getString("decorations");
-                String localDJ = resultSet.getString("localDJ");
-                String budgetRange = resultSet.getString("budgetRange");
+                float budgetRange = resultSet.getFloat("budgetRange");
+                String audioPartner = resultSet.getString("audioPartner");
+                String decoPartner = resultSet.getString("decoPartner");
+                String foodPartner = resultSet.getString("foodPartner");
+                String tablesPartner = resultSet.getString("tablesPartner");
 
                 EventPackage eventPackage = new EventPackage(packageNo, numberOfGuests, foodFor, beveragesFor,
-                        tablesChairs, audioFacilities, decorations, localDJ,
-                        budgetRange);
+                        tablesChairs, audioFacilities, decorations,
+                        budgetRange,foodPartner,decoPartner,audioPartner,tablesPartner);
                 packages.add(eventPackage);
             }
         } catch (SQLException e) {
