@@ -46,7 +46,7 @@ public class RequestController extends HttpServlet {
         UserType userTypeEnum = UserType.valueOf(userType);
 
         if(session.getAttribute("id") == null) {
-            resp.sendRedirect("Astrologer_Login.jsp");
+            resp.sendRedirect("login");
             return;
         }
 

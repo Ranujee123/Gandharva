@@ -35,7 +35,7 @@ public class RequestCountController extends HttpServlet {
         System.out.println("UserId RequestCount: "+userId);
 
         if (session.getAttribute("id") == null) {
-            resp.sendRedirect("Astrologer_Login.jsp");
+            resp.sendRedirect("login");
             return;
         }
 

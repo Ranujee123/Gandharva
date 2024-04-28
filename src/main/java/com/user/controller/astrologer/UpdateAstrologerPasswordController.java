@@ -37,7 +37,7 @@ public class UpdateAstrologerPasswordController extends HttpServlet {
 //        UUID id = UUID.fromString(idString);
 
         if(session.getAttribute("id") == null) {
-            resp.sendRedirect("Astrologer_Login.jsp");
+            resp.sendRedirect("login");
             return;
         }
 

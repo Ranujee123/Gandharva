@@ -31,7 +31,7 @@ public class RequestGetAllWithStatusController extends HttpServlet {
         String userId = (String) session.getAttribute("id");
 
         if (session.getAttribute("id") == null) {
-            resp.sendRedirect("Astrologer_Login.jsp");
+            resp.sendRedirect("login");
             return;
         }
 
