@@ -53,7 +53,7 @@ public class PremiumUserServlet extends HttpServlet {
 
             if (paymentSuccess) {
                 UserDBUtil.updatePREMIUMUserType(userId, "PREMIUM_USER");
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("login");
             } else {
                 response.sendRedirect("paymentFailure.jsp");
             }

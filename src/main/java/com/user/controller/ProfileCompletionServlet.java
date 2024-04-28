@@ -30,13 +30,13 @@ public class ProfileCompletionServlet extends HttpServlet {
             response.sendRedirect("login.jsp");
             return;
         }
-        // Handle "Save Progress" action
+      /*  // Handle "Save Progress" action
         if ("save".equals(action)) {
             response.sendRedirect("u_myprofile.jsp");
             return;
         }
 
-
+*/
         boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
         boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
         boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
@@ -75,7 +75,7 @@ public class ProfileCompletionServlet extends HttpServlet {
         session.setAttribute("completedSteps", completedSteps);
         session.setAttribute("completionPercentage", completionPercentage);
 
-     String redirectUrl;
+        String redirectUrl;
 
         if(!personalDetailsCompleted){
             redirectUrl="u_personaldetails.jsp";

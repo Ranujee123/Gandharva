@@ -52,7 +52,7 @@ public class PaymentServlet extends HttpServlet {
 
             if (paymentSuccess) {
                 UserDBUtil.updateUserType(userId, "STANDARD_USER");
-                response.sendRedirect("login.jsp");
+                response.sendRedirect("login");
             } else {
                 response.sendRedirect("paymentFailure.jsp");
             }
