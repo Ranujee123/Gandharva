@@ -7,6 +7,7 @@
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:import url="Final_Sidebar.jsp"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,40 +27,56 @@
             cursor: pointer;
         }
 
-        /* Centering the container that holds the button */
-        .container {
-            display: flex;
-            justify-content: center;  /* Centers horizontally */
-            align-items: center;      /* Centers vertically if the container has a specified height */
-            height: 100vh;            /* Takes full viewport height */
-        }
-
-        .profile-container {
-            display: flex;
-            flex-direction: column; /* Ensures all children (cards) are stacked vertically */
-            align-items: center; /* Center-aligns the cards for a cleaner look */
-            width: 100%; /* Uses full width of the container */
-        }
-
         .profile-card {
             box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
             transition: 0.3s;
-            width: 80%; /* Relative width to make them responsive */
-            min-height: 300px; /* Optional: Ensures all cards have at least this height */
+            width: 50%;  /* Adjust the width as needed */
+            height: 30%; /* Same value as width to make it square */
             border-radius: 5px;
-            margin: 10px 0; /* Adds vertical spacing but no horizontal */
-            padding: 15px; /* Good padding inside the card */
-            text-align: center; /* Centers text */
-            background-color: #fff; /* Sets background color, if needed */
+            display: inline-block;
+            margin: 10px;
+            padding: 2px 16px;
+            text-align: center;
         }
 
-        .profiles-section {
-            width: 100%; /* Ensures the section uses full width */
+        * { font-family: "Poppins", sans-serif; }
+        body {
             display: flex;
-            justify-content: center; /* Center the entire section horizontally */
-            flex-wrap: wrap; /* Allows multiple rows as needed */
+            min-height: 100vh;
+            background-color: #f0f0f0;
+            align-items: flex-start;
+            justify-content: center;
         }
-
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - 120px);
+            margin-left: 100px;
+        }
+        .details-card {
+            margin: 15px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 60%;
+            text-decoration: none;
+        }
+        .profile-image {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            margin-right: 20px;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+            width: 100%;
+        }
     </style>
 
 
@@ -84,13 +101,18 @@
 
 </head>
 <body>
-<h1>Matched Profiles</h1>
-<div class="profiles-section">
+<div class="main-content">
+    <h1><b>Matched Profiles</b></h1>
+
     <c:if test="${not empty matchedUsers}">
 
             <c:forEach items="${matchedUsers}" var="user">
-
+<%--        <div class="details-card">--%>
+<%--            <div class="profiles-section">--%>
                 <div class="profile-card">
+            <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
+
+
                     <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
                     <div class="profile-details-grid">
                         <div class="profile-detail">
@@ -126,7 +148,7 @@
 
 <c:if test="${!isPremiumUser }">
 
-        <button type="button" class="button" id="connectionForm"  onclick="confirmConnection()">View More Matches</button>
+        <button type="button" class="connect-button" id="connectionForm"  onclick="confirmConnection()">View More Potential Matches</button>
 
 </c:if>
 

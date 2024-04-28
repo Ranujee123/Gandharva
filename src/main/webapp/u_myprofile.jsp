@@ -70,12 +70,14 @@
     <p>Verification Status:
         <% if (user.getIsVerified() == 1) { %>
         <i class="fas fa-check-circle" style="color: green;"></i> Verified
+        <% } else if (user.getIsVerified() == 0) { %>
+        <i class="fas fa-exclamation-circle" style="color: orange;"></i> Pending Verification
         <% } else { %>
         <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
         <% } %>
     </p>
 
-            <!-- Displaying the Verification Status -->
+    <!-- Displaying the Verification Status -->
 
             <!-- Add other fields as needed -->
             <% } %>

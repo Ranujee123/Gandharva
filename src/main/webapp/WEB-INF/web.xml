@@ -313,11 +313,11 @@
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-name>UpdatePersonaldetails</servlet-name>
         <servlet-class>com.user.controller.Updatepersonaldetails</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-name>UpdatePersonaldetails</servlet-name>
         <url-pattern>/updatepersonaldetails</url-pattern>
     </servlet-mapping>
 
@@ -375,7 +375,24 @@
         <url-pattern>/updateinterestedINFam</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>sendoppositeuseremail</servlet-name>
+        <servlet-class>com.user.controller.Oppositeuseremail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sendoppositeuseremail</servlet-name>
+        <url-pattern>/oppositeuseremail</url-pattern>
+    </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>viewconnectedprofiledetails</servlet-name>
+        <servlet-class>com.user.controller.ViewDetailsofConnectedProfiles</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>viewconnectedprofiledetails</servlet-name>
+        <url-pattern>/viewconnectedprofiledetails</url-pattern>
+    </servlet-mapping>
 
 
     <!--    ASTROLOGER-->

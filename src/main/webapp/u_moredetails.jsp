@@ -216,24 +216,30 @@
   %>
   <h1></h1>
 
-  <div class="details-card">
+<%--  <div class="details-card">--%>
     <!-- User details -->
     <p class="connect-status"> <%= isReported ? "This user has been reported by you" : " " %></p>
-    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>
+<%--    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>--%>
     <!-- Show other user details -->
-  </div>
+<%--  </div>--%>
 
   <div class="details-card">
     <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
+
     <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
     <p><%=user.getAge()%>-<%=user.getProvince() %></p>
+    <p><%=user.getUserType()%></p>
     <p>Verification Status:
-    <% if (user.getIsVerified() == 1) { %>
-    <i class="fas fa-check-circle" style="color: green;"></i> Verified
-    <% } else { %>
-    <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
-    <% } %>
-  </p>
+      <% if (user.getIsVerified() == 1) { %>
+      <i class="fas fa-check-circle" style="color: green;"></i> Verified
+      <% } else if (user.getIsVerified() == 0) { %>
+      <i class="fas fa-exclamation-circle" style="color: orange;"></i> Pending Verification
+      <% } else if (user.getIsVerified() == 2) { %>
+      <i class="fas fa-check-double" style="color: blue;"></i> Very Verified
+      <% } else { %>
+      <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
+      <% } %>
+    </p>
 
 
 
@@ -258,6 +264,10 @@
       <p class="connect-status">You both are mutually connected</p>
       <table>
         <tr>
+          <td><b>Full Name</b></td>
+          <td><%=user.getfirstName()%> <%=user.getlastName()%></td>
+        </tr>
+        <tr>
           <td><b>Phone number</b></td>
           <td><%=user.getPhonenumber() != null ? user.getPhonenumber() : "Not Shared"%></td>
         </tr>
@@ -273,13 +283,21 @@
 
 
   <div class="details-card">
-    <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
+    <p>Private information such as full name, birth date, pictures and contact details are only visible to matched profiles.</p>
   </div>
 
   <div class="details-card">
     <h3>Personal Info</h3>
     <h4>Basic</h4>
     <table style="width:100%">
+
+      <c:if test="${isConnectedUser}">
+        <tr>
+          <td><b>Date of Birth</b></td>
+          <td><%=user.getDob() %></td>
+        </tr>
+
+      </c:if>
       <tr>
         <td><b>Ethnicity</b></td>
         <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>

@@ -26,8 +26,22 @@
 
 
     <style>
+.profile-card{
+    width: 50%;  /* Adjust the width as needed */
+    height: 30%; /* Same value as width to make it square */
+}
 
+input[type="number"] {
+    border: 2px solid black; /* Adds a black border */
+    padding: 5px; /* Adds some padding inside the input fields */
+    border-radius: 5px; /* Optionally rounds the corners of the border */
+}
 
+select {
+    border: 2px solid black; /* Adds a solid black border */
+    padding: 5px; /* Adds some padding inside the select box */
+    border-radius: 5px; /* Optionally rounds the corners of the border */
+}
 
     </style>
     <script>
@@ -105,6 +119,12 @@
                     <span id="ageto-error" style="color: red;"></span>
 
 
+                    <label>Gender<span ></span>:</label>
+                    <select name="gender" >
+                        <option value=""></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
 
                     <label>District<span ></span>:</label>
                     <select name="province">
@@ -324,7 +344,7 @@
                         <div class="profile-card">
 
 
-                            <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
+                            <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"><c:out value="${user.userType}"/></span></h2>
                             <div class="profile-details-grid">
                                 <div class="profile-detail">
                                     <p>Age: <c:out value="${user.age}"/></p>

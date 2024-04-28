@@ -120,13 +120,13 @@ public class UserDBUtil {
     }
 
 
-    public static boolean insertUser(String id, String firstName, String lastName, String nic, String province, String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age) {
+    public static boolean insertUser(String id, String firstName, String lastName, String nic, String province, String phonenumber, String email, byte[] frontPhoto, byte[] backPhoto, String password, String gender, String dob, int age,byte[] dpphoto) {
         boolean isSuccess = false;
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = DBConnect.getConnection();
-            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, phonenumber,email, frontphoto, backphoto, password, gender, dob, age) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+            String sql = "INSERT INTO user (id,firstName, lastName, nic, province, phonenumber,email, frontphoto, backphoto, password, gender, dob, age,dpphoto) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?)";
             pstmt = con.prepareStatement(sql);
             pstmt.setString(1, UUID.randomUUID().toString());
             pstmt.setString(2, firstName);
@@ -141,6 +141,7 @@ public class UserDBUtil {
             pstmt.setString(11, gender);
             pstmt.setString(12, dob);
             pstmt.setInt(13, age);
+            pstmt.setBytes(14,dpphoto);
 
             // Log the prepared statement to see what's being sent to the DB
             System.out.println("Executing SQL: " + pstmt.toString());
@@ -203,7 +204,7 @@ public class UserDBUtil {
                 int age = rs.getInt("age");
                 int isVerified=rs.getInt("isVerified");
 
-                users.add(new User(firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age,isVerified));
+                users.add(new User(firstName, lastName, nic, provinceName, phonenumber,dpphoto, emailU, dob, age,isVerified));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1131,10 +1132,11 @@ public class UserDBUtil {
           return users;
       }
   */
-    public static List<User> getFilteredUsers(int minAge,int maxAge,String province, String ethnicity, String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype, String userEmail) {
+    public static List<User> getFilteredUsers(int minAge,int maxAge,String gender,String province, String ethnicity, String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype, String userEmail) {
         List<User> users = new ArrayList<>();
         StringBuilder query = new StringBuilder();
-        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.qualification, ui.occupation, ui.diffabled, ui.personalitytype,u.age, ");
+        query.append("SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.caste, ui.status, ui.height, ui.foodpreferences, ui.drinking, ui.smoking, ui.qualification, ui.occupation, ui.diffabled, ui.personalitytype,u.age,u.gender, ");
+        query.append("(CASE WHEN u.gender = ? THEN 1 ELSE 0 END) + ");
         query.append("((CASE WHEN u.province = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.ethnicity = ? THEN 1 ELSE 0 END) + ");
         query.append("(CASE WHEN ui.religion = ? THEN 1 ELSE 0 END) + ");
@@ -1150,13 +1152,15 @@ public class UserDBUtil {
         query.append("(CASE WHEN ui.personalitytype = ? THEN 1 ELSE 0 END)) AS relevance ");
         query.append("FROM user u ");
         query.append("LEFT JOIN userInfo ui ON u.id = ui.id ");
-        query.append("WHERE u.email <> ? AND u.age BETWEEN ? AND ? ");
-        query.append("OR (u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
+        query.append("WHERE u.email <> ? AND u.age BETWEEN ? AND ? AND u.gender=? ");
+        query.append("OR ( u.province = ? OR ui.ethnicity = ? OR ui.religion = ? OR ui.caste=? OR ui.status=? OR ui.height=? OR ui.foodpreferences=? OR ui.drinking=? OR ui.smoking=? OR ui.qualification=? OR ui.occupation=? OR ui.diffabled=? OR ui.personalitytype=?)");
         query.append("ORDER BY relevance DESC");
 
 
         List<String> parameters = new ArrayList<>();
 // Add parameters for relevance scoring
+
+        parameters.add(gender);
         parameters.add(province);
         parameters.add(ethnicity);
         parameters.add(religion);
@@ -1175,6 +1179,8 @@ public class UserDBUtil {
         parameters.add(Integer.toString(maxAge));
 
 // Parameters again for WHERE conditions filtering
+
+        parameters.add(gender);
         parameters.add(province);
         parameters.add(ethnicity);
         parameters.add(religion);
@@ -1219,7 +1225,8 @@ public class UserDBUtil {
                         resultSet.getString("occupation"),
                         resultSet.getString("diffabled"),
                         resultSet.getString("personalitytype"),
-                        resultSet.getInt("age")
+                        resultSet.getInt("age"),
+                        resultSet.getString("gender")
                 );
 
                 users.add(user);
@@ -1235,7 +1242,7 @@ public class UserDBUtil {
     public static Optional<User> getUserByEmail(String email) {
 
         try (Connection con = DBConnect.getConnection()) {
-            String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings,u.isVerified FROM user u LEFT JOIN userInfo ui ON u.id = ui.id  WHERE u.email = ?";
+            String sql = "SELECT u.firstName, u.lastName, u.email, u.province, ui.ethnicity, ui.religion, ui.status, ui.height,ui.foodpreferences,ui.drinking,ui.smoking, ui.qualification, ui.occupation, ui.diffabled, u.age, ui.freli, ui.mreli, ui.foccu, ui.moccup,ui.maritalstatus, ui.siblings,u.isVerified,u.userType,u.dob,u.phonenumber FROM user u LEFT JOIN userInfo ui ON u.id = ui.id  WHERE u.email = ?";
 
 
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -1265,7 +1272,10 @@ public class UserDBUtil {
                         rs.getString("moccup"),
                         rs.getString("maritalstatus"),
                         rs.getInt("siblings"),
-                        rs.getInt("isVerified")
+                        rs.getInt("isVerified"),
+                        rs.getString("userType"),
+                        rs.getString("dob"),
+                        rs.getString("phonenumber")
                         //  rs.getInt("age")
                 );
                 return Optional.of(user);
@@ -1457,6 +1467,92 @@ public class UserDBUtil {
         }
         return requests;
     }
+
+
+    public static String getOppositeUserEmail(String userId, int requestId) throws SQLException {
+        String sql = "SELECT u1.email AS fromUserEmail, u2.email AS toUserEmail, cr.from_user_id, cr.to_user_id " +
+                "FROM connection_requests cr " +
+                "JOIN user u1 ON cr.from_user_id = u1.id " +
+                "JOIN user u2 ON cr.to_user_id = u2.id " +
+                "WHERE cr.request_id = ?";
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, requestId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    if (userId.equals(rs.getString("from_user_id"))) {
+                        return rs.getString("toUserEmail");
+                    } else {
+                        return rs.getString("fromUserEmail");
+                    }
+                }
+            }
+        }
+        return null; // Return null if no matching request is found or opposite email is not determined
+    }
+
+    public static String getOppositeUserEmail(int requestId, String currentUserId) throws SQLException {
+        String email = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = DBConnect.getConnection();
+            String sql = "SELECT u.email FROM user u " +
+                    "JOIN connection_requests cr ON (cr.to_user_id = u.id OR cr.from_user_id = u.id) " +
+                    "WHERE cr.request_id = ? AND u.id != ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, requestId);
+            pstmt.setString(2, currentUserId);
+
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                email = rs.getString("email");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL Error: " + e.getMessage());
+            throw e;
+        } finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+
+        return email;
+    }
+/*
+    public static String getOppositeUserEmail(String currentUserId, int requestId) throws SQLException {
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            con = DBConnect.getConnection();  // Assume DBConnect provides a connection to your database
+            String sql = "SELECT from_user_id, to_user_id, fromUser.email AS from_email, toUser.email AS to_email " +
+                    "FROM connection_requests " +
+                    "JOIN user as fromUser ON connection_requests.from_user_id = fromUser.id " +
+                    "JOIN user as toUser ON connection_requests.to_user_id = toUser.id " +
+                    "WHERE request_id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, requestId);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+                // Check if the current user is the sender; if so, return the receiver's email, and vice versa
+                if (currentUserId.equals(rs.getString("from_user_id"))) {
+                    return rs.getString("to_email");
+                } else {
+                    return rs.getString("from_email");
+                }
+            } else {
+                return null; // No connection found for the given request ID
+            }
+        } finally {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (con != null) con.close();
+        }
+    }
+*/
 
     public static boolean isConnectionAccepted(String fromUserId, String toUserId) {
         try (Connection con = DBConnect.getConnection();

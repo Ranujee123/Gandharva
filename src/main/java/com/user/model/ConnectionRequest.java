@@ -12,6 +12,8 @@ public class ConnectionRequest {
     private String oppositeUserFullName;
     private String oppositeUserEmail;
 
+    private String userId;
+
     // Constructor using IDs and names
     public ConnectionRequest(int requestId, String fromUserId, String toUserId, String status, String fromUserFullName, String toUserFullName,String oppositeUserEmail) {
         this.requestId = requestId;
@@ -34,9 +36,8 @@ public class ConnectionRequest {
 
     }
 
-
-    public ConnectionRequest(String oppositeUserEmail){
-        this.oppositeUserEmail=oppositeUserEmail;
+    public ConnectionRequest(String userId){
+       this.userId=userId;
 
     }
 

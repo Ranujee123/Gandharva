@@ -8,6 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <c:import url="Final_Sidebar.jsp"/>
+<%@ page import="com.user.model.ConnectionRequest" %>
 <html>
 <head>
     <title>View Accepted List</title>
@@ -54,6 +55,14 @@
     </style>
 </head>
 <body>
+<%
+    ConnectionRequest connectionRequest = (ConnectionRequest) request.getAttribute("connectionRequest");
+    Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+    Boolean isConnected=(Boolean)request.getAttribute("isConnectedUser") ;
+
+
+%>
+
 <div class="main-content">
     <h1>Your Connected Profiles</h1>
     <c:if test="${not empty acceptedRequests}">
@@ -63,19 +72,20 @@
             <div class="details-card">
                 <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
                 <div>
-                    <h2>${request.oppositeUserFullName}</h2>
+                    <h2><c:out value="${request.oppositeUserFullName}"/></h2>
                     <p>Status: ${request.status}</p>
-                    <input type="hidden" name="email" value="<c:out value='${request.oppositeUserEmail}'/>">
-                    <div class="button-container">
-                        <!-- Correctly setting the form action and method -->
-                        <form action="moredetails" method="post">
-                            <input type="hidden" name="email" value="${request.oppositeUserEmail}"/>
-                            <button type="submit" class="connect-button">View More</button>
-                        </form>
-                    </div>
+                    <!-- Form to submit to ViewDetailsofConnectedProfiles servlet -->
+                    <form action="moredetails" method="post">
+                        <input type="hidden" name="email" value="${request.oppositeUserEmail}"/>
+                        <p>Email: ${request.oppositeUserEmail}</p>
+                        <button type="submit" class="connect-button">View More</button>
+                    </form>
+
                 </div>
             </div>
         </c:forEach>
+
+
 
     </c:if>
 
