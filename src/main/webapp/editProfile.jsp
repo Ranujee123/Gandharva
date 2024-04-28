@@ -194,8 +194,6 @@
             <br>
 
             <br>
-            <label>About Me:</label>
-            <textarea id="aboutMe" name="aboutMe"></textarea>
 
 
 

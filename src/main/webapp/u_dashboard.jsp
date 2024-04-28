@@ -42,6 +42,27 @@
         }
     </script>
 
+    <script>
+        function validateAgeRange() {
+            var ageFrom = document.getElementById('minAge').value;
+            var ageTo = document.getElementById('maxAge').value;
+
+            // Convert input values to integers
+            var from = parseInt(ageFrom);
+            var to = parseInt(ageTo);
+
+
+            // Check if the ages are within the allowed range and 'Age From' is less than or equal to 'Age To'
+            if (from < 18 || to < 18 || from > to) {
+                alert('Please ensure that both ages are greater than 18, and that Age From is less than or equal to Age To.');
+                return false; // Prevent form submission if the conditions are not met
+            }
+
+            return true; // Allow form submission if all checks are passed
+        }
+    </script>
+
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -74,6 +95,14 @@
 
             <div class="filter-section">
                 <form action="Filter" method="post"> <!-- Replace 'your_servlet_url' with the URL to your servlet handling the filter logic -->
+
+                    <label for="minAge" >Age From:</label>
+                    <input type="number" id="minAge" name="minAge" min="18"  onchange="validateAgeRange()" required>
+                    <span id="age-error" style="color: red;"></span>
+
+                    <label for="maxAge">To:</label>
+                    <input type="number" id="maxAge" name="maxAge" min="18"  onchange="validateAgeRange()" required>
+                    <span id="ageto-error" style="color: red;"></span>
 
 
 
@@ -297,6 +326,9 @@
 
                             <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
                             <div class="profile-details-grid">
+                                <div class="profile-detail">
+                                    <p>Age: <c:out value="${user.age}"/></p>
+                                </div>
                                 <div class="profile-detail">
                                     <p>Province: <c:out value="${user.province}"/></p>
                                 </div>
