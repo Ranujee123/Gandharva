@@ -101,6 +101,7 @@
             width: 100px; /* Adjust the width as needed */
             height: 100px; /* Adjust the height as needed */
             border: none;
+            margin-left: 40px;
         }
 
 
@@ -158,6 +159,7 @@
         .buttons {
             display: flex;
             gap: 30px;
+            margin-right: 40px;
         }
 
         .buttons button {
@@ -365,6 +367,48 @@
             align: left;
         }
 
+        /* Dropdown button */
+        .signup {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        /* Dropdown content (hidden by default) */
+        .dropdown-content {
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            transform: translateY(-10px);
+        }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Change color of dropdown links on hover */
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Show the dropdown content when hovering or focusing on the dropdown button */
+        .show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /*.header-nav {*/
+        /*    margin: 0 20px;*/
+        /*}*/
 
     </style>
 </head>
@@ -375,7 +419,7 @@
 <div class="section--1">
     <video id="video-background" autoplay muted loop>
         <source src="https://res.cloudinary.com/dejithzc7/video/upload/v1705389563/Gandharva/rings_odeouz.mp4" type="video/mp4"> </video>
-    <header>
+    <header class="header-nav">
         <nav>
             <div class="logo">
                 <img src='images/logo.png' alt="Logo">
@@ -393,9 +437,16 @@
                 <li><a href="#">Help</a></li>
             </ul>
             <div class="buttons">
-                <a href="login"> <button class="signin">Sign In </button></a>
-                <button class="divider"> | </button>
-                <a href="registration"> <button class="signup">Sign Up</button> </a>
+                <a href="login"><button class="signin">Sign In</button></a>
+                <button class="divider">|</button>
+                <div class="dropdown-container">
+                    <button class="signup" onclick="toggleDropdown()">Sign Up</button>
+                    <div id="signupDropdown" class="dropdown-content">
+                        <!-- Dropdown content goes here -->
+                        <a href="#">User</a>
+                        <a href="registration">Service Provider</a>
+                    </div>
+                </div>
             </div>
 
         </nav>
@@ -500,7 +551,15 @@
     </div>
 </footer>
 
+<script>
+    /// Function to toggle the display of the dropdown
+function toggleDropdown() {
+    var dropdown = document.getElementById("signupDropdown");
+    dropdown.classList.toggle("show");
+}
 
+
+</script>
 
 </body>
 </html>
