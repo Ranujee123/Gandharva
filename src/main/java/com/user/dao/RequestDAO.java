@@ -1,6 +1,7 @@
 package com.user.dao;
 
 import com.user.constants.RequestType;
+import com.user.constants.UserType;
 import com.user.database.DBConnection;
 import com.user.model.astrologer.Request;
 import com.user.model.astrologer.RequestUserDAO;
@@ -55,8 +56,8 @@ public class RequestDAO {
 //        return request;
 //    }
 
-    public static List<Request> getRequests(String userId) throws SQLException, ClassNotFoundException {
-        List<Request> requests = new ArrayList<>();
+    public static List<RequestUserDAO> getRequests(String userId) throws SQLException, ClassNotFoundException {
+        List<RequestUserDAO> requests = new ArrayList<>();
         Connection connection = DBConnection.getInstance().getConnection();
         String query = "SELECT R.id, R.startDate, R.deadline, R.horoscope, R.status, R.comments, R.feedback, R.userId, R.astrologerId, R.horoscopeSecond, R.feedbackImage, U.firstName, U.lastName, U.email, U.userType FROM request R\n" +
                 "INNER JOIN user U ON U.id = R.userId \n" +
@@ -83,11 +84,22 @@ public class RequestDAO {
                         resultSet.getString(12),
                         resultSet.getString(13),
                         resultSet.getString(14),
-                        resultSet.getString(15)
+                        UserType.valueOf(resultSet.getString(15))
                 ));
             }
         }
-        return requests;
+
+        List<RequestUserDAO> prioritizedRequests = new ArrayList<>();
+        for (RequestUserDAO request : requests) {
+            System.out.println(request.getUserType());
+            if (UserType.PREMIUM_USER.equals(request.getUserType())) {
+                prioritizedRequests.add(request);
+                System.out.println("Prioritized request: " + request.getUserType().toString());
+            }
+        }
+        prioritizedRequests.addAll(requests);
+        System.out.println(prioritizedRequests);
+        return prioritizedRequests;
     }
 
     public static List<Request> getRequestsByStatus(String userId, RequestType requestType) throws SQLException, ClassNotFoundException {

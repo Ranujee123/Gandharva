@@ -109,7 +109,7 @@
 
         <input type="submit" class="btn" id="proceedBtn" name="proceed" value="Login">
     </form>
-    <a href="registration" class="sign-up-link">Don't have an account? Sign Up</a>
+    <a href="home" class="sign-up-link">Don't have an account? Sign Up</a>
     <a href="Astrologer/forgotPassword.jsp" class="forgot-password">Forgot Password?</a>
 </div>
 

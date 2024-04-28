@@ -21,6 +21,7 @@ $(document).ready(function() {
                     `<tr class="${isDeadlinePassed(x.deadline) ? 'deadline-passed' : ''}">
                         <td>${x.startDate}</td>
                         <td>${x.firstName} ${x.lastName}</td>
+                        <td>${x.userType}</td>
                         <td>
                             <div class="pdf-buttons-container">
                                 <button id="downloadButton1" class="pdf-buttons" onclick='downloadPDF("${x.horoscope}")' ${downloadButtonDisabled ? 'disabled' : ''} ${buttonStyle}>Download PDF 1</button>
