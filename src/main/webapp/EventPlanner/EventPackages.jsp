@@ -25,9 +25,17 @@
 
     .content {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         width: 100%;
         background-color: #ffffff;
+    }
+
+    .right-content {
+        width: 80%;
+        min-height: 100vh;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
         padding: 10px;
     }
 
@@ -112,11 +120,14 @@
 <div>
     <jsp:include page="NavBarBack.jsp"/>
     <div class="content">
-        <a href="AddEventPackage.jsp">
-            <button class="add-btn">Add New Package</button>
-        </a>
-        <div class="packages">
-            <div class="package">
+        <jsp:include page="EventSideMenu.jsp"/>
+        <div class="right-content">
+            <a href="AddEventPackage.jsp">
+                <button class="add-btn">Add New Package</button>
+            </a>
+            <div class="packages">
+                <div class="package">
+                </div>
             </div>
         </div>
     </div>

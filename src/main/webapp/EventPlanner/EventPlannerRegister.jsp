@@ -162,11 +162,6 @@
                 <input required type="number" name="exp" id="years"/>
             </div>
 
-<%--            <div class="form-item">--%>
-<%--                <label for="address">Address</label>--%>
-<%--                <input required type="text" name="address" id="address"/>--%>
-<%--            </div>--%>
-
             <div class="form-item">
                 <label for="email">Email</label>
                 <input required type="email" name="email" id="email"/>

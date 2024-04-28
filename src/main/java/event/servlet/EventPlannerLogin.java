@@ -1,5 +1,6 @@
 package event.servlet;
 
+import com.google.gson.Gson;
 import event.model.EventUser;
 import event.service.EventUserImpl;
 

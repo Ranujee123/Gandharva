@@ -366,4 +366,31 @@
     <servlet-name>EventPlannerLogoutServlet</servlet-name>
     <url-pattern>/EventPlanner/logout</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventPlannerEditServlet</servlet-name>
+    <servlet-class>event.servlet.EventPlannerEditServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPlannerEditServlet</servlet-name>
+    <url-pattern>/EventPlanner/editProfile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventNotificationServlet</servlet-name>
+    <servlet-class>event.servlet.EventNotificationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventNotificationServlet</servlet-name>
+    <url-pattern>/EventPlanner/notification</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventReservationServlet</servlet-name>
+    <servlet-class>event.servlet.EventReservationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventReservationServlet</servlet-name>
+    <url-pattern>/EventPlanner/reservation</url-pattern>
+  </servlet-mapping>
 </web-app>

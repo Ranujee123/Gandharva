@@ -55,46 +55,47 @@
 </nav>
 
 <div class="content">
-    <div class="left-bar">
-        <img src="../images/user.png" alt="user-logo"/>
-        <h1>${sessionScope.firstName} ${sessionScope.lastName}</h1>
-        <div class="user-links">
-            <ul>
-                <li>
-                    <a href="EventPlannerDashboard.jsp"
-                    ><img src="../images/user-pic.png" alt=""/>My Profile</a
-                    >
-                </li>
-                <li>
-                    <a href="EventPackages.jsp"
-                    ><img src="../images/packages.png" alt=""/>Packages</a
-                    >
-                </li>
-                <li>
-                    <a href="reservations.jsp"
-                    ><img src="../images/reservations.png" alt=""/>Reservations</a
-                    >
-                </li>
-            </ul>
-        </div>
-        <div class="general-links">
-            <ul>
-                <li>
-                    <a href="notifications.html"
-                    ><img src="../images/notifications.png" alt=""/>Notifications</a
-                    >
-                </li>
-                <li>
-                    <a href="settings.jsp"><img src="../images/settings.png" alt=""/>Settings</a>
-                </li>
-                <li>
-                    <a href=""
-                    ><img src="../images/sign-out-icon.png" alt=""/>Log out</a
-                    >
-                </li>
-            </ul>
-        </div>
-    </div>
+    <jsp:include page="EventSideMenu.jsp"/>
+<%--    <div class="left-bar">--%>
+<%--        <img src="../images/user.png" alt="user-logo"/>--%>
+<%--        <h1>${sessionScope.firstName} ${sessionScope.lastName}</h1>--%>
+<%--        <div class="user-links">--%>
+<%--            <ul>--%>
+<%--                <li>--%>
+<%--                    <a href="EventPlannerDashboard.jsp"--%>
+<%--                    ><img src="../images/user-pic.png" alt=""/>My Profile</a--%>
+<%--                    >--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="EventPackages.jsp"--%>
+<%--                    ><img src="../images/packages.png" alt=""/>Packages</a--%>
+<%--                    >--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="EventReservations.jsp"--%>
+<%--                    ><img src="../images/reservations.png" alt=""/>Reservations</a--%>
+<%--                    >--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--        <div class="general-links">--%>
+<%--            <ul>--%>
+<%--                <li>--%>
+<%--                    <a href="EventPlannerNotifications.jsp"--%>
+<%--                    ><img src="../images/notifications.png" alt=""/>Notifications</a--%>
+<%--                    >--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href="EventPlannerSettings.jsp"><img src="../images/settings.png" alt=""/>Settings</a>--%>
+<%--                </li>--%>
+<%--                <li>--%>
+<%--                    <a href=""--%>
+<%--                    ><img src="../images/sign-out-icon.png" alt=""/>Log out</a--%>
+<%--                    >--%>
+<%--                </li>--%>
+<%--            </ul>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <div class="right-content">
         <div class="top">

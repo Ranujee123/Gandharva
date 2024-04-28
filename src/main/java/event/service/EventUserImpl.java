@@ -138,6 +138,38 @@ public class EventUserImpl implements IEventUser {
         return user;
     }
 
+    @Override
+    public void updateEventUser(EventUser eventUser) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        try {
+            connection = DBConnect.getConnection();
+
+            String updateSql = "UPDATE user SET firstName = ?, lastName = ?, aboutMe = ? WHERE id = ?";
+            statement = connection.prepareStatement(updateSql);
+            statement.setString(1, eventUser.getFirstName());
+            statement.setString(2, eventUser.getLastName());
+            statement.setString(3, eventUser.getAboutMe());
+            statement.setString(4, eventUser.getId());
+
+            int rowsUpdated = statement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("User updated successfully.");
+            } else {
+                System.out.println("User not found or no changes made.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+            if (statement != null) {
+                statement.close();
+            }
+        }
+    }
+
     private String hashPassword(String password) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashedBytes = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));

@@ -34,6 +34,13 @@ public class EventUser {
         this.aboutMe = aboutMe;
     }
 
+    public EventUser(String id, String firstName, String lastName, String aboutMe) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.aboutMe = aboutMe;
+    }
+
     public String getId() {
         return id;
     }

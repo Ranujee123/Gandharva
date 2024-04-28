@@ -7,4 +7,5 @@ public interface IEventUser {
     public void registerEventUser(EventUser eventUser) throws Exception;
     public boolean loginEventUser(String email, String password) throws Exception;
     public EventUser getUserByEmail(String email) throws Exception;
+    public void updateEventUser(EventUser eventUser) throws Exception;
 }
