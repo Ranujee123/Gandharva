@@ -9,10 +9,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="profile.css" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="profile.css"/>
     <title>User Profile</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <nav>
@@ -20,32 +21,58 @@
     />
 
     <div class="buttons">
-        <a href=""
-        ><img src="../images/sign-out-icon.png" alt="" id="sign-out-icon" />Log
-            out</a
+        <a href="#" onclick="confirmLogout()"
+        ><img src="../images/sign-out-icon.png" alt="" id="sign-out-icon"/>Log
+            out
+        </a
         >
     </div>
+    <script>
+        function confirmLogout() {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You would be signed out!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes!"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('${pageContext.request.contextPath}/EventPlanner/logout', {
+                        method: 'POST'
+                    })
+                        .then(response => {
+                            if(response.ok){
+                                window.location.href = '${pageContext.request.contextPath}/EventPlanner/EventPlannerLogin.jsp';
+                            }
+                        })
+                        .catch(error => console.error('Error in logout', error));
+                }
+            });
+        }
+    </script>
 </nav>
 
 <div class="content">
     <div class="left-bar">
-        <img src="../images/user.png" alt="user-logo" />
+        <img src="../images/user.png" alt="user-logo"/>
         <h1>${sessionScope.firstName} ${sessionScope.lastName}</h1>
         <div class="user-links">
             <ul>
                 <li>
                     <a href="EventPlannerDashboard.jsp"
-                    ><img src="../images/user-pic.png" alt="" />My Profile</a
+                    ><img src="../images/user-pic.png" alt=""/>My Profile</a
                     >
                 </li>
                 <li>
                     <a href="EventPackages.jsp"
-                    ><img src="../images/packages.png" alt="" />Packages</a
+                    ><img src="../images/packages.png" alt=""/>Packages</a
                     >
                 </li>
                 <li>
                     <a href="reservations.jsp"
-                    ><img src="../images/reservations.png" alt="" />Reservations</a
+                    ><img src="../images/reservations.png" alt=""/>Reservations</a
                     >
                 </li>
             </ul>
@@ -54,15 +81,15 @@
             <ul>
                 <li>
                     <a href="notifications.html"
-                    ><img src="../images/notifications.png" alt="" />Notifications</a
+                    ><img src="../images/notifications.png" alt=""/>Notifications</a
                     >
                 </li>
                 <li>
-                    <a href="settings.jsp"><img src="../images/settings.png" alt="" />Settings</a>
+                    <a href="settings.jsp"><img src="../images/settings.png" alt=""/>Settings</a>
                 </li>
                 <li>
                     <a href=""
-                    ><img src="../images/sign-out-icon.png" alt="" />Log out</a
+                    ><img src="../images/sign-out-icon.png" alt=""/>Log out</a
                     >
                 </li>
             </ul>

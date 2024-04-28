@@ -3,6 +3,7 @@ package event.servlet;
 import event.model.EventUser;
 import event.service.EventUserImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,8 +38,8 @@ public class EventPlannerLogin extends HttpServlet {
             session.setAttribute("lastName", user.getLastName());
             session.setAttribute("email", user.getEmail());
 
-            request.getSession().setAttribute("successMessage", "Login successful!");
-            response.sendRedirect("EventPlannerDashboard.jsp");
+            RequestDispatcher dis = request.getRequestDispatcher("EventPlannerDashboard.jsp");
+            dis.forward(request, response);
         } else {
             response.sendRedirect("EventPlannerLogin.jsp?error=1");
         }

@@ -13,10 +13,43 @@
     <link rel="stylesheet" href="addPackage.css"/>
     <title>Add New Packages</title>
 </head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('${pageContext.request.contextPath}/EventPlanner/eventPartner')
+            .then(response => response.json())
+            .then(data => {
+                updateSelectInputs(data);
+            })
+            .catch(error => console.error('Error fetching partners data:', error));
+    });
+
+    function updateSelectInputs(partnersData) {
+        populateSelectOptions(partnersData.deco, 'decoPartner');
+        populateSelectOptions(partnersData.dj, 'djPartner');
+        populateSelectOptions(partnersData.food, 'foodPartner');
+        populateSelectOptions(partnersData.table, 'tablePartner');
+    }
+
+    function populateSelectOptions(partners, selectId) {
+        const select = document.getElementById(selectId);
+        select.innerHTML = '';
+
+        const defaultOption = document.createElement('option');
+        defaultOption.text = 'Select Partner';
+        defaultOption.value = '';
+        select.appendChild(defaultOption);
+        partners.forEach(function(partner) {
+            const option = document.createElement('option');
+            option.text = partner.partnerName;
+            option.value = partner.partnerName;
+            select.appendChild(option);
+        });
+    }
+</script>
 <body>
 <jsp:include page="NavBarBack.jsp"/>
 <div class="content">
-    <form action="#" method="POST">
+    <form action="eventPackage" method="POST">
         <div class="form-group">
             <label for="packageNo">Package No:</label>
             <input required type="number" name="packageNo" id="packageNo">
@@ -40,54 +73,38 @@
         <div class="form-group">
             <label>Tables/Chairs Partner:</label>
             <select name="tablePartner" id="tablePartner">
-                <option value="">Select Partner</option>
-                <option value="food">Food and Beverage</option>
-                <option value="table">Tables and Chairs</option>
-                <option value="dj">Local DJ</option>
             </select>
         </div>
         <div class="form-group">
             <label>Food/Beverage Partner:</label>
             <select name="foodPartner" id="foodPartner">
-                <option value="">Select Partner</option>
-                <option value="food">Food and Beverage</option>
-                <option value="table">Tables and Chairs</option>
-                <option value="dj">Local DJ</option>
             </select>
         </div>
         <div class="form-group">
             <label>Decorations:</label>
             <div>
-                <input type="radio" name="decoRadio" id="decoYes" value="yes" checked>
+                <input type="radio" name="decorations" id="decoYes" value="Yes" checked>
                 <label for="decoYes">Yes</label>
-                <input type="radio" name="decoRadio" id="decoNo" value="no">
+                <input type="radio" name="decorations" id="decoNo" value="No">
                 <label for="decoNo">No</label>
             </div>
             <select name="decoPartner" id="decoPartner">
-                <option value="">Select Partner</option>
-                <option value="food">Food and Beverage</option>
-                <option value="table">Tables and Chairs</option>
-                <option value="dj">Local DJ</option>
             </select>
         </div>
         <div class="form-group">
             <label>Audio Facilities/Local DJ:</label>
             <div>
-                <input type="radio" name="djRadio" id="djYes" value="yes" checked>
+                <input type="radio" name="audioFacilities" id="djYes" value="Yes" checked>
                 <label for="djYes">Yes</label>
-                <input type="radio" name="djRadio" id="djNo" value="no">
+                <input type="radio" name="audioFacilities" id="djNo" value="No">
                 <label for="djNo">No</label>
             </div>
-            <select name="djPartner" id="djPartner">
-                <option value="">Select Partner</option>
-                <option value="food">Food and Beverage</option>
-                <option value="table">Tables and Chairs</option>
-                <option value="dj">Local DJ</option>
+            <select name="audioPartner" id="djPartner">
             </select>
         </div>
         <div class="form-group">
             <label for="budget">Budget Range:</label>
-            <input required type="number" name="budget" id="budget">
+            <input required type="number" name="budgetRange" id="budget">
         </div>
         <div class="form-group">
             <button type="submit">Add Package</button>
@@ -103,7 +120,7 @@
         const djPartnerSelect = document.getElementById("djPartner");
 
         function showHideSelect(element, select) {
-            if (element.value === "yes") {
+            if (element.value === "Yes") {
                 select.style.display = "inline-block";
             } else {
                 select.style.display = "none";

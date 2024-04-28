@@ -348,4 +348,22 @@
     <servlet-name>EventPartnerServlet</servlet-name>
     <url-pattern>/EventPlanner/eventPartner</url-pattern>
   </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventPackageServlet</servlet-name>
+    <servlet-class>event.servlet.EventPackageServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPackageServlet</servlet-name>
+    <url-pattern>/EventPlanner/eventPackage</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>EventPlannerLogoutServlet</servlet-name>
+    <servlet-class>event.servlet.EventPlannerLogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>EventPlannerLogoutServlet</servlet-name>
+    <url-pattern>/EventPlanner/logout</url-pattern>
+  </servlet-mapping>
 </web-app>

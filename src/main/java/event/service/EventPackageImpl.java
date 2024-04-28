@@ -75,7 +75,7 @@ public class EventPackageImpl implements IEventPackage {
                 String audioPartner = resultSet.getString("audioPartner");
                 String decoPartner = resultSet.getString("decoPartner");
                 String foodPartner = resultSet.getString("foodPartner");
-                String tablesPartner = resultSet.getString("tablesPartner");
+                String tablesPartner = resultSet.getString("tablePartner");
 
                 EventPackage eventPackage = new EventPackage(packageNo, numberOfGuests, foodFor, beveragesFor,
                         tablesChairs, audioFacilities, decorations,

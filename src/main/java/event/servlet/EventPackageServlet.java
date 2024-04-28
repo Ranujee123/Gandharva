@@ -1,5 +1,6 @@
 package event.servlet;
 
+import com.google.gson.Gson;
 import event.model.EventPackage;
 import event.service.EventPackageImpl;
 
@@ -13,17 +14,16 @@ import java.util.List;
 public class EventPackageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int packageNo = Integer.parseInt(request.getParameter("packageNo"));
-        int numberOfGuests = Integer.parseInt(request.getParameter("numberOfGuests"));
-        int foodFor = Integer.parseInt(request.getParameter("foodFor"));
-        int beveragesFor = Integer.parseInt(request.getParameter("beveragesFor"));
-        int tablesChairs = Integer.parseInt(request.getParameter("tablesChairs"));
+        int numberOfGuests = Integer.parseInt(request.getParameter("noOfGuests"));
+        int foodFor = Integer.parseInt(request.getParameter("food"));
+        int beveragesFor = Integer.parseInt(request.getParameter("beverage"));
+        int tablesChairs = Integer.parseInt(request.getParameter("table"));
         String audioFacilities = request.getParameter("audioFacilities");
         String decorations = request.getParameter("decorations");
-        String localDJ = request.getParameter("localDJ");
         String foodPartner = request.getParameter("foodPartner");
         String decoPartner = request.getParameter("decoPartner");
         String audioPartner = request.getParameter("audioPartner");
-        String tablesPartner = request.getParameter("tablesPartner");
+        String tablesPartner = request.getParameter("tablePartner");
         float budgetRange = Float.parseFloat(request.getParameter("budgetRange"));
 
         EventPackage eventPackage = new EventPackage(packageNo, numberOfGuests, foodFor, beveragesFor, tablesChairs,
@@ -39,12 +39,15 @@ public class EventPackageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         EventPackageImpl eventPackageImpl = new EventPackageImpl();
         try {
             List<EventPackage> eventPackages = eventPackageImpl.getAllPackages();
-            // Do something with eventPackages, like forwarding to a JSP for display
-            request.setAttribute("eventPackages", eventPackages);
-            request.getRequestDispatcher("EventPackages.jsp").forward(request, response);
+
+            Gson gson = new Gson();
+            String json = gson.toJson(eventPackages);
+            response.getWriter().write(json);
         } catch (Exception e) {
             e.printStackTrace();
         }
