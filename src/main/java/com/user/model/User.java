@@ -1,5 +1,7 @@
 package com.user.model;
 public class User {
+    private  String interests;
+    private String id;
     private String maritalStatus;
     private String firstName;
     private String lastName;
@@ -107,7 +109,7 @@ public class User {
 */
 
     //display filter box card method constructor
-    public User(String firstName, String lastName, String email, String province, String ethnicity,String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype)
+    public User(String firstName, String lastName, String email, String province, String ethnicity,String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype,int age)
     {
 
         this.firstName = firstName;
@@ -126,6 +128,7 @@ public class User {
         this.occupation = occupation;
         this.diffabled = diffabled;
         this.personalitytype=personalitytype;
+        this.age=age;
 
     }
 
@@ -241,9 +244,9 @@ public class User {
     }
 
 
-
+//updatepersonalInfo
     public User(String firstName, String lastName, String email, String province, String ethnicity, String religion,
-                String status, String height, String foodPreferences, String drinking, String smoking,
+                String status, String height, String foodpreferences, String drinking, String smoking,
                 String qualification, String occupation, String diffabled, int age, String freli, String mreli,
                 String foccu, String moccup, String maritalStatus, int siblings, int isVerified) {
         this.firstName = firstName;
@@ -254,7 +257,7 @@ public class User {
         this.religion = religion;
         this.status = status;
         this.height = height;
-        this.foodPreferences = foodPreferences;
+        this.foodpreferences = foodpreferences;
         this.drinking = drinking;
         this.smoking = smoking;
         this.qualification = qualification;
@@ -270,6 +273,78 @@ public class User {
         this.isVerified = isVerified;
     }
 
+//updateuserdetails
+    public User(String id, String ethnicity, String religion, String caste, String status, String height,
+                String foodPreferences, String drinking, String smoking, String diffabled) {
+        this.id = id;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.caste = caste;
+        this.status = status;
+        this.height = height;
+        this.foodPreferences = foodPreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.diffabled = diffabled;
+    }
+
+
+    public User(String email, String ethnicity, String religion, String caste, String status,
+                String height, String foodPreferences, String drinking, String smoking,
+                String diffabled, String qualification, String occupation, String school) {
+        this.email = email;
+        this.ethnicity = ethnicity;
+        this.religion = religion;
+        this.caste = caste;
+        this.status = status;
+        this.height = height;
+        this.foodPreferences = foodPreferences;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.diffabled = diffabled;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.school = school;
+    }
+//update interest\
+
+    public User(String id, String interests, String personalitytype) {
+        this.id = id;
+        this.interests = interests;
+        this.personalitytype = personalitytype;
+    }
+
+    // Constructor for updateinterestedinfamily details
+    public User(String id, String freli, String foccu, String mreli, String moccup, String maritalStatus, int siblings) {
+        this.id = id;
+        this.freli = freli;
+        this.foccu = foccu;
+        this.mreli = mreli;
+        this.moccup = moccup;
+        this.maritalStatus = maritalStatus;
+        this.siblings = siblings;
+    }
+
+
+
+    // Constructor for updateinterestedIN
+    public User(String id, int minAge, int maxAge, String religion, String caste, String ethnicity, String province) {
+        this.id = id;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.religion = religion;
+        this.caste = caste;
+        this.ethnicity = ethnicity;
+        this.province = province;
+    }
+
+    // Constructor for qualification details
+    public User(String id, String qualification, String occupation, String school) {
+        this.id = id;
+        this.qualification = qualification;
+        this.occupation = occupation;
+        this.school = school;
+    }
 
     public String getReligion() {
         return religion;
@@ -479,5 +554,30 @@ public class User {
 
     public int getIsVerified() {
         return isVerified;
+    }
+
+    public String getPersonalitytype() {
+        return personalitytype;
+    }
+
+    public void setPersonalitytype(String personalitytype) {
+        this.personalitytype = personalitytype;
+    }
+
+
+    public String getInterests() {
+        return interests;
+    }
+
+    public void setInterests(String interests) {
+        this.interests = interests;
+    }
+
+    public int getMinAge() {
+        return minAge;
+    }
+
+    public int getMaxAge() {
+        return maxAge;
     }
 }

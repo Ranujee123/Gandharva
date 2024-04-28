@@ -27,6 +27,8 @@ public class FilterServlet extends HttpServlet {
             return;
         }
 
+        int minAge= Integer.parseInt(request.getParameter("minAge"));
+        int maxAge= Integer.parseInt(request.getParameter("maxAge"));
         String province = request.getParameter("province");
         String ethnicity = request.getParameter("ethnicity");
         String religion = request.getParameter("religion");
@@ -45,7 +47,7 @@ public class FilterServlet extends HttpServlet {
 
 
         // Call the model to get filtered users, excluding the current user
-        List<User> filteredUsers = UserDBUtil.getFilteredUsers(province, ethnicity, religion,caste, status,height,foodpreferences,drinking,smoking,qualification,occupation,diffabled,personalitytype,userEmail);
+        List<User> filteredUsers = UserDBUtil.getFilteredUsers(minAge,maxAge,province, ethnicity, religion,caste, status,height,foodpreferences,drinking,smoking,qualification,occupation,diffabled,personalitytype,userEmail);
 
         request.setAttribute("filteredUsers", filteredUsers);
         RequestDispatcher dispatcher = request.getRequestDispatcher("u_dashboard.jsp"); // Adjust if necessary
