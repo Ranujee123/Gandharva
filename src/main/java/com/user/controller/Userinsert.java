@@ -14,9 +14,12 @@ import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import java.security.MessageDigest;
+
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
+
+
+import static com.user.constants.PasswordHashing.obtainSHA;
+import static com.user.constants.PasswordHashing.toHexStr;
 
 
 @MultipartConfig
@@ -42,13 +45,11 @@ public class Userinsert extends HttpServlet {
         }
 
         try {
-            password = hashPassword(password); // Hash the password
+            password = toHexStr(obtainSHA(password));
+//            System.out.println(login_password);
         } catch (NoSuchAlgorithmException e) {
-            req.setAttribute("errorMessage", "Failed to hash the password.");
-            req.getRequestDispatcher("/u_reg.jsp").forward(req, resp);
-            return;
+            e.printStackTrace();
         }
-
 
         Part frontPhotoPart = req.getPart("frontphoto");
         Part backPhotoPart = req.getPart("backphoto");
@@ -114,10 +115,5 @@ public class Userinsert extends HttpServlet {
         return bytes;
     }
 
-    private String hashPassword(String password) throws NoSuchAlgorithmException {
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hashedBytes = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(hashedBytes);
-    }
 
 }

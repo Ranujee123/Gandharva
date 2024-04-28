@@ -41,7 +41,7 @@
       align-items: center;
       min-height: 100vh;
       background-color: #f0f0f0;
-      }
+    }
     .details-card {
 
       margin: 15px; /* Space between cards */
@@ -127,6 +127,10 @@
       display: block; /* Ensures the text takes its own line */
       margin-top: 10px; /* Extra space above the status for clarity */
     }
+    .report-button {
+      color: #d9534f; /* Red color for the report icon */
+      font-size: 24px; /* Size of the icon */
+    }
 
 
 
@@ -203,95 +207,140 @@
 
 <div>
 
-<%
-  User user = (User) request.getAttribute("user");
-  Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+  <%
+    User user = (User) request.getAttribute("user");
+    Boolean isReported = (Boolean) request.getAttribute("isUserReported");
+    Boolean isConnected=(Boolean)request.getAttribute("isConnectedUser") ;
 
-  if (user != null) {
-%>
-<h1></h1>
+    if (user != null) {
+  %>
+  <h1></h1>
 
   <div class="details-card">
     <!-- User details -->
-    <p> <%= isReported ? "This user has been reported by you:" : " " %></p>
+    <p class="connect-status"> <%= isReported ? "This user has been reported by you" : " " %></p>
+    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>
     <!-- Show other user details -->
   </div>
-<div class="details-card">
-  <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
-  <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
-  <p><%=user.getAge()%>-<%=user.getProvince() %></p>
 
-</div>
-
-<div class="details-card">
-  <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
-</div>
-
-<div class="details-card">
-  <h3>Personal Info</h3>
-  <h4>Basic</h4>
-  <table style="width:100%">
-<tr>
-  <td><b>Ethnicity</b></td>
-  <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>
-</tr>
-
-    <tr>
-      <td><b>Religion</b></td>
-      <td><%=user.getReligion() != null ? user.getReligion() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Age</b></td>
-      <td><%=user.getAge()%></td>
-    </tr>
-    <tr>
-      <td><b>Civil Status</b></td>
-      <td><%=user.getStatus() != null ? user.getStatus() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Height</b></td>
-      <td><%=user.getHeight()%></td>
-    </tr>
-    <tr>
-      <td><b>Province</b></td>
-      <td><%=user.getProvince()%></td>
-    </tr>
-
-  </table>
-
-  <h4>Education & Profession</h4>
-  <table style="width:100%">
-    <tr>
-      <td><b>Highest Education Qualification</b></td>
-      <td><%=user.getQualification() != null ? user.getQualification() : "Not Shared"%></td>
-    </tr>
-
-    <tr>
-      <td><b>Profession</b></td>
-      <td><%=user.getOccupation() != null ? user.getOccupation() : "Not Shared"%></td>
-    </tr>
-  </table>
-
-  <h4>Habits</h4>
-  <table style="width:100%">
-    <tr>
-      <td><b>Food Preference</b></td>
-      <td><%=user.getFoodpreferences() != null ? user.getFoodpreferences() : "Not Shared"%></td>
-    </tr>
-
-    <tr>
-      <td><b>Drinking</b></td>
-      <td><%=user.getDrinking() != null ? user.getDrinking() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>Smoking</b></td>
-      <td><%=user.getSmoking() != null ? user.getSmoking() : "Not Shared"%></td>
-    </tr>
-  </table>
-</div>
+  <div class="details-card">
+    <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
+    <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
+    <p><%=user.getAge()%>-<%=user.getProvince() %></p>
+    <p>Verification Status:
+    <% if (user.getIsVerified() == 1) { %>
+    <i class="fas fa-check-circle" style="color: green;"></i> Verified
+    <% } else { %>
+    <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
+    <% } %>
+  </p>
 
 
-<div class="details-card">
+
+    <!-- Reporting Section -->
+    <div class="report-user-section">
+      <!-- Using a Font Awesome icon instead of a button -->
+      <i onclick="reportUser()" class="fas fa-flag report-button" style="cursor: pointer;"></i>
+
+      <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
+        <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
+        <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
+        <input type="hidden" id="reason" name="reason" />
+      </form>
+    </div>
+
+  </div>
+
+  <c:if test="${isConnectedUser}">
+    <div class="details-card">
+
+      <h3>Contact Info</h3>
+      <p class="connect-status">You both are mutually connected</p>
+      <table>
+        <tr>
+          <td><b>Phone number</b></td>
+          <td><%=user.getPhonenumber() != null ? user.getPhonenumber() : "Not Shared"%></td>
+        </tr>
+        <tr>
+          <td><b>Email</b></td>
+          <td><%=user.getEmail() %></td>
+        </tr>
+
+      </table>
+    </div>
+  </c:if>
+
+
+
+  <div class="details-card">
+    <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
+  </div>
+
+  <div class="details-card">
+    <h3>Personal Info</h3>
+    <h4>Basic</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Ethnicity</b></td>
+        <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>
+      </tr>
+
+      <tr>
+        <td><b>Religion</b></td>
+        <td><%=user.getReligion() != null ? user.getReligion() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Age</b></td>
+        <td><%=user.getAge()%></td>
+      </tr>
+      <tr>
+        <td><b>Civil Status</b></td>
+        <td><%=user.getStatus() != null ? user.getStatus() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Height</b></td>
+        <td><%=user.getHeight()%></td>
+      </tr>
+      <tr>
+        <td><b>Province</b></td>
+        <td><%=user.getProvince()%></td>
+      </tr>
+
+    </table>
+
+    <h4>Education & Profession</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Highest Education Qualification</b></td>
+        <td><%=user.getQualification() != null ? user.getQualification() : "Not Shared"%></td>
+      </tr>
+
+      <tr>
+        <td><b>Profession</b></td>
+        <td><%=user.getOccupation() != null ? user.getOccupation() : "Not Shared"%></td>
+      </tr>
+    </table>
+
+    <h4>Habits</h4>
+    <table style="width:100%">
+      <tr>
+        <td><b>Food Preference</b></td>
+        <td><%=user.getFoodpreferences() != null ? user.getFoodpreferences() : "Not Shared"%></td>
+      </tr>
+
+      <tr>
+        <td><b>Drinking</b></td>
+        <td><%=user.getDrinking() != null ? user.getDrinking() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>Smoking</b></td>
+        <td><%=user.getSmoking() != null ? user.getSmoking() : "Not Shared"%></td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="details-card">
 
     <h3>Family Info</h3>
 
@@ -326,52 +375,51 @@
 
 
     </div>
-  <table>
-    <tr>
-      <td><b>Marital Status of parents</b></td>
-      <td><%=user.getMaritalstatus() != null ? user.getMaritalstatus() : "Not Shared"%></td>
-    </tr>
-    <tr>
-      <td><b>No of Siblings</b></td>
-      <td><%=user.getSiblings() %></td>
-    </tr>
+    <table>
+      <tr>
+        <td><b>Marital Status of parents</b></td>
+        <td><%=user.getMaritalstatus() != null ? user.getMaritalstatus() : "Not Shared"%></td>
+      </tr>
+      <tr>
+        <td><b>No of Siblings</b></td>
+        <td><%=user.getSiblings() %></td>
+      </tr>
 
+    </table>
 
-  </table>
   </div>
 
 
 
-<c:if test="${isConnectionRequestPending}">
-  <p class="connect-status">Pending Request</p>
-</c:if>
-<c:if test="${not isConnectionRequestPending}">
 
 
-  <form action="connection" method="post" id="connectionForm">
-    <input type="hidden" name="toUserEmail" value="${user.email}" />
-    <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
-  </form>
-</c:if>
 
-  <!-- Reporting Section -->
-  <div class="report-user-section">
-    <button onclick="reportUser()" class="report-button">Report User</button>
-    <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
-      <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
-      <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
-      <input type="hidden" id="reason" name="reason" />
+      <c:if test="${isConnectionRequestPending}">
+    <!-- Displayed if there is a pending connection request -->
+    <p class="connect-status">Pending Request</p>
+  </c:if>
+
+  <c:if test="${isConnectedUser}">
+    <!-- Displayed if the users are already connected -->
+    <p class="connect-status">You both are mutually connected</p>
+  </c:if>
+
+  <c:if test="${!isConnectionRequestPending and !isConnectedUser}">
+    <form action="connection" method="post" id="connectionForm">
+      <input type="hidden" name="toUserEmail" value="${user.email}" />
+      <button type="button" class="connect-button" onclick="confirmConnection()">Connect</button>
     </form>
-  </div>
+  </c:if>
 
 
 
-</div>
+
+    </div>
 <br>
 <br>
 <br>
 
-  <!-- Add other fields similarly -->
+<!-- Add other fields similarly -->
 <% } else { %>
 <p>User details not found.</p>
 <% } %>

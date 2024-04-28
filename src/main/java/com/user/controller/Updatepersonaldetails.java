@@ -1,5 +1,6 @@
 package com.user.controller;
 
+import com.user.model.User;
 import com.user.model.UserDBUtil;
 
 import javax.servlet.RequestDispatcher;
@@ -9,9 +10,10 @@ import javax.servlet.http.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 @MultipartConfig
-public class Personaldetails extends HttpServlet {
+public class Updatepersonaldetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
@@ -41,12 +43,19 @@ public class Personaldetails extends HttpServlet {
                 caste = otherCaste;
             }
 
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
 
             // Save personal details to database
             boolean isSaved = UserDBUtil.savePersonalDetailsToDatabase(userEmail, ethnicity, religion,caste, status, height, foodPreference, drinking, smoking, diffabled);
             if (isSaved) {
                 session.setAttribute("personalDetailsCompleted", true);
-                response.sendRedirect("ProfileCompletionServlet"); // Redirect to the next step or confirmation page
+                // After updating, fetch the updated details to verify or display
+                List<User> personaldetails = UserDBUtil.getPersonalDetails(id);
+                request.setAttribute("personaldetails", personaldetails);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("u_myprofile.jsp");
+                dispatcher.forward(request, response);
+
+
             } else {
                 request.setAttribute("errorMessage", "Failed to save personal details. Please try again.");
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/errorPage.jsp"); // Adjust the redirection as needed

@@ -1,16 +1,18 @@
 package com.user.controller;
 
+import com.user.model.User;
 import com.user.model.UserDBUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
-public class InterestedINfam extends HttpServlet {
-
+public class UpdateINterestedINFAM extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
@@ -46,7 +48,11 @@ public class InterestedINfam extends HttpServlet {
             // Pass the ID as a String to your DB utility method
             if (UserDBUtil.saveinterestedINFamDetailsToDatabase(id, freli, foccu, mreli, moccup, maritalstatus, siblings)) {
                 session.setAttribute("interestedINFamDetailsCompleted", true);
-                response.sendRedirect("ProfileCompletionServlet");
+                // After updating, fetch the updated details to verify or display
+                List<User> updateinterestedinFam = UserDBUtil.getInterestedInFamDetails(id);
+                request.setAttribute("updateinterestedinFam", updateinterestedinFam);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("userSelectEdit.jsp");
+                dispatcher.forward(request, response);
             } else {
                 response.sendRedirect("unsuccess.jsp");
             }

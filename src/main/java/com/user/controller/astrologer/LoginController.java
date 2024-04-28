@@ -3,6 +3,7 @@ package com.user.controller.astrologer;
 import com.user.constants.UserType;
 import com.user.dao.AuthDao;
 import com.user.dao.LoginDAO;
+import com.user.model.UserDBUtil;
 import com.user.model.astrologer.AllUser;
 import com.user.model.astrologer.Login;
 import com.user.model.astrologer.ParentUser;
@@ -70,12 +71,14 @@ public class LoginController extends HttpServlet {
                             session.setAttribute("userEmail", loginData.getEmail());
                             session.setAttribute("userId", loginData.getId());
                             session.setAttribute("premiumUser", allUser);
+                            updateProfileCompletionStatus(session, email);
                             out.print("1");
                             break;
                         case STANDARD_USER:
                             session.setAttribute("userEmail", loginData.getEmail());
                             session.setAttribute("userId", loginData.getId());
                             session.setAttribute("standardUser", allUser);
+                            updateProfileCompletionStatus(session, email);
                             out.print("2");
                             break;
                         case ASTROLOGER:
@@ -116,4 +119,31 @@ public class LoginController extends HttpServlet {
             return false;
         }
     }
+
+
+    private void updateProfileCompletionStatus(HttpSession session, String userEmail) {
+        // Assume these methods return true if the respective section is completed
+        boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
+        boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
+        boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
+        boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
+        boolean interestedINCompleted = UserDBUtil.isInterestedINCompleted(userEmail);
+        boolean interestedINQualCompleted = UserDBUtil.isInterestedINQualCompleted(userEmail);
+        boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
+
+        int completedSteps = (personalDetailsCompleted ? 1 : 0) +
+                (qualificationCompleted ? 1 : 0) +
+                (familyDetailsCompleted ? 1 : 0) +
+                (interestCompleted ? 1 : 0) +
+                (interestedINCompleted ? 1 : 0) +
+                (interestedINQualCompleted ? 1 : 0) +
+                (interestedINFamDetailsCompleted ? 1 : 0);
+        int totalSteps = 7;
+        int completionPercentage = (completedSteps * 100) / totalSteps;
+
+        session.setAttribute("completedSteps", completedSteps);
+        session.setAttribute("totalSteps", totalSteps);
+        session.setAttribute("completionPercentage", completionPercentage);
+    }
+
 }

@@ -36,6 +36,7 @@ public class UpdateUserServlet extends HttpServlet {
         String province = request.getParameter("province"); // Assuming the dropdown has the name "province"
 
         Part dpphotoPart = request.getPart("dpphoto");
+     //   int isVerified=request.getParameter("isVerified");
 
 
 

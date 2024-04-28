@@ -1,16 +1,18 @@
 package com.user.controller;
 
+import com.user.model.User;
 import com.user.model.UserDBUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
-public class interestedINqual extends  HttpServlet{
-
+public class UpdateInterestedINQual extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             HttpSession session = request.getSession();
@@ -35,7 +37,13 @@ public class interestedINqual extends  HttpServlet{
 
             if (UserDBUtil.saveinterestedINQualToDatabase(id, occupation, qualification)) {
                 session.setAttribute("isInterestedINQualCompleted", true);
-                response.sendRedirect("ProfileCompletionServlet");
+                // After updating, fetch the updated details to verify or display
+                List<User> updateinterestedinQual = UserDBUtil.getInterestedInQualDetails(id);
+                request.setAttribute("updateinterestedinQual", updateinterestedinQual);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("userSelectEdit.jsp");
+                dispatcher.forward(request, response);
+
+
             } else {
                 response.sendRedirect("unsuccess.jsp");
             }
@@ -47,3 +55,5 @@ public class interestedINqual extends  HttpServlet{
         }
     }
 }
+
+

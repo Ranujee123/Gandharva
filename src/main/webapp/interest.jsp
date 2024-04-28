@@ -95,6 +95,20 @@
             color: red;
             margin-bottom: 10px;
         }
+        .form-container .button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -114,25 +128,25 @@
 
                 <label>Enter your personality type:</label>
                 <select name="personalitytype" >
-                        <option value=""></option>
-                        <option value="ENTJ">ENTJ </option>
-                        <option value="INFP">INFP</option>
-                        <option value="ENFJ">ENFJ</option>
-                        <option value="ESFP">ESFP</option>
-                        <option value="ISFP">ISFP</option>
-                        <option value="ENTP">ENTP</option>
-                        <option value="INTJ">INTJ</option>
-                        <option value="ENFP">ENFP</option>
-                        <option value="ESTJ">ESTJ</option>
-                        <option value="ISTJ">ISTJ</option>
-                        <option value="INFJ">INFJ</option>
-                        <option value="INTP">INTP </option>
-                        <option value="ESFJ">ESFJ</option>
-                        <option value="ESTP">ESTP</option>
-                        <option value="ISTP">ISTP</option>
-                        <option value="ISFJ">ISFJ</option>
+                    <option value=""></option>
+                    <option value="ENTJ">ENTJ </option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ESFP">ESFP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INTP">INTP </option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFJ">ISFJ</option>
 
-                    </select>
+                </select>
 
 
                 <label>You want to find it out? : <a href="https://www.16personalities.com/free-personality-test" target="_blank">Click here</a></label>
@@ -144,14 +158,14 @@
                 <p class="completion-text">4 out of 7 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
-                <button type="submit" name="action" value="proceed">Proceed</button>
+                <button type="submit" name="action" value="proceed" class="form-container button">Save & Next</button>
 
                 <!-- Save Progress button -->
-                <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
+                <a href="u_myprofile.jsp" class="form-container button">Back to Profile</a>
             </form>
 
         </div>
-</div>
+    </div>
 </div>
 
 </div>

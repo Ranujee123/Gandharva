@@ -81,6 +81,36 @@
         <servlet-name>UserinsertDeatils</servlet-name>
         <url-pattern>/qul</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateUserFamInfo</servlet-name>
+        <servlet-class>com.user.controller.UpdateUserFamInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateUserFamInfo</servlet-name>
+        <url-pattern>/updateuserfamInfo</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>UserPayment</servlet-name>
+        <servlet-class>com.user.controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserPayment</servlet-name>
+        <url-pattern>/userpayment</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PremiumUserPayment</servlet-name>
+        <servlet-class>com.user.controller.PremiumUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PremiumUserPayment</servlet-name>
+        <url-pattern>/premiumuserpayment</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>Userlist</servlet-name>
         <servlet-class>com.user.controller.UserListControler</servlet-class>
@@ -282,7 +312,73 @@
         <url-pattern>/findMatches</url-pattern>
     </servlet-mapping>
 
-<!--    ASTROLOGER-->
+    <servlet>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-class>com.user.controller.Updatepersonaldetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <url-pattern>/updatepersonaldetails</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpadteInterest</servlet-name>
+        <servlet-class>com.user.controller.UpdateInterest</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpadteInterest</servlet-name>
+        <url-pattern>/upadteinterest</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>UpadteQualification</servlet-name>
+    <servlet-class>com.user.controller.UpdateQualificationServlet</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>UpadteQualification</servlet-name>
+<url-pattern>/upadtequal</url-pattern>
+</servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdateFamilyDeatils</servlet-name>
+        <servlet-class>com.user.controller.UpdateFamilyDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateFamilyDeatils</servlet-name>
+        <url-pattern>/updatefam</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Updateinterestedin</servlet-name>
+        <servlet-class>com.user.controller.UpdateInterestedIN</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Updateinterestedin</servlet-name>
+        <url-pattern>/updateinterestedIN</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateInterestedINQual</servlet-name>
+        <servlet-class>com.user.controller.UpdateInterestedINQual</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateInterestedINQual</servlet-name>
+        <url-pattern>/updateinterestedINQual</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>updateInterestedinFam</servlet-name>
+        <servlet-class>com.user.controller.UpdateINterestedINFAM</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>updateInterestedinFam</servlet-name>
+        <url-pattern>/updateinterestedINFam</url-pattern>
+    </servlet-mapping>
+
+
+
+
+    <!--    ASTROLOGER-->
     <servlet>
         <servlet-name>login</servlet-name>
         <servlet-class>com.user.controller.astrologer.LoginController</servlet-class>

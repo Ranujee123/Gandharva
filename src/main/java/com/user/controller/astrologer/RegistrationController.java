@@ -98,12 +98,13 @@ public class RegistrationController extends HttpServlet {
         System.out.println("UserType "+ userType);
 
         try {
-            password = toHexStr(obtainSHA(password));
-//            System.out.println(login_password);
+            password = toHexStr(obtainSHA(password)); // Hash the password
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            req.setAttribute("errorMessage", "An error occurred while processing the password. Please try again.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
         }
-
         System.out.println("Password: "+password);
 
         UserType userTypeEnum = UserType.valueOf(userType);

@@ -1,19 +1,19 @@
 package com.user.controller;
 
-import com.user.model.DBConnect;
+import com.user.model.User;
 import com.user.model.UserDBUtil;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.util.List;
 
-public class InterestedINServlet extends HttpServlet {
+public class UpdateInterestedIN extends HttpServlet {
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             // Retrieve user information from the session
@@ -49,7 +49,11 @@ public class InterestedINServlet extends HttpServlet {
             // Save the details to the database
             if (UserDBUtil.saveInterestedInDetails(id, minAge, maxAge, religion, caste, ethnicity, province)) {
                 session.setAttribute("interestedINCompleted", true);
-                response.sendRedirect("ProfileCompletionServlet"); // Redirect to next part of profile completion
+                // After updating, fetch the updated details to verify or display
+                List<User> getinterestedindetails = UserDBUtil.getInterestedInforUpdate(id);
+                request.setAttribute("getinterestedindetails", getinterestedindetails);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("userSelectEdit.jsp");
+                dispatcher.forward(request, response);
             } else {
                 System.out.println("Failed to save interested in details for user ID: " + id);
                 response.sendRedirect("unsuccess.jsp");
@@ -60,3 +64,4 @@ public class InterestedINServlet extends HttpServlet {
         }
     }
 }
+
