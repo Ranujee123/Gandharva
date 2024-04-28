@@ -67,11 +67,11 @@
 
         <div class="stat">
             <h3>Active Users</h3>
-            <p class="active-users">100</p>
+            <p class="active-users">0</p>
         </div>
         <div class="stat">
             <h3>Standerd Users</h3>
-            <p class="standerd-users">30</p>
+            <p class="standerd-users">0</p>
         </div>
         <div class="stat">
             <h3>Premium Users</h3>
@@ -79,7 +79,11 @@
         </div>
         <div class="stat">
             <h3>Astrologers</h3>
-            <p class="astrologers">20</p>
+            <p class="astrologers">0</p>
+        </div>
+        <div class="stat">
+            <h3>Event Planners</h3>
+            <p class="event">0</p>
         </div>
 
     </div>
@@ -107,7 +111,7 @@
 
 
 
-    setstats(${adminDashboardmodels.totalUsers}, ${adminDashboardmodels.standerdUsers}, ${adminDashboardmodels.premiumUsers}, ${adminDashboardmodels.astrologers});
+    setstats(${adminDashboardmodels.totalUsers}, ${adminDashboardmodels.standerdUsers}, ${adminDashboardmodels.premiumUsers}, ${adminDashboardmodels.astrologers}, ${adminDashboardmodels.eventPlanners});
     const barchart= document.getElementById('income-bar');
     const piechart= document.getElementById('income-pie');
     const labels = ['Astologer', 'Premium', 'Standard', 'Events'];
@@ -172,12 +176,13 @@
   new Chart(barchart, barconfig);
   new Chart(piechart, pieconfig);
 
-function setstats(activeUsercount, standerdUsercount, premiumUsercount, astrologercount){
+function setstats(activeUsercount, standerdUsercount, premiumUsercount, astrologercount, eventPlannercount){
     console.log(activeUsercount, standerdUsercount, premiumUsercount, astrologercount);
     let activeUsers = document.querySelector('.active-users');
     let standerdUsers = document.querySelector('.standerd-users');
     let premiumUsers = document.querySelector('.premium-users');
     let astrologers = document.querySelector('.astrologers');
+    let eventPlanners = document.querySelector('.event');
     let count = 0;
     setInterval(()=>{
         if(count <= activeUsercount){
@@ -196,6 +201,11 @@ function setstats(activeUsercount, standerdUsercount, premiumUsercount, astrolog
 
             premiumUsers.textContent = count;
         }
+        if(count <= eventPlannercount){
+
+            eventPlanners.textContent = count;
+        }
+
         count++;
     }, 20);
 

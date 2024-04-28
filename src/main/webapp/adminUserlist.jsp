@@ -139,7 +139,7 @@
             if (result.isConfirmed) {
 
 
-        fetch('/Gandharva_main/activateuser', {
+        fetch('/Gandharva_main_war_exploded/activateuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',

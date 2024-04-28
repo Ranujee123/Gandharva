@@ -54,7 +54,6 @@
     <div class="view">
       <div class="detail-box gradient email-box"><p class="email-p">Email  <span class="tex email"></span></p></div>
       <div class="detail-box gradient nic-box"><p class="nic-p">NIC  <span class="tex nic"></span></p></div>
-      <div class="detail-box gradient cou-box" ><p class="cou-p">Country  <span class="tex cou"></span></p></div>
       <div class="detail-box gradient dis-box"><p class="dis-p">District  <span class="tex dis"></span></p></div>
       <div class="detail-box gradient ch-box"><p class="ch-p">Contracts Handled <span class="tex ch"></span></p></div>
       <div class="detail-box gradient exp-box"><p class="exp-p">Experience  <span class="tex exp"></span></p></div>
@@ -117,7 +116,6 @@
       const emailText = document.querySelector('.email');
       const nicText = document.querySelector('.nic');
       const bdText = document.querySelector('.bd');
-      const couText = document.querySelector('.cou');
       const disText = document.querySelector('.dis');
       const chText = document.querySelector('.ch');
       const expText = document.querySelector('.exp');
@@ -142,13 +140,7 @@
         emailText.textContent = '';
       }
 
-      if(country!=''){
-        document.querySelector('.cou-box').classList.remove("gradient")
-        couText.textContent =' : '+ country;
-      }else {
-        document.querySelector('.cou-box').classList.add("gradient")
-        couText.textContent = '';
-      }
+
       if(district!=''){
         document.querySelector('.dis-box').classList.remove("gradient")
         disText.textContent =' : '+ district;
@@ -182,7 +174,7 @@
           confirmButtonText: 'Yes, Pay  it!'
         }).then((result) => {
           if (result.isConfirmed) {
-            fetch('/Gandharva_main/payments_admin', {
+            fetch('/Gandharva_main_war_exploded/payments_admin', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -230,7 +222,7 @@
         <th>Name</th>
         <th>NIC</th>
         <th>Email</th>
-        <th>Country</th>
+
         <th>Net Amount</th>
         <th>Pay Amount</th>
 
@@ -246,7 +238,6 @@
           <td><div id="cener-box"><img src="${user.base64Image}" width="50" class="profimage" height="50"/>${user.firstName} ${user.lastName}</div></td>
           <td>${user.nic}</td>
           <td>${user.email}</td>
-          <td>${user.countryOfResidence}</td>
           <td>${user.amount}</td>
           <td>${user.payamount}</td>
 
