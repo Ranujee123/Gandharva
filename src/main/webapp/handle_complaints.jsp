@@ -106,7 +106,7 @@
 
               <h3>Title: ${complaint.title}</h3>
               <p>${complaint.descripion}</p>
-              <c:if test="${complaint.status == 'Open'}">
+              <c:if test="${complaint.status == 'REPORTED'}">
                 <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}','${complaint.receiver_firstName} ${complaint.receiver_lastName}','${complaint.receiver_email}','${complaint.receiver_countryOfResidence}','${complaint.receiver_userType}','${complaint.receiver_district}','${complaint.receiver_nic}','${complaint.receiver_birthday}','${complaint.receiver_numberOfCasesHandled}','${complaint.receiver_yearsOfExperience}','${complaint.receiver_userImage}','${complaint.receiver_complaint_count}','${complaint.receiverid}')">Go to Resolve</button>
               </c:if>
               <c:if test="${complaint.status == 'Resolved'}">
@@ -214,7 +214,7 @@
 
         statustag = document.querySelector('.status-view')
         statustag.innerText = status;
-        if (status == 'Open') {
+        if (status == 'REPORTED') {
 
           statustag.classList.remove('status-c-deactive')
           statustag.classList.add('status-c-active')
