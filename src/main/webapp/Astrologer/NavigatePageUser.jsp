@@ -240,7 +240,7 @@
 <div class="container">
 
     <div class="form-box">
-        <a href="#"> <h1 class="heading">Guest User</h1> </a>
+        <a href="guest_register.jsp"> <h1 class="heading">Guest User</h1> </a>
     </div>
 
     <div class="form-box">
