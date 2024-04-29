@@ -89,10 +89,10 @@
             <h2>Requests</h2>
         </div>
         <div class="user--info">
-            <div class="search--box">
-                <i class="menu-icon fas fa-search"></i>
-                <input type="text" placeholder="Search">
-            </div>
+<%--            <div class="search--box">--%>
+<%--                <i class="menu-icon fas fa-search"></i>--%>
+<%--                <input type="text" placeholder="Search">--%>
+<%--            </div>--%>
             <a href="astrologerProfile">
                 <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image">
             </a>

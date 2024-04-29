@@ -88,10 +88,10 @@
             <h2>Dashboard</h2>
         </div>
         <div class="user--info">
-            <div class="search--box">
-                <i class="menu-icon fas fa-search"></i>
-                <input type="text" placeholder="Search">
-            </div>
+<%--            <div class="search--box">--%>
+<%--                <i class="menu-icon fas fa-search"></i>--%>
+<%--                <input type="text" placeholder="Search">--%>
+<%--            </div>--%>
             <img src="images/img.png" alt="logo">
         </div>
     </div>

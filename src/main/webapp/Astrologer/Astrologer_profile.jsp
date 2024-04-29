@@ -169,11 +169,11 @@
 
         </div>
         <div class="user--info">
-            <div class="search--box">
-                <i class="menu-icon fas fa-search">
+<%--            <div class="search--box">--%>
+<%--                <i class="menu-icon fas fa-search">--%>
 
-                    <input type="text" placeholder="Search"></i>
-            </div>
+<%--                    <input type="text" placeholder="Search"></i>--%>
+<%--            </div>--%>
 
             <img src="data:image/png;base64, <%= base64Image %>" alt="User Image">
 
