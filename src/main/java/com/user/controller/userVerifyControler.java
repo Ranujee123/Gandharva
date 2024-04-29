@@ -62,12 +62,19 @@ public class userVerifyControler extends HttpServlet {
                     user.setCertificateFileUpload(null);
                 }
 
-                byte[] brFile = resultSet.getBytes("brFileUpload");
-                if (brFile != null && brFile.length > 0) {
-                    String base64brFile = Base64.getEncoder().encodeToString(brFile);
-                    user.setBrFileUpload("data:image/jpeg;base64,"+ base64brFile);
+                byte[] frontphoto = resultSet.getBytes("frontphoto");
+                if (frontphoto != null && frontphoto.length > 0) {
+                    String base64brFile = Base64.getEncoder().encodeToString(frontphoto);
+                    user.setFrontphoto("data:image/jpeg;base64,"+ base64brFile);
                 }else {
-                    user.setBrFileUpload(null);
+                    user.setFrontphoto(null);
+                }
+                byte[] backphoto = resultSet.getBytes("backphoto");
+                if (backphoto != null && backphoto.length > 0) {
+                    String base64brFile = Base64.getEncoder().encodeToString(backphoto);
+                    user.setBackphoto("data:image/jpeg;base64,"+ base64brFile);
+                }else {
+                    user.setBackphoto(null);
                 }
 
                 userList.add(user);
@@ -96,7 +103,6 @@ public class userVerifyControler extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String userId = req.getParameter("userid");
-        String reason = req.getParameter("reason");
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -104,11 +110,11 @@ public class userVerifyControler extends HttpServlet {
         System.out.println("User ID: " + userId);
         try {
             connection = DBConnect.getConnection();
-            String query = "UPDATE user SET isVerified = ? , reason=? WHERE id = ?";
+            String query = "UPDATE user SET isVerified = ?  WHERE id = ?";
             statement = connection.prepareStatement(query);
             statement.setInt(1, Integer.parseInt(action));
-            statement.setString(2, reason);
-            statement.setString(3, userId);
+
+            statement.setString(2, userId);
             statement.executeUpdate();
             resp.setContentType("text/plain");
             resp.setStatus(HttpServletResponse.SC_OK);

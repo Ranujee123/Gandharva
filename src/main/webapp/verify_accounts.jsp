@@ -45,8 +45,10 @@
     </div>
     <div class="button-box">
       <div class="certificate-box">
-        <button class="view-br-file" onclick="viewBrFile()">View BR File</button>
+
         <button class="view-certificate" onclick="viewCertificate()">View Certificate</button>
+        <button class="view-front" onclick="viewfront()">View NIC Front</button>
+        <button class="view-back" onclick="viewback()">View NIC Back</button>
       </div>
       <div class="control-box">
         <button class="reject-button" onclick="reject()">Reject</button>
@@ -84,7 +86,7 @@
           <td>${user.nic}</td>
           <td>${user.userType}</td>
 
-          <td><button onclick="verifyUser('${user.firstName} ${user.lastName}','${user.userType}','${user.email}','${user.nic}','${user.birthday}','${user.countryOfResidence}','${user.district}','${user.numberOfCasesHandled}','${user.yearsOfExperience}','${user.base64Image}','${user.certificateFileUpload}','${user.brFileUpload}','${user.id}')">Verify</button></td>
+          <td><button onclick="verifyUser('${user.firstName} ${user.lastName}','${user.userType}','${user.email}','${user.nic}','${user.birthday}','${user.countryOfResidence}','${user.district}','${user.numberOfCasesHandled}','${user.yearsOfExperience}','${user.base64Image}','${user.certificateFileUpload}','${user.id}','${user.frontphoto}','${user.backphoto}')">Verify</button></td>
 
         </tr>
       </c:forEach>
@@ -106,7 +108,7 @@
   document.querySelector(".container-box").addEventListener('click', handleBackgroundClick);
 
 
-  function verifyUser(name, type, email, nic, bd, cou, dis, cases, exp, img, cer, br,uid) {
+  function verifyUser(name, type, email, nic, bd, cou, dis, cases, exp, img, cer, uid,front,back) {
 
     document.querySelector('.container-box').style.display = 'flex';
     const tag = document.querySelector('.tag');
@@ -187,22 +189,46 @@
     }
 
 
+    if(type==='ASTROLOGER'){
+      document.querySelector('.view-back').style.display = 'none';
+        document.querySelector('.view-front').style.display = 'none';
+        document.querySelector('.view-certificate').style.display = 'block';
+    }else{
+      document.querySelector('.view-back').style.display = 'block';
+      document.querySelector('.view-front').style.display = 'block';
+      document.querySelector('.view-certificate').style.display = 'none';
+    }
 
     uname.innerText = name;
     prfPic.src = img;
 
-    document.querySelector('.view-br-file').onclick = function () {
-      if(br === ''){
+    document.querySelector('.view-front').onclick = function () {
+      if(front === ''){
         Swal.fire({
           icon: 'error',
-          title: 'BR File not uploaded',
+          title: 'NIC Front not uploaded',
           confirmButtonColor: '#192d3c',
         });
         return;
       }
       Swal.fire({
-        imageUrl: br,
-        imageAlt: "BR File",
+        imageUrl: front,
+        imageAlt: "Certificate",
+        confirmButtonColor: '#192d3c',
+      });
+    };
+    document.querySelector('.view-back').onclick = function () {
+      if(back === ''){
+        Swal.fire({
+          icon: 'error',
+          title: 'NIC Back not uploaded',
+          confirmButtonColor: '#192d3c',
+        });
+        return;
+      }
+      Swal.fire({
+        imageUrl: back,
+        imageAlt: "Certificate",
         confirmButtonColor: '#192d3c',
       });
     };

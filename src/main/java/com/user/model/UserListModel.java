@@ -19,7 +19,32 @@ public class UserListModel {
     private byte[] userImage;
     private String base64Image;
     private  String status;
+    private String backphoto;
+    private String frontphoto;
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getBackphoto() {
+        return backphoto;
+    }
+
+    public void setBackphoto(String backphoto) {
+        this.backphoto = backphoto;
+    }
+
+    public String getFrontphoto() {
+        return frontphoto;
+    }
+
+    public void setFrontphoto(String frontphoto) {
+        this.frontphoto = frontphoto;
+    }
 
     public String getId() {
         return id;

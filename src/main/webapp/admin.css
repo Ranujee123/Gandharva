@@ -495,7 +495,7 @@ h5 {
     width: 200px;
 }
 .box-verify{
-    width: 500px;
+    /*width: 500px;*/
     display: flex;
     background-color: #fff;
     border-radius: 10px;
@@ -538,7 +538,7 @@ h5 {
     gap: 20px;
     width: 200px;
 }
-.view-br-file, .view-certificate{
+.view-br-file, .view-certificate, .view-front, .view-back{
     background-color: #192d3c;
     color: white;
     padding: 10px 20px;

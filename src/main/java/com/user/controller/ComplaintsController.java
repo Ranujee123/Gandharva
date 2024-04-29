@@ -46,6 +46,7 @@ public class ComplaintsController extends HttpServlet {
                 complaints.setIdcomplaints(resultSet.getInt("report_id"));
                 complaints.setUserid(resultSet.getString("from_user_id"));
                 complaints.setDate(resultSet.getString("timestamp"));
+                complaints.setTitle(resultSet.getString("reason"));
 
                 complaints.setStatus(resultSet.getString("status"));
                 complaints.setFirstName(resultSet.getString("firstName"));
@@ -112,7 +113,7 @@ public class ComplaintsController extends HttpServlet {
         PreparedStatement statement = null;
         try {
             connection = DBConnect.getConnection();
-            String query = "UPDATE complaints SET status = 'Resolved' WHERE idcomplaints = ?";
+            String query = "UPDATE user_reports SET status = 'Resolved' WHERE report_id = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, id);
             statement.executeUpdate();

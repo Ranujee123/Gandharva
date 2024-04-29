@@ -37,7 +37,7 @@
     <li><a href="complaints">Handling Complaints</a></li>
   </ul>
 
-  <a class="logout">Logout</a>
+  <a class="logout" HREF="/Gandharva_main_war_exploded">Logout</a>
 
 </div>
 
