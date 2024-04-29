@@ -133,12 +133,12 @@
     }
 </style>
 <body>
-<nav>
-    <img src="../images/logo.png" alt="company-logo"/>
-    <div class="buttons">
-        <button><a href="EventPlannerLogin.jsp">Log in</a></button>
-    </div>
-</nav>
+<%--<nav>--%>
+<%--    <img src="../images/logo.png" alt="company-logo"/>--%>
+<%--    <div class="buttons">--%>
+<%--        <button><a href="EventPlannerLogin.jsp">Log in</a></button>--%>
+<%--    </div>--%>
+<%--</nav>--%>
 
 <div class="content">
     <h1>Event Planner</h1>

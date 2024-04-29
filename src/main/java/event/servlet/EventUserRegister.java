@@ -34,6 +34,6 @@ public class EventUserRegister extends HttpServlet {
             throw new RuntimeException(e);
         }
         request.getSession().setAttribute("successMessage", "Registration successful!");
-        response.sendRedirect("EventPlannerLogin.jsp");
+        response.sendRedirect(request.getContextPath() + "/login");
     }
 }

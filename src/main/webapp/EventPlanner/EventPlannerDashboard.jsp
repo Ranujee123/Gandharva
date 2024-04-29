@@ -54,7 +54,7 @@
                     })
                         .then(response => {
                             if(response.ok){
-                                window.location.href = '${pageContext.request.contextPath}/EventPlanner/EventPlannerLogin.jsp';
+                                window.location.href = '${pageContext.request.contextPath}/login';
                             }
                         })
                         .catch(error => console.error('Error in logout', error));

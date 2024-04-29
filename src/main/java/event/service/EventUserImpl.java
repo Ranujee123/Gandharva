@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Base64;
 
+import static com.user.constants.PasswordHashing.obtainSHA;
+import static com.user.constants.PasswordHashing.toHexStr;
+
 public class EventUserImpl implements IEventUser {
     @Override
     public void registerEventUser(EventUser eventUser) throws Exception {
@@ -31,7 +34,7 @@ public class EventUserImpl implements IEventUser {
                 return;
             }
 
-            String hashedPassword = hashPassword(eventUser.getPassword());
+            String hashedPassword = toHexStr(obtainSHA(eventUser.getPassword()));
 
             String insertSql = "INSERT INTO user (id, firstName, lastName, email, userType, password, numberOfCasesHandled, yearsOfExperience, aboutMe, phonenumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(insertSql);
