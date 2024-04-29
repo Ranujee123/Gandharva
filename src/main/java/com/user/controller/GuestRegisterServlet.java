@@ -5,6 +5,7 @@ import com.user.model.UserDBUtil;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @MultipartConfig
+@WebServlet("/GuestRegister")
 public class GuestRegisterServlet extends HttpServlet {
 
 	@Override
@@ -58,7 +60,7 @@ public class GuestRegisterServlet extends HttpServlet {
 
 		if (isInserted) {
 			req.getSession().setAttribute("successMessage", "Registration successful.");
-			resp.sendRedirect("login.jsp");
+			resp.sendRedirect("login");
 		} else {
 			req.setAttribute("errorMessage", "Registration failed. Please try again.");
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/guest_register.jsp");

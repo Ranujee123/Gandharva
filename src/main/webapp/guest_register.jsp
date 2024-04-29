@@ -118,7 +118,7 @@ List<String> province = UserDBUtil.getAllProvince();
 			<%
 			}
 			%>
-			<form id="registration-form" method="post" action="guestReg"
+			<form id="registration-form" method="post" action="GuestRegister"
 				enctype="multipart/form-data">
 
 				      <label for="firstName">First Name<span class="required-star">*</span>:</label>
