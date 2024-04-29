@@ -90,14 +90,22 @@ public class RequestDAO {
         }
 
         List<RequestUserDAO> prioritizedRequests = new ArrayList<>();
+
+
         for (RequestUserDAO request : requests) {
-            System.out.println(request.getUserType());
             if (UserType.PREMIUM_USER.equals(request.getUserType())) {
                 prioritizedRequests.add(request);
                 System.out.println("Prioritized request: " + request.getUserType().toString());
             }
         }
-        prioritizedRequests.addAll(requests);
+
+
+        for (RequestUserDAO request : requests) {
+            if (!UserType.PREMIUM_USER.equals(request.getUserType())) {
+                prioritizedRequests.add(request);
+            }
+        }
+
         System.out.println(prioritizedRequests);
         return prioritizedRequests;
     }
