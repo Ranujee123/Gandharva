@@ -394,6 +394,15 @@
         <url-pattern>/viewconnectedprofiledetails</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>profilePhotoServlet</servlet-name>
+        <servlet-class>com.user.controller.ProfilePhotoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profilePhotoServlet</servlet-name>
+        <url-pattern>/profilePhotoServlet</url-pattern>
+    </servlet-mapping>
+
 
     <!--    ASTROLOGER-->
     <servlet>

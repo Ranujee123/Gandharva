@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class GetAcceptedRequests extends HttpServlet {
 
         try {
             String userId = UserDBUtil.getUserIdByEmail(userEmail);
-            List<ConnectionRequest> acceptedRequests = UserDBUtil.getAcceptedReq(userId);
+            List<ConnectionRequest> acceptedRequests = UserDBUtil.getAcceptedConnectionDetails(userId);
             request.setAttribute("acceptedRequests", acceptedRequests != null ? acceptedRequests : new ArrayList<>());
             request.getRequestDispatcher("ViewAcceptedReqU.jsp").forward(request, response);
         } catch (Exception e) {

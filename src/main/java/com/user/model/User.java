@@ -273,7 +273,7 @@ public class User {
     public User(String firstName, String lastName, String email, String province, String ethnicity, String religion,
                 String status, String height, String foodpreferences, String drinking, String smoking,
                 String qualification, String occupation, String diffabled, int age, String freli, String mreli,
-                String foccu, String moccup, String maritalStatus, int siblings, int isVerified, String userType,String dob,String phonenumber) {
+                String foccu, String moccup, String maritalStatus, int siblings, int isVerified, String userType,String dob,String phonenumber,byte[] dpphoto) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -299,6 +299,7 @@ public class User {
         this.userType=userType;
         this.dob=dob;
         this.phonenumber=phonenumber;
+        this.dpphoto=dpphoto;
     }
 
 //updateuserdetails
@@ -613,5 +614,7 @@ public class User {
         return userType;
     }
 
-
+    public void setDpphoto(byte[] dpphoto) {
+        this.dpphoto = dpphoto;
+    }
 }

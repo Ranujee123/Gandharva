@@ -72,12 +72,12 @@
             <div class="details-card">
                 <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
                 <div>
-                    <h2><c:out value="${request.oppositeUserFullName}"/></h2>
-                    <p>Status: ${request.status}</p>
+                    <h2><c:out value="${request.firstName}"/> <c:out value="${request.lastName}"/></h2>
+<%--                    <p>Status: ${request.status}</p>--%>
                     <!-- Form to submit to ViewDetailsofConnectedProfiles servlet -->
                     <form action="moredetails" method="post">
-                        <input type="hidden" name="email" value="${request.oppositeUserEmail}"/>
-                        <p>Email: ${request.oppositeUserEmail}</p>
+                        <input type="hidden" name="email" value="${request.email}"/>
+                        <p>Email: ${request.email}</p>
                         <button type="submit" class="connect-button">View More</button>
                     </form>
 
