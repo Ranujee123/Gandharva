@@ -20,7 +20,6 @@ import java.util.Base64;
 public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         try {
@@ -33,16 +32,19 @@ public class LoginServlet extends HttpServlet {
 
         try {
             // Validate the user
-            List<User> userDetails = UserDBUtil.validate(email, password);
+			List<User> userDetails = UserDBUtil.validate(email, password);
 
             // Check if the validation was successful
             if (!userDetails.isEmpty()) {
                 User user = userDetails.get(0); // Assuming the first user is the correct one
+                System.out.println(user.getUserID());
+                System.out.println(user.getUserType());
 
                 // Set userEmail and userId in session
                 HttpSession session = req.getSession();
                 session.setAttribute("userEmail", email);
-                session.setAttribute("userId", user.getId());// Assuming User class has getId method
+                session.setAttribute("userId", user.getUserID());// Assuming User class has getId method
+                session.setAttribute("userType", user.getUserType());
 
 
                 // Calculate and set profile completion status
@@ -58,6 +60,7 @@ public class LoginServlet extends HttpServlet {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
             // Handle other exceptions as needed
             RequestDispatcher dis = req.getRequestDispatcher("/error.jsp");
             dis.forward(req, resp);
