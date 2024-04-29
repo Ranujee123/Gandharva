@@ -2598,6 +2598,42 @@ public class UserDBUtil {
             return profilePhoto;
         }
 
+    public static String getVerificationDenialReason(String userEmail) {
+        try (Connection con = DBConnect.getConnection()) {
+            String sql = "SELECT reason FROM user WHERE email = ? AND isVerified = 2"; // Assuming '2' means denied
+            try (PreparedStatement stmt = con.prepareStatement(sql)) {
+                stmt.setString(1, userEmail);
+                ResultSet rs = stmt.executeQuery();
+                if (rs.next()) {
+                    return rs.getString("reason");  // Fetch the actual reason
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if no reason found or error occurs
+    }
 
+    public static boolean isUserVerificationDenied(String userEmail) {
+        boolean isDenied = false;
+        String sql = "SELECT count(*) FROM user WHERE email = ? AND isVerified = 2";  // Assuming '2' indicates denied status
 
+        try (Connection con = DBConnect.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, userEmail);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    isDenied = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isDenied;
+    }
 }
+
+
+
+
+

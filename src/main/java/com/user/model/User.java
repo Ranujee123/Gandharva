@@ -53,7 +53,7 @@ public class User {
   private String phoneNumber;
 
    private String userType;
-
+private String reason;
 
 
 
@@ -76,7 +76,7 @@ public class User {
 
 
 
-    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age,int isVerified) {
+    public User(String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age,int isVerified,String reason) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.nic = nic;
@@ -87,6 +87,8 @@ public class User {
         this.dob = dob;
         this.age = age;
         this.isVerified=isVerified;
+        this.reason=reason;
+
     }
 
 
@@ -616,5 +618,9 @@ public class User {
 
     public void setDpphoto(byte[] dpphoto) {
         this.dpphoto = dpphoto;
+    }
+
+    public String getReason() {
+        return reason;
     }
 }
