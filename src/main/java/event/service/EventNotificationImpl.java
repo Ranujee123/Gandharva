@@ -3,7 +3,6 @@ package event.service;
 import com.user.model.DBConnect;
 import event.model.EventNotification;
 
-import javax.management.Notification;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,13 +20,15 @@ public class EventNotificationImpl implements IEventNotification {
         try {
             connection = DBConnect.getConnection();
             String selectSql = "SELECT CONCAT(u.firstName, ' ', u.lastName) AS customer, " +
-                    "       e.foodFor, " +
-                    "       e.beveragesFor, " +
-                    "       e.tablesChairs, " +
-                    "       e.budgetRange, " +
-                    "       e.requestStatus, " +
-                    "       e.requestedDate " +
-                    "FROM event_planner_requests  " +
+                    "e.id, " +
+                    "e.foodFor, " +
+                    "e.beveragesFor, " +
+                    "e.tablesChairs, " +
+                    "e.budgetRange, " +
+                    "e.requestStatus, " +
+                    "e.paymentStatus, " +
+                    "e.requestedDate " +
+                    "FROM event_planner_requests e " +
                     "JOIN user u ON e.userId = u.id " +
                     "WHERE e.requestStatus = ? ";
             statement = connection.prepareStatement(selectSql);
@@ -38,7 +39,13 @@ public class EventNotificationImpl implements IEventNotification {
                 EventNotification notification = new EventNotification();
                 notification.setId(resultSet.getInt("id"));
                 notification.setRequestStatus(resultSet.getString("requestStatus"));
+                notification.setPaymentStatus(resultSet.getString("paymentStatus"));
+                notification.setRequestedDate(resultSet.getString("requestedDate"));
                 notification.setCustomer(resultSet.getString("customer"));
+                notification.setFoodFor(resultSet.getInt("foodFor"));
+                notification.setBeveragesFor(resultSet.getInt("beveragesFor"));
+                notification.setTablesChairs(resultSet.getInt("tablesChairs"));
+                notification.setBudgetRange(resultSet.getString("budgetRange"));
                 pendingEvents.add(notification);
             }
         } catch (Exception e) {
@@ -69,15 +76,17 @@ public class EventNotificationImpl implements IEventNotification {
         try {
             connection = DBConnect.getConnection();
             String selectSql = "SELECT CONCAT(u.firstName, ' ', u.lastName) AS customer, " +
-                    "       e.foodFor, " +
-                    "       e.beveragesFor, " +
-                    "       e.tablesChairs, " +
-                    "       e.budgetRange, " +
-                    "       e.requestStatus, " +
-                    "       e.requestedDate " +
-                    "FROM event_planner_requests  " +
+                    "e.id, " +
+                    "e.foodFor, " +
+                    "e.beveragesFor, " +
+                    "e.tablesChairs, " +
+                    "e.budgetRange, " +
+                    "e.requestStatus, " +
+                    "e.paymentStatus, " +
+                    "e.requestedDate " +
+                    "FROM event_planner_requests e " +
                     "JOIN user u ON e.userId = u.id " +
-                    "WHERE e.requestStatus != ? ";
+                    "WHERE e.requestStatus <> ? ";
             statement = connection.prepareStatement(selectSql);
             statement.setString(1, "PENDING");
             resultSet = statement.executeQuery();
@@ -89,7 +98,6 @@ public class EventNotificationImpl implements IEventNotification {
                 notification.setPaymentStatus(resultSet.getString("paymentStatus"));
                 notification.setRequestedDate(resultSet.getString("requestedDate"));
                 notification.setCustomer(resultSet.getString("customer"));
-                notification.setEmail(resultSet.getString("email"));
                 notification.setFoodFor(resultSet.getInt("foodFor"));
                 notification.setBeveragesFor(resultSet.getInt("beveragesFor"));
                 notification.setTablesChairs(resultSet.getInt("tablesChairs"));
@@ -112,6 +120,39 @@ public class EventNotificationImpl implements IEventNotification {
         }
 
         return reservationEvents;
+    }
+
+    @Override
+    public int getTotalEvents(String id) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        int totalEvents = 0;
+        try {
+            connection = DBConnect.getConnection();
+            String query = "SELECT count(*) as total FROM event_planner_requests WHERE eventPlannerId = ? ";
+            statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+            resultSet = statement.executeQuery();
+            System.out.println(id);
+            if (resultSet.next()) {
+                totalEvents = resultSet.getInt("total");
+            }
+            System.out.println(totalEvents);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }  finally {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+        if (statement != null) {
+            statement.close();
+        }
+        if (connection != null) {
+            connection.close();
+        }
+    }
+        return totalEvents;
     }
 
     @Override

@@ -62,27 +62,31 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         fetch('${pageContext.request.contextPath}/EventPlanner/reservation')
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(data => {
                 const tableBody = document.querySelector('table tbody');
+                tableBody.innerHTML = '';
 
-                // Iterate over the data and create table rows
                 data.forEach(reservation => {
-                    const row = document.createElement('tr');
-                    row.innerHTML = `
-                        <td>${reservation.customer}</td>
-                        <td>${reservation.foodFor}</td>
-                        <td>${reservation.beveragesFor}</td>
-                        <td>${reservation.tablesChairs}</td>
-                        <td>${reservation.budgetRange}</td>
-                        <td>${reservation.requestStatus}</td>
-                        <td>${reservation.requestedDate}</td>
-                    `;
-                    tableBody.appendChild(row);
-                })
-                    .catch(error => console.error('Error fetching package data:', error));
+                    const row = '<tr>' +
+                        '<td>' + reservation.customer + '</td>' +
+                        '<td>' + reservation.foodFor + '</td>' +
+                        '<td>' + reservation.beveragesFor + '</td>' +
+                        '<td>' + reservation.tablesChairs + '</td>' +
+                        '<td>' + reservation.budgetRange + '</td>' +
+                        '<td>' + reservation.requestStatus + '</td>' +
+                        '<td>' + reservation.requestedDate + '</td>' +
+                        '</tr>';
+                    tableBody.insertAdjacentHTML('beforeend', row);
+                });
             })
-    })
+            .catch(error => console.error('Error fetching package data:', error));
+    });
 </script>
 <body>
 <jsp:include page="NavBarBack.jsp"/>

@@ -2,7 +2,6 @@ package event.servlet;
 
 import com.google.gson.Gson;
 import event.model.EventNotification;
-import event.model.EventPackage;
 import event.service.EventNotificationImpl;
 
 import javax.servlet.ServletException;
@@ -23,6 +22,18 @@ public class EventNotificationServlet extends HttpServlet {
             Gson gson = new Gson();
             String json = gson.toJson(eventNotifications);
             response.getWriter().write(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        String status = request.getParameter("status");
+        EventNotificationImpl notification = new EventNotificationImpl();
+        try {
+           notification.updateReservationStatus(Integer.parseInt(id),status);
+           response.sendRedirect("EventReservations.jsp");
         } catch (Exception e) {
             e.printStackTrace();
         }

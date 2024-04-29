@@ -1,4 +1,4 @@
-<%--
+<%@ page import="event.service.EventNotificationImpl" %><%--
   Created by IntelliJ IDEA.
   User: ASUS
   Date: 4/25/2024
@@ -6,6 +6,12 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    int total = 0;
+    EventNotificationImpl eventNotification = new EventNotificationImpl();
+    String id = (String) session.getAttribute("id");
+    total = eventNotification.getTotalEvents(id);
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -127,7 +133,7 @@
             </div>
             <div class="stats">
                 <div class="events">
-                    <h2>45</h2>
+                    <h2><%=total%></h2>
                     <h1>Events</h1>
                     <p>in the next 365 days</p>
                 </div>
@@ -135,8 +141,8 @@
         </div>
 
         <div class="bottom">
-            <button>New Event Requests</button>
-            <button>Next Event</button>
+            <button><a href="EventPlannerNotifications.jsp">New Event Requests</a></button>
+            <button><a href="EventReservations.jsp">Next Event</a></button>
             <button><a href="Partners.jsp">View Partners</a></button>
         </div>
     </div>

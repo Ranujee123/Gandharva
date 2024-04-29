@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class EventPlannerEditServlet  extends HttpServlet {
@@ -19,6 +20,9 @@ public class EventPlannerEditServlet  extends HttpServlet {
         EventUser eventUser =  new EventUser(id, firstName, lastName, aboutMe);
         try {
             eventUserService.updateEventUser(eventUser);
+            HttpSession session = request.getSession();
+            session.setAttribute("firstName", eventUser.getFirstName());
+            session.setAttribute("lastName", eventUser.getLastName());
             response.sendRedirect("EventPlannerSettings.jsp");
         }catch (Exception e){
             e.printStackTrace();
