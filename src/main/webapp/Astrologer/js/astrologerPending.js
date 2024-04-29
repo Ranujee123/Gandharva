@@ -119,7 +119,7 @@ function showPage(page) {
 
 function filterTable(status) {
     $('#user-request-table-pending-id tbody tr').each(function() {
-        const rowStatus = $(this).find('td:nth-child(5)').text().trim();
+        const rowStatus = $(this).find('td:nth-child(6)').text().trim();
         if (status === '' || rowStatus === status) {
             $(this).show();
         } else {
