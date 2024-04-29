@@ -2,6 +2,9 @@ package com.user.controller;
 
 import com.user.model.UserDBUtil;
 
+import static com.user.constants.PasswordHashing.obtainSHA;
+import static com.user.constants.PasswordHashing.toHexStr;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -37,7 +40,7 @@ public class GuestRegisterServlet extends HttpServlet {
 		}
 
 		try {
-			password = hashPassword(password); // Hash the password
+			password = toHexStr(obtainSHA(password)); // Hash the password
 		} catch (NoSuchAlgorithmException e) {
 			req.setAttribute("errorMessage", "Failed to hash the password.");
 			req.getRequestDispatcher("/guest_register.jsp").forward(req, resp);

@@ -67,6 +67,12 @@ public class LoginController extends HttpServlet {
             if(allUser != null && allUser.getIsActivated()) {
                 if (checkLogin(login, loginData)) {
                     switch (userType) {
+                        case GUEST_USER:
+                            session.setAttribute("userEmail", loginData.getEmail());
+                            session.setAttribute("userId", loginData.getId());
+                            session.setAttribute("guestUser", allUser);
+                            out.print("0");
+                            break;
                         case PREMIUM_USER:
                             session.setAttribute("userEmail", loginData.getEmail());
                             session.setAttribute("userId", loginData.getId());

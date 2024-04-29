@@ -33,7 +33,7 @@ public class LoginDAO {
             parentUser.setUserImage(resultSet.getBytes(15));
             parentUser.setActivated(resultSet.getBoolean(16));
 
-            if(parentUser.getUserType().equals(UserType.USER) || parentUser.getUserType().equals(UserType.PREMIUM_USER) || parentUser.getUserType().equals(UserType.STANDARD_USER)){
+            if(parentUser.getUserType().equals(UserType.USER) || parentUser.getUserType().equals(UserType.PREMIUM_USER) || parentUser.getUserType().equals(UserType.STANDARD_USER) || parentUser.getUserType().equals(UserType.GUEST_USER)){
                 User user = new User(parentUser);
                 user.setNic(resultSet.getString(9));
 //                user.setBirthday(resultSet.getDate(10).toLocalDate());

@@ -95,7 +95,7 @@ public class AuthDao {
             allUser.setUserImage(resultSet.getBytes(15));
             allUser.setActivated(resultSet.getBoolean(16));
 
-            if(allUser.getUserType().equals(UserType.USER) || allUser.getUserType().equals(UserType.PREMIUM_USER) || allUser.getUserType().equals(UserType.STANDARD_USER)){
+            if(allUser.getUserType().equals(UserType.USER) || allUser.getUserType().equals(UserType.PREMIUM_USER) || allUser.getUserType().equals(UserType.STANDARD_USER) || allUser.getUserType().equals(UserType.GUEST_USER)){
                 allUser.setNic(resultSet.getString(9));
 //                allUser.setBirthday(resultSet.getDate(10).toLocalDate());
                 allUser.setProvince(resultSet.getString(19));
