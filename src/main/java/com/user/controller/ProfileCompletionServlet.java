@@ -23,19 +23,21 @@ public class ProfileCompletionServlet extends HttpServlet {
         String action = request.getParameter("action");
 
 
+
         String userEmail = (String) session.getAttribute("userEmail");
 
         if (userEmail == null) {
             response.sendRedirect("login.jsp");
             return;
         }
-        // Handle "Save Progress" action
+      /*  // Handle "Save Progress" action
         if ("save".equals(action)) {
             response.sendRedirect("u_myprofile.jsp");
             return;
         }
 
-
+*/
+        boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
         boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
         boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
         boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
@@ -44,9 +46,21 @@ public class ProfileCompletionServlet extends HttpServlet {
         boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
 
 
+        session.setAttribute("personalDetailsCompleted", personalDetailsCompleted);
+        session.setAttribute("qualificationCompleted", qualificationCompleted);
+        session.setAttribute("familyDetailsCompleted", familyDetailsCompleted);
+        session.setAttribute("interestCompleted", interestCompleted);
+        session.setAttribute("interestedINCompleted", interestedINCompleted);
+        session.setAttribute("interestedINQualCompleted", interestedINQualCompleted);
+        session.setAttribute("interestedINFamDetailsCompleted", interestedINFamDetailsCompleted);
+
+
+
+
 
         // Calculate completion percentage
         int completedSteps = 0;
+        if (personalDetailsCompleted) completedSteps++;
         if (qualificationCompleted) completedSteps++;
         if (familyDetailsCompleted) completedSteps++;
         if (interestCompleted) completedSteps++;
@@ -54,33 +68,39 @@ public class ProfileCompletionServlet extends HttpServlet {
         if (interestedINQualCompleted) completedSteps++;
         if (interestedINFamDetailsCompleted) completedSteps++;
 
-        int totalSteps = 6;
+        int totalSteps = 7;
         int completionPercentage = (completedSteps * 100) / totalSteps;
 
         // Update session attributes
         session.setAttribute("completedSteps", completedSteps);
         session.setAttribute("completionPercentage", completionPercentage);
 
+        String redirectUrl;
 
-        if (!qualificationCompleted) {
-            response.sendRedirect("addDetails.jsp");
+        if(!personalDetailsCompleted){
+            redirectUrl="u_personaldetails.jsp";
+        }
+        else if (!qualificationCompleted) {
+            redirectUrl="addDetails.jsp";
         } else if (!familyDetailsCompleted) {
-            response.sendRedirect("family.jsp");
+            redirectUrl="family.jsp";
         }
         else if (!interestCompleted) {
-            response.sendRedirect("interest.jsp");
+            redirectUrl="interest.jsp";
 
         } else if (!interestedINCompleted) {
-                response.sendRedirect("interestedIN.jsp");
+            redirectUrl="interestedIN.jsp";
 
         } else if (!interestedINQualCompleted) {
-            response.sendRedirect("interestINqual.jsp");
+            redirectUrl="interestINqual.jsp";
 
         }else if (!interestedINFamDetailsCompleted) {
-                response.sendRedirect("interestedINfam.jsp");
+            redirectUrl="interestedINfam.jsp";
         }else {
-            response.sendRedirect("u_myprofile.jsp");
+            redirectUrl="u_myprofile.jsp";
         }
+
+        response.sendRedirect(redirectUrl);
 
 
 

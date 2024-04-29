@@ -21,17 +21,30 @@ public class InterestedINfam extends HttpServlet {
                 return;
             }
 
+            String freli = request.getParameter("freli");
+            String foccu = request.getParameter("foccu");
+            String otherfoccu = request.getParameter("other_foccu");
+            String mreli = request.getParameter("mreli");
+            String moccup = request.getParameter("moccup");
+            String othermoccup = request.getParameter("other_moccup");
+            String maritalstatus = request.getParameter("maritalstatus");
+            int siblings = Integer.parseInt(request.getParameter("siblings"));
 
-            String freli = request.getParameter("fatherReligion");
-            String foccu = request.getParameter("fatherOccupation");
 
-            String mreli = request.getParameter("motherReligion");
-            String moccup = request.getParameter("motherOccupation");
-            String maritalstatus = request.getParameter("maritalStatus");
-            String siblings = request.getParameter("numberOfSiblings");
+            if ("Other".equals(foccu) && otherfoccu != null && !otherfoccu.isEmpty()) {
+                foccu = otherfoccu;
+            }
+
+            if ("Other".equals(moccup) && othermoccup != null && !othermoccup.isEmpty()) {
+                moccup = othermoccup;
+            }
 
 
-            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(userEmail,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
+            // Fetch the user ID as a String
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
+
+            // Pass the ID as a String to your DB utility method
+            if (UserDBUtil.saveinterestedINFamDetailsToDatabase(id, freli, foccu, mreli, moccup, maritalstatus, siblings)) {
                 session.setAttribute("interestedINFamDetailsCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {
@@ -41,10 +54,5 @@ public class InterestedINfam extends HttpServlet {
             e.printStackTrace();
             response.sendRedirect("unsuccess.jsp");
         }
-
     }
 }
-
-
-
-

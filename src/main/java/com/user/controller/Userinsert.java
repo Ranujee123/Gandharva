@@ -1,6 +1,8 @@
 package com.user.controller;
 
 import com.user.model.UserDBUtil;
+
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -8,78 +10,38 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.io.InputStream;
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.format.DateTimeFormatter;
+import java.util.UUID;
+
+
+
+import java.security.NoSuchAlgorithmException;
+
+
+import static com.user.constants.PasswordHashing.obtainSHA;
+import static com.user.constants.PasswordHashing.toHexStr;
+
 
 @MultipartConfig
 public class Userinsert extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-
-
-// Parse the birthday from the request and calculate age
-        String bday = req.getParameter("birthday");
-        LocalDate biday = LocalDate.parse(bday, DateTimeFormatter.ISO_LOCAL_DATE);
-        LocalDate today = LocalDate.now();
-        int age = Period.between(biday, today).getYears();
-
-        if (age < 18) {
-            req.setAttribute("errorMessage", "You must be at least 18 years old to register.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return; // Stop the execution
-        }
-// Continue with registration process if age is 18 or above
-
-
-
-        String fname = req.getParameter("firstName");
-        String lname = req.getParameter("lastName");
-
-        String country = req.getParameter("country");
-        int cID = -1; // Default or error value, assuming your IDs are positive integers
-        try {
-            cID = UserDBUtil.getCountryIdByName(country);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Consider handling this error more gracefully
-        }
-
-        // Check if a valid gender ID was retrieved
-        if (cID == -1) {
-            req.setAttribute("errorMessage", "Invalid country selected.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return;
-        }
+        String id = UUID.randomUUID().toString();
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+        String nic = req.getParameter("nic");
+        String province = req.getParameter("province");
+        String phonenumber= req.getParameter("phonenumber");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String cpassword = req.getParameter("confirmPassword");
-        String gender = req.getParameter("gender");
-        int gID = -1; // Default or error value, assuming your IDs are positive integers
-        try {
-            gID = UserDBUtil.getgenderIdByName(gender);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // Consider handling this error more gracefully
-        }
 
-        // Check if a valid gender ID was retrieved
-        if (gID == -1) {
-            req.setAttribute("errorMessage", "Invalid gender selected.");
-            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
-            dispatcher.forward(req, resp);
-            return;
-        }
-
-        // Check if passwords match
         if (!password.equals(cpassword)) {
             req.setAttribute("errorMessage", "Passwords do not match. Please try again.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
@@ -87,60 +49,99 @@ public class Userinsert extends HttpServlet {
             return;
         }
 
-        Part filePartFront = req.getPart("frontphoto");
-        Part filePartBack = req.getPart("backphoto");
-
-        String frontphoto = uploadPhoto(filePartFront, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(F)", req, resp);
-        String backphoto = uploadPhoto(filePartBack, "/Users/ranu/Desktop/untitled folder 4/Gandharva/src/main/webapp/PhotoID(B)", req, resp);
-
-        if (frontphoto == null || backphoto == null) {
-            // Error handling is already done inside uploadPhoto
-            return; // Stop processing if there was an error uploading photos
+        try {
+            password = toHexStr(obtainSHA(password));
+//            System.out.println(login_password);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
 
-        password = String.valueOf(password.hashCode()); // Consider a more secure hashing method
+        Part frontPhotoPart = req.getPart("frontphoto");
+        Part backPhotoPart = req.getPart("backphoto");
 
-        boolean isInserted = UserDBUtil.insertUser(fname, lname, bday, cID, email, frontphoto, backphoto, password,gID);
+        byte[] frontPhoto = convertPartToByteArray(frontPhotoPart);
+        byte[] backPhoto = convertPartToByteArray(backPhotoPart);
 
-        if (isInserted) {
-            RequestDispatcher dis = req.getRequestDispatcher("login.jsp");
-            dis.forward(req, resp);
-        } else {
-            req.setAttribute("errorMessage", "Registration failed. Please try again.");
-            RequestDispatcher dis2 = req.getRequestDispatcher("/u_reg.jsp");
-            dis2.forward(req, resp);
-        }
-    }
-
-    private String uploadPhoto(Part filePart, String uploadsDirPath, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (filePart == null || filePart.getSubmittedFileName().isEmpty()) {
+        if (frontPhoto == null || backPhoto == null) {
             req.setAttribute("errorMessage", "All photos are required. Please select files to upload.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
             dispatcher.forward(req, resp);
-            return null; // Indicate error
+            return;
         }
 
-        String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-        // Generate a unique file name by appending a timestamp
-        String newFileName = System.currentTimeMillis() + "_" + originalFileName;
 
+        String dob = req.getParameter("dob");
+        LocalDate birthDate = LocalDate.parse(dob);
+        int age = LocalDate.now().minusYears(birthDate.getYear()).getYear();
 
-       // String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-
-        File uploadsDir = new File(uploadsDirPath);
-        if (!uploadsDir.exists() && !uploadsDir.mkdirs()) {
-            System.err.println("Failed to create directory for file uploads.");
-            req.setAttribute("errorMessage", "Server error: unable to create directory for file upload.");
+        if (age < 18) {
+            req.setAttribute("errorMessage", "You must be 18 years or older to register.");
             RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
             dispatcher.forward(req, resp);
-            return null; // Indicate error
+            return;
         }
 
-        String photoIDPath = uploadsDirPath + File.separator + newFileName;
-        filePart.write(photoIDPath); // Save the file
+        // Check if email is already registered
+        boolean isRegistered = UserDBUtil.isEmailRegistered(email);
+        if (isRegistered) {
+            req.setAttribute("errorMessage", "Email already registered.");
+            req.setAttribute("firstName", firstName);
+            req.setAttribute("lastName", lastName);
+            req.setAttribute("nic", nic);
+            req.setAttribute("province", province);
 
-        return newFileName; // Return the file name for database storage
+            // You can also retain other non-sensitive data if needed
+
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+            return;
+
+
+        }
+
+
+        byte[] whiteImageBytes = null;
+        try {
+            BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = image.createGraphics();
+
+            Color greyColor = new Color(128, 128, 128); // RGB values for grey color
+            graphics.setColor(greyColor);
+//            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+            graphics.dispose();
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", outputStream);
+            whiteImageBytes = outputStream.toByteArray();
+            outputStream.close();
+            System.out.println("New white image created!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        boolean isInserted = UserDBUtil.insertUser(id,firstName, lastName, nic, province,phonenumber, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age,whiteImageBytes);
+
+        if (isInserted) {
+            req.getSession().setAttribute("successMessage", "Registration successful.");
+            resp.sendRedirect("pricing.jsp");
+        } else {
+            req.setAttribute("errorMessage", "Registration failed. Please try again.");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/u_reg.jsp");
+            dispatcher.forward(req, resp);
+        }
     }
+
+    private byte[] convertPartToByteArray(Part filePart) throws IOException {
+        if (filePart == null) {
+            return null;
+        }
+
+        InputStream inputStream = filePart.getInputStream();
+        byte[] bytes = new byte[(int) filePart.getSize()];
+        inputStream.read(bytes);
+        return bytes;
+    }
+
+
 }
-
-

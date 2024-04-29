@@ -10,7 +10,8 @@
 <%@ page import="java.util.List" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:import url="logoutbutton.jsp"/>
-<c:import url="sidebar.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
+
 
 
 <%
@@ -25,14 +26,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="u_styles.css">
     <title>User Dashboard</title>
     <style>
         /* Inline CSS styling */
         body {
             margin: 0;
             display: flex;
-            flex-direction: column;
             min-height: 100vh;
             background-color: #f0f0f0;
         }
@@ -95,6 +95,20 @@
             color: red;
             margin-bottom: 10px;
         }
+        .form-container .button {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+
     </style>
 </head>
 <body>
@@ -113,32 +127,45 @@
 
 
                 <label>Enter your personality type:</label>
-                <select name="ptype" required>
+                <select name="personalitytype" >
                     <option value=""></option>
-                    <% for (String personality : personalities) { %>
-                    <option><%= personality %></option>
-                    <% } %>
-                </select>
+                    <option value="ENTJ">ENTJ </option>
+                    <option value="INFP">INFP</option>
+                    <option value="ENFJ">ENFJ</option>
+                    <option value="ESFP">ESFP</option>
+                    <option value="ISFP">ISFP</option>
+                    <option value="ENTP">ENTP</option>
+                    <option value="INTJ">INTJ</option>
+                    <option value="ENFP">ENFP</option>
+                    <option value="ESTJ">ESTJ</option>
+                    <option value="ISTJ">ISTJ</option>
+                    <option value="INFJ">INFJ</option>
+                    <option value="INTP">INTP </option>
+                    <option value="ESFJ">ESFJ</option>
+                    <option value="ESTP">ESTP</option>
+                    <option value="ISTP">ISTP</option>
+                    <option value="ISFJ">ISFJ</option>
 
+                </select>
 
 
                 <label>You want to find it out? : <a href="https://www.16personalities.com/free-personality-test" target="_blank">Click here</a></label>
 
 
                 <div class="completion-bar">
-                    <div class="completion-fill" style="width: 56%;"></div> <!-- Adjust the width based on completion -->
+                    <div class="completion-fill" style="width: 57%;"></div> <!-- Adjust the width based on completion -->
                 </div>
-                <p class="completion-text">4 out of 6 steps left to complete your profile</p>
+                <p class="completion-text">4 out of 7 steps left to complete your profile</p>
 
                 <!-- Proceed button -->
-                <button type="submit" name="action" value="proceed">Proceed</button>
+                <button type="submit" name="action" value="proceed" class="form-container button">Save & Next</button>
 
                 <!-- Save Progress button -->
-                <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
+                <a href="u_myprofile.jsp" class="form-container button">Back to Profile</a>
             </form>
 
         </div>
-</div>
+    </div>
 </div>
 
 </div>

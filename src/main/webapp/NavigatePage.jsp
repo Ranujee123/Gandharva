@@ -258,15 +258,15 @@
 
 <div class="container">
     <div class="form-box">
-        <a href="Astrologer_Registration.jsp"> <h1 class="heading">Astrologer</h1> </a>
+        <a href="astrologerRegistration"> <h1 class="heading">Astrologer</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="login.jsp"> <h1 class="heading">User</h1> </a>
+        <a href="u_reg.jsp"> <h1 class="heading">User</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="Astrologer_dashboard.jsp"> <h1 class="heading">Event Planner</h1> </a>
+        <a href="login"> <h1 class="heading">Event Planner</h1> </a>
     </div>
 </div>
 

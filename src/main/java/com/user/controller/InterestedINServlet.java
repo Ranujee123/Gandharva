@@ -22,47 +22,41 @@ public class InterestedINServlet extends HttpServlet {
 
             // Check if the user is authenticated
             if (userEmail == null) {
-                // Log or print the value of userEmail here for debugging
                 System.out.println("User email is null");
-                response.sendRedirect("login.jsp"); // Redirect to the login page or an appropriate page
+                response.sendRedirect("login.jsp"); // Redirect to the login page
                 return; // Stop further processing
             }
 
             System.out.println("User email: " + userEmail); // Debug print
 
-            String age = request.getParameter("age");
-            String gender = request.getParameter("gender");
+            int minAge = Integer.parseInt(request.getParameter("minAge"));
+            int maxAge = Integer.parseInt(request.getParameter("maxAge"));
             String religion = request.getParameter("religion");
             String caste = request.getParameter("caste");
-            String nationality = request.getParameter("nationality");
-            String country = request.getParameter("country");
+            String otherCaste = request.getParameter("other_caste");
+            String ethnicity = request.getParameter("ethnicity");
+            String province = request.getParameter("province");
 
 
-            // Get user ID, qpersonality ID
+            if ("Other".equals(caste) && otherCaste != null && !otherCaste.isEmpty()) {
+                caste = otherCaste;
+            }
 
-            int uID = UserDBUtil.getUserIdByEmail(userEmail);
-            int aID = UserDBUtil.getAgeIdByName(age);
 
-
+            // Get user ID
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
 
             // Save the details to the database
-
-            if (UserDBUtil.saveInterestedInDetails( uID,aID,gender,religion,caste,nationality, country)) {
+            if (UserDBUtil.saveInterestedInDetails(id, minAge, maxAge, religion, caste, ethnicity, province)) {
                 session.setAttribute("interestedINCompleted", true);
-                response.sendRedirect("ProfileCompletionServlet");
+                response.sendRedirect("ProfileCompletionServlet"); // Redirect to next part of profile completion
             } else {
+                System.out.println("Failed to save interested in details for user ID: " + id);
                 response.sendRedirect("unsuccess.jsp");
             }
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("unsuccess.jsp");
         }
-
-
     }
 }
-
-
-
-
-

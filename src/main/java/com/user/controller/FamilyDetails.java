@@ -13,34 +13,48 @@ import java.io.IOException;
 public class FamilyDetails extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            HttpSession session = request.getSession();
-            String userEmail = (String) session.getAttribute("userEmail");
+        HttpSession session = request.getSession();
+        String userEmail = (String) session.getAttribute("userEmail");
 
-            if (userEmail == null) {
-                response.sendRedirect("login.jsp");
-                return;
+        if (userEmail == null) {
+            response.sendRedirect("login.jsp");
+            return;
+        }
+
+        try {
+            String freli = request.getParameter("freli");
+            String foccu = request.getParameter("foccu");
+            String otherfoccu = request.getParameter("other_foccu");
+            String mreli = request.getParameter("mreli");
+            String moccup = request.getParameter("moccup");
+            String othermoccup = request.getParameter("other_moccup");
+            String maritalstatus = request.getParameter("maritalstatus");
+            int siblings = Integer.parseInt(request.getParameter("siblings")); // Consider adding try-catch around this
+
+            // Correcting the condition to check if 'Other' is selected and apply other values
+            if ("Other".equals(foccu) && otherfoccu != null && !otherfoccu.isEmpty()) {
+                foccu = otherfoccu;
             }
 
+            if ("Other".equals(moccup) && othermoccup != null && !othermoccup.isEmpty()) {
+                moccup = othermoccup;
+            }
 
-            String freli = request.getParameter("fatherReligion");
-            String foccu = request.getParameter("fatherOccupation");
-            String mreli = request.getParameter("motherReligion");
-            String moccup = request.getParameter("motherOccupation");
-            String maritalstatus = request.getParameter("maritalStatus");
-            String siblings = request.getParameter("numberOfSiblings");
+            String id = UserDBUtil.getUserIdByEmail(userEmail); // Ensure this method handles exceptions and returns null or a valid id.
 
-
-        if (UserDBUtil.saveFamilyDetailsToDatabase(userEmail,  freli, foccu,  mreli, moccup, maritalstatus, siblings)) {
-            session.setAttribute("familyDetailsCompleted", true);
-            response.sendRedirect("ProfileCompletionServlet");
-        } else {
-            response.sendRedirect("unsuccess.jsp");
+            if (UserDBUtil.saveFamilyDetailsToDatabase(id, freli, foccu, mreli, moccup, maritalstatus, siblings)) {
+                session.setAttribute("familyDetailsCompleted", true);
+                response.sendRedirect("ProfileCompletionServlet"); // Ensure this redirects to a meaningful URL or handler
+            } else {
+                response.sendRedirect("unsuccess.jsp"); // Consider providing error details or logging
+            }
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage", "Invalid number of siblings.");
+            request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Server error occurred. Please try again.");
+            request.getRequestDispatcher("/errorPage.jsp").forward(request, response);
         }
-    } catch (Exception e) {
-        e.printStackTrace();
-        response.sendRedirect("unsuccess.jsp");
     }
-
-}
 }

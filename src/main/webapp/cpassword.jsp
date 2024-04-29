@@ -30,7 +30,7 @@
 <head>
 
     <title>Change Password </title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="u_styles.css">
 
     <style>
     body {
@@ -62,7 +62,7 @@
 
 
 <script>
-    function saveProfile() {
+    function staus() {
         var existingPassword = document.getElementById("existingPassword").value;
         var newPassword = document.getElementById("newPassword").value;
         var confirmPassword = document.getElementById("confirmPassword").value;

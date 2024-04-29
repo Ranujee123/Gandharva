@@ -5,13 +5,15 @@ import com.user.model.UserDBUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.*;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 import java.util.List;
 
+@MultipartConfig
 public class UpdateUserServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
 
@@ -24,16 +26,25 @@ public class UpdateUserServlet extends HttpServlet {
             return;
         }
 
-        String fname = request.getParameter("fname");
-        String lname = request.getParameter("lname");
-        String bday = request.getParameter("bday");
-        String country = request.getParameter("country");
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+    //  String bday = request.getParameter("bday");
+        String nic=request.getParameter("nic");
+        //String cID = request.getParameter("cID");
+        String phonenumber=request.getParameter("phonenumber");
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String province = request.getParameter("province"); // Assuming the dropdown has the name "province"
+
+        Part dpphotoPart = request.getPart("dpphoto");
+     //   int isVerified=request.getParameter("isVerified");
 
 
 
-        boolean isTrue = UserDBUtil.updateUser(fname, lname, bday, country, email, password);
+        byte[] dpPhoto = convertPartToByteArray(dpphotoPart);
+
+
+        boolean isTrue = UserDBUtil.updateUser(firstName, lastName, nic, province, phonenumber, dpPhoto,email);
+
 
         if (isTrue) {
             // Fetch the updated user details
@@ -59,7 +70,23 @@ public class UpdateUserServlet extends HttpServlet {
             dis.forward(request, response);
         }
     }
+
+    private byte[] convertPartToByteArray(Part filePart) throws IOException {
+        if (filePart == null) {
+            return null;
+        }
+
+        InputStream inputStream = filePart.getInputStream();
+        byte[] bytes = new byte[(int) filePart.getSize()];
+        inputStream.read(bytes);
+        return bytes;
+    }
+
+
 }
+
+
+
 
 
 

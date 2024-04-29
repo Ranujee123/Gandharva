@@ -5,10 +5,14 @@
   Time: 22:04
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.user.model.User" %>
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:import url="Final_Sidebar.jsp"/>
+
+
 
 <%
 
@@ -25,7 +29,7 @@
 <html>
 <head>
   <title>User Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="u_styles.css">
   <style>
     /* Inline CSS styling */
     .container {
@@ -70,26 +74,7 @@
 <body>
 
 
-<div class="sidebar">
-  <div class="profile">
-    <% if (user != null) { %>
-    <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-    <p class="profile-name"><%= user.getFname() %> <%= user.getLname() %></p>
-    <% } %>
-  </div>
-  <ul class="sidebar-menu">
-    <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
-    <li><button>Connections</button></li>
-    <li><a href="chat.jsp"><button>Chat</button></a></li>
-    <li><button>Notifications</button></li>
-    <li><button>Settings</button></li>
-    <li class="dropdown">
-      <button>Request Service &#9662;</button>
-      <ul class="dropdown-content">
-        <li><a href="astrologerService.jsp"><button>Astrology Service</button></a></li>
-        <li><a href="eventplannerService.jsp"><button>Event Planner Service</button></a></li>
-</ul>
-</div>
+
 
 
 <div class="main-content">

@@ -6,98 +6,38 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-  <title>Chat List</title>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <style>
-    /* Reset some default styles */
-
-
-    .main-content {
-      margin-left: 220px; /* Adjust margin to leave space for sidebar */
-      padding: 20px;
-      text-align: center;
+  <title>Chat Room</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script>
+    function refreshMessages() {
+      const senderId = '<%=request.getParameter("userId")%>';
+      const receiverId = '<%=request.getParameter("receiverId")%>';
+      $.get('LoadMessages', {senderId: senderId, receiverId: receiverId}, function(responseText) {
+        $('#messages').html(responseText);
+      });
     }
 
-    .chat-list {
-      padding: 20px;
-      max-width: 300px;
-      margin: auto;
-    }
+    $(document).ready(function() {
+      setInterval(refreshMessages, 3000); // Refresh messages every 3 seconds
 
-    .chat-item {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .avatar {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-    }
-
-    .username {
-      font-weight: bold;
-    }
-
-    .last-message {
-      color: #888;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  </style>
+      $('#sendMessage').click(function() {
+        var message = $('#message').val();
+        const senderId = '<%=request.getParameter("userId")%>';
+        const receiverId = '<%=request.getParameter("receiverId")%>';
+        $.post('ChatStore', {senderId: senderId, receiverId: receiverId, message: message}, function(responseText) {
+          $('#message').val(''); // Clear the message input after sending
+          refreshMessages(); // Refresh messages to include the new one
+        });
+      });
+    });
+  </script>
 </head>
 <body>
-<div class="sidebar">
-  <div class="profile">
-    <img src="images/background.jpg" alt="Profile Image" class="profile-image">
-    <p class="profile-name">Vidhara Ranujee</p>
-  </div>
-  <ul class="sidebar-menu">
-    <li><a href="u_myprofile.jsp"><button>My Profile</button></a></li>
-    <li><button>Connections</button></li>
-    <li><a href="chat.jsp"><button>Chat</button></a></li>
-    <li><button>Notifications</button></li>
-    <li><button>Settings</button></li>
-    <li><a href="u_logout.jsp"><button>Log out</button></a></li>
-    <li class="dropdown">
-      <button>Request Service &#9662;</button>
-      <ul class="dropdown-content">
-        <li><a href="astrologerService.jsp"><button>Astrology Service</button></a></li>
-        <li><a href="eventplannerService.jsp"><button>Event Planner Service</button></a></li>
-</div>
-
-</li>
-
-</ul>
-</div>
-<div class="main-content">
-  <h1>Chat</h1>
-  <div class="chat-list">
-    <!-- Chat list items -->
-    <div class="chat-item">
-      <img src="images/user1.jpg" alt="User 1" class="avatar">
-      <div>
-        <div class="username">Marry</div>
-        <div class="last-message">Hey, how are you doing?</div>
-      </div>
-    </div>
-    <div class="chat-item">
-      <img src="images/user1.jpg" alt="User 2" class="avatar">
-      <div>
-        <div class="username">Marry</div>
-        <div class="last-message">Sure, I'll be there on time.</div>
-      </div>
-    </div>
-    <!-- Add more chat list items as needed -->
-  </div>
-</div>
-
+<div id="messages" style="height: 300px; overflow: auto;"></div>
+<textarea id="message"></textarea>
+<button id="sendMessage">Send</button>
 </body>
 </html>

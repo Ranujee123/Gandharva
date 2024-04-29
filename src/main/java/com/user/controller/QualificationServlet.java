@@ -23,14 +23,19 @@ public class QualificationServlet extends HttpServlet {
             }
 
             String school = request.getParameter("school");
-            String eduQualification = request.getParameter("eduquali");
+            String qualification = request.getParameter("qualification");
             String occupation = request.getParameter("occupation");
+            String otheroccupation = request.getParameter("other_occupation");
 
-            int uID = UserDBUtil.getUserIdByEmail(userEmail);
-            int qID = UserDBUtil.getQualificationIdByName(eduQualification);
-            int oID = UserDBUtil.getOccupationIdByName(occupation);
+            String id = UserDBUtil.getUserIdByEmail(userEmail);
 
-            if (UserDBUtil.saveDetailsToDatabase(uID, qID, oID, school)) {
+            if ("Other".equals(occupation) && otheroccupation!= null && !otheroccupation.isEmpty()) {
+                occupation = otheroccupation;
+            }
+
+
+
+            if (UserDBUtil.saveDetailsToDatabase(id, qualification, occupation, school)) {
                 session.setAttribute("qualificationCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

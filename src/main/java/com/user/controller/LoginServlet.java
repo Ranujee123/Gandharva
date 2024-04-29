@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 
 @WebServlet
 public class LoginServlet extends HttpServlet {
@@ -20,7 +23,13 @@ public class LoginServlet extends HttpServlet {
 
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        password = String.valueOf(password.hashCode());
+        try {
+            password = hashPassword(password);  // Hash the password using SHA-256 and base64
+        } catch (NoSuchAlgorithmException e) {
+            req.setAttribute("errorMessage", "Failed to secure the password.");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            return;
+        }
 
         try {
             // Validate the user
@@ -28,11 +37,13 @@ public class LoginServlet extends HttpServlet {
 
             // Check if the validation was successful
             if (!userDetails.isEmpty()) {
-                req.setAttribute("userDetails", userDetails);
+                User user = userDetails.get(0); // Assuming the first user is the correct one
 
-                // Set userEmail in session
+                // Set userEmail and userId in session
                 HttpSession session = req.getSession();
                 session.setAttribute("userEmail", email);
+                session.setAttribute("userId", user.getId());// Assuming User class has getId method
+
 
                 // Calculate and set profile completion status
                 updateProfileCompletionStatus(session, email);
@@ -52,22 +63,36 @@ public class LoginServlet extends HttpServlet {
             dis.forward(req, resp);
         }
     }
-        private void updateProfileCompletionStatus(HttpSession session, String userEmail) {
-            // Assume these methods return true if the respective section is completed
-            boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
-            boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
-            boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
-            boolean interestedINCompleted = UserDBUtil.isInterestedINCompleted(userEmail);
-            boolean interestedINQualCompleted = UserDBUtil.isInterestedINQualCompleted(userEmail);
-            boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
 
+    private void updateProfileCompletionStatus(HttpSession session, String userEmail) {
+        // Assume these methods return true if the respective section is completed
+        boolean personalDetailsCompleted = UserDBUtil.isPersonalDetailsCompleted(userEmail);
+        boolean qualificationCompleted = UserDBUtil.isQualificationDetailsCompleted(userEmail);
+        boolean familyDetailsCompleted = UserDBUtil.isFamilyDetailsCompleted(userEmail);
+        boolean interestCompleted = UserDBUtil.isInterestCompleted(userEmail);
+        boolean interestedINCompleted = UserDBUtil.isInterestedINCompleted(userEmail);
+        boolean interestedINQualCompleted = UserDBUtil.isInterestedINQualCompleted(userEmail);
+        boolean interestedINFamDetailsCompleted = UserDBUtil.isinterestedINFamDetailsCompleted(userEmail);
 
-            int completedSteps = (qualificationCompleted ? 1 : 0) + (familyDetailsCompleted ? 1 : 0) + (interestCompleted ? 1 : 0) + (interestedINCompleted ? 1 : 0) + (interestedINQualCompleted ? 1 : 0) + (interestedINFamDetailsCompleted ? 1 : 0);
-            int totalSteps = 6;
-            int completionPercentage = (completedSteps * 100) / totalSteps;
+        int completedSteps = (personalDetailsCompleted ? 1 : 0) +
+                (qualificationCompleted ? 1 : 0) +
+                (familyDetailsCompleted ? 1 : 0) +
+                (interestCompleted ? 1 : 0) +
+                (interestedINCompleted ? 1 : 0) +
+                (interestedINQualCompleted ? 1 : 0) +
+                (interestedINFamDetailsCompleted ? 1 : 0);
+        int totalSteps = 7;
+        int completionPercentage = (completedSteps * 100) / totalSteps;
 
-            session.setAttribute("completedSteps", completedSteps);
-            session.setAttribute("totalSteps", totalSteps);
-            session.setAttribute("completionPercentage", completionPercentage);
-        }
+        session.setAttribute("completedSteps", completedSteps);
+        session.setAttribute("totalSteps", totalSteps);
+        session.setAttribute("completionPercentage", completionPercentage);
     }
+
+    private String hashPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hashedBytes = digest.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hashedBytes);
+    }
+
+}

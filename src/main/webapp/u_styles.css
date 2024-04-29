@@ -1,0 +1,71 @@
+
+
+.dropdown-content {
+    display: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.profile-image-editable {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
+
+.completion-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #ddd;
+    margin-top: 20px;
+}
+
+.completion-fill {
+    height: 100%;
+    background-color: #4CAF50;
+}
+
+.completion-text {
+    margin-top: 10px;
+}
+
+.completion-link a {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.dashboard-options ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.dashboard-options ul li {
+    margin-bottom: 10px;
+}
+
+.MuiGrid-item {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.MuiPaper-root {
+    color: rgba(0, 0, 0, 0.87);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    background-color: #fff;
+}
+
+/*
+
+    select {
+        border-radius: 5px;
+        border: 2px solid #757070;
+        background-color: #f8f8f8;
+    }
+ */
