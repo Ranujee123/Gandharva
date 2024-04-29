@@ -118,7 +118,7 @@ $(document).ready(function() {
                         confirmButtonColor: '#0E2C4B',
                     })
                     setTimeout(function() {
-                        window.location.href = 'eventPlanner';
+                        window.location.href = 'EventPlanner/EventPlannerDashboard.jsp';
                     }, 1000);
                 } else if (result == "5") {
                     Swal.fire({

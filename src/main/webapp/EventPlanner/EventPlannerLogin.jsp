@@ -8,178 +8,149 @@
     <title>Login</title>
 </head>
 <style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        color: #fff;
-        font-family: "Poppins", sans-serif;
-    }
-
     body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
         background-image: url('../images/background.jpg');
-        background-repeat: no-repeat;
         background-size: cover;
-        background-position: center;
-        min-height: 100vh;
-    }
-
-    a {
-        text-decoration: none;
-    }
-
-    /* Navogation bar */
-
-    nav {
+        background-repeat: no-repeat;
         display: flex;
-        justify-content: space-around;
+        justify-content: center;
         align-items: center;
-        font-family: "Roboto", sans-serif;
-        background-color: #000;
-        height: 75px;
-        margin-bottom: 25px;
+        height: 100vh;
     }
 
-    nav img {
-        border: none;
-        height: 75px;
-        width: auto;
-    }
-
-    nav ul {
-        display: flex;
-        gap: 100px;
-    }
-
-    nav ul li {
-        font-size: 20px;
-        list-style-type: none;
-    }
-
-    nav button {
-        cursor: pointer;
-        width: 90px;
-        height: 30px;
-        background-color: #000;
-        font-size: 20px;
-        border-radius: 20px;
-        border: none;
-    }
-
-    nav .buttons {
-        display: flex;
-        gap: 5px;
-    }
-
-    nav .buttons #sign-up-button {
-        color: #000;
-        font-weight: bold;
-        border-radius: 0;
-    }
-
-    /* Content */
-
-    .content {
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        flex-direction: column;
-        padding: 50px;
-        border: 2px solid #fff;
+    .form-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        padding: 40px;
         border-radius: 10px;
-        margin: 50px auto 60px;
-        width: 600px;
-        height: 500px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        width: 400px;
+        text-align: center;
     }
 
-    .content h1 {
-        margin-bottom: 5px;
+    .form-container h1 {
+        margin-bottom: 30px;
+        color: #333;
     }
 
-    .reg-btn {
+    .input-field {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+    }
+
+    .input-field:focus {
+        border-color: #007bff;
+    }
+
+    .remember-me {
         margin-top: 20px;
-        padding: 10px 20px;
+        text-align: left;
+    }
+
+    .remember-me input[type="checkbox"] {
+        margin-right: 5px;
+        vertical-align: middle;
+    }
+
+    .btn {
         background-color: #007bff;
         color: #fff;
         border: none;
         border-radius: 5px;
+        padding: 10px 20px;
         cursor: pointer;
-        width: 40%;
+        transition: background-color 0.3s;
     }
 
-    .login-form-wrapper {
+    .btn:hover {
+        background-color: #0056b3;
+    }
+
+    .forgot-password {
         margin-top: 20px;
-        width: 500px;
-        align-self: center;;
-    }
-
-    .form-item {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin: 16px 0;
-    }
-
-    .form-item input {
-        color: #000000;
-        padding: 10px;
-        width: 50%;
-        margin-top: 4px;
-    }
-    .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .form-group input[type="checkbox"] {
-        margin-right: 5px;
-    }
-
-    .remember{
-        margin-top: 10px;
-        opacity: 0.75;
-    }
-
-    .signup-text {
-        text-align: left;
         font-size: 14px;
-        margin-top: 10px;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .forgot-password:hover {
+        color: #007bff;
+    }
+
+    .sign-up-link {
+        display: block;
+        margin-top: 20px;
+        color: #333;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .sign-up-link:hover {
+        color: #007bff;
     }
 </style>
 <body>
-<nav>
-    <img src="../images/logo.png" alt="company-logo"/>
-    <div class="buttons">
-        <button><a href="EventPlannerLogin.jsp">Log in</a></button>
-    </div>
-</nav>
+<%--<nav>--%>
+<%--    <img src="../images/logo.png" alt="company-logo"/>--%>
+<%--    <div class="buttons">--%>
+<%--        <button><a href="EventPlannerLogin.jsp">Log in</a></button>--%>
+<%--    </div>--%>
+<%--</nav>--%>
 
-<div class="content">
-    <h1>Event Planner</h1>
+<%--<div class="content">--%>
+<%--    <h1>Event Planner</h1>--%>
 
-    <h2>Login</h2>
+<%--    <h2>Login</h2>--%>
 
-    <div class="login-form-wrapper">
-        <form action="eventPlannerLog" method="post" class="login-form" id="addeventplannerform">
-            <div class="form-item">
-                <label for="email">Email</label>
-                <input required type="email" name="email" id="email" placeholder="example@email.com"/>
-            </div>
+<%--    <div class="login-form-wrapper">--%>
+<%--        <form action="eventPlannerLog" method="post" class="login-form" id="addeventplannerform">--%>
+<%--            <div class="form-item">--%>
+<%--                <label for="email">Email</label>--%>
+<%--                <input required type="email" name="email" id="email" placeholder="example@email.com"/>--%>
+<%--            </div>--%>
 
-            <div class="form-item">
-                <label for="password">Password</label>
-                <input required type="password" name="password" id="password"/>
-            </div>
-            <div class="remember">
-                <label for="remember">
-                    <input type="checkbox" name="remember" id="remember">
-                    Remember Me
-                </label>
-            </div>
-            <button class="reg-btn" type="submit">Login</button>
-            <p class="signup-text">Don't have an account? <a href="EventPlannerRegister.jsp">Sign Up</a></p>
-        </form>
-    </div>
+<%--            <div class="form-item">--%>
+<%--                <label for="password">Password</label>--%>
+<%--                <input required type="password" name="password" id="password"/>--%>
+<%--            </div>--%>
+<%--            <div class="remember">--%>
+<%--                <label for="remember">--%>
+<%--                    <input type="checkbox" name="remember" id="remember">--%>
+<%--                    Remember Me--%>
+<%--                </label>--%>
+<%--            </div>--%>
+<%--            <button class="reg-btn" type="submit">Login</button>--%>
+<%--            <p class="signup-text">Don't have an account? <a href="EventPlannerRegister.jsp">Sign Up</a></p>--%>
+<%--        </form>--%>
+<%--    </div>--%>
+<%--</div>--%>
+<div class="form-container">
+    <h1>Login</h1>
+    <form action="eventPlannerLog" method="POST" id="login-form">
+        <input type="text" id="email" name="email" class="input-field" placeholder="Email" required><br>
+        <input type="password" id="password" name="password" class="input-field" placeholder="Password" required><br>
+
+        <div class="remember-me">
+            <input type="checkbox" name="remember" id="remember">
+            <label for="remember">Remember Me</label>
+        </div>
+
+        <input type="submit" class="btn" id="proceedBtn" name="proceed" value="Login">
+    </form>
+    <a href="EventPlannerRegister.jsp" class="sign-up-link">Don't have an account? Sign Up</a>
+    <a href="/Astrologer/forgotPassword.jsp" class="forgot-password">Forgot Password?</a>
 </div>
+
 </body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
+<script src="Astrologer/js/login.js" defer></script>
 </html>
