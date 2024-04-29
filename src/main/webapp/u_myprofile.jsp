@@ -4,22 +4,26 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:import url="logoutbutton.jsp" />
-<c:import url="Final_Sidebar.jsp" />
 
 <%
 String userEmail = (String) session.getAttribute("userEmail");
 User user = null;
+
 if (userEmail != null) {
 	List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
 	if (userDetails != null && !userDetails.isEmpty()) {
 		user = userDetails.get(0);
+		session.setAttribute("user", user);
 	}
+} else {
+	response.sendRedirect("login.jsp");
+	return;
 }
 String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
 %>
 
-
+<c:import url="logoutbutton.jsp" />
+<c:import url="Final_Sidebar.jsp" />
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +33,6 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 <link rel="stylesheet" type="text/css" href="u_myprofile.css">
 <style>
 </style>
-
 
 <script src="js/nic-utils.js"></script>
 <script>
@@ -44,17 +47,9 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
                 .catch(error => console.error('Error fetching data:', error));
         });
     </script>
-
-
 </head>
 
-
-
 <body style="margin: 0;">
-
-
-
-
 	<div class="main-content">
 		<form action="UpdateUserServlet" method="post">
 			<div class="profile-details">
@@ -81,12 +76,10 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 					<%
 					}
 					%>
-
 				</div>
 				<%
 				}
 				%>
-
 			</div>
 
 			<div class="cards-container">
@@ -105,8 +98,6 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 
 				</div>
 			</div>
-
-
 
 			<%
 			if (!user.getUserType().equals("GUEST_USER")) {
@@ -140,7 +131,6 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 			}
 			%>
 
-
 			<div class="button">
 				<div class="dashboard-options">
 					<ul>
@@ -153,6 +143,5 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 			</div>
 		</form>
 	</div>
-
 </body>
 </html>

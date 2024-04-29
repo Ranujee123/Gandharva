@@ -438,4 +438,8 @@ public class User {
     public String getUserType() {
     	return userType;
     }
+    
+    public void setDpphoto(byte[] dpphoto) {
+    	this.dpphoto = dpphoto;
+    }
 }

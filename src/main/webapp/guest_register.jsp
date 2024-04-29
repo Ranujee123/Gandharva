@@ -136,7 +136,7 @@ List<String> province = UserDBUtil.getAllProvince();
 				      <label for="confirmPassword">Confirm Password<span class="required-star">*</span>:</label>
 				      <input type="password" id="confirmPassword" name="confirmPassword" required onchange="validateConfirmPassword()">
 
-				<h2>Your personal details won't be visible to users unless there's a mutual connection</h2>
+				<h5>Your personal details won't be visible to users unless there's a mutual connection</h5>
 				<button type="submit" id="proceed-btn">Proceed</button>
 			</form>
 		</div>

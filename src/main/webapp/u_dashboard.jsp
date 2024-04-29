@@ -19,17 +19,15 @@
     List<String> ages= UserDBUtil.getAge();
 %>
 
+<%
+String userType = (String) session.getAttribute("userEmail");
+%>
+
 <html>
 <head>
     <title>User Dashboard</title>
     <link rel="stylesheet" href="u_dashboard.css">
-
-
-    <style>
-
-
-
-    </style>
+    <link rel="stylesheet" href="styles/main.css">
     <script>
         function validateAgeRange() {
             var ageFrom = document.getElementById('age').value;
@@ -284,7 +282,9 @@
 
         <!-- Add more filters here up to 10 different filters as per your requirement -->
 
-        <button type="submit" class="filter-button">Filter</button>
+        <!-- if userType.equals("GUEST_USER") disable the button -->
+        ${userType.equals("GUEST_USER") ? '<button type="submit" class="filter-button" disabled>Filter</button>' : '<button type="submit" class="filter-button">Filter</button>'}
+
         <button type="reset" class="clear-button">Clear</button>
     </form>
 </div>
@@ -333,6 +333,10 @@
 
 <c:if test="${empty filteredUsers}">
     <p>No users found matching your criteria.</p>
+            ${userType.equals("GUEST_USER") ? '
+            <p class="warnMsg" style="width: 100%; text-align: center; font-size: large; margin-top: 50px;">
+                You need to upgrade to use this feature.
+            </p>' : ''}
 </c:if>
 
             </div>

@@ -1,8 +1,13 @@
 package com.user.model;
 
 import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+// import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.Optional;
+import java.util.Base64;
 import java.util.stream.Stream;
 
 public class UserDBUtil {
@@ -243,7 +248,9 @@ public class UserDBUtil {
                 int age = rs.getInt("age");
                 String userType = rs.getString("userType");
 
-                users.add(new User(id, firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age, userType));
+                User u = new User(id, firstName, lastName, nic, provinceName, phonenumber, emailU, dob, age, userType);
+                u.setDpphoto(dpphoto);
+                users.add(u);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -1311,8 +1318,8 @@ public class UserDBUtil {
     }
 
     // Sending horoscope and resquest to astrologer
-    public static boolean insertNewRequest(int userId, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
-        String sql = "INSERT INTO request (id,startDate, horoscope, horoscopeSecond, status, userId) VALUES (?,?, ?, ?, ?, ?)";
+    public static boolean insertNewRequest(String userId, String astrologerId, String deadline, String status, byte[] horoscope, byte[] horoscopeSecond) throws SQLException {
+        String sql = "INSERT INTO request (id, startDate, horoscope, horoscopeSecond, status, userId, astrologerId, deadline) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnect.getConnection();
                 PreparedStatement statement = conn.prepareStatement(sql)) {
             statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
@@ -1329,15 +1336,68 @@ public class UserDBUtil {
             }
             statement.setString(5, RequestType.PENDING.name()); // Assuming RequestType is an enum and PENDING is a
                                                                 // status
-            statement.setInt(6, userId); // Set userId
+            statement.setString(6, userId); // Set userId
+            statement.setString(7, astrologerId);
+            statement.setString(8, deadline);
+
+            int result = statement.executeUpdate();
+            System.out.println(result > 0);
+            return result > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error during database operation: " + ex.getMessage());
+            ex.printStackTrace();
+//            throw ex;
+        }
+        return false;
+    }
+
+    public static boolean insertNewRequest(String userId, String astrologerId, String deadline) throws SQLException {
+        String sql = "INSERT INTO request (id, startDate, status, userId, astrologerId, deadline) VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection conn = DBConnect.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql)) {
+            statement.setString(1, UUID.randomUUID().toString());// Generate UUID for id
+            statement.setDate(2, new Date(System.currentTimeMillis())); // Use current time for startDate
+            statement.setString(3, RequestType.NEW.name()); // Assuming RequestType is an enum and PENDING is a
+                                                                // status
+            statement.setString(4, userId); // Set userId
+            statement.setString(5, astrologerId);
+            statement.setString(6, deadline);
+
+            int result = statement.executeUpdate();
+            System.out.println(result > 0);
+            return result > 0;
+        } catch (SQLException ex) {
+            System.err.println("Error during database operation: " + ex.getMessage());
+            ex.printStackTrace();
+//            throw ex;
+        }
+        return false;
+    }
+
+    public static boolean updateHoroscopes(String requestId, byte[] horoscope, byte[] horoscopeSecond) {
+        String sql = "UPDATE request SET horoscope = ?, horoscopeSecond = ?, status = ? WHERE id = ?";
+        try (Connection conn = DBConnect.getConnection();
+                PreparedStatement statement = conn.prepareStatement(sql)) {
+            if (horoscope != null) {
+                statement.setBytes(1, horoscope);
+            } else {
+                statement.setNull(1, Types.BLOB); // Set NULL if horoscope is null
+            }
+            if (horoscopeSecond != null) {
+                statement.setBytes(2, horoscopeSecond);
+            } else {
+                statement.setNull(2, Types.BLOB); // Set NULL if horoscopeSecond is null
+            }
+            statement.setString(3, RequestType.PENDING.name());
+            statement.setString(4, requestId);
 
             int result = statement.executeUpdate();
             return result > 0;
         } catch (SQLException ex) {
             System.err.println("Error during database operation: " + ex.getMessage());
             ex.printStackTrace();
-            throw ex;
         }
+        return false;
     }
 
     public static boolean updateUserInfo(String id, String ethnicity, String religion, String caste, String status,
@@ -1843,13 +1903,11 @@ public class UserDBUtil {
             }
         }
     }
-
-    public static List<UserListModel> getServiceProviders(String serviceType) {
-        List<UserListModel> astrogers = new ArrayList<>();
-        String sql = "SELECT * FROM user WHERE usertype = ?";
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement pstmt = con.prepareStatement(sql)) {
-            pstmt.setString(1, serviceType);
+    
+    private static List<UserListModel> getList(PreparedStatement pstmt) {
+    	List<UserListModel> astrogers = new ArrayList<>();
+        
+        try (Connection con = DBConnect.getConnection()) {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
 
@@ -1864,7 +1922,7 @@ public class UserDBUtil {
                             rs.getInt("numberOfCasesHandled"),
                             rs.getInt("yearsOfExperience"));
 
-                    byte[] imageData = rs.getBytes("userImage");
+                    byte[] imageData = rs.getBytes("dpphoto");
                     if (imageData != null && imageData.length > 0) {
                         String base64Image = Base64.getEncoder().encodeToString(imageData);
                         astroger.setBase64Image("data:image/jpeg;base64," + base64Image);
@@ -1876,6 +1934,34 @@ public class UserDBUtil {
                     astrogers.add(astroger);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return astrogers;
+    }
+
+    public static List<UserListModel> getServiceProviders(String serviceType) {
+        List<UserListModel> astrogers = new ArrayList<>();
+        String sql = "SELECT id, firstName, lastName, email, countryOfResidence, province, district, numberOfCasesHandled, yearsOfExperience, dpphoto FROM user WHERE usertype = ?";
+        try (Connection con = DBConnect.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, serviceType);
+            astrogers = getList(pstmt);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return astrogers;
+    }
+    
+    public static List<UserListModel> getFilteredServiceProviders(String serviceType, String filter) {
+        List<UserListModel> astrogers = new ArrayList<>();
+        // combine firstName and lastName into a single column, then search for the filter in that column
+        String sql = "SELECT id, firstName, lastName, email, countryOfResidence, province, district, numberOfCasesHandled, yearsOfExperience, dpphoto FROM user WHERE usertype = ? AND CONCAT(firstName, ' ', lastName) LIKE ?";
+        try (Connection con = DBConnect.getConnection();
+                PreparedStatement pstmt = con.prepareStatement(sql)) {
+            pstmt.setString(1, serviceType);
+            pstmt.setString(2, "%" + filter + "%");
+            astrogers = getList(pstmt);
         } catch (SQLException e) {
             e.printStackTrace();
         }
