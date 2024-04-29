@@ -305,7 +305,7 @@ select {
                         <option value="No">No</option>
                     </select>
 
-                    <label>Enter your personality type:</label>
+                    <label>Personality Type:</label>
                     <select name="personalitytype" >
                         <option value=""></option>
                         <option value="ENTJ">ENTJ </option>

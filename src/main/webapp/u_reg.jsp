@@ -130,7 +130,7 @@
       <input type="text" id="lastName" name="lastName" required onchange="validateLastName()" />
 
       <!-- Your existing form structure -->
-      <label for="nic">Nation Identity Number<span class="required-star">*</span>:</label>
+      <label for="nic">National Identity Number<span class="required-star">*</span>:</label>
       <input type="text" id="nic" name="nic" onchange="updateGenderAndAgeFromNIC('nic', 'gender', 'dob', 'proceed-btn', 'nicError')" required />
 
 
@@ -173,14 +173,16 @@
 
 
 
-      <label for="frontphoto">ID photo (front)<span class="required-star">*</span>:</label>
-        <input type="file" id="frontphoto" name="frontphoto" required>
+      <label for="frontphoto">Verification Document Front Photo<span class="required-star">*</span>:</label>
+      <input type="file" id="frontphoto" name="frontphoto" required>
 
-      <label for="backphoto">ID photo (back)<span class="required-star">*</span>:</label>
+
+
+      <label for="backphoto">Verification Document Back Photo<span class="required-star">*</span>:</label>
       <input type="file" id="backphoto" name="backphoto" required>
 
 
-      <label for="phonenumber">Contact <span class="required-star">*</span>:</label>
+      <label for="phonenumber">Contact Number<span class="required-star">*</span>:</label>
       <input type="text" id="phonenumber" name="phonenumber" required onchange="validateSriLankanPhoneNumber()" />
 
       <label for="email">Email<span class="required-star">*</span>:</label>
@@ -193,8 +195,8 @@
 
       <label for="confirmPassword">Confirm Password<span class="required-star">*</span>:</label>
       <input type="password" id="confirmPassword" name="confirmPassword" required onchange="validateConfirmPassword()">
-
-<h2>Your personal details like contact number,birthday,email won't be visible to users unless there's a mutual connection</h2>
+      <h6>*Verification document can be your NIC/Passport/Driving Liscence</h6>
+<h5>*Your personal details like contact number,birthday,email won't be visible to users unless there's a mutual connection</h5>
       <h2 style="font-size: 14px" class="center-elements">Step 1 out of 2</h2><br><br> <!-- Moved the step text below the form -->
       <button type="submit" id="proceed-btn">Proceed</button>
     </form>
