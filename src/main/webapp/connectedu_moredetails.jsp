@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
   User: ranu
-  Date: 2024-04-18
-  Time: 14:56
+  Date: 2024-04-28
+  Time: 20:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page import="com.user.model.User" %>
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Base64" %>
+<%@ page import="com.user.model.ConnectionRequest" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -210,75 +210,28 @@
 
   <%
     User user = (User) request.getAttribute("user");
+    ConnectionRequest connectionRequest=(ConnectionRequest) request.getAttribute("request") ;
     Boolean isReported = (Boolean) request.getAttribute("isUserReported");
     Boolean isConnected=(Boolean)request.getAttribute("isConnectedUser") ;
 
     if (user != null) {
   %>
-  <%
-    String base64Image = "";
-    String firstName = "Not";
-    String lastName = "Applicable";
-    if (session.getAttribute("id") == null) {
-      response.sendRedirect("login");
-    } else {
-      //  String userEmail = (String) session.getAttribute("userEmail");
-//        AllUser astrologer = (AllUser) session.getAttribute("astrologer");
-      byte[] blobData = user.getDpphoto();
-
-      base64Image = Base64.getEncoder().encodeToString(blobData);
-      //  firstName = astrologer.getFirstName();
-      //   lastName = astrologer.getLastName();
-    }
-  %>
-
   <h1></h1>
 
-<%--  <div class="details-card">--%>
+  <div class="details-card">
     <!-- User details -->
     <p class="connect-status"> <%= isReported ? "This user has been reported by you" : " " %></p>
-<%--    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>--%>
+    <p class="connect-status"> <%= isConnected? "You both are mutually connected" : " " %></p>
     <!-- Show other user details -->
-<%--  </div>--%>
+  </div>
 
   <div class="details-card">
-<%--    <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">--%>
-<%--  <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image" class="profile-image">--%>
-
-
-<%--    <% if (user != null) {--%>
-<%--      String base64Image;--%>
-<%--      byte[] blobData = user.getDpphoto();--%>
-<%--      if (isConnected && blobData != null) {--%>
-<%--        // If connected and blobData is not null, encode it to Base64--%>
-<%--        base64Image = Base64.getEncoder().encodeToString(blobData);--%>
-<%--      } else {--%>
-<%--        // Use a default image if not connected or blobData is null--%>
-<%--        base64Image = "DP/defaultDP.jpeg"; // Provide the path to your default image here--%>
-<%--      }--%>
-<%--    %>--%>
-    <img src="<%= isConnected ? "data:image/png;base64," + base64Image : base64Image %>" alt="User Image" class="profile-image">
-
-
+    <img src="DP/defaultDP.jpeg" alt="Profile Image" class="profile-image">
     <h2><c:out value="${user.firstName}"/> <span class="lastName" data-lastName="<c:out value='${user.lastName}'/>"></span></h2>
     <p><%=user.getAge()%>-<%=user.getProvince() %></p>
-    <p>
-      <%
-        String userType = user.getUserType();
-        if ("STANDARD_USER".equals(userType)) { %>
-      Standard User <i class="fas fa-user" style="color: black;"></i>
-      <% } else if ("PREMIUM_USER".equals(userType)) { %>
-      Premium User <i class="fas fa-user-check" style="color: gold;"></i>
-      <% } else { %>
-      <i class="fas fa-user-slash" style="color: red;"></i> Other
-      <% } %>
-    </p>
-
     <p>Verification Status:
       <% if (user.getIsVerified() == 1) { %>
       <i class="fas fa-check-circle" style="color: green;"></i> Verified
-      <% } else if (user.getIsVerified() == 0) { %>
-      <i class="fas fa-exclamation-circle" style="color: orange;"></i> Pending Verification
       <% } else { %>
       <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
       <% } %>
@@ -291,7 +244,7 @@
       <!-- Using a Font Awesome icon instead of a button -->
       <i onclick="reportUser()" class="fas fa-flag report-button" style="cursor: pointer;"></i>
 
-      <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;" >
+      <form id="reportForm" action="ReportUserServlet" method="POST" style="display:none;">
         <input type="hidden" name="fromUserEmail" value="<%=session.getAttribute("email")%>" />
         <input type="hidden" name="toUserEmail" value="<%=user.getEmail()%>" />
         <input type="hidden" id="reason" name="reason" />
@@ -306,10 +259,6 @@
       <h3>Contact Info</h3>
       <p class="connect-status">You both are mutually connected</p>
       <table>
-        <tr>
-          <td><b>Full Name</b></td>
-          <td><%=user.getfirstName()%> <%=user.getlastName()%></td>
-        </tr>
         <tr>
           <td><b>Phone number</b></td>
           <td><%=user.getPhonenumber() != null ? user.getPhonenumber() : "Not Shared"%></td>
@@ -326,21 +275,13 @@
 
 
   <div class="details-card">
-    <p>Private information such as full name, birth date, pictures and contact details are only visible to matched profiles.</p>
+    <p>Private information such as full name, birth date, pictures, contact details and horoscope information are only visible to matched profiles.</p>
   </div>
 
   <div class="details-card">
     <h3>Personal Info</h3>
     <h4>Basic</h4>
     <table style="width:100%">
-
-      <c:if test="${isConnectedUser}">
-        <tr>
-          <td><b>Date of Birth</b></td>
-          <td><%=user.getDob() %></td>
-        </tr>
-
-      </c:if>
       <tr>
         <td><b>Ethnicity</b></td>
         <td><%=user.getEthnicity() != null ? user.getEthnicity() : "Not Shared" %></td>
@@ -455,7 +396,7 @@
 
 
 
-      <c:if test="${isConnectionRequestPending}">
+  <c:if test="${isConnectionRequestPending}">
     <!-- Displayed if there is a pending connection request -->
     <p class="connect-status">Pending Request</p>
   </c:if>
@@ -475,18 +416,14 @@
 
 
 
-    </div>
+</div>
 <br>
 <br>
 <br>
 
 <!-- Add other fields similarly -->
-      <%
-    } else {
-%>
-    <p>User details not found.</p>
-      <%
-    }
-%>
+<% } else { %>
+<p>User details not found.</p>
+<% } %>
 </body>
 </html>

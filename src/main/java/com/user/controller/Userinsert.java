@@ -2,6 +2,7 @@ package com.user.controller;
 
 import com.user.model.UserDBUtil;
 
+import javax.imageio.ImageIO;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -9,10 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.util.UUID;
+
 
 
 import java.security.NoSuchAlgorithmException;
@@ -91,8 +96,31 @@ public class Userinsert extends HttpServlet {
             dispatcher.forward(req, resp);
             return;
 
+
         }
-            boolean isInserted = UserDBUtil.insertUser(id,firstName, lastName, nic, province,phonenumber, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age);
+
+
+        byte[] whiteImageBytes = null;
+        try {
+            BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = image.createGraphics();
+
+            Color greyColor = new Color(128, 128, 128); // RGB values for grey color
+            graphics.setColor(greyColor);
+//            graphics.setColor(Color.WHITE);
+            graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+            graphics.dispose();
+
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            ImageIO.write(image, "jpg", outputStream);
+            whiteImageBytes = outputStream.toByteArray();
+            outputStream.close();
+            System.out.println("New white image created!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        boolean isInserted = UserDBUtil.insertUser(id,firstName, lastName, nic, province,phonenumber, email, frontPhoto, backPhoto, password, req.getParameter("gender"), dob, age,whiteImageBytes);
 
         if (isInserted) {
             req.getSession().setAttribute("successMessage", "Registration successful.");

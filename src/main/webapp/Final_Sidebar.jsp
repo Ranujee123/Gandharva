@@ -43,7 +43,7 @@
       padding: 0 1.7rem;
       color: whitesmoke;
       overflow: hidden;
-      transition: null 0.5s linear;
+      transition: width 0.5s linear;
       background: #24333E;
 
     }
@@ -129,23 +129,38 @@
       </a>
     </li>
     <li>
+      <a href="u_dashboard.jsp">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <span>Search</span>
+      </a>
+    </li>
+    <li>
+      <a href="findMatches">
+        <i class="fa-solid fa-user-group"></i>
+        <span>Matched Profiles</span>
+      </a>
+    </li>
+
+    <li>
       <a href="userSelectEdit.jsp">
         <i class="menu-icon fas fa-user"></i>
         <span>Profile</span>
       </a>
     </li>
-    <li>
-      <a href="u_dashboard.jsp">
-        <i class="menu-icon fas fa-hourglass-half"></i>
-        <span>Search</span>
-      </a>
-    </li>
+
     <li>
       <a href="fetchConnection">
-        <i class="menu-icon fas fa-bell"></i>
-        <span>Connections</span>
+        <i class="fa-solid fa-hand"></i>
+        <span>Pending Connections</span>
       </a>
     </li>
+    <li>
+      <a href="GetAcceptedRequests">
+        <i class="fa-solid fa-handshake"></i>
+        <span>Connected Profiles</span>
+      </a>
+    </li>
+
     <li>
       <a href="viewAstrologerList.jsp">
         <i class="menu-icon fas fa-bookmark"></i>
@@ -158,28 +173,18 @@
         <span>Event Planing Srvice</span>
       </a>
     </li>
-    <li>
-      <a href="#">
+<%--    <li>
+      <a href="pricing.jsp">
         <i class="menu-icon fas fa-credit-card"></i>
-        <span>Payment</span>
+        <span>Change Plane</span>
       </a>
-    </li>
+    </li>--%>
 
-    <li>
-      <a href="GetAcceptedRequests">
-        <i class="menu-icon fas fa-cog"></i>
-        <span>Settings</span>
-      </a>
-    </li>
 
-    <li>
-      <a href="findMatches">
-        <i class="menu-icon fas fa-cog"></i>
-        <span>Settings</span>
-      </a>
-    </li>
+
+
     <li class="logout">
-      <a href="logoutbutton.jsp" onclick="Logout(); return false;">
+      <a href="login">
         <i class="menu-icon fas fa-sign-out-alt"></i>
         <span>logout</span>
       </a>

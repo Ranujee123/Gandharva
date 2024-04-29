@@ -50,7 +50,29 @@ public class User {
     private String phonenumber;
     private String personalitytype;
    private int isVerified;
+  private String phoneNumber;
 
+   private String userType;
+
+
+
+
+
+
+
+
+    public User(String firstName, String lastName, String nic, String province, String phonenumber, byte[] dpphoto, String email, String dob, int age, int isVerified) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
+        this.province = province;
+        this.phonenumber = phonenumber;
+        this.dpphoto = dpphoto;
+        this.email = email;
+        this.dob = dob;
+        this.age = age;
+        this.isVerified = isVerified;
+    }
 
 
 
@@ -109,7 +131,7 @@ public class User {
 */
 
     //display filter box card method constructor
-    public User(String firstName, String lastName, String email, String province, String ethnicity,String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype,int age)
+    public User(String firstName, String lastName, String email, String province, String ethnicity,String religion, String caste, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, String personalitytype,int age,String gender)
     {
 
         this.firstName = firstName;
@@ -129,6 +151,8 @@ public class User {
         this.diffabled = diffabled;
         this.personalitytype=personalitytype;
         this.age=age;
+        this.gender=gender;
+
 
     }
 
@@ -217,7 +241,7 @@ public class User {
 
     }
 
-    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings,String gender) {
+    public User(String firstName, String lastName, String email, String province, String ethnicity, String religion, String status, String height, String foodpreferences, String drinking, String smoking, String qualification, String occupation, String diffabled, int age, String freli, String mreli, String foccu, String moccup, String maritalstatus, int siblings,String gender,String userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -240,6 +264,7 @@ public class User {
         this.maritalstatus = maritalstatus;
         this.siblings = siblings;
         this.gender=gender;
+        this.userType=userType;
 
     }
 
@@ -248,7 +273,7 @@ public class User {
     public User(String firstName, String lastName, String email, String province, String ethnicity, String religion,
                 String status, String height, String foodpreferences, String drinking, String smoking,
                 String qualification, String occupation, String diffabled, int age, String freli, String mreli,
-                String foccu, String moccup, String maritalStatus, int siblings, int isVerified) {
+                String foccu, String moccup, String maritalStatus, int siblings, int isVerified, String userType,String dob,String phonenumber,byte[] dpphoto) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -271,6 +296,10 @@ public class User {
         this.maritalStatus = maritalStatus;
         this.siblings = siblings;
         this.isVerified = isVerified;
+        this.userType=userType;
+        this.dob=dob;
+        this.phonenumber=phonenumber;
+        this.dpphoto=dpphoto;
     }
 
 //updateuserdetails
@@ -579,5 +608,13 @@ public class User {
 
     public int getMaxAge() {
         return maxAge;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setDpphoto(byte[] dpphoto) {
+        this.dpphoto = dpphoto;
     }
 }

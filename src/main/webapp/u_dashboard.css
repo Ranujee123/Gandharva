@@ -108,6 +108,10 @@ select {
 
 }
 
+.profile-card.PREMIUM {
+    border: 3px solid gold; /* Example for premium users */
+}
+
 .profile-details-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* Creates three columns */

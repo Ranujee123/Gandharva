@@ -24,7 +24,7 @@ function Saveprofile() {
             Swal.fire("Successfully Logged out!", "", "success").then((result) => {
                 if (result.isConfirmed) {
                     // Redirect to login page or perform server-side logout
-                    window.location.href = "login.jsp"; // Change this to your logout URL
+                    window.location.href = "logoutbutton.jsp"; // Change this to your logout URL
                 }
             });
         } else if (result.isDenied) {

@@ -19,9 +19,9 @@
             display: flex;
         }
         .main-content {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: repeat(2, 1fr);
+            /*display: grid;*/
+            /*grid-template-columns: repeat(2, 1fr);*/
+            /*grid-template-rows: repeat(2, 1fr);*/
             flex-grow: 1;
             gap: 20px; /* Adjusted to give more space between cards */
             padding: 20px;
@@ -38,8 +38,9 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             border-radius: 10px; /* Rounded corners */
             transition: box-shadow 0.3s; /* Smooth transition for shadow effects */
-            width: 100%; /* Card takes up 100% of the grid cell's width */
-            height: 50%; /* Card takes up 100% of the grid cell's height */
+            width: 80%; /* Card takes up 100% of the grid cell's width */
+            height: 30px; /* Card takes up 100% of the grid cell's height */
+            margin-top: 50px;
         }
 
         .card:hover {
