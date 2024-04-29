@@ -363,7 +363,7 @@ String userType = (String) session.getAttribute("userEmail");
 
                 <c:if test="${empty filteredUsers}">
                     <p>No users found matching your criteria.</p>
-                            ${userType.equals("GUEST_USER") ? '
+                            ${user.getUserType().equals("GUEST_USER") ? '
                             <p class="warnMsg" style="width: 100%; text-align: center; font-size: large; margin-top: 50px;">
                                 You need to upgrade to use this feature.
                             </p>' : ''}

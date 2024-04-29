@@ -18,7 +18,7 @@ public class ViewEventReq extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
 			// Get the userId from the session
-			String userId = (String) req.getSession().getAttribute("userId");
+			String userId = req.getSession().getAttribute("userId").toString();
 
 			List<EventPlannerRequest> requests = RequestsDB.getEventPlannerRequests(userId);
 			req.setAttribute("serviceRequests", requests);
