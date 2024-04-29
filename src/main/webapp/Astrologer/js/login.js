@@ -148,7 +148,7 @@ $(document).ready(function() {
                         confirmButtonColor: '#932828',
                     })
                 } else {
-                    console.log(result);
+                    console.log("res" + result);
                     Swal.fire({
                         icon: 'error',
                         title: 'Login unsuccessfully!',

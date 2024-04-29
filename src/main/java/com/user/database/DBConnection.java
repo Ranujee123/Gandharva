@@ -22,9 +22,9 @@ public class DBConnection {
 
 //    VIDARA
     private final String port = "3306";
-    private final String database = "gandharvanewtest";
-    private final String username = "binali";
-    private final String password = "password";
+    private final String database = "gandharva";
+    private final String username = "root";
+    private final String password = "";
 
     private Connection connection;
     private static DBConnection dbconnection;
