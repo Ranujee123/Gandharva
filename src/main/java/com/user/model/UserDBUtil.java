@@ -227,7 +227,7 @@ public class UserDBUtil {
 
     public static List<User> getUserDetails(String emailOrId) {
         List<User> users = new ArrayList<>();
-        String sql = "SELECT id, firstName, lastName, nic, province, email, dpphoto, phonenumber, dob, age, userType FROM user WHERE email = ? OR id = ?";
+        String sql = "SELECT id, firstName, lastName, nic, province, email, dpphoto, phonenumber, dob, age, userType, isVerified FROM user WHERE email = ? OR id = ?";
         try (Connection con = DBConnect.getConnection();
                 PreparedStatement pstmt = con.prepareStatement(sql)) {
             pstmt.setString(1, emailOrId);
