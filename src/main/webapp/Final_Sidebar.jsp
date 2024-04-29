@@ -159,7 +159,7 @@
       </a>
     </li>
     <li>
-      <a href="matches.jsp">
+      <a href="#">
         <i class="menu-icon fas fa-credit-card"></i>
         <span>Payment</span>
       </a>
@@ -179,7 +179,7 @@
       </a>
     </li>
     <li class="logout">
-      <a href="#" onclick="Logout(); return false;">
+      <a href="logoutbutton.jsp" onclick="Logout(); return false;">
         <i class="menu-icon fas fa-sign-out-alt"></i>
         <span>logout</span>
       </a>

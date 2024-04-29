@@ -180,7 +180,8 @@
       <input type="file" id="backphoto" name="backphoto" required>
 
 
-
+      <label for="phonenumber">Contact <span class="required-star">*</span>:</label>
+      <input type="text" id="phonenumber" name="phonenumber" required onchange="validateSriLankanPhoneNumber()" />
 
       <label for="email">Email<span class="required-star">*</span>:</label>
       <input type="email" id="email" name="email" required onchange="validateEmail()" />
@@ -193,6 +194,7 @@
       <label for="confirmPassword">Confirm Password<span class="required-star">*</span>:</label>
       <input type="password" id="confirmPassword" name="confirmPassword" required onchange="validateConfirmPassword()">
 
+<h2>Your personal details like contact number,birthday,email won't be visible to users unless there's a mutual connection</h2>
       <h2 style="font-size: 14px" class="center-elements">Step 1 out of 2</h2><br><br> <!-- Moved the step text below the form -->
       <button type="submit" id="proceed-btn">Proceed</button>
     </form>

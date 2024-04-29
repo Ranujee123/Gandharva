@@ -59,18 +59,29 @@
 <body>
 
 <div class="main-content">
-    <a href="editpersonalInfo.jsp" style="text-decoration: none; color: inherit;">
+    <a href="Updateu_personaldetails.jsp" style="text-decoration: none; color: inherit;">
     <div class="card">
         <div class="card-text">Personal Information</div></div></a>
-    <a href="#" style="text-decoration: none; color: inherit;">
+    <a href="UpdateAddDetails.jsp" style="text-decoration: none; color: inherit;">
+    <div class="card">
+        <div class="card-text">QualificationDetails</div></div></a>
+    <a href="UpdateFamilyDeatils.jsp" style="text-decoration: none; color: inherit;">
     <div class="card">
         <div class="card-text">Family Details</div></div></a>
-    <a href="#" style="text-decoration: none; color: inherit;">
+    <a href="Updateinterest.jsp" style="text-decoration: none; color: inherit;">
     <div class="card">
-        <div class="card-text">Interested In Personal Information</div></div></a>
-    <a href="#" style="text-decoration: none; color: inherit;">
-    <div class="card">
-        <div class="card-text">Interested In Family Details</div></div></a>
+        <div class="card-text">Intereste Details</div></div></a>
+    <a href="updateInterestedIN.jsp" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-text">Interested In</div></div></a>
+
+    <a href="UpdateInterestedINQual.jsp" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-text">Interested In Qual</div></div></a>
+    <a href="UpdateInterestedINFam.jsp" style="text-decoration: none; color: inherit;">
+        <div class="card">
+            <div class="card-text">Interested In Fam</div></div></a>
+
 
 </div>
 

@@ -33,16 +33,18 @@ public class InterestedINServlet extends HttpServlet {
             int maxAge = Integer.parseInt(request.getParameter("maxAge"));
             String religion = request.getParameter("religion");
             String caste = request.getParameter("caste");
+            String otherCaste = request.getParameter("other_caste");
             String ethnicity = request.getParameter("ethnicity");
             String province = request.getParameter("province");
 
+
+            if ("Other".equals(caste) && otherCaste != null && !otherCaste.isEmpty()) {
+                caste = otherCaste;
+            }
+
+
             // Get user ID
             String id = UserDBUtil.getUserIdByEmail(userEmail);
-            if (id == null) {
-                System.out.println("Failed to retrieve user ID for email: " + userEmail);
-                response.sendRedirect("unsuccess.jsp"); // Redirect to an error page
-                return;
-            }
 
             // Save the details to the database
             if (UserDBUtil.saveInterestedInDetails(id, minAge, maxAge, religion, caste, ethnicity, province)) {

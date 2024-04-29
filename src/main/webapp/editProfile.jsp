@@ -156,6 +156,9 @@
             <input type="email" name="email" value="<%= user.getEmail() %>" >
             <label>NIC:</label>
             <input type="text" id="nic" name="nic" value="<%= user.getnic() %>">
+            <label>Phone Number:</label>
+            <input type="text" id="phonenumber" name="phonenumber" value="<%= user.getPhonenumber() %>">
+
 
 
 
@@ -191,8 +194,6 @@
             <br>
 
             <br>
-            <label>About Me:</label>
-            <textarea id="aboutMe" name="aboutMe"></textarea>
 
 
 

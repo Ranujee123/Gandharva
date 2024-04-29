@@ -21,12 +21,24 @@ public class InterestedINfam extends HttpServlet {
                 return;
             }
 
-            String freli = request.getParameter("fatherReligion");
-            String foccu = request.getParameter("fatherOccupation");
-            String mreli = request.getParameter("motherReligion");
-            String moccup = request.getParameter("motherOccupation");
-            String maritalstatus = request.getParameter("maritalStatus");
-            int siblings = Integer.parseInt(request.getParameter("numberOfSiblings"));
+            String freli = request.getParameter("freli");
+            String foccu = request.getParameter("foccu");
+            String otherfoccu = request.getParameter("other_foccu");
+            String mreli = request.getParameter("mreli");
+            String moccup = request.getParameter("moccup");
+            String othermoccup = request.getParameter("other_moccup");
+            String maritalstatus = request.getParameter("maritalstatus");
+            int siblings = Integer.parseInt(request.getParameter("siblings"));
+
+
+            if ("Other".equals(foccu) && otherfoccu != null && !otherfoccu.isEmpty()) {
+                foccu = otherfoccu;
+            }
+
+            if ("Other".equals(moccup) && othermoccup != null && !othermoccup.isEmpty()) {
+                moccup = othermoccup;
+            }
+
 
             // Fetch the user ID as a String
             String id = UserDBUtil.getUserIdByEmail(userEmail);

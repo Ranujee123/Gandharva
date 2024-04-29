@@ -25,13 +25,13 @@ public class Interest extends HttpServlet {
             System.out.println("User email: " + userEmail); // Debug print
 
             String interests = request.getParameter("interest");
-            String ptype = request.getParameter("ptype");
+            String personalitytype = request.getParameter("personalitytype");
 
             String id = UserDBUtil.getUserIdByEmail(userEmail);
-            int pID = UserDBUtil.getPersonalityIdByName(ptype);
+
 
             // Save the details to the database
-            if (UserDBUtil.saveInterestDetails(id, interests, pID)) {
+            if (UserDBUtil.saveInterestDetails(id, interests, personalitytype)) {
                 session.setAttribute("interestCompleted", true);
                 response.sendRedirect("ProfileCompletionServlet");
             } else {

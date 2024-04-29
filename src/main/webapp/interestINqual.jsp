@@ -89,7 +89,39 @@
       color: red;
       margin-bottom: 10px;
     }
+
+    .form-container .button {
+      background-color: #4CAF50; /* Green background */
+      color: white; /* White text */
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+    }
+
   </style>
+
+
+  <script>
+    function showOtherInput() {
+      console.log("Dropdown changed"); // Check if function is called
+      var select = document.getElementById('occupation');
+      var otherInput = document.getElementById('other_occupation');
+      if (select.value === "Other") { // Ensure the comparison is correct
+        otherInput.style.display = 'block';
+      } else {
+        otherInput.style.display = 'none';
+      }
+    }
+
+  </script>
+
+
 </head>
 <body>
 
@@ -108,22 +140,22 @@
         <label>Minimum Education Qualification:</label>
         <select name="qualification" >
           <option value=""></option>
-          <option value="phd">Phd or Post Doctoral </option>
-          <option value="msc">Master's Degree or Equivalent</option>
-          <option value="diploma">Post Graduate Diploma</option>
-          <option value="bachelor">Bachelor's Degree or Equivalent</option>
-          <option value="undergrad">Undergraduate</option>
-          <option value="proffqual">Professional Qualification</option>
-          <option value="diploma">Diploma</option>
-          <option value="al">Up to GCE A/L</option>
-          <option value="ol">Up to GCE O/L</option>
-          <option value="other">Other</option>
+          <option value="Phd or Post Doctoral">Phd or Post Doctoral </option>
+          <option value="Master's Degree or Equivalent">Master's Degree or Equivalent</option>
+          <option value="Post Graduate Diploma">Post Graduate Diploma</option>
+          <option value="Bachelor's Degree or Equivalent">Bachelor's Degree or Equivalent</option>
+          <option value="Undergraduate">Undergraduate</option>
+          <option value="Professional Qualification">Professional Qualification</option>
+          <option value="Diploma">Diploma</option>
+          <option value="Up to GCE A/L">Up to GCE A/L</option>
+          <option value="Up to GCE O/L">Up to GCE O/L</option>
+          <option value="Other">Other</option>
 
         </select><br>
 
 
         <label> Occupation :</label>
-        <select name="occupation" required>
+        <select name="occupation" id="occupation" onchange="showOtherInput()" required>
           <option value=""></option>
           <option value="Accountant">Accountant </option>
           <option value="Architect">Architect</option>
@@ -156,7 +188,9 @@
           <option value="Technician">Technician</option>
           <option value="Other">Other</option>
 
-        </select><br>
+        </select>
+        <input type="text" name="other_occupation" id="other_occupation" style="display:none;" placeholder="Specify your occupation">
+        <br>
 
 
 
@@ -169,10 +203,11 @@
         <p class="completion-text">2 out of 7 is completed</p>
 
         <!-- Proceed button -->
-        <button type="submit" name="action" value="proceed">Proceed</button>
+        <button type="submit" name="action" value="proceed" class="form-container button">Save & Next</button>
 
         <!-- Save Progress button -->
-        <button type="submit" formaction="ProfileCompletionServlet" name="action" value="save">Save Progress</button>
+        <a href="u_myprofile.jsp" class="form-container button">Back to Profile</a>
+
       </form>
     </div>
 

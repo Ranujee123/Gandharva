@@ -28,12 +28,18 @@ public class Personaldetails extends HttpServlet {
             String ethnicity = request.getParameter("ethnicity");
             String religion = request.getParameter("religion");
             String caste=request.getParameter("caste");
+            String otherCaste = request.getParameter("other_caste");
             String status = request.getParameter("status");
             String height = request.getParameter("height");
             String foodPreference = request.getParameter("foodpreferences");
             String drinking = request.getParameter("drinking");
             String smoking = request.getParameter("smoking");
             String diffabled = request.getParameter("diffabled");
+
+// Determine the actual caste value to store
+            if ("Other".equals(caste) && otherCaste != null && !otherCaste.isEmpty()) {
+                caste = otherCaste;
+            }
 
 
             // Save personal details to database

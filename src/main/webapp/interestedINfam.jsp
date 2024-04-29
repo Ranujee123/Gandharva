@@ -5,13 +5,7 @@
   Time: 14:12
   To change this template use File | Settings | File Templates.
 --%>
-<%--
-Created by IntelliJ IDEA.
-User: ranu
-Date: 2023-11-02
-Time: 09:20
-To change this template use File | Settings | File Templates.
---%>
+
 
 <%@ page import="java.util.List" %>
 <%@ page import="com.user.model.UserDBUtil" %>
@@ -88,7 +82,49 @@ To change this template use File | Settings | File Templates.
       color: red;
       margin-bottom: 10px;
     }
+
+    .form-container .button {
+      background-color: #4CAF50; /* Green background */
+      color: white; /* White text */
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      border: none;
+    }
+
   </style>
+
+
+  <script>
+    function showOtherInputFoccu() {
+      console.log("Dropdown changed"); // Check if function is called
+      var select = document.getElementById('foccu');
+      var otherInput = document.getElementById('other_foccu');
+      if (select.value === "Other") { // Ensure the comparison is correct
+        otherInput.style.display = 'block';
+      } else {
+        otherInput.style.display = 'none';
+      }
+    }
+
+    function showOtherInputMoccup() {
+      console.log("Dropdown changed"); // Check if function is called
+      var select = document.getElementById('moccup');
+      var otherInput = document.getElementById('other_moccup');
+      if (select.value === "Other") { // Ensure the comparison is correct
+        otherInput.style.display = 'block';
+      } else {
+        otherInput.style.display = 'none';
+      }
+    }
+
+  </script>
+
 </head>
 <body>
 
@@ -101,35 +137,33 @@ To change this template use File | Settings | File Templates.
       <form action="interestinfam" method="post">
 
         <label>Father's Religion:</label>
-        <select name="fatherReligion">
+        <select name="freli">
           <option value=""> </option>
-          <option value="buddhist">Buddhist</option>
-          <option value="christain">Christian</option>
-          <option value="hindu">Hindu</option>
-          <option value="islam">Islam</option>
-          <option value="agonistics">Agonistic</option>
-          <option value="catholic">Catholic</option>
-          <option value="none">None</option>
-          <option value="other">Other</option>
+          <option value="Atheists">Atheists</option>
+          <option value="Buddhist">Buddhist</option>
+          <option value="Catholic">Catholic</option>
+          <option value="Christian">Christian</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Islam">Islam</option>
+          <option value="Other">Other</option>
         </select>
 
 
 
         <label>Mother's Religion:</label>
-        <select name="motherReligion">
+        <select name="mreli">
           <option value=""> </option>
-          <option value="buddhist">Buddhist</option>
-          <option value="christain">Christian</option>
-          <option value="hindu">Hindu</option>
-          <option value="islam">Islam</option>
-          <option value="agonistics">Agonistic</option>
-          <option value="catholic">Catholic</option>
-          <option value="none">None</option>
-          <option value="other">Other</option>
+          <option value="Atheists">Atheists</option>
+          <option value="Buddhist">Buddhist</option>
+          <option value="Catholic">Catholic</option>
+          <option value="Christian">Christian</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Islam">Islam</option>
+          <option value="Other">Other</option>
         </select>
 
         <label>Father's Occupation:</label>
-        <select name="fatherOccupation" required>
+        <select name="foccu" id="foccu" onchange="showOtherInputFoccu()" required>
           <option value=""></option>
           <option value="Accountant">Accountant </option>
           <option value="Architect">Architect</option>
@@ -162,9 +196,11 @@ To change this template use File | Settings | File Templates.
           <option value="Technician">Technician</option>
           <option value="Other">Other</option>
         </select>
+        <input type="text" name="other_foccu" id="other_foccu" style="display:none;" placeholder="Specify your father's occupation">
+        <br>
 
         <label>Mother's Occupation:</label>
-        <select name="motherOccupation" >
+        <select name="moccup" id="moccup" onchange="showOtherInputMoccup()">
           <option value=""></option>
           <option value="Accountant">Accountant </option>
           <option value="Architect">Architect</option>
@@ -197,19 +233,22 @@ To change this template use File | Settings | File Templates.
           <option value="Technician">Technician</option>
           <option value="Other">Other</option>
         </select>
+        <input type="text" name="other_moccup" id="other_moccup" style="display:none;" placeholder="Specify your mother's occupation">
+        <br>
 
 
         <label>Marital Status of Parents:</label>
-        <select name="maritalStatus">
+        <select name="maritalstatus">
           <option value=""></option>
-          <option value="widowed">Widowed</option>
-          <option value="divorced">Divorced</option>
-          <option value="seperated">Seperated</option>
-          <option value="other">Other</option>
+          <option value="Married">Married</option>
+          <option value="Widowed">Widowed</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Seperated">Seperated</option>
+          <option value="Other">Other</option>
         </select>
 
         <label>Number of Siblings:</label>
-        <input type="number" name="numberOfSiblings" min="0" required><br>
+        <input type="number" name="siblings" min="0" required><br>
 
 
 
@@ -219,7 +258,7 @@ To change this template use File | Settings | File Templates.
         </div>
         <p class="completion-text">1 out of 7 is completed</p>
 
-        <button type="submit" name="action" value="proceed">Submit</button>
+        <button type="submit" name="action" value="proceed" class="form-container button">Submit</button>
       </form>
     </div>
 
