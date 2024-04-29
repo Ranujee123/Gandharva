@@ -6,6 +6,9 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<c:import url="logoutbutton.jsp"/>
+<c:import url="Final_Sidebar.jsp"/>
+
 <%
 String userEmail = (String) session.getAttribute("userEmail");
 User user = null;
@@ -33,8 +36,9 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
         //  String userEmail = (String) session.getAttribute("userEmail");
 //        AllUser astrologer = (AllUser) session.getAttribute("astrologer");
         byte[] blobData = user.getDpphoto();
-
-        base64Image = Base64.getEncoder().encodeToString(blobData);
+		if(blobData != null && blobData.length > 0) {
+        	base64Image = Base64.getEncoder().encodeToString(blobData);
+		}
         //  firstName = astrologer.getFirstName();
         //   lastName = astrologer.getLastName();
     }
@@ -81,7 +85,8 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
             <% if (user != null) { %>
 
 <%--            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">--%>
-            <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image" class="profile-image">
+            <%-- <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "DP/defaultDP.jpeg" %>" alt="User Image" class="profile-image"> --%>
+            <img src="<%= base64Image != null ? "data:image/png;base64," + base64Image : "DP/defaultDP.jpeg" %>" alt="User Image" class="profile-image">
 
 <div class="profile-info">
             <p>Name: <span><%= user.getfirstName() %></span> <span><%= user.getlastName() %></span></p>
