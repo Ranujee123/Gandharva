@@ -36,7 +36,7 @@
         <div class="detail-box gradient email-box"><p class="email-p">Email  <span class="tex email"></span></p></div>
         <div class="detail-box gradient nic-box"><p class="nic-p">NIC  <span class="tex nic"></span></p></div>
         <div class="detail-box gradient bd-box"><p class="bd-p">BirthDate  <span class="tex bd"></span></p></div>
-        <div class="detail-box gradient cou-box" ><p class="cou-p">Country  <span class="tex cou"></span></p></div>
+
         <div class="detail-box gradient dis-box"><p class="dis-p">District  <span class="tex dis"></span></p></div>
         <div class="detail-box gradient exp-box"><p class="exp-p">Experience  <span class="tex exp"></span></p></div>
 
@@ -70,7 +70,7 @@
         <th>Email</th>
         <th>NIC</th>
         <th>User Type</th>
-        <th>Country</th>
+
       </tr>
 
 
@@ -83,7 +83,7 @@
           <td>${user.email}</td>
           <td>${user.nic}</td>
           <td>${user.userType}</td>
-          <td>${user.countryOfResidence}</td>
+
           <td><button onclick="verifyUser('${user.firstName} ${user.lastName}','${user.userType}','${user.email}','${user.nic}','${user.birthday}','${user.countryOfResidence}','${user.district}','${user.numberOfCasesHandled}','${user.yearsOfExperience}','${user.base64Image}','${user.certificateFileUpload}','${user.brFileUpload}','${user.id}')">Verify</button></td>
 
         </tr>
@@ -143,7 +143,7 @@
     const emailText = document.querySelector('.email');
     const nicText = document.querySelector('.nic');
     const bdText = document.querySelector('.bd');
-    const couText = document.querySelector('.cou');
+
     const disText = document.querySelector('.dis');
     const expText = document.querySelector('.exp');
 
@@ -170,13 +170,6 @@
     }else {
       document.querySelector('.bd-box').classList.add("gradient")
       bdText.textContent = '';
-    }
-    if(cou!=''){
-      document.querySelector('.cou-box').classList.remove("gradient")
-      couText.textContent =' : '+ cou;
-    }else {
-      document.querySelector('.cou-box').classList.add("gradient")
-      couText.textContent = '';
     }
     if(dis!=''){
       document.querySelector('.dis-box').classList.remove("gradient")
@@ -240,7 +233,7 @@
         confirmButtonText: 'Yes, verify it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch('/Gandharva_main/verifyuser', {
+          fetch('/Gandharva_main_war_exploded/verifyuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -274,23 +267,27 @@
         }
 
 
-    document.querySelector('.reject-button').onclick = function () {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You want to reject this user!",
-        icon: 'warning',
-        showCancelButton: true,
+    document.querySelector('.reject-button').onclick = async function () {
+      const { value: reson_text } = await Swal.fire({
+        title: "Enter the reason for rejecting",
+        input: "text",
+        inputLabel: "Reason",showCancelButton: true,
         confirmButtonColor: '#192d3c',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, reject it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          fetch('/Gandharva_main/verifyuser', {
+        confirmButtonText: 'Yes, reject it!',
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          }
+        }
+      });
+      if (reson_text){
+          fetch('/Gandharva_main_war_exploded/verifyuser', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'action='+2+'&userid='+encodeURIComponent(uid)
+            body: 'action='+2+'&userid='+encodeURIComponent(uid)+'&reason='+encodeURIComponent(reson_text)
           })
                   .then(function(response) {
                     if (response.ok) {
@@ -313,8 +310,8 @@
 
         }
 
-      });
-    };
+      }
+
   }
 </script>
 

@@ -25,10 +25,10 @@ public class ComplaintsController extends HttpServlet {
         String query = null;
 
         if (req.getParameter("id") != null) {
-            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM complaints WHERE receiverid = c.receiverid) AS receiver_complaint_count FROM  complaints c  JOIN  user u ON u.id = c.userid  JOIN  user u2 ON u2.id = c.receiverid where c.receiverid= \'"+req.getParameter("id")+"\'  ORDER BY  c.status ASC;";
+            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM user_reports WHERE c.to_user_id = c.to_user_id) AS receiver_complaint_count FROM  user_reports c  JOIN  user u ON u.id = c.from_user_id  JOIN  user u2 ON u2.id = c.to_user_id where  c.to_user_id = \'"+req.getParameter("id")+"\'  ORDER BY  c.status ASC;";
 
         } else {
-            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM complaints WHERE receiverid = c.receiverid) AS receiver_complaint_count FROM  complaints c  JOIN  user u ON u.id = c.userid  JOIN  user u2 ON u2.id = c.receiverid ORDER BY  c.status ASC;";
+            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM user_reports WHERE c.to_user_id = c.to_user_id) AS receiver_complaint_count FROM  user_reports c  JOIN  user u ON u.id = c.from_user_id  JOIN  user u2 ON u2.id = c.to_user_id ORDER BY  c.status ASC;";
         }
 
         List<ComplaintsModel> complaint = new ArrayList<>();
@@ -43,11 +43,10 @@ public class ComplaintsController extends HttpServlet {
 
             while (resultSet.next()) {
                 ComplaintsModel complaints = new ComplaintsModel();
-                complaints.setIdcomplaints(resultSet.getInt("idcomplaints"));
-                complaints.setUserid(resultSet.getString("userid"));
-                complaints.setDate(resultSet.getString("date"));
-                complaints.setTitle(resultSet.getString("title"));
-                complaints.setDescripion(resultSet.getString("descripion"));
+                complaints.setIdcomplaints(resultSet.getInt("report_id"));
+                complaints.setUserid(resultSet.getString("from_user_id"));
+                complaints.setDate(resultSet.getString("timestamp"));
+
                 complaints.setStatus(resultSet.getString("status"));
                 complaints.setFirstName(resultSet.getString("firstName"));
                 complaints.setLastName(resultSet.getString("lastName"));
@@ -81,7 +80,7 @@ public class ComplaintsController extends HttpServlet {
                 complaints.setReceiver_numberOfCasesHandled(resultSet.getString("receiver_numberOfCasesHandled"));
                 complaints.setReceiver_yearsOfExperience(resultSet.getString("receiver_yearsOfExperience"));
                 complaints.setReceiver_complaint_count(resultSet.getString("receiver_complaint_count"));
-                complaints.setReceiverid(resultSet.getString("receiverid"));
+                complaints.setReceiverid(resultSet.getString("to_user_id"));
 
                 complaint.add(complaints);
             }

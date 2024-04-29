@@ -34,7 +34,6 @@
       <div class="name-box">
         <p class="name usertext">Name : <span class="n-c"> Shyamal Test User</span> </p>
         <p class="email usertext">Email : <span class="e-c"> sha256@tmail.com</span> </p>
-          <p class="Country usertext">Country : <span class="c-c"> </span> </p>
         <p class="Usertype usertext">User Type : <span class="ut-c"> </span> </p>
       </div>
       </div>
@@ -63,7 +62,6 @@
              <p class="name usertext" >Name : <span class="n-r"> Shyamal Test User</span> </p>
              <p class="email usertext">Email : <span class="e-r"> sha256@tmail.com</span> </p>
              <p class="Usertype usertext">User Type : <span class="ut-r"> </span> </p>
-             <p class="Country usertext">Country : <span class="c-r"> </span> </p>
              <p class="Disrtict usertext">District : <span class="dis-r"> sha256@tmail.com</span> </p>
              <p class="Nic usertext">NIC : <span class="nic-r"> </span> </p>
              <p class="Birthday usertext">Birthday : <span class="bd-r"> </span> </p>
@@ -108,7 +106,7 @@
 
               <h3>Title: ${complaint.title}</h3>
               <p>${complaint.descripion}</p>
-              <c:if test="${complaint.status == 'Open'}">
+              <c:if test="${complaint.status == 'REPORTED'}">
                 <button style="width:  -webkit-fill-available" onclick="displayComplain('${complaint.firstName} ${complaint.lastName}','${complaint.email}','${complaint.countryOfResidence}','${complaint.userType}','${complaint.status}','${complaint.idcomplaints}','${complaint.date}','${complaint.title}','${complaint.descripion}','${complaint.base64Image}','${complaint.receiver_firstName} ${complaint.receiver_lastName}','${complaint.receiver_email}','${complaint.receiver_countryOfResidence}','${complaint.receiver_userType}','${complaint.receiver_district}','${complaint.receiver_nic}','${complaint.receiver_birthday}','${complaint.receiver_numberOfCasesHandled}','${complaint.receiver_yearsOfExperience}','${complaint.receiver_userImage}','${complaint.receiver_complaint_count}','${complaint.receiverid}')">Go to Resolve</button>
               </c:if>
               <c:if test="${complaint.status == 'Resolved'}">
@@ -136,11 +134,9 @@
         document.querySelector('.container-box').style.display = 'flex';
         document.querySelector('.n-c').innerText = name;
         document.querySelector('.e-c').innerText = email;
-        document.querySelector('.c-c').innerText = country;
         document.querySelector('.ut-c').innerText = userType;
         document.querySelector('.n-r').innerText = r_name;
         document.querySelector('.e-r').innerText = r_email;
-        document.querySelector('.c-r').innerText = r_country;
         document.querySelector('.ut-r').innerText = r_userType;
         document.querySelector('.dis-r').innerText = r_district;
         document.querySelector('.nic-r').innerText = r_nic;
@@ -149,7 +145,7 @@
         document.querySelector('.rc-r').innerText = r_reportcount;
         document.querySelector('.prf_pic-complainer2').src = r_image;
         document.querySelector('.btn-view').onclick= function(){
-          window.location.href = '/Gandharva_main/complaints?id='+r_id;
+          window.location.href = '/Gandharva_main_war_exploded/complaints?id='+r_id;
         }
         document.querySelector('.btn-ban').onclick = function(){
 
@@ -165,7 +161,7 @@
                     if (result.isConfirmed) {
 
 
-                      fetch('/Gandharva_main/activateuser', {
+                      fetch('/Gandharva_main_war_exploded/activateuser', {
                         method: 'POST',
                         headers: {
                           'Content-Type': 'application/x-www-form-urlencoded',
@@ -179,7 +175,7 @@
                                 throw new Error('Network response was not ok.');
                               })
                               .then(function(responseText) {
-                                  fetch('/Gandharva_main/complaints', {
+                                  fetch('/Gandharva_main_war_exploded/complaints', {
                                     method: 'POST',
                                     headers: {
                                       'Content-Type': 'application/x-www-form-urlencoded',
@@ -218,7 +214,7 @@
 
         statustag = document.querySelector('.status-view')
         statustag.innerText = status;
-        if (status == 'Open') {
+        if (status == 'REPORTED') {
 
           statustag.classList.remove('status-c-deactive')
           statustag.classList.add('status-c-active')
@@ -253,7 +249,7 @@
             if (result.isConfirmed) {
 
               var complaintId = document.querySelector('.id').innerText;
-              fetch('/Gandharva_main/complaints', {
+              fetch('/Gandharva_main_war_exploded/complaints', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
