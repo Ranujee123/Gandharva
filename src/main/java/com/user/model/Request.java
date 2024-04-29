@@ -3,6 +3,7 @@ import com.user.model.RequestType;
 
 import java.sql.Date;
 import java.util.UUID;
+import java.util.Base64;
 
 public class Request {
     private UUID id;
@@ -17,6 +18,7 @@ public class Request {
     private UUID astrologerId;
     private byte[] horoscopeSecond;
     private byte[] feedbackImage;
+    private String feedbackImageString;
 
 
 
@@ -57,6 +59,30 @@ public class Request {
         this.astrologerId = astrologerId;
         this.horoscopeSecond = horoscopeSecond;
         this.feedbackImage = feedbackImage;
+    }
+
+    public Request(String id, Date startDate, Date deadline, String status, String comments, String feedback, String astrologerId, byte[] feedbackImage) {
+        this.id = UUID.fromString(id);
+        this.startDate = startDate;
+        this.deadline = deadline;
+        this.status = RequestType.valueOf(status);
+        this.comments = comments;
+        this.feedback = feedback;
+        this.astrologerId = UUID.fromString(astrologerId);
+        this.feedbackImage = feedbackImage;
+
+        try {
+            byte[] imageData = feedbackImage;
+            if (imageData != null && imageData.length > 0) {
+                String base64Image = Base64.getEncoder().encodeToString(imageData);
+                this.feedbackImageString = "data:image/jpeg;base64," + base64Image;
+            } else {
+                // Set a default image URL if userImage is null
+                this.feedbackImageString = "images/no-profile.png"; // or you can set a default value here if required
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public UUID getId() {
@@ -146,4 +172,14 @@ public class Request {
     public void setFeedbackImage(byte[] feedbackImage) {
         this.feedbackImage = feedbackImage;
     }
+
+    public String getFeedbackImageString() {
+        return feedbackImageString;
+    }
+
+    public void setFeedbackImageString(String feedbackImageString) {
+        this.feedbackImageString = feedbackImageString;
+    }
+
+    
 }

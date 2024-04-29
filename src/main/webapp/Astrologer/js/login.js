@@ -58,7 +58,20 @@ $(document).ready(function() {
             // dataType:"json",
             // contentType:"application/json",
             success: function(result) {
-                if (result == "1") {
+                if (result == "0") {
+                    // alert(result);
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Success',
+                        text: 'Guest User!',
+                        confirmButtonText: "Ok",
+                        confirmButtonColor: '#0E2C4B',
+                    })
+                    setTimeout(function() {
+                        window.location.href = 'user';
+                    }, 1000);
+
+                } else if (result == "1") {
                     // alert(result);
                     Swal.fire({
                         icon: 'success',
@@ -135,7 +148,7 @@ $(document).ready(function() {
                         confirmButtonColor: '#932828',
                     })
                 } else {
-                    console.log(result);
+                    console.log("res" + result);
                     Swal.fire({
                         icon: 'error',
                         title: 'Login unsuccessfully!',

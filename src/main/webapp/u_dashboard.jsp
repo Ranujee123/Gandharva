@@ -19,30 +19,33 @@
     List<String> ages= UserDBUtil.getAge();
 %>
 
+<%
+String userType = (String) session.getAttribute("userEmail");
+%>
+
 <html>
 <head>
     <title>User Dashboard</title>
     <link rel="stylesheet" href="u_dashboard.css">
-
+    <link rel="stylesheet" href="styles/main.css">
 
     <style>
-.profile-card{
-    width: 50%;  /* Adjust the width as needed */
-    height: 30%; /* Same value as width to make it square */
-}
+        .profile-card{
+            width: 50%;  /* Adjust the width as needed */
+            height: 30%; /* Same value as width to make it square */
+        }
 
-input[type="number"] {
-    border: 2px solid black; /* Adds a black border */
-    padding: 5px; /* Adds some padding inside the input fields */
-    border-radius: 5px; /* Optionally rounds the corners of the border */
-}
+        input[type="number"] {
+            border: 2px solid black; /* Adds a black border */
+            padding: 5px; /* Adds some padding inside the input fields */
+            border-radius: 5px; /* Optionally rounds the corners of the border */
+        }
 
-select {
-    border: 2px solid black; /* Adds a solid black border */
-    padding: 5px; /* Adds some padding inside the select box */
-    border-radius: 5px; /* Optionally rounds the corners of the border */
-}
-
+        select {
+            border: 2px solid black; /* Adds a solid black border */
+            padding: 5px; /* Adds some padding inside the select box */
+            border-radius: 5px; /* Optionally rounds the corners of the border */
+        }
     </style>
     <script>
         function validateAgeRange() {
@@ -331,7 +334,9 @@ select {
 
                     <!-- Add more filters here up to 10 different filters as per your requirement -->
 
-                    <button type="submit" class="filter-button">Filter</button>
+                    <!-- if userType.equals("GUEST_USER") disable the button -->
+                    ${userType.equals("GUEST_USER") ? '<button type="submit" class="filter-button" disabled>Filter</button>' : '<button type="submit" class="filter-button">Filter</button>'}
+
                     <button type="reset" class="clear-button">Clear</button>
                 </form>
             </div>
@@ -383,6 +388,10 @@ select {
 
                 <c:if test="${empty filteredUsers}">
                     <p>No users found matching your criteria.</p>
+                            ${user.getUserType().equals("GUEST_USER") ? '
+                            <p class="warnMsg" style="width: 100%; text-align: center; font-size: large; margin-top: 50px;">
+                                You need to upgrade to use this feature.
+                            </p>' : ''}
                 </c:if>
 
             </div>

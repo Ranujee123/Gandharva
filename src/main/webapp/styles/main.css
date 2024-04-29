@@ -1,0 +1,32 @@
+.errorMsg {
+	color: white;
+	background-color: #f44336;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+
+.successMsg {
+	color: white;
+	background-color: #04AA6D;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+
+.warnMsg {
+	color: white;
+	background-color: #ff9800;
+	padding: 10px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+}
+
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+

@@ -24,7 +24,8 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            z-index: -1;
+            /*background: rgba(70, 70, 70, 0.55);*/
+            /*z-index: -1;*/
         }
 
         * {
@@ -45,13 +46,13 @@
 
 
         header {
-            background-color: rgba(0, 0, 0, 0.8);
+            /*background-color: rgba(0, 0, 0, 0.8);*/
             padding: 20px 0;
         }
 
         nav {
 
-            color: black;
+            /*color: black;*/
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -218,10 +219,10 @@
             margin-right: 5px;
         }
 
-        .remember{
-            margin-top: 5px;
-            opacity: 0.75;
-        }
+        /*.remember{*/
+        /*    margin-top: 5px;*/
+        /*    opacity: 0.75;*/
+        /*}*/
 
 
     </style>
@@ -232,20 +233,39 @@
 <header>
     <nav>
         <div class="logo">
-            <a href="home"> <img src='images/logo.png' alt="Logo" ></a>
-        </div>
+            <a href="HomePage.jsp"> <img src='images/logo.png' alt="Logo" ></a>
+<%--        </div>--%>
+<%--        <ul class="navbar">--%>
+<%--            <li><a href="#">About Us</a></li>--%>
+<%--            <li><a href="#">Our Services</a>--%>
+<%--                <ul class="submenu">--%>
+<%--                    <li><a href="Astrologer_Registration.jsp">Astrologer</a></li>--%>
+<%--                    <li><a href="#">Event Planner</a></li>--%>
+<%--                </ul>--%>
+<%--            </li>--%>
+<%--            <li><a href="#">Pricing</a></li>--%>
+<%--            <li><a href="#">Help</a></li>--%>
+<%--        </ul>--%>
+
+<%--        <div class="buttons">--%>
+<%--            <a href="Astrologer_Login.jsp"> <button class="signin">Sign In </button></a>--%>
+<%--            <a href="Astrologer_Registration.jsp"><button class="signup"> |  Sign Up </button> </a>--%>
+<%--        </div>--%>
+
+
     </nav>
 </header>
 
 <div class="container">
-
     <div class="form-box">
-        <a href="guest_register.jsp"> <h1 class="heading">Guest User</h1> </a>
+        <a href="#"> <h1 class="heading">Guest User</h1> </a>
     </div>
 
     <div class="form-box">
-        <a href="userRegistration"> <h1 class="heading">Paid User</h1> </a>
+        <a href="login"> <h1 class="heading">Paid User</h1> </a>
     </div>
+
+
 </div>
 
 </body>

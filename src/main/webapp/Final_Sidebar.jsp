@@ -14,9 +14,6 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-
-  <title>Side bar</title>
-
   <style>
     *{
       margin: 0;
@@ -162,15 +159,15 @@
     </li>
 
     <li>
-      <a href="viewAstrologerList.jsp">
+      <a href="AstrologyService">
         <i class="menu-icon fas fa-bookmark"></i>
         <span>Astrology Service</span>
       </a>
     </li>
     <li>
-      <a href="ViewEventPlannerList.jsp">
+      <a href="EventPlannerService">
         <i class="menu-icon fas fa-calendar"></i>
-        <span>Event Planing Srvice</span>
+        <span>Event Planing Service</span>
       </a>
     </li>
 <%--    <li>

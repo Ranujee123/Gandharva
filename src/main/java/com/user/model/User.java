@@ -3,15 +3,15 @@ public class User {
     private  String interests;
     private String id;
     private String maritalStatus;
-    private String firstName;
-    private String lastName;
+    protected String firstName;
+    protected String lastName;
     private String nic;
     private int pID;
     private String province;
 
-    private String email;
+    protected String email;
 
-    private String password;
+    protected String password;
     private String gender;
     private String dob;
     private String provinceName;
@@ -45,21 +45,19 @@ public class User {
     private String caste;
 
     private String foodPreferences;
-    private static int Id;
+    private int Id;
     private String school;
     private String phonenumber;
     private String personalitytype;
-   private int isVerified;
-  private String phoneNumber;
-
-   private String userType;
-
-
-
-
-
-
-
+    private int isVerified;
+    private String phoneNumber;
+    
+    private String userType;
+    private String userId;
+    
+    public User() {
+    	
+    }
 
     public User(String firstName, String lastName, String nic, String province, String phonenumber, byte[] dpphoto, String email, String dob, int age, int isVerified) {
         this.firstName = firstName;
@@ -102,6 +100,19 @@ public class User {
         this.dob = dob;
         this.age = age;
 
+    }
+    
+    public User(String id, String firstName, String lastName, String nic, String province,String phonenumber, String email, String dob, int age, String userType) {
+    	this.userId = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nic = nic;
+        this.province = province;
+        this.phonenumber=phonenumber;
+        this.email = email;
+        this.dob = dob;
+        this.age = age;
+        this.userType = userType;
     }
 
     //update userfamily info
@@ -500,7 +511,7 @@ public class User {
     }
 
 
-    public static int getId() {
+    public int getId() {
         return Id;
     }
 
@@ -576,6 +587,10 @@ public class User {
         return phonenumber;
     }
 
+    public String getUserID() {
+    	return userId;
+    }
+
     public String getSchool() {
         return school;
     }
@@ -583,6 +598,10 @@ public class User {
 
     public int getIsVerified() {
         return isVerified;
+    }
+
+    public void setIsVerified(int isVerified) {
+        this.isVerified = isVerified;
     }
 
     public String getPersonalitytype() {

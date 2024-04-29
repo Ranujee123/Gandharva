@@ -297,11 +297,11 @@
         <url-pattern>/SendRequest</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-name>UpdatePersonalInfo0</servlet-name>
         <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-name>UpdatePersonalInfo0</servlet-name>
         <url-pattern>/updatepersonalInfo</url-pattern>
     </servlet-mapping>
     <servlet>

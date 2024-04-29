@@ -4,20 +4,23 @@
 <%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:import url="logoutbutton.jsp"/>
-<c:import url="Final_Sidebar.jsp"/>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-    String userEmail = (String) session.getAttribute("userEmail");
-    User user = null;
-    if (userEmail != null) {
-        List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
-        if (userDetails != null && !userDetails.isEmpty()) {
-            user = userDetails.get(0);
-        }
-    }
-    String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
+String userEmail = (String) session.getAttribute("userEmail");
+User user = null;
+
+if (userEmail != null) {
+	List<User> userDetails = UserDBUtil.getUserDetails(userEmail);
+	if (userDetails != null && !userDetails.isEmpty()) {
+		user = userDetails.get(0);
+		session.setAttribute("user", user);
+	}
+} else {
+	response.sendRedirect("login.jsp");
+	return;
+}
+String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
 %>
 
 <%
@@ -41,8 +44,8 @@
 <html>
 
 <head>
-    <title>User profile </title>
-    <link rel="stylesheet" type="text/css" href="u_myprofile.css">
+<title>User profile</title>
+<link rel="stylesheet" type="text/css" href="u_myprofile.css">
 <style>
 .profile-image{
     width: 100px;  /* or any other dimensions */
@@ -52,9 +55,8 @@
 }
 </style>
 
-
-    <script src="js/nic-utils.js"></script>
-    <script>
+<script src="js/nic-utils.js"></script>
+<script>
         document.addEventListener('DOMContentLoaded', function() {
             fetch('fetchRequestStatusCount')  // Ensure the URL matches the servlet mapping
                 .then(response => response.json())
@@ -66,11 +68,7 @@
                 .catch(error => console.error('Error fetching data:', error));
         });
     </script>
-
-
 </head>
-
-
 
 <body style="margin: 0;">
 
@@ -88,7 +86,9 @@
 <div class="profile-info">
             <p>Name: <span><%= user.getfirstName() %></span> <span><%= user.getlastName() %></span></p>
 
-            <p>Email: <%= user.getEmail() %></p>
+					<p>
+						Email:
+						<%=user.getEmail()%></p>
 
          <p> Province:  <%= user.getProvince() != null ? user.getProvince() : "Not specified" %></p>
     <p>Verification Status:
@@ -109,18 +109,14 @@
 
         </div>
 
-        <div class="cards-container">
-            <div class="card">
-                <div class="card-text">
-                New Connections
-                </div>
-                <span id="newRequestsCount">0</span>
-            </div>
-            <div class="card">
-                <div class="card-text">
-                Pending Requests
-                </div>
-                <span id="pendingRequestsCount">0</span>
+			<div class="cards-container">
+				<div class="card">
+					<div class="card-text">New Connections</div>
+					<span id="newRequestsCount">0</span>
+				</div>
+				<div class="card">
+					<div class="card-text">Pending Requests</div>
+					<span id="pendingRequestsCount">0</span>
 
             </div>
             <div class="card">
@@ -129,42 +125,52 @@
                 </div>
                 <span id="acceptedRequestsCount">0</span>
 
-            </div>
-        </div>
+				</div>
+			</div>
 
+			<%
+			if (!user.getUserType().equals("GUEST_USER")) {
+				Integer completedSteps = (Integer) session.getAttribute("completedSteps");
+				Integer totalSteps = 7;
+				if (completedSteps != null && completedSteps >= totalSteps) {
+					// Profile is fully completed, don't display completion bar or Add Profile Details button
+			%>
+			<p class="completion-text">Your profile is fully completed.</p>
+			<%
+			} else {
+			if (completedSteps == null) {
+				completedSteps = 0;
+			}
+			int stepsLeft = totalSteps - completedSteps;
+			%>
+			<div class="completion-bar">
+				<div class="completion-fill"
+					style="width: <%=((double) completedSteps / totalSteps) * 100%>%;"></div>
+			</div>
+			<p class="completion-text">
+				You have
+				<%=stepsLeft%>
+				steps left to complete your profile.
+			</p>
+			<div class="button">
+				<a href="ProfileCompletionServlet">Add Profile Details</a>
+			</div>
+			<%
+			}
+			}
+			%>
 
-
-        <%
-            Integer completedSteps = (Integer) session.getAttribute("completedSteps");
-            Integer totalSteps = 7;
-            if (completedSteps != null && completedSteps >= totalSteps) {
-                // Profile is fully completed, don't display completion bar or Add Profile Details button
-        %>
-        <p class="completion-text">Your profile is fully completed.</p>
-        <% } else {
-            if (completedSteps == null) { completedSteps = 0; }
-            int stepsLeft = totalSteps - completedSteps;
-        %>
-        <div class="completion-bar">
-            <div class="completion-fill" style="width: <%= ((double)completedSteps / totalSteps) * 100 %>%;"></div>
-        </div>
-        <p class="completion-text">You have <%= stepsLeft %> steps left to complete your profile.</p>
-        <div class="button"><a href="ProfileCompletionServlet">Add Profile Details</a></div>
-        <% } %>
-
-
-        <div class="button">
-        <div class="dashboard-options">
-            <ul>
-                <li><a href="editProfile.jsp">Update my data</a></li>
-                <li><a href="cpassword.jsp">Change Password</a></li>
-                <li><a href="pricing.jsp">Change Plan</a></li>
-                <li><a href="deleteuserprofile.jsp">Deactivate Account</a></li>
-            </ul>
-        </div>
-</div>
-    </form>
-</div>
-
+			<div class="button">
+				<div class="dashboard-options">
+					<ul>
+						<li><a href="editProfile.jsp">Update my data</a></li>
+						<li><a href="cpassword.jsp">Change Password</a></li>
+						<li><a href="pricing.jsp">Change Plan</a></li>
+						<li><a href="deleteuserprofile.jsp">Deactivate Account</a></li>
+					</ul>
+				</div>
+			</div>
+		</form>
+	</div>
 </body>
 </html>
