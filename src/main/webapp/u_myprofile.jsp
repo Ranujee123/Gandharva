@@ -1,6 +1,7 @@
 <%@ page import="com.user.model.User" %>
 <%@ page import="com.user.model.UserDBUtil" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Base64" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -19,7 +20,22 @@
     String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch image path (default or user's)
 %>
 
+<%
+    String base64Image = null;
+    String firstName = "Not";
+    String lastName = "Applicable";
+    if (session.getAttribute("id") == null) {
+        response.sendRedirect("login");
+    } else {
+        //  String userEmail = (String) session.getAttribute("userEmail");
+//        AllUser astrologer = (AllUser) session.getAttribute("astrologer");
+        byte[] blobData = user.getDpphoto();
 
+        base64Image = Base64.getEncoder().encodeToString(blobData);
+        //  firstName = astrologer.getFirstName();
+        //   lastName = astrologer.getLastName();
+    }
+%>
 
 <!DOCTYPE html>
 <html>
@@ -28,7 +44,12 @@
     <title>User profile </title>
     <link rel="stylesheet" type="text/css" href="u_myprofile.css">
 <style>
-
+.profile-image{
+    width: 100px;  /* or any other dimensions */
+    height: 100px; /* height must be equal to the width for a perfect circle */
+    border-radius: 50%; /* this makes the image round */
+    object-fit: cover;
+}
 </style>
 
 
@@ -60,7 +81,10 @@
     <form action="UpdateUserServlet" method="post">
         <div class="profile-details">
             <% if (user != null) { %>
-            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">
+
+<%--            <img src="<%= profileImagePath %>" alt="Profile Image" class="profile-image-editable">--%>
+            <img src="data:image/png;base64, <%= base64Image != null ? base64Image : "" %>" alt="User Image" class="profile-image">
+
 <div class="profile-info">
             <p>Name: <span><%= user.getfirstName() %></span> <span><%= user.getlastName() %></span></p>
 
@@ -70,12 +94,14 @@
     <p>Verification Status:
         <% if (user.getIsVerified() == 1) { %>
         <i class="fas fa-check-circle" style="color: green;"></i> Verified
+        <% } else if (user.getIsVerified() == 0) { %>
+        <i class="fas fa-exclamation-circle" style="color: orange;"></i> Pending Verification
         <% } else { %>
         <i class="fas fa-times-circle" style="color: red;"></i> Not Verified
         <% } %>
     </p>
 
-            <!-- Displaying the Verification Status -->
+    <!-- Displaying the Verification Status -->
 
             <!-- Add other fields as needed -->
             <% } %>
@@ -99,7 +125,7 @@
             </div>
             <div class="card">
                 <div class="card-text">
-                    Accepted
+                    Total Connected Profiles
                 </div>
                 <span id="acceptedRequestsCount">0</span>
 

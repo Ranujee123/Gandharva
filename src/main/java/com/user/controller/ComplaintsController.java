@@ -22,6 +22,15 @@ public class ComplaintsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("ComplaintsController doGet() called");
+        String query = null;
+
+        if (req.getParameter("id") != null) {
+            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM user_reports WHERE c.to_user_id = c.to_user_id) AS receiver_complaint_count FROM  user_reports c  JOIN  user u ON u.id = c.from_user_id  JOIN  user u2 ON u2.id = c.to_user_id where  c.to_user_id = \'"+req.getParameter("id")+"\'  ORDER BY  c.status ASC;";
+
+        } else {
+            query = "SELECT  c.*, u.firstName,  u.lastName,  u.email,  u.userType,  u.countryOfResidence,  u.userImage,  u2.firstName AS receiver_firstName,  u2.lastName AS receiver_lastName,  u2.email AS receiver_email,  u2.userType AS receiver_userType,  u2.countryOfResidence AS receiver_countryOfResidence,  u2.district AS receiver_district,  u2.nic AS receiver_nic,  u2.birthday AS receiver_birthday,  u2.numberOfCasesHandled AS receiver_numberOfCasesHandled,  u2.yearsOfExperience AS receiver_yearsOfExperience,   u2.userImage AS receiver_userImage, (SELECT COUNT(*) FROM user_reports WHERE c.to_user_id = c.to_user_id) AS receiver_complaint_count FROM  user_reports c  JOIN  user u ON u.id = c.from_user_id  JOIN  user u2 ON u2.id = c.to_user_id ORDER BY  c.status ASC;";
+        }
+
         List<ComplaintsModel> complaint = new ArrayList<>();
 
         Connection connection = null;
@@ -29,17 +38,15 @@ public class ComplaintsController extends HttpServlet {
         ResultSet resultSet = null;
         try {
             connection = DBConnect.getConnection();
-            String query = "SELECT * FROM complaints c join user u on u.id= c.userid order by status DESC ;";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 ComplaintsModel complaints = new ComplaintsModel();
-                complaints.setIdcomplaints(resultSet.getInt("idcomplaints"));
-                complaints.setUserid(resultSet.getString("userid"));
-                complaints.setDate(resultSet.getString("date"));
-                complaints.setTitle(resultSet.getString("title"));
-                complaints.setDescripion(resultSet.getString("descripion"));
+                complaints.setIdcomplaints(resultSet.getInt("report_id"));
+                complaints.setUserid(resultSet.getString("from_user_id"));
+                complaints.setDate(resultSet.getString("timestamp"));
+
                 complaints.setStatus(resultSet.getString("status"));
                 complaints.setFirstName(resultSet.getString("firstName"));
                 complaints.setLastName(resultSet.getString("lastName"));
@@ -54,6 +61,26 @@ public class ComplaintsController extends HttpServlet {
                     // Set a default image URL if userImage is null
                     complaints.setBase64Image("images/no-profile.png"); // or you can set a default value here if required
                 }
+                imageData = resultSet.getBytes("receiver_userImage");
+                if (imageData != null && imageData.length > 0) {
+                    String base64Image = Base64.getEncoder().encodeToString(imageData);
+                    complaints.setReceiver_userImage("data:image/jpeg;base64,"+ base64Image);
+                }else {
+                    // Set a default image URL if userImage is null
+                    complaints.setReceiver_userImage("images/no-profile.png"); // or you can set a default value here if required
+                }
+                complaints.setReceiver_firstName(resultSet.getString("receiver_firstName"));
+                complaints.setReceiver_lastName(resultSet.getString("receiver_lastName"));
+                complaints.setReceiver_email(resultSet.getString("receiver_email"));
+                complaints.setReceiver_countryOfResidence(resultSet.getString("receiver_countryOfResidence"));
+                complaints.setReceiver_userType(resultSet.getString("receiver_userType"));
+                complaints.setReceiver_district(resultSet.getString("receiver_district"));
+                complaints.setReceiver_nic(resultSet.getString("receiver_nic"));
+                complaints.setReceiver_birthday(resultSet.getString("receiver_birthday"));
+                complaints.setReceiver_numberOfCasesHandled(resultSet.getString("receiver_numberOfCasesHandled"));
+                complaints.setReceiver_yearsOfExperience(resultSet.getString("receiver_yearsOfExperience"));
+                complaints.setReceiver_complaint_count(resultSet.getString("receiver_complaint_count"));
+                complaints.setReceiverid(resultSet.getString("to_user_id"));
 
                 complaint.add(complaints);
             }
@@ -85,7 +112,7 @@ public class ComplaintsController extends HttpServlet {
         PreparedStatement statement = null;
         try {
             connection = DBConnect.getConnection();
-            String query = "UPDATE complaints SET status = 'Closed' WHERE idcomplaints = ?";
+            String query = "UPDATE complaints SET status = 'Resolved' WHERE idcomplaints = ?";
             statement = connection.prepareStatement(query);
             statement.setString(1, id);
             statement.executeUpdate();

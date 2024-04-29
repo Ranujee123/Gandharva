@@ -3,6 +3,7 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 
+
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
@@ -215,6 +216,111 @@
         <servlet-name>ChatStore</servlet-name>
         <url-pattern>/chatstore</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>LoadMessages</servlet-name>
+        <servlet-class>com.user.controller.LoadMessages</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoadMessages</servlet-name>
+        <url-pattern>/LoadMessages</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ViewMoreDetails</servlet-name>
+        <servlet-class>com.user.controller.ViewUserDetailsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ViewMoreDetails</servlet-name>
+        <url-pattern>/moredetails</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Connection</servlet-name>
+        <servlet-class>com.user.controller.ConnectionRequestServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Connection</servlet-name>
+        <url-pattern>/connection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CheckEmailServlet</servlet-name>
+        <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CheckEmailServlet</servlet-name>
+        <url-pattern>/CheckEmailServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>FetchConnection</servlet-name>
+        <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>FetchConnection</servlet-name>
+        <url-pattern>/fetchConnection</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>RequestStatusCount</servlet-name>
+        <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RequestStatusCount</servlet-name>
+        <url-pattern>/fetchRequestStatusCount</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateRequestStatus</servlet-name>
+        <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateRequestStatus</servlet-name>
+        <url-pattern>/updateConnectionStatus</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdateAccepetedreqList</servlet-name>
+        <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateAccepetedreqList</servlet-name>
+        <url-pattern>/GetAcceptedRequests</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ReportUsers</servlet-name>
+        <servlet-class>com.user.controller.ReportUserServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ReportUsers</servlet-name>
+        <url-pattern>/ReportUserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SendRequesttoAstrologer</servlet-name>
+        <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SendRequesttoAstrologer</servlet-name>
+        <url-pattern>/SendRequest</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatePersonalInfo</servlet-name>
+        <url-pattern>/updatepersonalInfo</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>MatchFindingServlet</servlet-name>
+        <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MatchFindingServlet</servlet-name>
+        <url-pattern>/findMatches</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UpdatePersonaldetails</servlet-name>
+        <servlet-class>com.user.controller.Updatepersonaldetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdatePersonaldetails</servlet-name>
+        <url-pattern>/updatepersonaldetails</url-pattern>
+    </servlet-mapping>
 
     <servlet>
         <servlet-name>UpadteInterest</servlet-name>
@@ -270,7 +376,33 @@
         <url-pattern>/updateinterestedINFam</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>sendoppositeuseremail</servlet-name>
+        <servlet-class>com.user.controller.Oppositeuseremail</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sendoppositeuseremail</servlet-name>
+        <url-pattern>/oppositeuseremail</url-pattern>
+    </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>viewconnectedprofiledetails</servlet-name>
+        <servlet-class>com.user.controller.ViewDetailsofConnectedProfiles</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>viewconnectedprofiledetails</servlet-name>
+        <url-pattern>/viewconnectedprofiledetails</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profilePhotoServlet</servlet-name>
+        <servlet-class>com.user.controller.ProfilePhotoServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>profilePhotoServlet</servlet-name>
+        <url-pattern>/profilePhotoServlet</url-pattern>
+    </servlet-mapping>
 
 
     <!--    ASTROLOGER-->
@@ -326,15 +458,6 @@
     <servlet-mapping>
         <servlet-name>eventPlannerController</servlet-name>
         <url-pattern>/eventPlanner</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>adminController</servlet-name>
-        <servlet-class>com.user.controller.astrologer.AdminController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>adminController</servlet-name>
-        <url-pattern>/admin</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -579,193 +702,23 @@
         <url-pattern>/userNavigation</url-pattern>
     </servlet-mapping>
 
-
-  <servlet>
-    <servlet-name>LoadMessages</servlet-name>
-    <servlet-class>com.user.controller.LoadMessages</servlet-class>
+     <servlet>
+    <servlet-name>dash_admin</servlet-name>
+    <servlet-class>com.user.controller.AdminDashboardController</servlet-class>
   </servlet>
-
   <servlet-mapping>
-    <servlet-name>LoadMessages</servlet-name>
-    <url-pattern>/LoadMessages</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-  <servlet-name>ViewMoreDetails</servlet-name>
-  <servlet-class>com.user.controller.ViewUserDetailsServlet</servlet-class>
-</servlet>
-
-<servlet-mapping>
-<servlet-name>ViewMoreDetails</servlet-name>
-<url-pattern>/moredetails</url-pattern>
-</servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>Connection</servlet-name>
-    <servlet-class>com.user.controller.ConnectionRequestServlet</servlet-class>
-  </servlet>
-
-  <servlet-mapping>
-    <servlet-name>Connection</servlet-name>
-    <url-pattern>/connection</url-pattern>
+    <servlet-name>dash_admin</servlet-name>
+    <url-pattern>/admin</url-pattern>
   </servlet-mapping>
 
   <servlet>
-    <servlet-name>CheckEmailServlet</servlet-name>
-    <servlet-class>com.user.controller.CheckEmailServlet</servlet-class>
+    <servlet-name>payment_admin</servlet-name>
+    <servlet-class>com.user.controller.Payments_admin</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>CheckEmailServlet</servlet-name>
-    <url-pattern>/CheckEmailServlet</url-pattern>
+    <servlet-name>payment_admin</servlet-name>
+    <url-pattern>/payments_admin</url-pattern>
   </servlet-mapping>
 
 
-  <servlet>
-    <servlet-name>FetchConnection</servlet-name>
-    <servlet-class>com.user.controller.FetchConnectionStatusServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>FetchConnection</servlet-name>
-    <url-pattern>/fetchConnection</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>RequestStatusCount</servlet-name>
-    <servlet-class>com.user.controller.RequestStatusCount</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RequestStatusCount</servlet-name>
-    <url-pattern>/fetchRequestStatusCount</url-pattern>
-  </servlet-mapping>
-
-
-
-  <servlet>
-    <servlet-name>UpdateRequestStatus</servlet-name>
-    <servlet-class>com.user.controller.UpdateConnectionStatusServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateRequestStatus</servlet-name>
-    <url-pattern>/updateConnectionStatus</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UpdateAccepetedreqList</servlet-name>
-    <servlet-class>com.user.controller.GetAcceptedRequests</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateAccepetedreqList</servlet-name>
-    <url-pattern>/GetAcceptedRequests</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>ReportUsers</servlet-name>
-    <servlet-class>com.user.controller.ReportUserServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ReportUsers</servlet-name>
-    <url-pattern>/ReportUserServlet</url-pattern>
-  </servlet-mapping>
-
-
-  <servlet>
-    <servlet-name>SendRequesttoAstrologer</servlet-name>
-    <servlet-class>com.user.controller.USendRequestAstrologer</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>SendRequesttoAstrologer</servlet-name>
-    <url-pattern>/SendRequest</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>UpdatePersonalInfo</servlet-name>
-    <servlet-class>com.user.controller.UpdateUserPersonalInfo</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdatePersonalInfo</servlet-name>
-    <url-pattern>/updatepersonalInfo</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>MatchFindingServlet</servlet-name>
-    <servlet-class>com.user.controller.MatchedUsersServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MatchFindingServlet</servlet-name>
-    <url-pattern>/findMatches</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPlannerRegisterServlet</servlet-name>
-    <servlet-class>event.servlet.EventUserRegister</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPlannerRegisterServlet</servlet-name>
-    <url-pattern>/EventPlanner/eventPlannerReg</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPlannerLoginServlet</servlet-name>
-    <servlet-class>event.servlet.EventPlannerLogin</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPlannerLoginServlet</servlet-name>
-    <url-pattern>/EventPlanner/eventPlannerLog</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPartnerServlet</servlet-name>
-    <servlet-class>event.servlet.EventPartnerServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPartnerServlet</servlet-name>
-    <url-pattern>/EventPlanner/eventPartner</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPackageServlet</servlet-name>
-    <servlet-class>event.servlet.EventPackageServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPackageServlet</servlet-name>
-    <url-pattern>/EventPlanner/eventPackage</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPlannerLogoutServlet</servlet-name>
-    <servlet-class>event.servlet.EventPlannerLogoutServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPlannerLogoutServlet</servlet-name>
-    <url-pattern>/EventPlanner/logout</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventPlannerEditServlet</servlet-name>
-    <servlet-class>event.servlet.EventPlannerEditServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventPlannerEditServlet</servlet-name>
-    <url-pattern>/EventPlanner/editProfile</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventNotificationServlet</servlet-name>
-    <servlet-class>event.servlet.EventNotificationServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventNotificationServlet</servlet-name>
-    <url-pattern>/EventPlanner/notification</url-pattern>
-  </servlet-mapping>
-
-  <servlet>
-    <servlet-name>EventReservationServlet</servlet-name>
-    <servlet-class>event.servlet.EventReservationServlet</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>EventReservationServlet</servlet-name>
-    <url-pattern>/EventPlanner/reservation</url-pattern>
-  </servlet-mapping>
-</web-app>
+ </web-app>

@@ -26,7 +26,7 @@ public class userVerifyControler extends HttpServlet {
 
         try {
             connection = DBConnect.getConnection();
-            String query = "SELECT * FROM user_status us join user u on u.id = us.userID where us.verified = '0'";
+            String query = "SELECT * FROM user  where isVerified = '0'";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
@@ -96,7 +96,7 @@ public class userVerifyControler extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String userId = req.getParameter("userid");
-
+        String reason = req.getParameter("reason");
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
@@ -104,10 +104,11 @@ public class userVerifyControler extends HttpServlet {
         System.out.println("User ID: " + userId);
         try {
             connection = DBConnect.getConnection();
-            String query = "UPDATE user_status SET verified = ? WHERE userID = ?";
+            String query = "UPDATE user SET isVerified = ? , reason=? WHERE id = ?";
             statement = connection.prepareStatement(query);
-            statement.setString(1, action);
-            statement.setString(2, userId);
+            statement.setInt(1, Integer.parseInt(action));
+            statement.setString(2, reason);
+            statement.setString(3, userId);
             statement.executeUpdate();
             resp.setContentType("text/plain");
             resp.setStatus(HttpServletResponse.SC_OK);

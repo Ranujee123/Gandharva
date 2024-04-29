@@ -497,37 +497,37 @@
     </div>
 </section>
 
-<section id="--3">
-    <div class="section--3">
-        <img src="images/contactusBG.jpg" class="bgimg">
+<%--<section id="--3">--%>
+<%--    <div class="section--3">--%>
+<%--        <img src="images/contactusBG.jpg" class="bgimg">--%>
 
-        <div class="inquiries--card">
-            <form enctype="multipart/form-data" id="#">
-                <H2>
-                    GET IN TOUCH
-                </H2>
-                <br>
+<%--        <div class="inquiries--card">--%>
+<%--            <form enctype="multipart/form-data" id="#">--%>
+<%--                <H2>--%>
+<%--                    GET IN TOUCH--%>
+<%--                </H2>--%>
+<%--                <br>--%>
 
-                <label for="name"> Name in Full: </label> <p class="require"> * </p>
-                <input type="text" id="name" class="input-field" placeholder="John Doe" required> <br><br>
+<%--                <label for="name"> Name in Full: </label> <p class="require"> * </p>--%>
+<%--                <input type="text" id="name" class="input-field" placeholder="John Doe" required> <br><br>--%>
 
-                <label for="email"> E-mail address: </label> <p class="require"> * </p>
-                <input type="email" id="email" class="input-field" placeholder="johndoe@email.com" required><br><br>
+<%--                <label for="email"> E-mail address: </label> <p class="require"> * </p>--%>
+<%--                <input type="email" id="email" class="input-field" placeholder="johndoe@email.com" required><br><br>--%>
 
-                <label for="inquire"> How can we help? </label>  <p class="require"> * </p>
-                <textarea id="inquire" class="input-field" placeholder="Type your message here" required></textarea><br><br>
-
-
-            </form>
-
-<%--            <img src="images/contact_us.jpg" id="contact--img">--%>
-
-        </div>
-
-    </div>
+<%--                <label for="inquire"> How can we help? </label>  <p class="require"> * </p>--%>
+<%--                <textarea id="inquire" class="input-field" placeholder="Type your message here" required></textarea><br><br>--%>
 
 
-</section>
+<%--            </form>--%>
+
+<%--&lt;%&ndash;            <img src="images/contact_us.jpg" id="contact--img">&ndash;%&gt;--%>
+
+<%--        </div>--%>
+
+<%--    </div>--%>
+
+
+<%--</section>--%>
 
 
 

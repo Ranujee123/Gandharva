@@ -29,9 +29,10 @@
     <img src="images/admin.png" alt="Profile Image" class="profile-image">
   </div>
   <ul class="sidebar-menu-admin">
-
+    <li><a href="admin" >Dashboard</a></li>
     <li><a href="activateuser" >Activate Accounts</a></li>
     <li><a href="verifyuser">Verify Accounts</a></li>
+    <li><a href="payments_admin">Payments</a></li>
     <li><a href="userlist">View profiles</a></li>
     <li><a href="complaints">Handling Complaints</a></li>
   </ul>

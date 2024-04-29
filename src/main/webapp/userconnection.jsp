@@ -19,8 +19,11 @@
 
   <style>
     .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: calc(100% - 120px);
       margin-left: 100px;
-      margin-top: 50px;
     }
     .request-item {
       display: flex;

@@ -27,7 +27,7 @@ public class activateuserController extends HttpServlet
 
         try {
             connection = DBConnect.getConnection();
-            String query = "SELECT * FROM user_status us join user u on u.id = us.userID order by us.status asc";
+            String query = "SELECT * FROM user order by isActivated asc";
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
@@ -45,7 +45,7 @@ public class activateuserController extends HttpServlet
                 user.setBirthday(resultSet.getDate("birthday"));
                 user.setNic(resultSet.getString("nic"));
                 user.setDistrict(resultSet.getString("district"));
-                user.setStat(resultSet.getString("status"));
+                user.setStat(resultSet.getString("isActivated"));
 
                 byte[] imageData = resultSet.getBytes("userImage");
                 if (imageData != null && imageData.length > 0) {
@@ -104,9 +104,9 @@ public class activateuserController extends HttpServlet
 
         try {
             connection = DBConnect.getConnection();
-            String query = "UPDATE user_status SET status = ? WHERE userID = ?";
+            String query = "UPDATE user SET isActivated = ? WHERE id = ?";
             statement = connection.prepareStatement(query);
-            statement.setString(1, status);
+            statement.setInt(1, Integer.parseInt(status));
             statement.setString(2, id);
             statement.executeUpdate();
             resp.setStatus(HttpServletResponse.SC_OK);
