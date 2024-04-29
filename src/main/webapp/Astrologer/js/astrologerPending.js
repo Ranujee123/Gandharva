@@ -50,13 +50,13 @@ $(document).ready(function() {
                             </span>
                         </td>
                         <td>
-                            ${x.feedback}
+                            ${x.feedback !== undefined ? x.feedback : 'Insert your feedback!'}
                             <i class="menu-icon fas fa-comment feedback-icon" onClick='provideFeedback("${x.id}")'></i>
                             <i class="upload-icon fas fa-upload" onClick='uploadDocument("${x.id}")'></i>
                             <i class="view-icon fas fa-eye" onClick='viewDocument("${x.id}", "${x.feedbackImage}")'></i>
                         </td>
                         <td>
-                            <input type="text" placeholder="Not displayed to anyone else" value="${x.comments}" class="user-request-comment">
+                            <input type="text" placeholder="Not displayed to anyone else" value="${x.comments !== undefined ? x.comments : 'Insert your Comment!'}" class="user-request-comment">
                             <i class="fas fa-pencil-alt comment-icon" onClick='updateComment(this, "${x.id}")'></i>
                         </td>
                     </tr>`
