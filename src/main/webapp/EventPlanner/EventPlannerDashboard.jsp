@@ -8,9 +8,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     int total = 0;
-//    EventNotificationImpl eventNotification = new EventNotificationImpl();
-//    String id = (String) session.getAttribute("id");
-//    total = eventNotification.getTotalEvents(id);
+    EventNotificationImpl eventNotification = new EventNotificationImpl();
+    String id = (String) session.getAttribute("userId");
+    try {
+        total = eventNotification.getTotalEvents(id);
+    } catch (Exception e) {
+        throw new RuntimeException(e);
+    }
 %>
 <!DOCTYPE html>
 <html lang="en">
