@@ -93,6 +93,10 @@ public class LoginController extends HttpServlet {
                             break;
                         case EVENT_PLANNER:
                             session.setAttribute("eventPlanner", allUser);
+                            session.setAttribute("userId", loginData.getId().toString());
+                            session.setAttribute("firstName",allUser.getFirstName());
+                            session.setAttribute("lastName", allUser.getLastName());
+                            session.setAttribute("email", loginData.getEmail());
                             out.print("4");
                             break;
                         case ADMIN:

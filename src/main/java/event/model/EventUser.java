@@ -1,18 +1,20 @@
 package event.model;
 
+import com.user.constants.UserType;
+
 public class EventUser {
     private String id;
     private String firstName;
     private String lastName;
     private String email;
-    private String userType;
+    private UserType userType;
     private String password;
     private String aboutMe;
     private String phoneNo;
     private int numberOfEventsHandled;
     private int yearsOfExperience;
 
-    public EventUser(String id, String firstName, String lastName, String email, String userType, String password, int numberOfCasesHandled, int yearsOfExperience, String aboutMe, String phoneNo) {
+    public EventUser(String id, String firstName, String lastName, String email, UserType userType, String password, int numberOfCasesHandled, int yearsOfExperience, String aboutMe, String phoneNo) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +27,7 @@ public class EventUser {
         this.phoneNo = phoneNo;
     }
 
-    public EventUser(String id, String firstName, String lastName, String email, String userType, String aboutMe) {
+    public EventUser(String id, String firstName, String lastName, String email, UserType userType, String aboutMe) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -73,11 +75,12 @@ public class EventUser {
         this.email = email;
     }
 
-    public String getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(String userType) {
+
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 

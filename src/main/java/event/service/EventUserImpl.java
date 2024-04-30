@@ -1,5 +1,6 @@
 package event.service;
 
+import com.user.constants.UserType;
 import com.user.model.DBConnect;
 import event.model.EventUser;
 
@@ -22,6 +23,7 @@ public class EventUserImpl implements IEventUser {
         ResultSet resultSet = null;
         try {
             connection = DBConnect.getConnection();
+            String password= eventUser.getPassword();
 
             String emailCheckSql = "SELECT COUNT(*) AS count FROM user WHERE email = ?";
             statement = connection.prepareStatement(emailCheckSql);
@@ -33,8 +35,14 @@ public class EventUserImpl implements IEventUser {
                 System.out.println("Email already exists.");
                 return;
             }
+            System.out.println(password);
 
-            String hashedPassword = toHexStr(obtainSHA(eventUser.getPassword()));
+            try {
+                password = toHexStr(obtainSHA(password));
+//            System.out.println(login_password);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
 
             String insertSql = "INSERT INTO user (id, firstName, lastName, email, userType, password, numberOfCasesHandled, yearsOfExperience, aboutMe, phonenumber) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(insertSql);
@@ -42,8 +50,8 @@ public class EventUserImpl implements IEventUser {
             statement.setString(2, eventUser.getFirstName());
             statement.setString(3, eventUser.getLastName());
             statement.setString(4, eventUser.getEmail());
-            statement.setString(5, eventUser.getUserType());
-            statement.setString(6, hashedPassword);
+            statement.setString(5, eventUser.getUserType().toString());
+            statement.setString(6, password);
             statement.setInt(7, eventUser.getNumberOfEventsHandled());
             statement.setInt(8, eventUser.getYearsOfExperience());
             statement.setString(9, eventUser.getAboutMe());
@@ -123,8 +131,9 @@ public class EventUserImpl implements IEventUser {
                 String userEmail = resultSet.getString("email");
                 String userType = resultSet.getString("userType");
                 String aboutMe = resultSet.getString("aboutMe");
+                UserType userTypeEnum = UserType.valueOf(userType);
 
-                user = new EventUser(id, firstName, lastName, userEmail, userType, aboutMe);
+                user = new EventUser(id, firstName, lastName, userEmail, userTypeEnum, aboutMe);
             }
         } catch (SQLException e) {
             e.printStackTrace();

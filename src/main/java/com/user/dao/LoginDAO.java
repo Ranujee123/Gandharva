@@ -46,15 +46,20 @@ public class LoginDAO {
                 astrologer.setCertificateFileUpload(resultSet.getBytes(13));
                 astrologer.setAstrologerPayment(resultSet.getInt(17));
                 return astrologer;
-            } else if (parentUser.getUserType().equals(UserType.EVENT_PLANNER)) {
+            }
+            else if (parentUser.getUserType().equals(UserType.EVENT_PLANNER)) {
                 EventPlanner eventPlanner = new EventPlanner(parentUser);
-                eventPlanner.setNumberOfCasesHandled(resultSet.getInt(11));
-                eventPlanner.setYearsOfExperience(resultSet.getInt(12));
-                eventPlanner.setBrFileUpload(resultSet.getBytes(14));
-            }else {
+              eventPlanner.setNumberOfCasesHandled(resultSet.getInt(11));
+                System.out.println("ranu");
+         eventPlanner.setYearsOfExperience(resultSet.getInt(12));
+//                eventPlanner.setBrFileUpload(resultSet.getBytes(14));
+                return eventPlanner;
+            }
+            else {
                 throw new RuntimeException("UserType not present in the database");
             }
         }
+        System.out.println(parentUser);
         return null;
     }
 }

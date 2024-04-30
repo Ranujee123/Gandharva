@@ -2,6 +2,7 @@ package com.user.model.astrologer;
 
 import com.user.constants.UserType;
 
+import java.util.Arrays;
 import java.util.UUID;
 
 public class ParentUser {
@@ -130,5 +131,21 @@ public class ParentUser {
 
     public void setActivated(boolean activated) {
         isActivated = activated;
+    }
+
+    @Override
+    public String toString() {
+        return "ParentUser{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", userType=" + userType +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", countryOfResidence='" + countryOfResidence + '\'' +
+                ", district='" + district + '\'' +
+                ", userImage=" + Arrays.toString(userImage) +
+                ", isActivated=" + isActivated +
+                '}';
     }
 }
