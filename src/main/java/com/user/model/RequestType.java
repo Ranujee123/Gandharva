@@ -9,4 +9,5 @@ public enum RequestType {
     CANCELLED,
     ACCEPTED,
     PAYMENT_PENDING,
+    DONE,
 }
