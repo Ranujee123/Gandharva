@@ -21,10 +21,10 @@ public class DBConnection {
 //    private final String password = "password";
 
 //    VIDARA
-    private final String port = "8889";
-    private final String database = "gandharva";
+    private final String port = "3306";
+    private final String database = "gandharwa";
     private final String username = "root";
-    private final String password = "root";
+    private final String password = "GASballa123";
 
     private Connection connection;
     private static DBConnection dbconnection;

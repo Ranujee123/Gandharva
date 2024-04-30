@@ -220,7 +220,7 @@
       <tr>
 
         <th>Name</th>
-        <th>NIC</th>
+<%--        <th>NIC</th>--%>
         <th>Email</th>
 
         <th>Net Amount</th>
@@ -236,7 +236,7 @@
         <tr onclick="displayUserDetails('${user.userid}','${user.firstName} ${user.lastName}','${user.userType}','${user.email}','${user.nic}','${user.birthday}','${user.countryOfResidence}','${user.district}','${user.numberOfCasesHandled}','${user.yearsOfExperience}','${user.base64Image}')">
 
           <td><div id="cener-box"><img src="${user.base64Image}" width="50" class="profimage" height="50"/>${user.firstName} ${user.lastName}</div></td>
-          <td>${user.nic}</td>
+<%--          <td>${user.nic}</td>--%>
           <td>${user.email}</td>
           <td>${user.amount}</td>
           <td>${user.payamount}</td>

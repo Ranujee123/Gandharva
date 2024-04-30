@@ -33,6 +33,7 @@ public class UserListControler extends HttpServlet {
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
 
+
             while (resultSet.next()) {
                 UserListModel user = new UserListModel();
                 user.setId(resultSet.getString("id"));
@@ -46,6 +47,8 @@ public class UserListControler extends HttpServlet {
                 user.setYearsOfExperience(resultSet.getInt("yearsOfExperience"));
                 user.setBirthday(resultSet.getDate("birthday"));
                 user.setNic(resultSet.getString("nic"));
+                user.setPhonenumber(resultSet.getString("phonenumber"));
+                user.setGender(resultSet.getString("gender"));
                 user.setDistrict(resultSet.getString("district"));
                 byte[] imageData = resultSet.getBytes("userImage");
                 if (imageData != null && imageData.length > 0) {
@@ -55,8 +58,10 @@ public class UserListControler extends HttpServlet {
                     // Set a default image URL if userImage is null
                     user.setBase64Image("images/no-profile.png"); // or you can set a default value here if required
                 }
+
                 userList.add(user);
             }
+
 
             // Set user list as attribute to be accessed in JSP
             req.setAttribute("userList", userList);

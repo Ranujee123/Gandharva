@@ -495,7 +495,7 @@ h5 {
     width: 200px;
 }
 .box-verify{
-    width: 500px;
+    /*width: 500px;*/
     display: flex;
     background-color: #fff;
     border-radius: 10px;

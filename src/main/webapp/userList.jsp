@@ -157,6 +157,7 @@
         <th>User Type</th>
 
 
+
       </tr>
       </thead>
 
@@ -170,14 +171,13 @@
           <td>${user.email}</td>
           <td>${user.userType}</td>
 
+
         </tr>
       </c:forEach>
       </tbody>
     </table>
   </div>
 </div>
-
-
 
 </body>
 </html>

@@ -19,6 +19,8 @@ public class UserListModel {
     private byte[] userImage;
     private String base64Image;
     private  String status;
+    private  String phonenumber;
+    private  String gender;
 
 
     public String getId() {
@@ -148,4 +150,21 @@ public class UserListModel {
     public void setStat(String status) {
         this.status = status;
     }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
 }
+

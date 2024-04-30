@@ -97,7 +97,8 @@
             <c:forEach items="${userList}" var="user">
                 <tr >
 
-                    <td>${user.firstName}</td>
+
+                            <td>${user.firstName}</td>
                     <td>${user.lastName}</td>
                     <td>${user.email}</td>
                     <td>${user.nic}</td>

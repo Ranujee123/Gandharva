@@ -68,7 +68,7 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Email</th>
-        <th>NIC</th>
+<%--        <th>NIC</th>--%>
         <th>User Type</th>
 
       </tr>
@@ -81,7 +81,7 @@
           <td>${user.firstName}</td>
           <td>${user.lastName}</td>
           <td>${user.email}</td>
-          <td>${user.nic}</td>
+<%--          <td>${user.nic}</td>--%>
           <td>${user.userType}</td>
 
           <td><button onclick="verifyUser('${user.firstName} ${user.lastName}','${user.userType}','${user.email}','${user.nic}','${user.birthday}','${user.countryOfResidence}','${user.district}','${user.numberOfCasesHandled}','${user.yearsOfExperience}','${user.base64Image}','${user.certificateFileUpload}','${user.brFileUpload}','${user.id}')">Verify</button></td>
