@@ -58,7 +58,7 @@
 <div class="container">
   <form action="premiumuserpayment" method="post">
     <h1>Payment Form</h1>
-    <h3>Rs. 5000.00</h3>
+    <h3>Rs. 4000.00</h3>
 
 
     <label for="email"><i class="fa fa-envelope"></i> Email</label>

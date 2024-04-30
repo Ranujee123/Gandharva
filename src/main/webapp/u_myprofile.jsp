@@ -169,7 +169,7 @@ String profileImagePath = UserDBUtil.getProfileImagePath(userEmail); // Fetch im
 				<div class="dashboard-options">
 					<ul>
 						<li><a href="editProfile.jsp">Update my data</a></li>
-						<li><a href="cpassword.jsp">Change Password</a></li>
+<%--						<li><a href="cpassword.jsp">Change Password</a></li>--%>
 						<li><a href="pricing.jsp">Change Plan</a></li>
 						<li><a href="deleteuserprofile.jsp">Deactivate Account</a></li>
 					</ul>
