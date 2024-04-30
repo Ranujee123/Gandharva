@@ -97,11 +97,11 @@
 </body>
 
 <script>
-	let merchant_id = "121XXXX";	// Replace your Merchant ID
+	let merchant_id = "1226597";	// Replace your Merchant ID
 	let order_id = "ItemNo12345";
 	let amount = 1000;
 	let currency = "LKR";
-	let merchant_secret = "45D3CBA93E9F2189BD630ADFE19AA6DC";	// Replace your Merchant Secret
+	let merchant_secret = "MzY0MjkyOTIwNzI1NTUxNjM3NzkzMDczMDg5NjAxMzU5NzIwMTg1Mg==";	// Replace your Merchant Secret
 
 	let hash = CryptoJS.MD5(
 		merchant_id +
