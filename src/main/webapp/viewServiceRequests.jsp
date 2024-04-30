@@ -103,7 +103,7 @@
                         <!-- if serviceRequest.status is ACCEPTED -->
                         <td>
                             <c:choose>
-                                <c:when test="${serviceRequest.status == 'ACCEPTED'}">
+                                <c:when test="${serviceRequest.status == 'PAYMENT_PENDING'}">
                                 <a href="SendHoroscope?id=${serviceRequest.id}">Pay</a>
                                 </c:when><c:otherwise></c:otherwise>
                             </c:choose>

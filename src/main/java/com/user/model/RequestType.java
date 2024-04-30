@@ -8,4 +8,5 @@ public enum RequestType {
     IN_PROGRESS,
     CANCELLED,
     ACCEPTED,
+    PAYMENT_PENDING,
 }

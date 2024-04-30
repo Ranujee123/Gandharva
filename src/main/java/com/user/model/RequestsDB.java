@@ -84,7 +84,7 @@ public class RequestsDB {
 	public static List<Request> getAcceptedAstroRequests(String userId) {
 		ArrayList<Request> requests = new ArrayList<>();
 
-		String sql = "SELECT r.id, r.startDate, r.deadline, r.status, r.comments, r.feedback, r.astrologerId, r.feedbackImage, u.firstName, u.lastName FROM request r JOIN user u ON r.astrologerId = u.id WHERE r.astrologerId IS NOT NULL AND r.userId = ? AND r.status = 'ACCEPTED'";
+		String sql = "SELECT r.id, r.startDate, r.deadline, r.status, r.comments, r.feedback, r.astrologerId, r.feedbackImage, u.firstName, u.lastName FROM request r JOIN user u ON r.astrologerId = u.id WHERE r.astrologerId IS NOT NULL AND r.userId = ? AND r.status = 'PAYMENT_PENDING'";
 
 		try {
 			PreparedStatement preparedStatement = con.prepareStatement(sql);
