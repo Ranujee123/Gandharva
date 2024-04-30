@@ -39,7 +39,7 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
-	height: 400px; /* Adjust the card height as needed */
+	height: 600px; /* Adjust the card height as needed */
 }
 
 .card:hover {
@@ -63,13 +63,12 @@ body {
 <body>
 	<div class="card">
 		<h2>Free Guest User</h2>
-		<p>Features:</p>
-		<ul>
-			<li>Feature 1</li>
-			<li>Feature 2</li>
-			<li>Feature 3</li>
-		</ul>
-		<p>Price: $0 per month</p>
+<%--		<p>Features:</p>--%>
+<%--		<ul>--%>
+			<p>You can request for Astrology services</p>
+			<p>You can request for event planner services</p>
+
+<%--		</ul>--%>
 
 		<a href="guest_register.jsp">
 			<button class="subscribe-button">Subscribe</button>
@@ -78,13 +77,14 @@ body {
 	</div>
 	<div class="card">
 		<h2>Standard User</h2>
-		<p>Features:</p>
-		<ul>
-			<li>Feature 1</li>
-			<li>Feature 2</li>
-			<li>Feature 3</li>
-		</ul>
-		<p>Price: $X per month</p>
+<%--		<p>Features:</p>--%>
+<%--		<ul>--%>
+			<p>You can search for users based on your preferences</p>
+			<p>We will give you potential matches based on your preferred criteria(limited number)</p>
+			<p>You can request for Astrology services</p>
+			<p>You can request for event planner services</p>
+<%--		</ul>--%>
+		<p><b>Price: Rs. 2000 per month</b></p>
 
 		<a href="UserPayement.jsp">
 			<button class="subscribe-button">Subscribe</button>
@@ -93,13 +93,16 @@ body {
 	</div>
 	<div class="card">
 		<h2>Premium User</h2>
-		<p>Features:</p>
-		<ul>
-			<li>Feature A</li>
-			<li>Feature B</li>
-			<li>Feature C</li>
-		</ul>
-		<p>Price: $Y per month</p>
+
+<%--		<ul>--%>
+			<p>You can search for users based on your preferences</p>
+			<p>We will give you all the potential matches based on your preferred criteria(No limitation)</p>
+			<p>You will be the first one to be shown at the potential matches</p>
+			<p>You can request for Astrology services</p>
+			<p>You will be listed as the first in the Astrologer request list</p>
+			<p>You can request for event planner services</p>
+<%--		</ul>--%>
+		<p><b>Price: Rs. 4000 per month</b></p>
 		<a href="premiumUserPayment.jsp">
 			<button class="subscribe-button">Subscribe</button>
 		</a>
