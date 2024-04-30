@@ -80,12 +80,12 @@
 		</div>
 		<form action="SendHoroscope?id=${requestId}" method="post" enctype="multipart/form-data" id="save">
 			<label for="horoscope">Horoscope Image:</label> 
-			<input type="file" id="horoscope" name="horoscope" accept="image/*" required> 
+			<input type="file" id="horoscope" name="horoscope" accept="application/pdf" required>
 			<br>
 			<br> 
 			
 			<label for="horoscopeSecond">Second Horoscope Image:</label> 
-			<input type="file" id="horoscopeSecond" name="horoscopeSecond" accept="image/*" required>
+			<input type="file" id="horoscopeSecond" name="horoscopeSecond" accept="application/pdf" required>
 			<br>
 			<br> 
 			
