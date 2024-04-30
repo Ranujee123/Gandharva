@@ -33,11 +33,15 @@ public class activateuserController extends HttpServlet
 
             while (resultSet.next()) {
                 UserListModel user = new UserListModel();
+                user.setUserType(resultSet.getString("userType"));
+                if(user.getUserType().equals("ADMIN")){
+                    continue;
+                }
                 user.setId(resultSet.getString("id"));
                 user.setFirstName(resultSet.getString("firstName"));
                 user.setLastName(resultSet.getString("lastName"));
                 user.setEmail(resultSet.getString("email"));
-                user.setUserType(resultSet.getString("userType"));
+
                 user.setCountryOfResidence(resultSet.getString("countryOfResidence"));
                 user.setBirthday(resultSet.getDate("birthday"));
                 user.setNumberOfCasesHandled(resultSet.getInt("numberOfCasesHandled"));
